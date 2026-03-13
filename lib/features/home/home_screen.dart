@@ -8,6 +8,9 @@ import '../simulatore/simulatore_screen.dart';
 import '../prenotazioni/prenotazioni_screen.dart';
 import '../simulatore/isee_screen.dart';
 import '../strumenti/strumenti_screen.dart';
+import '../agevolazioni/agevolazioni_screen.dart';
+import '../agevolazioni/agevolazioni_data.dart';
+import '../agevolazioni/agevolazione_detail_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final VoidCallback onNavigateToGuide;
@@ -34,6 +37,7 @@ class HomeScreen extends StatelessWidget {
         SliverToBoxAdapter(child: _sectionTitle('I Nostri Servizi')),
         SliverToBoxAdapter(child: _buildServicesGrid(context)),
         SliverToBoxAdapter(child: _buildStats()),
+        SliverToBoxAdapter(child: _buildAgevolazioneDelGiorno(context)),
         SliverToBoxAdapter(child: _sectionTitle('Novità & Avvisi')),
         SliverToBoxAdapter(child: _buildNews()),
         SliverToBoxAdapter(child: _sectionTitle('Azioni Rapide')),
@@ -172,6 +176,11 @@ class HomeScreen extends StatelessWidget {
             onTap: () => _push(context, const PrenotazioniScreen()),
           ),
           ServiceCard(
+            icon: Icons.card_giftcard, title: 'Agevolazioni', subtitle: '53 bonus governativi',
+            iconGradient: const [Color(0xFFFFF3E0), Color(0xFFFFE0B2)], iconColor: Color(0xFFE65100),
+            onTap: () => _push(context, const AgevolazioniScreen()),
+          ),
+          ServiceCard(
             icon: Icons.menu_book_rounded, title: 'Guide Complete', subtitle: '18 guide step-by-step',
             iconGradient: const [AppColors.servicePurpleLight, AppColors.servicePurpleMed], iconColor: AppColors.iconPurple,
             onTap: onNavigateToGuide,
@@ -200,6 +209,75 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildAgevolazioneDelGiorno(BuildContext context) {
+    final a = agevolazioneDelGiorno();
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(
+          builder: (_) => AgevolazioneDetailScreen(
+            agevolazione: a,
+            icon: Icons.card_giftcard,
+            color: const Color(0xFF1565C0),
+          ),
+        ));
+      },
+      child: Container(
+        margin: const EdgeInsets.fromLTRB(16, 6, 16, 0),
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [Color(0xFF1565C0), Color(0xFF0D47A1)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [BoxShadow(color: const Color(0xFF1565C0).withValues(alpha: 0.25), blurRadius: 16, offset: const Offset(0, 4))],
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 46, height: 46,
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(Icons.card_giftcard, color: Colors.white, size: 24),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: Colors.amber.shade600,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: const Text('AGEVOLAZIONE DEL GIORNO', style: TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.w800)),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(a.titolo, style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w700), maxLines: 1, overflow: TextOverflow.ellipsis),
+                  const SizedBox(height: 2),
+                  Text(a.importo, style: TextStyle(color: Colors.amber.shade300, fontSize: 11, fontWeight: FontWeight.w600)),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Icon(Icons.arrow_forward, color: Colors.white, size: 16),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildNews() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -223,7 +301,7 @@ class HomeScreen extends StatelessWidget {
           QuickActionItem(icon: Icons.euro, label: 'Costi', onTap: () => _push(context, const SimulatoreScreen())),
           QuickActionItem(icon: Icons.chat_bubble_outline, label: 'Chat AI', onTap: onNavigateToAI),
           QuickActionItem(icon: Icons.calendar_month, label: 'Prenota', onTap: () => _push(context, const PrenotazioniScreen())),
-          QuickActionItem(icon: Icons.build_circle, label: 'Strumenti', onTap: () => _push(context, const StrumentiScreen())),
+          QuickActionItem(icon: Icons.card_giftcard, label: 'Bonus', onTap: () => _push(context, const AgevolazioniScreen())),
           QuickActionItem(icon: Icons.calculate_outlined, label: 'ISEE', onTap: () => _push(context, const IseeScreen())),
           QuickActionItem(icon: Icons.menu_book, label: 'Guide', onTap: onNavigateToGuide),
           QuickActionItem(icon: Icons.question_answer, label: 'Domande', onTap: onNavigateToDomande),
