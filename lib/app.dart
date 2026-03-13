@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'core/theme/app_theme.dart';
+import 'core/services/language_service.dart';
 import 'features/home/home_screen.dart';
 import 'features/guide/guide_list_screen.dart';
 import 'features/agevolazioni/agevolazioni_screen.dart';
@@ -13,11 +15,14 @@ class MioPatronatoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Il Mio Patronato',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.theme,
-      home: const MainShell(),
+    return ChangeNotifierProvider(
+      create: (_) => LanguageService(),
+      child: MaterialApp(
+        title: 'Il Mio Patronato',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.theme,
+        home: const MainShell(),
+      ),
     );
   }
 }

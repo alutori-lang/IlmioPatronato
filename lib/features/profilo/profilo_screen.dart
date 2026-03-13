@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../config/constants.dart';
+import '../../core/services/language_service.dart';
 
 class ProfiloScreen extends StatelessWidget {
   const ProfiloScreen({super.key});
@@ -15,7 +17,7 @@ class ProfiloScreen extends StatelessWidget {
         SliverToBoxAdapter(child: _sectionTitle('Strumenti')),
         SliverToBoxAdapter(child: _buildTools(context)),
         SliverToBoxAdapter(child: _sectionTitle('Impostazioni')),
-        SliverToBoxAdapter(child: _buildSettings()),
+        SliverToBoxAdapter(child: _buildSettings(context)),
         const SliverToBoxAdapter(child: SizedBox(height: 40)),
       ],
     );
@@ -156,9 +158,59 @@ class ProfiloScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSettings() {
+  void _showLanguagePicker(BuildContext context) {
+    final langService = context.read<LanguageService>();
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (_) => Container(
+        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.7),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 12),
+            Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(2))),
+            const SizedBox(height: 16),
+            const Text('Scegli Lingua / Choose Language', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+            const SizedBox(height: 4),
+            const Text('Per contenuti educativi', style: TextStyle(fontSize: 12, color: AppColors.textLight)),
+            const SizedBox(height: 12),
+            Flexible(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: supportedLanguages.length,
+                itemBuilder: (ctx, i) {
+                  final lang = supportedLanguages[i];
+                  final isSelected = lang.code == langService.currentCode;
+                  return ListTile(
+                    leading: Text(lang.flag, style: const TextStyle(fontSize: 24)),
+                    title: Text(lang.name, style: TextStyle(fontSize: 15, fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500, color: isSelected ? AppColors.primary : AppColors.textDark)),
+                    subtitle: Text(lang.nameEn, style: const TextStyle(fontSize: 12, color: AppColors.textLight)),
+                    trailing: isSelected ? const Icon(Icons.check_circle, color: AppColors.primary, size: 22) : null,
+                    onTap: () {
+                      langService.setLanguage(lang.code);
+                      Navigator.pop(ctx);
+                    },
+                  );
+                },
+              ),
+            ),
+            SizedBox(height: MediaQuery.of(context).padding.bottom + 8),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSettings(BuildContext context) {
+    final langService = context.watch<LanguageService>();
     final items = [
-      _SettData(Icons.language, 'Lingua', 'Italiano', AppColors.iconBlue),
+      _SettData(Icons.language, 'Lingua', '${langService.current.flag} ${langService.current.name}', AppColors.iconBlue),
       _SettData(Icons.dark_mode, 'Tema', 'Chiaro', AppColors.textDark),
       _SettData(Icons.notifications, 'Notifiche', 'Attive', AppColors.iconOrange),
       _SettData(Icons.info, 'Info App', 'v1.0.0', AppColors.iconGreen),
@@ -167,25 +219,30 @@ class ProfiloScreen extends StatelessWidget {
     ];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(children: items.map((s) {
-        return Container(
-          margin: const EdgeInsets.only(bottom: 8),
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14),
-            boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 10)]),
-          child: Row(children: [
-            Container(
-              width: 34, height: 34,
-              decoration: BoxDecoration(color: s.color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(10)),
-              child: Icon(s.icon, color: s.color, size: 18),
-            ),
-            const SizedBox(width: 12),
-            Text(s.label, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textDark)),
-            const Spacer(),
-            if (s.value.isNotEmpty) Text(s.value, style: const TextStyle(fontSize: 13, color: AppColors.textLight)),
-            const SizedBox(width: 6),
-            const Icon(Icons.chevron_right, color: AppColors.navInactive, size: 20),
-          ]),
+      child: Column(children: items.asMap().entries.map((entry) {
+        final i = entry.key;
+        final s = entry.value;
+        return GestureDetector(
+          onTap: i == 0 ? () => _showLanguagePicker(context) : null,
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14),
+              boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 10)]),
+            child: Row(children: [
+              Container(
+                width: 34, height: 34,
+                decoration: BoxDecoration(color: s.color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(10)),
+                child: Icon(s.icon, color: s.color, size: 18),
+              ),
+              const SizedBox(width: 12),
+              Text(s.label, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textDark)),
+              const Spacer(),
+              if (s.value.isNotEmpty) Text(s.value, style: const TextStyle(fontSize: 13, color: AppColors.textLight)),
+              const SizedBox(width: 6),
+              const Icon(Icons.chevron_right, color: AppColors.navInactive, size: 20),
+            ]),
+          ),
         );
       }).toList()),
     );
