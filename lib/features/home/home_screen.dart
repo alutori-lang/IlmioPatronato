@@ -1,27 +1,21 @@
 import 'package:flutter/material.dart';
 import '../../config/constants.dart';
 import '../../core/widgets/service_card.dart';
-import '../../core/widgets/news_card.dart';
-import '../../core/widgets/quick_action_item.dart';
 import '../compilatore/compilatore_screen.dart';
-import '../simulatore/simulatore_screen.dart';
-import '../prenotazioni/prenotazioni_screen.dart';
 import '../simulatore/isee_screen.dart';
-import '../strumenti/strumenti_screen.dart';
-import '../agevolazioni/agevolazioni_screen.dart';
 import '../agevolazioni/agevolazioni_data.dart';
 import '../agevolazioni/agevolazione_detail_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final VoidCallback onNavigateToGuide;
-  final VoidCallback onNavigateToDomande;
-  final VoidCallback onNavigateToAI;
+  final VoidCallback onNavigateToAgevolazioni;
+  final VoidCallback onNavigateToStrumenti;
 
   const HomeScreen({
     super.key,
     required this.onNavigateToGuide,
-    required this.onNavigateToDomande,
-    required this.onNavigateToAI,
+    required this.onNavigateToAgevolazioni,
+    required this.onNavigateToStrumenti,
   });
 
   void _push(BuildContext context, Widget screen) {
@@ -34,14 +28,12 @@ class HomeScreen extends StatelessWidget {
       slivers: [
         SliverToBoxAdapter(child: _buildHeader(context)),
         SliverToBoxAdapter(child: _buildBanner(context)),
-        SliverToBoxAdapter(child: _sectionTitle('I Nostri Servizi')),
+        SliverToBoxAdapter(child: _buildAgevolazioneDelGiorno(context)),
+        SliverToBoxAdapter(child: _sectionTitle('Cosa vuoi fare?')),
         SliverToBoxAdapter(child: _buildServicesGrid(context)),
         SliverToBoxAdapter(child: _buildStats()),
-        SliverToBoxAdapter(child: _buildAgevolazioneDelGiorno(context)),
-        SliverToBoxAdapter(child: _sectionTitle('Novità & Avvisi')),
-        SliverToBoxAdapter(child: _buildNews()),
-        SliverToBoxAdapter(child: _sectionTitle('Azioni Rapide')),
-        SliverToBoxAdapter(child: _buildQuickActions(context)),
+        SliverToBoxAdapter(child: _sectionTitle('Novità Agevolazioni 2025')),
+        SliverToBoxAdapter(child: _buildNovitaAgevolazioni(context)),
         const SliverToBoxAdapter(child: SizedBox(height: 20)),
       ],
     );
@@ -76,9 +68,6 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-          _HeaderBtn(icon: Icons.search, onTap: () {}),
-          const SizedBox(width: 10),
-          _HeaderBtn(icon: Icons.notifications_outlined, showDot: true, onTap: () {}),
         ],
       ),
     );
@@ -89,7 +78,7 @@ class HomeScreen extends StatelessWidget {
       onTap: () => _push(context, const CompilatoreScreen()),
       child: Container(
         margin: const EdgeInsets.fromLTRB(16, 14, 16, 0),
-        height: 180,
+        height: 160,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(18),
           boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.15), blurRadius: 30, offset: const Offset(0, 8))],
@@ -116,7 +105,7 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     const Text('Benvenuto su\nIl Mio Patronato', style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w800, height: 1.2)),
                     const SizedBox(height: 6),
-                    const Text('Pratiche di Immigrazione e Servizi CAF', style: TextStyle(color: AppColors.bannerText, fontSize: 13)),
+                    const Text('Pratiche, Bonus e Servizi per Immigrati', style: TextStyle(color: AppColors.bannerText, fontSize: 13)),
                     const SizedBox(height: 10),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
@@ -126,7 +115,7 @@ class HomeScreen extends StatelessWidget {
                         children: [
                           Icon(Icons.rocket_launch, color: Colors.white, size: 14),
                           SizedBox(width: 6),
-                          Text('Inizia Ora', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600)),
+                          Text('Compila Moduli', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600)),
                         ],
                       ),
                     ),
@@ -136,75 +125,6 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _sectionTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
-      child: Text(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: AppColors.textDark)),
-    );
-  }
-
-  Widget _buildServicesGrid(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: GridView.count(
-        crossAxisCount: 2, shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        mainAxisSpacing: 12, crossAxisSpacing: 12, childAspectRatio: 0.92,
-        children: [
-          ServiceCard(
-            icon: Icons.edit_document, title: 'Compila Moduli', subtitle: 'Genera PDF pronti',
-            iconGradient: const [AppColors.serviceBlueLight, AppColors.serviceBlueMed], iconColor: AppColors.iconBlue,
-            onTap: () => _push(context, const CompilatoreScreen()),
-          ),
-          ServiceCard(
-            icon: Icons.calculate_rounded, title: 'Simulatore', subtitle: '14 calcolatori reali',
-            iconGradient: const [AppColors.serviceGreenLight, AppColors.serviceGreenMed], iconColor: AppColors.iconGreen,
-            onTap: () => _push(context, const SimulatoreScreen()),
-          ),
-          ServiceCard(
-            icon: Icons.build_circle, title: 'Strumenti', subtitle: 'CV, Quiz, Wallet +',
-            iconGradient: const [Color(0xFFE3F2FD), Color(0xFFBBDEFB)], iconColor: Color(0xFF1565C0),
-            onTap: () => _push(context, const StrumentiScreen()),
-          ),
-          ServiceCard(
-            icon: Icons.calendar_month_rounded, title: 'Prenotazioni', subtitle: 'Prenota appuntamento',
-            iconGradient: const [AppColors.serviceOrangeLight, AppColors.serviceOrangeMed], iconColor: AppColors.iconOrange,
-            onTap: () => _push(context, const PrenotazioniScreen()),
-          ),
-          ServiceCard(
-            icon: Icons.card_giftcard, title: 'Agevolazioni', subtitle: '53 bonus governativi',
-            iconGradient: const [Color(0xFFFFF3E0), Color(0xFFFFE0B2)], iconColor: Color(0xFFE65100),
-            onTap: () => _push(context, const AgevolazioniScreen()),
-          ),
-          ServiceCard(
-            icon: Icons.menu_book_rounded, title: 'Guide Complete', subtitle: '18 guide step-by-step',
-            iconGradient: const [AppColors.servicePurpleLight, AppColors.servicePurpleMed], iconColor: AppColors.iconPurple,
-            onTap: onNavigateToGuide,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildStats() {
-    return Container(
-      margin: const EdgeInsets.all(16),
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
-      decoration: BoxDecoration(
-        color: Colors.white, borderRadius: BorderRadius.circular(14),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 15, offset: const Offset(0, 2))],
-      ),
-      child: const Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _StatItem(value: '6', label: 'MODULI'),
-          _StatItem(value: '14', label: 'SIMULATORI'),
-          _StatItem(value: '6', label: 'STRUMENTI'),
-        ],
       ),
     );
   }
@@ -222,13 +142,12 @@ class HomeScreen extends StatelessWidget {
         ));
       },
       child: Container(
-        margin: const EdgeInsets.fromLTRB(16, 6, 16, 0),
+        margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           gradient: const LinearGradient(
             colors: [Color(0xFF1565C0), Color(0xFF0D47A1)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            begin: Alignment.topLeft, end: Alignment.bottomRight,
           ),
           borderRadius: BorderRadius.circular(16),
           boxShadow: [BoxShadow(color: const Color(0xFF1565C0).withValues(alpha: 0.25), blurRadius: 16, offset: const Offset(0, 4))],
@@ -250,10 +169,7 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: Colors.amber.shade600,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
+                    decoration: BoxDecoration(color: Colors.amber.shade600, borderRadius: BorderRadius.circular(4)),
                     child: const Text('AGEVOLAZIONE DEL GIORNO', style: TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.w800)),
                   ),
                   const SizedBox(height: 4),
@@ -266,10 +182,7 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(width: 8),
             Container(
               padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(10),
-              ),
+              decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(10)),
               child: const Icon(Icons.arrow_forward, color: Colors.white, size: 16),
             ),
           ],
@@ -278,62 +191,126 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildNews() {
+  Widget _sectionTitle(String title) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(children: [
-        NewsCard(title: 'Rinnovo Permesso 2026', description: 'Scopri le nuove regole per il rinnovo del permesso di soggiorno.', onTap: onNavigateToGuide),
-        NewsCard(title: 'Bonus Famiglia', description: 'Agevolazioni per le famiglie, scopri come fare domanda.', onTap: onNavigateToGuide),
-        NewsCard(title: 'Cittadinanza Italiana', description: 'Nuove procedure per la richiesta di cittadinanza.', onTap: onNavigateToGuide),
-      ]),
+      padding: const EdgeInsets.fromLTRB(20, 18, 20, 10),
+      child: Text(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: AppColors.textDark)),
     );
   }
 
-  Widget _buildQuickActions(BuildContext context) {
+  Widget _buildServicesGrid(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: GridView.count(
-        crossAxisCount: 4, shrinkWrap: true,
+        crossAxisCount: 2, shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        mainAxisSpacing: 10, crossAxisSpacing: 10, childAspectRatio: 0.9,
+        mainAxisSpacing: 12, crossAxisSpacing: 12, childAspectRatio: 1.15,
         children: [
-          QuickActionItem(icon: Icons.edit_document, label: 'Moduli', onTap: () => _push(context, const CompilatoreScreen())),
-          QuickActionItem(icon: Icons.euro, label: 'Costi', onTap: () => _push(context, const SimulatoreScreen())),
-          QuickActionItem(icon: Icons.chat_bubble_outline, label: 'Chat AI', onTap: onNavigateToAI),
-          QuickActionItem(icon: Icons.calendar_month, label: 'Prenota', onTap: () => _push(context, const PrenotazioniScreen())),
-          QuickActionItem(icon: Icons.card_giftcard, label: 'Bonus', onTap: () => _push(context, const AgevolazioniScreen())),
-          QuickActionItem(icon: Icons.calculate_outlined, label: 'ISEE', onTap: () => _push(context, const IseeScreen())),
-          QuickActionItem(icon: Icons.menu_book, label: 'Guide', onTap: onNavigateToGuide),
-          QuickActionItem(icon: Icons.question_answer, label: 'Domande', onTap: onNavigateToDomande),
+          ServiceCard(
+            icon: Icons.card_giftcard, title: 'Agevolazioni', subtitle: '53 bonus & diritti',
+            iconGradient: const [Color(0xFFFFF3E0), Color(0xFFFFE0B2)], iconColor: const Color(0xFFE65100),
+            onTap: onNavigateToAgevolazioni,
+          ),
+          ServiceCard(
+            icon: Icons.menu_book_rounded, title: 'Guide', subtitle: '18 guide step-by-step',
+            iconGradient: const [AppColors.servicePurpleLight, AppColors.servicePurpleMed], iconColor: AppColors.iconPurple,
+            onTap: onNavigateToGuide,
+          ),
+          ServiceCard(
+            icon: Icons.build_circle, title: 'Strumenti', subtitle: '20+ calcolatori & tools',
+            iconGradient: const [AppColors.serviceGreenLight, AppColors.serviceGreenMed], iconColor: AppColors.iconGreen,
+            onTap: onNavigateToStrumenti,
+          ),
+          ServiceCard(
+            icon: Icons.calculate, title: 'Calcola ISEE', subtitle: 'Formula ufficiale',
+            iconGradient: const [AppColors.serviceBlueLight, AppColors.serviceBlueMed], iconColor: AppColors.iconBlue,
+            onTap: () => _push(context, const IseeScreen()),
+          ),
         ],
       ),
     );
   }
-}
 
-class _HeaderBtn extends StatelessWidget {
-  final IconData icon;
-  final bool showDot;
-  final VoidCallback onTap;
-  const _HeaderBtn({required this.icon, this.showDot = false, required this.onTap});
+  Widget _buildStats() {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
+      decoration: BoxDecoration(
+        color: Colors.white, borderRadius: BorderRadius.circular(14),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 15, offset: const Offset(0, 2))],
+      ),
+      child: const Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _StatItem(value: '53', label: 'BONUS'),
+          _StatItem(value: '18', label: 'GUIDE'),
+          _StatItem(value: '14', label: 'CALCOLATORI'),
+          _StatItem(value: '6', label: 'PDF'),
+        ],
+      ),
+    );
+  }
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 38, height: 38,
-        decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.1), shape: BoxShape.circle),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Icon(icon, color: Colors.white, size: 18),
-            if (showDot) Positioned(
-              top: 7, right: 8,
-              child: Container(width: 8, height: 8, decoration: BoxDecoration(color: AppColors.notification, shape: BoxShape.circle, border: Border.all(color: AppColors.headerMid, width: 2))),
+  Widget _buildNovitaAgevolazioni(BuildContext context) {
+    final nuove = novita().take(3).toList();
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        children: [
+          ...nuove.map((a) => GestureDetector(
+            onTap: () => Navigator.push(context, MaterialPageRoute(
+              builder: (_) => AgevolazioneDetailScreen(agevolazione: a, icon: Icons.card_giftcard, color: const Color(0xFFE65100)),
+            )),
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(14),
+                boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 12, offset: const Offset(0, 2))],
+                border: Border.all(color: Colors.red.shade100),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 40, height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.red.shade50,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Icon(Icons.fiber_new, color: Colors.red.shade600, size: 22),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(a.titolo, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.textDark), maxLines: 1, overflow: TextOverflow.ellipsis),
+                        const SizedBox(height: 2),
+                        Text(a.importo, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Colors.green.shade700)),
+                      ],
+                    ),
+                  ),
+                  Icon(Icons.chevron_right, color: Colors.grey.shade400, size: 20),
+                ],
+              ),
             ),
-          ],
-        ),
+          )),
+          GestureDetector(
+            onTap: onNavigateToAgevolazioni,
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              decoration: BoxDecoration(
+                color: const Color(0xFFE65100).withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Center(
+                child: Text('Vedi tutte le 53 Agevolazioni →', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Color(0xFFE65100))),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -347,9 +324,9 @@ class _StatItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      Text(value, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: AppColors.primary)),
+      Text(value, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: AppColors.primary)),
       const SizedBox(height: 2),
-      Text(label, style: const TextStyle(fontSize: 10, color: AppColors.textLight, letterSpacing: 0.5)),
+      Text(label, style: const TextStyle(fontSize: 9, color: AppColors.textLight, letterSpacing: 0.5)),
     ]);
   }
 }

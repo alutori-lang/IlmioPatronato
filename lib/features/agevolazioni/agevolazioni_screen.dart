@@ -132,7 +132,9 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: CustomScrollView(
+      body: SafeArea(
+        top: false,
+        child: CustomScrollView(
         slivers: [
           // ── HEADER ──
           SliverToBoxAdapter(child: _buildHeader(context)),
@@ -252,6 +254,7 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
                 ),
         ],
       ),
+      ),
     );
   }
 
@@ -269,6 +272,7 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
   }
 
   Widget _buildHeader(BuildContext context) {
+    final canPop = Navigator.of(context).canPop();
     return Container(
       padding: EdgeInsets.only(
         top: MediaQuery.of(context).padding.top + 10,
@@ -277,18 +281,20 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
       decoration: const BoxDecoration(gradient: AppColors.headerGradient),
       child: Row(
         children: [
-          GestureDetector(
-            onTap: () => Navigator.pop(context),
-            child: Container(
-              width: 38, height: 38,
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(10),
+          if (canPop) ...[
+            GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: Container(
+                width: 38, height: 38,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Icon(Icons.arrow_back, color: Colors.white, size: 20),
               ),
-              child: const Icon(Icons.arrow_back, color: Colors.white, size: 20),
             ),
-          ),
-          const SizedBox(width: 12),
+            const SizedBox(width: 12),
+          ],
           Container(
             width: 42, height: 42,
             decoration: BoxDecoration(

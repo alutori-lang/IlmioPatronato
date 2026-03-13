@@ -1495,7 +1495,6 @@ class _CvEuropassScreenState extends State<CvEuropassScreen> {
             initialDate: now,
             firstDate: DateTime(1950),
             lastDate: DateTime(now.year + 10),
-            locale: const Locale('it', 'IT'),
             builder: (ctx, child) {
               return Theme(
                 data: Theme.of(ctx).copyWith(

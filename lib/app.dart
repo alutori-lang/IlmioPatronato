@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'core/theme/app_theme.dart';
 import 'features/home/home_screen.dart';
 import 'features/guide/guide_list_screen.dart';
-import 'features/domande/domande_screen.dart';
-import 'features/ai_avvocato/ai_chat_screen.dart';
+import 'features/agevolazioni/agevolazioni_screen.dart';
+import 'features/strumenti/strumenti_tab_screen.dart';
 import 'features/profilo/profilo_screen.dart';
 import 'core/widgets/app_nav_bar.dart';
 import 'config/constants.dart';
@@ -45,12 +45,12 @@ class _MainShellState extends State<MainShell> {
         children: [
           HomeScreen(
             onNavigateToGuide: () => _navigateTo(1),
-            onNavigateToDomande: () => _navigateTo(2),
-            onNavigateToAI: () => _navigateTo(3),
+            onNavigateToAgevolazioni: () => _navigateTo(2),
+            onNavigateToStrumenti: () => _navigateTo(3),
           ),
           const GuideListScreen(),
-          const DomandeScreen(),
-          const AiChatScreen(),
+          const AgevolazioniScreen(),
+          const StrumentiTabScreen(),
           const ProfiloScreen(),
         ],
       ),
