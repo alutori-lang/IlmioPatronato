@@ -101,7 +101,80 @@ class _BustaPagaScreenState extends State<BustaPagaScreen> {
               ],
             ),
           ),
+          const SizedBox(width: 8),
+          GestureDetector(
+            onTap: () => _showLanguagePicker(context),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
+              ),
+              child: Row(mainAxisSize: MainAxisSize.min, children: [
+                Text(
+                  context.watch<LanguageService>().current.flag,
+                  style: const TextStyle(fontSize: 16),
+                ),
+                const SizedBox(width: 4),
+                const Icon(Icons.translate, color: Colors.white, size: 16),
+              ]),
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  void _showLanguagePicker(BuildContext context) {
+    final langService = context.read<LanguageService>();
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (_) => Container(
+        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.7),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 12),
+            Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(2))),
+            const SizedBox(height: 16),
+            const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Icon(Icons.translate, color: AppColors.primary, size: 20),
+              SizedBox(width: 8),
+              Text('Scegli Lingua', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.primary)),
+            ]),
+            const SizedBox(height: 4),
+            const Text('Le spiegazioni cambieranno lingua', style: TextStyle(fontSize: 12, color: AppColors.textLight)),
+            const SizedBox(height: 12),
+            Flexible(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: supportedLanguages.length,
+                itemBuilder: (ctx, i) {
+                  final lang = supportedLanguages[i];
+                  final isSelected = lang.code == langService.currentCode;
+                  return ListTile(
+                    leading: Text(lang.flag, style: const TextStyle(fontSize: 24)),
+                    title: Text(lang.name, style: TextStyle(fontSize: 15, fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500, color: isSelected ? AppColors.primary : AppColors.textDark)),
+                    subtitle: Text(lang.nameEn, style: const TextStyle(fontSize: 12, color: AppColors.textLight)),
+                    trailing: isSelected ? const Icon(Icons.check_circle, color: AppColors.primary, size: 22) : null,
+                    onTap: () {
+                      langService.setLanguage(lang.code);
+                      Navigator.pop(ctx);
+                    },
+                  );
+                },
+              ),
+            ),
+            SizedBox(height: MediaQuery.of(context).padding.bottom + 8),
+          ],
+        ),
       ),
     );
   }
