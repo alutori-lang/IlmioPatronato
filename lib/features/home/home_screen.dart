@@ -58,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
         SliverToBoxAdapter(child: _sectionTitle('Agevolazioni Nuove Questa Settimana')),
         SliverToBoxAdapter(child: _buildNovitaAgevolazioni(context)),
         const SliverToBoxAdapter(child: SizedBox(height: 12)),
+        const SliverToBoxAdapter(child: _DisclaimerBox()),
         const SliverToBoxAdapter(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
@@ -446,5 +447,38 @@ class _StatItem extends StatelessWidget {
       const SizedBox(height: 2),
       Text(label, style: const TextStyle(fontSize: 9, color: AppColors.textLight, letterSpacing: 0.5)),
     ]);
+  }
+}
+
+class _DisclaimerBox extends StatelessWidget {
+  const _DisclaimerBox();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.grey.shade300),
+      ),
+      child: const Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(Icons.info_outline, size: 15, color: Colors.grey),
+          SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              'Questa app non è un ente governativo né è affiliata ad esso. '
+              'Le informazioni fornite sono a scopo orientativo e si basano su fonti ufficiali '
+              '(INPS, Agenzia delle Entrate, Ministeri). '
+              'Verifica sempre i dettagli sui siti ufficiali (.gov.it) prima di presentare domanda.',
+              style: TextStyle(fontSize: 10, color: Colors.grey, height: 1.5),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -193,6 +193,14 @@ class _AgevolazioneAiDetailScreenState extends State<AgevolazioneAiDetailScreen>
 
           ],
 
+          // Disclaimer
+          const SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(16, 14, 16, 0),
+              child: _DisclaimerNote(),
+            ),
+          ),
+
           const SliverToBoxAdapter(child: SizedBox(height: 30)),
         ],
       ),
@@ -443,6 +451,37 @@ class _AgevolazioneAiDetailScreenState extends State<AgevolazioneAiDetailScreen>
                 const SizedBox(height: 2),
                 Text(_ente, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: color)),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DisclaimerNote extends StatelessWidget {
+  const _DisclaimerNote();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.grey.shade300),
+      ),
+      child: const Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(Icons.info_outline, size: 15, color: Colors.grey),
+          SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              'Informazioni a scopo orientativo basate su fonti ufficiali (INPS, Agenzia delle Entrate, Ministeri). '
+              'Questa app non è un ente governativo. '
+              'Verifica sempre i dettagli sul sito ufficiale prima di presentare domanda.',
+              style: TextStyle(fontSize: 10, color: Colors.grey, height: 1.5),
             ),
           ),
         ],
