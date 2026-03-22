@@ -1,25 +1,48 @@
 import 'package:flutter/material.dart';
 import '../../config/constants.dart';
 import '../../core/widgets/service_card.dart';
-import '../compilatore/compilatore_screen.dart';
-import '../simulatore/isee_screen.dart';
-import '../agevolazioni/agevolazioni_data.dart';
+import '../../core/widgets/banner_ad_widget.dart';
+import '../../core/services/agevolazioni_service.dart';
+import '../agevolazioni/agevolazioni_data.dart' as data;
 import '../agevolazioni/agevolazione_detail_screen.dart';
+import '../agevolazioni/agevolazione_ai_detail_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   final VoidCallback onNavigateToGuide;
   final VoidCallback onNavigateToAgevolazioni;
   final VoidCallback onNavigateToStrumenti;
+  final VoidCallback onNavigateToSbroglia;
 
   const HomeScreen({
     super.key,
     required this.onNavigateToGuide,
     required this.onNavigateToAgevolazioni,
     required this.onNavigateToStrumenti,
+    required this.onNavigateToSbroglia,
   });
 
-  void _push(BuildContext context, Widget screen) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => screen));
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final _agevolazioniService = AgevolazioniService();
+  List<Agevolazione> _nuoveAgevolazioni = [];
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAgevolazioni();
+  }
+
+  Future<void> _loadAgevolazioni() async {
+    try {
+      final result = await _agevolazioniService.getAgevolazioni();
+      if (mounted) setState(() { _nuoveAgevolazioni = result; _loading = false; });
+    } catch (_) {
+      if (mounted) setState(() => _loading = false);
+    }
   }
 
   @override
@@ -32,8 +55,15 @@ class HomeScreen extends StatelessWidget {
         SliverToBoxAdapter(child: _sectionTitle('Cosa vuoi fare?')),
         SliverToBoxAdapter(child: _buildServicesGrid(context)),
         SliverToBoxAdapter(child: _buildStats()),
-        SliverToBoxAdapter(child: _sectionTitle('Novità Agevolazioni 2025')),
+        SliverToBoxAdapter(child: _sectionTitle('Agevolazioni Nuove Questa Settimana')),
         SliverToBoxAdapter(child: _buildNovitaAgevolazioni(context)),
+        const SliverToBoxAdapter(child: SizedBox(height: 12)),
+        const SliverToBoxAdapter(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: BannerAdWidget(),
+          ),
+        ),
         const SliverToBoxAdapter(child: SizedBox(height: 20)),
       ],
     );
@@ -74,63 +104,48 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildBanner(BuildContext context) {
-    return GestureDetector(
-      onTap: () => _push(context, const CompilatoreScreen()),
-      child: Container(
-        margin: const EdgeInsets.fromLTRB(16, 14, 16, 0),
-        height: 160,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
-          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.15), blurRadius: 30, offset: const Offset(0, 8))],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(18),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              Image.asset('assets/images/banner.png', fit: BoxFit.cover),
-              Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft, end: Alignment.bottomRight,
-                    colors: [AppColors.bannerOverlayStart, AppColors.bannerOverlayEnd],
-                  ),
+    return Container(
+      margin: const EdgeInsets.fromLTRB(16, 14, 16, 0),
+      height: 150,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.15), blurRadius: 30, offset: const Offset(0, 8))],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(18),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset('assets/images/banner.png', fit: BoxFit.cover),
+            Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft, end: Alignment.bottomRight,
+                  colors: [AppColors.bannerOverlayStart, AppColors.bannerOverlayEnd],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(22),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('Benvenuto su\nIl Mio Patronato', style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w800, height: 1.2)),
-                    const SizedBox(height: 6),
-                    const Text('Pratiche, Bonus e Servizi per Immigrati', style: TextStyle(color: AppColors.bannerText, fontSize: 13)),
-                    const SizedBox(height: 10),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                      decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(20)),
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.rocket_launch, color: Colors.white, size: 14),
-                          SizedBox(width: 6),
-                          Text('Compila Moduli', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600)),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('Il Mio Patronato', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800, height: 1.2)),
+                  const SizedBox(height: 4),
+                  const Text('Pratiche, Bonus e Servizi per Immigrati', style: TextStyle(color: AppColors.bannerText, fontSize: 12)),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 
   Widget _buildAgevolazioneDelGiorno(BuildContext context) {
-    final a = agevolazioneDelGiorno();
+    final a = data.agevolazioneDelGiorno();
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(
@@ -199,32 +214,28 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildServicesGrid(BuildContext context) {
+    final bonusCount = 53 + _nuoveAgevolazioni.length;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: GridView.count(
-        crossAxisCount: 2, shrinkWrap: true,
+        crossAxisCount: 3, shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        mainAxisSpacing: 12, crossAxisSpacing: 12, childAspectRatio: 1.15,
+        mainAxisSpacing: 12, crossAxisSpacing: 12, childAspectRatio: 0.78,
         children: [
           ServiceCard(
-            icon: Icons.card_giftcard, title: 'Agevolazioni', subtitle: '53 bonus & diritti',
+            icon: Icons.card_giftcard, title: 'Agevolazioni', subtitle: '$bonusCount bonus & diritti',
             iconGradient: const [Color(0xFFFFF3E0), Color(0xFFFFE0B2)], iconColor: const Color(0xFFE65100),
-            onTap: onNavigateToAgevolazioni,
+            onTap: widget.onNavigateToAgevolazioni,
           ),
           ServiceCard(
-            icon: Icons.menu_book_rounded, title: 'Guide', subtitle: '18 guide step-by-step',
-            iconGradient: const [AppColors.servicePurpleLight, AppColors.servicePurpleMed], iconColor: AppColors.iconPurple,
-            onTap: onNavigateToGuide,
-          ),
-          ServiceCard(
-            icon: Icons.build_circle, title: 'Strumenti', subtitle: '20+ calcolatori & tools',
+            icon: Icons.build_circle, title: 'Strumenti', subtitle: '20+ tools',
             iconGradient: const [AppColors.serviceGreenLight, AppColors.serviceGreenMed], iconColor: AppColors.iconGreen,
-            onTap: onNavigateToStrumenti,
+            onTap: widget.onNavigateToStrumenti,
           ),
           ServiceCard(
-            icon: Icons.calculate, title: 'Calcola ISEE', subtitle: 'Formula ufficiale',
-            iconGradient: const [AppColors.serviceBlueLight, AppColors.serviceBlueMed], iconColor: AppColors.iconBlue,
-            onTap: () => _push(context, const IseeScreen()),
+            icon: Icons.psychology_rounded, title: 'Chiedi AI', subtitle: 'Patronato AI',
+            iconGradient: const [Color(0xFFEDE7F6), Color(0xFFD1C4E9)], iconColor: Color(0xFF6A1B9A),
+            onTap: widget.onNavigateToSbroglia,
           ),
         ],
       ),
@@ -232,6 +243,7 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildStats() {
+    final bonusCount = 53 + _nuoveAgevolazioni.length;
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
@@ -239,20 +251,124 @@ class HomeScreen extends StatelessWidget {
         color: Colors.white, borderRadius: BorderRadius.circular(14),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 15, offset: const Offset(0, 2))],
       ),
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _StatItem(value: '53', label: 'BONUS'),
-          _StatItem(value: '18', label: 'GUIDE'),
-          _StatItem(value: '14', label: 'CALCOLATORI'),
-          _StatItem(value: '6', label: 'PDF'),
+          _StatItem(value: '$bonusCount', label: 'BONUS'),
+          const _StatItem(value: '18', label: 'GUIDE'),
+          const _StatItem(value: '14', label: 'CALCOLATORI'),
+          const _StatItem(value: '6', label: 'PDF'),
         ],
       ),
     );
   }
 
   Widget _buildNovitaAgevolazioni(BuildContext context) {
-    final nuove = novita().take(3).toList();
+    if (_loading) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        child: Center(child: Column(
+          children: [
+            SizedBox(width: 28, height: 28, child: CircularProgressIndicator(strokeWidth: 2.5, color: Color(0xFFE65100))),
+            SizedBox(height: 10),
+            Text('Cerco agevolazioni reali...', style: TextStyle(fontSize: 12, color: AppColors.textLight)),
+          ],
+        )),
+      );
+    }
+
+    if (_nuoveAgevolazioni.isEmpty) {
+      // Fallback: mostra 3 agevolazioni statiche come prima
+      final nuove = data.novita().take(3).toList();
+      return _buildStaticNovita(context, nuove);
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        children: [
+          ..._nuoveAgevolazioni.take(4).map((a) => _buildAgevolazioneCard(context, a)),
+          const SizedBox(height: 4),
+          GestureDetector(
+            onTap: widget.onNavigateToAgevolazioni,
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              decoration: BoxDecoration(
+                color: const Color(0xFFE65100).withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Center(
+                child: Text(
+                  'Vedi tutte le ${53 + _nuoveAgevolazioni.length} Agevolazioni →',
+                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Color(0xFFE65100)),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAgevolazioneCard(BuildContext context, Agevolazione a) {
+    return GestureDetector(
+      onTap: () => Navigator.push(context, MaterialPageRoute(
+        builder: (_) => AgevolazioneAiDetailScreen(agevolazione: a),
+      )),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 10),
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(14),
+          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 12, offset: const Offset(0, 2))],
+          border: Border.all(color: const Color(0xFFE65100).withValues(alpha: 0.15)),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 40, height: 40,
+              decoration: BoxDecoration(
+                color: const Color(0xFFE65100).withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(child: Text(a.categoriaIcon, style: const TextStyle(fontSize: 20))),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(a.titolo, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.textDark), maxLines: 1, overflow: TextOverflow.ellipsis),
+                  const SizedBox(height: 2),
+                  Text(a.descrizione, style: const TextStyle(fontSize: 11, color: AppColors.textLight), maxLines: 2, overflow: TextOverflow.ellipsis),
+                  const SizedBox(height: 4),
+                  Row(children: [
+                    if (a.importo.isNotEmpty) ...[
+                      Text(a.importo, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Colors.green.shade700)),
+                      const SizedBox(width: 8),
+                    ],
+                    Icon(Icons.access_time, size: 11, color: Colors.grey.shade500),
+                    const SizedBox(width: 3),
+                    Text(a.tempoRelativo, style: TextStyle(fontSize: 10, color: Colors.grey.shade500)),
+                    if (a.fonte.isNotEmpty) ...[
+                      const SizedBox(width: 8),
+                      Icon(Icons.source, size: 11, color: Colors.grey.shade400),
+                      const SizedBox(width: 3),
+                      Flexible(child: Text(a.fonte, style: TextStyle(fontSize: 10, color: Colors.grey.shade400), overflow: TextOverflow.ellipsis)),
+                    ],
+                  ]),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStaticNovita(BuildContext context, List<dynamic> nuove) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
@@ -297,7 +413,7 @@ class HomeScreen extends StatelessWidget {
             ),
           )),
           GestureDetector(
-            onTap: onNavigateToAgevolazioni,
+            onTap: widget.onNavigateToAgevolazioni,
             child: Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 12),
@@ -315,6 +431,8 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+// ─── StatItem ──────────────────────────────────────────────────────────────
 
 class _StatItem extends StatelessWidget {
   final String value;

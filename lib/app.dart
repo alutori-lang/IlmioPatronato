@@ -7,6 +7,7 @@ import 'features/home/home_screen.dart';
 import 'features/guide/guide_list_screen.dart';
 import 'features/agevolazioni/agevolazioni_screen.dart';
 import 'features/strumenti/strumenti_tab_screen.dart';
+import 'features/sbroglia/sbroglia_chat_screen.dart';
 import 'features/profilo/profilo_screen.dart';
 import 'core/widgets/app_nav_bar.dart';
 import 'config/constants.dart';
@@ -63,11 +64,13 @@ class _MainShellState extends State<MainShell> {
             onNavigateToGuide: () => _navigateTo(1),
             onNavigateToAgevolazioni: () => _navigateTo(2),
             onNavigateToStrumenti: () => _navigateTo(3),
+            onNavigateToSbroglia: () => _navigateTo(4),
           ),
           const GuideListScreen(),
           const AgevolazioniScreen(),
           const StrumentiTabScreen(),
-          const ProfiloScreen(),
+          const SbrogliaScreen(),   // index 4 — Sbroglia.AI
+          const ProfiloScreen(),    // index 5 — Profilo
         ],
       ),
       bottomNavigationBar: AppNavBar(

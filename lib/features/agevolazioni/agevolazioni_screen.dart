@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/banner_ad_widget.dart';
+import '../../core/services/ad_service.dart';
+import '../../core/services/agevolazioni_service.dart' as ai;
 import 'agevolazioni_data.dart';
 import 'agevolazione_detail_screen.dart';
+import 'agevolazione_ai_detail_screen.dart';
 
 class AgevolazioniScreen extends StatefulWidget {
   const AgevolazioniScreen({super.key});
@@ -16,10 +20,25 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
   List<Agevolazione> _risultati = [];
   bool _mostraNovita = true;
 
+  // AI agevolazioni settimanali
+  final _aiService = ai.AgevolazioniService();
+  List<ai.Agevolazione> _aiNuove = [];
+  bool _aiLoading = true;
+
   @override
   void initState() {
     super.initState();
     _risultati = allAgevolazioni;
+    _loadAiAgevolazioni();
+  }
+
+  Future<void> _loadAiAgevolazioni() async {
+    try {
+      final result = await _aiService.getAgevolazioni();
+      if (mounted) setState(() { _aiNuove = result; _aiLoading = false; });
+    } catch (_) {
+      if (mounted) setState(() => _aiLoading = false);
+    }
   }
 
   void _onSearch(String query) {
@@ -132,6 +151,7 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
 
     return Scaffold(
       backgroundColor: AppColors.background,
+      bottomNavigationBar: const BannerAdWidget(),
       body: SafeArea(
         top: false,
         child: CustomScrollView(
@@ -141,6 +161,10 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
 
           // ── SEARCH BAR ──
           SliverToBoxAdapter(child: _buildSearchBar()),
+
+          // ── NUOVE QUESTA SETTIMANA (AI) ──
+          if (_mostraNovita)
+            SliverToBoxAdapter(child: _buildAiNuoveSection()),
 
           // ── AGEVOLAZIONE DEL GIORNO ──
           if (_mostraNovita)
@@ -259,6 +283,7 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
   }
 
   void _openDetail(Agevolazione a) {
+    AdService().onNavigateToDetail();
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -268,6 +293,103 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
           color: _getCategoriaColor(a.categoria),
         ),
       ),
+    );
+  }
+
+  Widget _buildAiNuoveSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 14, 20, 8),
+          child: Row(children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(color: const Color(0xFFE65100), borderRadius: BorderRadius.circular(8)),
+              child: const Row(mainAxisSize: MainAxisSize.min, children: [
+                Icon(Icons.auto_awesome, color: Colors.white, size: 14),
+                SizedBox(width: 4),
+                Text('QUESTA SETTIMANA', style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w800)),
+              ]),
+            ),
+            const SizedBox(width: 8),
+            if (!_aiLoading) Text('${_aiNuove.length} agevolazioni reali', style: const TextStyle(fontSize: 12, color: AppColors.textMedium)),
+          ]),
+        ),
+        if (_aiLoading)
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Center(child: Row(mainAxisSize: MainAxisSize.min, children: [
+              SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFFE65100))),
+              SizedBox(width: 10),
+              Text('Cerco agevolazioni reali...', style: TextStyle(fontSize: 12, color: AppColors.textLight)),
+            ])),
+          )
+        else if (_aiNuove.isEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(color: Colors.orange.shade50, borderRadius: BorderRadius.circular(12)),
+              child: const Row(children: [
+                Icon(Icons.info_outline, color: Color(0xFFE65100), size: 18),
+                SizedBox(width: 8),
+                Flexible(child: Text('Nessuna nuova agevolazione trovata questa settimana', style: TextStyle(fontSize: 12, color: AppColors.textMedium))),
+              ]),
+            ),
+          )
+        else
+          ...List.generate(_aiNuove.length, (i) {
+            final a = _aiNuove[i];
+            return GestureDetector(
+              onTap: () => Navigator.push(context, MaterialPageRoute(
+                builder: (_) => AgevolazioneAiDetailScreen(agevolazione: a),
+              )),
+              child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+              child: Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 12, offset: const Offset(0, 2))],
+                  border: Border.all(color: const Color(0xFFE65100).withValues(alpha: 0.2)),
+                ),
+                child: Row(children: [
+                  Container(
+                    width: 40, height: 40,
+                    decoration: BoxDecoration(color: const Color(0xFFE65100).withValues(alpha: 0.08), borderRadius: BorderRadius.circular(10)),
+                    child: Center(child: Text(a.categoriaIcon, style: const TextStyle(fontSize: 20))),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(a.titolo, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.textDark), maxLines: 1, overflow: TextOverflow.ellipsis),
+                      const SizedBox(height: 2),
+                      Text(a.descrizione, style: const TextStyle(fontSize: 11, color: AppColors.textLight), maxLines: 2, overflow: TextOverflow.ellipsis),
+                      const SizedBox(height: 4),
+                      Row(children: [
+                        if (a.importo.isNotEmpty) ...[
+                          Text(a.importo, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Colors.green.shade700)),
+                          const SizedBox(width: 8),
+                        ],
+                        Icon(Icons.access_time, size: 11, color: Colors.grey.shade500),
+                        const SizedBox(width: 3),
+                        Text(a.tempoRelativo, style: TextStyle(fontSize: 10, color: Colors.grey.shade500)),
+                        if (a.fonte.isNotEmpty) ...[
+                          const SizedBox(width: 8),
+                          Flexible(child: Text(a.fonte, style: TextStyle(fontSize: 10, color: Colors.grey.shade400), overflow: TextOverflow.ellipsis)),
+                        ],
+                      ]),
+                    ],
+                  )),
+                ]),
+              ),
+            ),
+            );
+          }),
+      ],
     );
   }
 
