@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 
 class NaspiScreen extends StatefulWidget {
   const NaspiScreen({super.key});
@@ -182,6 +183,7 @@ class _NaspiScreenState extends State<NaspiScreen>
               SliverToBoxAdapter(child: _buildDecalageCard()),
               SliverToBoxAdapter(child: _buildInfoCard()),
             ],
+            SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: 'D.Lgs. 150/2015 e parametri INPS 2025')),
             const SliverToBoxAdapter(child: SizedBox(height: 40)),
           ],
         ),

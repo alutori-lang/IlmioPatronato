@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 
 class ImuScreen extends StatefulWidget {
   const ImuScreen({super.key});
@@ -148,6 +149,7 @@ class _ImuScreenState extends State<ImuScreen> with SingleTickerProviderStateMix
               SliverToBoxAdapter(child: _buildDettaglioCard()),
               SliverToBoxAdapter(child: _buildScadenzeCard()),
             ],
+            SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: 'normativa IMU comunale e catastale')),
             const SliverToBoxAdapter(child: SizedBox(height: 40)),
           ],
         ),

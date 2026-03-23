@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 
 class BolloAutoScreen extends StatefulWidget {
   const BolloAutoScreen({super.key});
@@ -159,6 +160,7 @@ class _BolloAutoScreenState extends State<BolloAutoScreen>
               SliverToBoxAdapter(child: _buildScadenzaCard()),
               SliverToBoxAdapter(child: _buildDovePagareCard()),
             ],
+            SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: 'tariffe ACI regionali')),
             const SliverToBoxAdapter(child: SizedBox(height: 40)),
           ],
         ),

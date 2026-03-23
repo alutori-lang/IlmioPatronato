@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 
 class CostoOrarioScreen extends StatefulWidget {
   const CostoOrarioScreen({super.key});
@@ -179,6 +180,7 @@ class _CostoOrarioScreenState extends State<CostoOrarioScreen>
               SliverToBoxAdapter(child: _buildBreakdownCard()),
               SliverToBoxAdapter(child: _buildPercentualeCard()),
             ],
+            SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: 'aliquote contributive INPS e INAIL')),
             const SliverToBoxAdapter(child: SizedBox(height: 40)),
           ],
         ),

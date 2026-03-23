@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 
 class AdiScreen extends StatefulWidget {
   const AdiScreen({super.key});
@@ -289,6 +290,7 @@ class _AdiScreenState extends State<AdiScreen>
             SliverToBoxAdapter(child: _buildRequisitiDetail()),
             SliverToBoxAdapter(child: _buildComeFareDomanda()),
           ],
+          SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: 'D.L. 48/2023 (Assegno di Inclusione)')),
           const SliverToBoxAdapter(child: SizedBox(height: 30)),
         ],
       ),

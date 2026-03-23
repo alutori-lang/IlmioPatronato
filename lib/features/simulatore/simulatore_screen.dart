@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 import 'cittadinanza_screen.dart';
 import 'costo_permesso_screen.dart';
 import 'adi_screen.dart';
@@ -215,6 +216,8 @@ class SimulatoreScreen extends StatelessWidget {
               ]),
             ),
           ),
+          const SliverToBoxAdapter(child: DisclaimerBox()),
+          const SliverToBoxAdapter(child: SizedBox(height: 20)),
         ],
       ),
     );

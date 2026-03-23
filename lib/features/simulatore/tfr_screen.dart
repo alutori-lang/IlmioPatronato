@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 
 class TfrScreen extends StatefulWidget {
   const TfrScreen({super.key});
@@ -168,6 +169,7 @@ class _TfrScreenState extends State<TfrScreen>
               SliverToBoxAdapter(child: _buildDettaglioCard()),
               SliverToBoxAdapter(child: _buildAnnualeCard()),
             ],
+            SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: 'art. 2120 c.c. e normativa TFR')),
             const SliverToBoxAdapter(child: SizedBox(height: 40)),
           ],
         ),

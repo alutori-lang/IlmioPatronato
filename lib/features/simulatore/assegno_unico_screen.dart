@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 
 class AssegnoUnicoScreen extends StatefulWidget {
   const AssegnoUnicoScreen({super.key});
@@ -259,6 +260,7 @@ class _AssegnoUnicoScreenState extends State<AssegnoUnicoScreen>
               SliverToBoxAdapter(child: _buildMaggiorazioniCard()),
               SliverToBoxAdapter(child: _buildInfoCard()),
             ],
+            SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: 'D.Lgs. 230/2021 e tabelle INPS')),
             const SliverToBoxAdapter(child: SizedBox(height: 40)),
           ],
         ),

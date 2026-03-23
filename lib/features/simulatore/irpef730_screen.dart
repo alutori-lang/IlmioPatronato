@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 
 class Irpef730Screen extends StatefulWidget {
   const Irpef730Screen({super.key});
@@ -304,6 +305,7 @@ class _Irpef730ScreenState extends State<Irpef730Screen>
               SliverToBoxAdapter(child: _buildDettaglioCard()),
               SliverToBoxAdapter(child: _buildNettoCard()),
             ],
+            SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: 'DPR 917/1986 (TUIR) e scaglioni IRPEF vigenti')),
             const SliverToBoxAdapter(child: SizedBox(height: 40)),
           ],
         ),

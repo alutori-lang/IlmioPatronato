@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 
 class IseeScreen extends StatefulWidget {
   const IseeScreen({super.key});
@@ -193,6 +194,7 @@ class _IseeScreenState extends State<IseeScreen> with SingleTickerProviderStateM
               SliverToBoxAdapter(child: _buildDettaglioCard()),
             if (_showResult)
               SliverToBoxAdapter(child: _buildAgevolazioniCard()),
+            SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: 'formula ufficiale DPCM 159/2013')),
             const SliverToBoxAdapter(child: SizedBox(height: 40)),
           ],
         ),

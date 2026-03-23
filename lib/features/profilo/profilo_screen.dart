@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../config/constants.dart';
 import '../../core/services/language_service.dart';
+import 'info_app_screen.dart';
 
 class ProfiloScreen extends StatelessWidget {
   const ProfiloScreen({super.key});
@@ -223,7 +224,11 @@ class ProfiloScreen extends StatelessWidget {
         final i = entry.key;
         final s = entry.value;
         return GestureDetector(
-          onTap: i == 0 ? () => _showLanguagePicker(context) : null,
+          onTap: i == 0
+              ? () => _showLanguagePicker(context)
+              : i == 3
+                  ? () => Navigator.push(context, MaterialPageRoute(builder: (_) => const InfoAppScreen()))
+                  : null,
           child: Container(
             margin: const EdgeInsets.only(bottom: 8),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),

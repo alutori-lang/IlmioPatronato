@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 
 class StipendioNettoScreen extends StatefulWidget {
   const StipendioNettoScreen({super.key});
@@ -266,6 +267,7 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
               SliverToBoxAdapter(child: _buildDettaglioCard()),
               SliverToBoxAdapter(child: _buildMensileCard()),
             ],
+            SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: 'aliquote INPS e IRPEF vigenti')),
             const SliverToBoxAdapter(child: SizedBox(height: 40)),
           ],
         ),

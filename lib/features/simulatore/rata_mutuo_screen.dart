@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 
 class RataMutuoScreen extends StatefulWidget {
   const RataMutuoScreen({super.key});
@@ -146,6 +147,7 @@ class _RataMutuoScreenState extends State<RataMutuoScreen>
                     child: _buildPianoCard(
                         'Ultime 12 Rate', _pianoLast12)),
             ],
+            SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: 'formula ammortamento alla francese')),
             const SliverToBoxAdapter(child: SizedBox(height: 40)),
           ],
         ),
