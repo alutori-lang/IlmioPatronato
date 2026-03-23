@@ -127,7 +127,7 @@ class _CostoPermessoScreenState extends State<CostoPermessoScreen>
             SliverToBoxAdapter(child: _buildReceiptCard()),
             SliverToBoxAdapter(child: _buildNoteCard()),
           ],
-          SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: 'tariffe Ministero dell'Interno')),
+          SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: "tariffe Ministero dell'Interno")),
           const SliverToBoxAdapter(child: SizedBox(height: 30)),
         ],
       ),
