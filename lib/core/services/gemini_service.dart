@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'web_search_service.dart';
 
 // ---------------------------------------------------------------------------
 // Servizio Groq AI — Singleton
@@ -96,6 +97,29 @@ class GeminiService {
     } catch (e) {
       return AiResponse.error('Errore: $e');
     }
+  }
+
+  // ── Chat con ricerca web integrata ──
+
+  Future<AiResponse> chatWithSearch({
+    required List<Map<String, dynamic>> messages,
+    required String userMessage,
+    String? systemPrompt,
+  }) async {
+    final search = WebSearchService();
+    String enrichedPrompt = systemPrompt ?? '';
+
+    // Se la domanda richiede info aggiornate, cerca su web
+    if (search.needsWebSearch(userMessage)) {
+      final results = await search.search('$userMessage Italia 2026');
+      if (results.isNotEmpty) {
+        enrichedPrompt += '\n\n--- INFORMAZIONI AGGIORNATE DA INTERNET (usa questi dati per rispondere) ---\n$results\n--- FINE RISULTATI WEB ---\n'
+            'Usa le informazioni sopra per dare una risposta aggiornata e precisa. '
+            'La data di oggi è ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}.';
+      }
+    }
+
+    return chat(messages: messages, systemPrompt: enrichedPrompt);
   }
 
   // ── Analisi documento con immagine (Groq Vision) ──

@@ -33,11 +33,9 @@ class AppNavBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _NavItem(icon: Icons.home_rounded, label: 'Home', index: 0, current: currentIndex, onTap: onTap),
-          _NavItem(icon: Icons.menu_book_rounded, label: 'Guide', index: 1, current: currentIndex, onTap: onTap),
-          _NavItem(icon: Icons.card_giftcard, label: 'Bonus', index: 2, current: currentIndex, onTap: onTap),
-          _NavItem(icon: Icons.build_circle, label: 'Strumenti', index: 3, current: currentIndex, onTap: onTap),
-          _NavItemSbroglia(index: 4, current: currentIndex, onTap: onTap),
-          _NavItem(icon: Icons.person_rounded, label: 'Profilo', index: 5, current: currentIndex, onTap: onTap),
+          _NavItem(icon: Icons.card_giftcard, label: 'Bonus', index: 1, current: currentIndex, onTap: onTap),
+          _NavItemSbroglia(index: 2, current: currentIndex, onTap: onTap),
+          _NavItem(icon: Icons.person_rounded, label: 'Profilo', index: 3, current: currentIndex, onTap: onTap),
         ],
       ),
     );

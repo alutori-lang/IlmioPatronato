@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 import '../../config/constants.dart';
 import '../../core/services/gemini_service.dart';
+import '../../core/widgets/rich_message_widget.dart';
 
 // ─────────────────────────────────────────────
 // Modelli
@@ -60,13 +62,13 @@ extension UserCategoryExt on UserCategory {
       case UserCategory.neogenitore:
         return [
           'Come richiedere Assegno Unico?',
-          'Congedo parentale 2025',
+          'Congedo parentale 2026',
           'Bonus Nido come funziona?',
           'ISEE per sussidi figli',
         ];
       case UserCategory.freelance:
         return [
-          'Scadenze fiscali 2025',
+          'Scadenze fiscali 2026',
           'Regime forfettario vantaggi',
           'Come fare fattura elettronica?',
           'Deduzioni P.IVA',
@@ -101,7 +103,16 @@ Regole fondamentali:
 - Se serve l'ISEE, spiega brevemente come ottenerlo o aggiornarlo.
 - Se un problema è troppo complesso, suggerisci di rivolgersi a un CAF o patronato.
 - Non inventare mai leggi o importi: se non sei sicuro, dillo chiaramente.
-- Tono: amichevole, come un amico esperto che ti aiuta.''';
+- Tono: amichevole, come un amico esperto che ti aiuta.
+
+REGOLE DI FORMATTAZIONE (OBBLIGATORIE):
+1. Scrivi un RIASSUNTO BREVE di massimo 3-4 righe con le info essenziali.
+2. Poi aggiungi una riga vuota e scrivi esattamente "---DETTAGLI---"
+3. Dopo "---DETTAGLI---" scrivi i dettagli.
+4. NON usare MAI asterischi ** per il grassetto. Scrivi il testo normalmente.
+5. Per i link: scrivi SEMPRE il link come URL completo su una riga separata, es: https://www.inps.it
+6. Per i titoli di sezione, mettili su una riga separata con ## davanti.
+7. Scrivi frasi CORTE. Vai a capo spesso. NON fare muri di testo.''';
       case UserCategory.freelance:
         return '''Sei Sbroglia.AI, l'esperto di burocrazia italiana specializzato in FREELANCE e PARTITE IVA.
 Conosci perfettamente: regime forfettario (coefficienti, limiti 85.000€), fatturazione elettronica SDI,
@@ -114,7 +125,16 @@ Regole fondamentali:
 - Per domande su tasse: spiega sempre con esempi numerici semplici.
 - Se serve un commercialista, dillo chiaramente.
 - Non inventare mai aliquote o deduzioni: cita la fonte (es. "secondo art. 1 L. 190/2014").
-- Tono: professionale ma diretto, come un commercialista amico.''';
+- Tono: professionale ma diretto, come un commercialista amico.
+
+REGOLE DI FORMATTAZIONE (OBBLIGATORIE):
+1. Scrivi un RIASSUNTO BREVE di massimo 3-4 righe con le info essenziali.
+2. Poi aggiungi una riga vuota e scrivi esattamente "---DETTAGLI---"
+3. Dopo "---DETTAGLI---" scrivi i dettagli.
+4. NON usare MAI asterischi ** per il grassetto. Scrivi il testo normalmente.
+5. Per i link: scrivi SEMPRE il link come URL completo su una riga separata, es: https://www.inps.it
+6. Per i titoli di sezione, mettili su una riga separata con ## davanti.
+7. Scrivi frasi CORTE. Vai a capo spesso. NON fare muri di testo.''';
       case UserCategory.casaBonus:
         return '''Sei Sbroglia.AI, l'esperto di burocrazia italiana specializzato in CASA, RISTRUTTURAZIONI e BONUS EDILIZI.
 Conosci perfettamente: Superbonus (110%, 90%, 70%, 65%), Ecobonus, Sismabonus, Bonus Mobili,
@@ -127,7 +147,16 @@ Regole fondamentali:
   la scadenza per i lavori e il tipo di immobile ammesso.
 - Spiega sempre la differenza tra detrazione e cessione del credito/sconto in fattura.
 - Se serve un geometra o architetto, dillo.
-- Tono: tecnico ma accessibile.''';
+- Tono: tecnico ma accessibile.
+
+REGOLE DI FORMATTAZIONE (OBBLIGATORIE):
+1. Scrivi un RIASSUNTO BREVE di massimo 3-4 righe con le info essenziali.
+2. Poi aggiungi una riga vuota e scrivi esattamente "---DETTAGLI---"
+3. Dopo "---DETTAGLI---" scrivi i dettagli.
+4. NON usare MAI asterischi ** per il grassetto. Scrivi il testo normalmente.
+5. Per i link: scrivi SEMPRE il link come URL completo su una riga separata, es: https://www.inps.it
+6. Per i titoli di sezione, mettili su una riga separata con ## davanti.
+7. Scrivi frasi CORTE. Vai a capo spesso. NON fare muri di testo.''';
       case UserCategory.giovane:
         return '''Sei Sbroglia.AI, l'esperto di burocrazia italiana specializzato in GIOVANI e PRIMA AUTONOMIA.
 Conosci perfettamente: ISEE universitario, borse di studio DSU, Carta Giovani Nazionale (18App),
@@ -139,7 +168,16 @@ Regole fondamentali:
 - Usa sempre passi numerati con spiegazioni brevi.
 - Per ogni procedura indica: dove andare (fisico o online), cosa portare, quanto costa, quanto ci vuole.
 - Usa link/portali ufficiali quando pertinente (es. "vai su inps.it > Servizi online").
-- Tono: amichevole, come un amico più grande che ti spiega le cose.''';
+- Tono: amichevole, come un amico più grande che ti spiega le cose.
+
+REGOLE DI FORMATTAZIONE (OBBLIGATORIE):
+1. Scrivi un RIASSUNTO BREVE di massimo 3-4 righe con le info essenziali.
+2. Poi aggiungi una riga vuota e scrivi esattamente "---DETTAGLI---"
+3. Dopo "---DETTAGLI---" scrivi i dettagli.
+4. NON usare MAI asterischi ** per il grassetto. Scrivi il testo normalmente.
+5. Per i link: scrivi SEMPRE il link come URL completo su una riga separata, es: https://www.inps.it
+6. Per i titoli di sezione, mettili su una riga separata con ## davanti.
+7. Scrivi frasi CORTE. Vai a capo spesso. NON fare muri di testo.''';
     }
   }
 }
@@ -555,10 +593,54 @@ class _ChatScreenState extends State<_ChatScreen> {
   bool _isTyping = false;
   final _picker = ImagePicker();
 
+  // Speech to text
+  final stt.SpeechToText _speech = stt.SpeechToText();
+  bool _isListening = false;
+  bool _speechAvailable = false;
+
   @override
   void initState() {
     super.initState();
+    _initSpeech();
     _addWelcomeMessage();
+  }
+
+  Future<void> _initSpeech() async {
+    _speechAvailable = await _speech.initialize(
+      onError: (_) => setState(() => _isListening = false),
+      onStatus: (status) {
+        if (status == 'notListening' || status == 'done') {
+          setState(() => _isListening = false);
+        }
+      },
+    );
+    setState(() {});
+  }
+
+  void _toggleListening() async {
+    if (_isListening) {
+      await _speech.stop();
+      setState(() => _isListening = false);
+    } else {
+      if (_speechAvailable) {
+        setState(() => _isListening = true);
+        await _speech.listen(
+          onResult: (result) {
+            setState(() {
+              _controller.text = result.recognizedWords;
+              _controller.selection = TextSelection.fromPosition(
+                TextPosition(offset: _controller.text.length),
+              );
+            });
+            if (result.finalResult) {
+              setState(() => _isListening = false);
+            }
+          },
+          localeId: 'it_IT',
+          listenMode: stt.ListenMode.dictation,
+        );
+      }
+    }
   }
 
   void _addWelcomeMessage() {
@@ -584,7 +666,7 @@ class _ChatScreenState extends State<_ChatScreen> {
           'Conosco tutto su:\n'
           '• Superbonus e Bonus Ristrutturazione\n'
           '• CILA, SCIA, permessi edilizi\n'
-          '• Bonus Mobili e agevolazioni 2025\n'
+          '• Bonus Mobili e agevolazioni 2026\n'
           '• Affitti, cedolare secca, IMU\n\n'
           'Cosa stai cercando di fare?',
       UserCategory.giovane:
@@ -607,12 +689,18 @@ class _ChatScreenState extends State<_ChatScreen> {
   void dispose() {
     _controller.dispose();
     _scrollController.dispose();
+    _speech.stop();
     super.dispose();
   }
 
   Future<void> _sendMessage([String? preset]) async {
     final text = preset ?? _controller.text.trim();
     if (text.isEmpty) return;
+
+    if (_isListening) {
+      await _speech.stop();
+      setState(() => _isListening = false);
+    }
 
     setState(() {
       _messages.add(_ChatMessage(text: text, isUser: true));
@@ -623,8 +711,9 @@ class _ChatScreenState extends State<_ChatScreen> {
 
     _apiMessages.add({'role': 'user', 'content': text});
 
-    final response = await GeminiService().chat(
+    final response = await GeminiService().chatWithSearch(
       messages: _apiMessages,
+      userMessage: text,
       systemPrompt: widget.category.systemPrompt,
     );
 
@@ -807,6 +896,22 @@ class _ChatScreenState extends State<_ChatScreen> {
           ),
         ),
 
+        // Listening indicator
+        if (_isListening)
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            color: cat.color.withValues(alpha: 0.08),
+            child: Row(children: [
+              Icon(Icons.mic, color: Colors.red.shade400, size: 20),
+              const SizedBox(width: 8),
+              const Expanded(child: Text('Sto ascoltando... parla ora', style: TextStyle(fontSize: 13, color: AppColors.textMedium, fontStyle: FontStyle.italic))),
+              GestureDetector(
+                onTap: _toggleListening,
+                child: const Icon(Icons.close, size: 20, color: AppColors.textLight),
+              ),
+            ]),
+          ),
+
         // Input
         Container(
           padding: EdgeInsets.only(
@@ -860,7 +965,25 @@ class _ChatScreenState extends State<_ChatScreen> {
                   ),
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: 6),
+              // Mic button
+              GestureDetector(
+                onTap: _isTyping ? null : _toggleListening,
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: _isListening ? Colors.red.shade50 : cat.color.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(12),
+                    border: _isListening ? Border.all(color: Colors.red.shade300, width: 1.5) : null,
+                  ),
+                  child: Icon(
+                    _isListening ? Icons.mic : Icons.mic_none,
+                    color: _isListening ? Colors.red : cat.color,
+                    size: 20,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 6),
               GestureDetector(
                 onTap: _isTyping ? null : () => _sendMessage(),
                 child: AnimatedContainer(
@@ -960,6 +1083,50 @@ class _MessageBubble extends StatelessWidget {
       );
     }
 
+    // AI message with expandable details
+    return _ExpandableSbrogliaMessage(
+      text: msg.text,
+      categoryColor: categoryColor,
+      categoryEmoji: categoryEmoji,
+    );
+  }
+}
+
+// ── Messaggio AI espandibile per Sbroglia ──
+
+class _ExpandableSbrogliaMessage extends StatefulWidget {
+  final String text;
+  final Color categoryColor;
+  final String categoryEmoji;
+  const _ExpandableSbrogliaMessage({required this.text, required this.categoryColor, required this.categoryEmoji});
+
+  @override
+  State<_ExpandableSbrogliaMessage> createState() => _ExpandableSbrogliaMessageState();
+}
+
+class _ExpandableSbrogliaMessageState extends State<_ExpandableSbrogliaMessage> {
+  bool _expanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    String summary;
+    String? details;
+
+    final separatorIndex = widget.text.indexOf('---DETTAGLI---');
+    if (separatorIndex != -1) {
+      summary = widget.text.substring(0, separatorIndex).trim();
+      details = widget.text.substring(separatorIndex + 14).trim();
+    } else {
+      final lines = widget.text.split('\n');
+      if (lines.length > 5) {
+        summary = lines.take(4).join('\n');
+        details = lines.skip(4).join('\n');
+      } else {
+        summary = widget.text;
+        details = null;
+      }
+    }
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 14, right: 40),
       child: Row(
@@ -968,10 +1135,10 @@ class _MessageBubble extends StatelessWidget {
           Container(
             width: 34, height: 34,
             decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [categoryColor, categoryColor.withValues(alpha: 0.7)]),
+              gradient: LinearGradient(colors: [widget.categoryColor, widget.categoryColor.withValues(alpha: 0.7)]),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Center(child: Text(categoryEmoji, style: const TextStyle(fontSize: 17))),
+            child: Center(child: Text(widget.categoryEmoji, style: const TextStyle(fontSize: 17))),
           ),
           const SizedBox(width: 8),
           Expanded(
@@ -981,11 +1148,51 @@ class _MessageBubble extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(18).copyWith(bottomLeft: const Radius.circular(4)),
                 boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 12, offset: const Offset(0, 2))],
-                border: Border.all(color: categoryColor.withValues(alpha: 0.08)),
+                border: Border.all(color: widget.categoryColor.withValues(alpha: 0.08)),
               ),
-              child: SelectableText(
-                msg.text,
-                style: const TextStyle(fontSize: 14, color: AppColors.textDark, height: 1.5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RichMessageWidget(text: summary),
+                  if (details != null && details.isNotEmpty) ...[
+                    const SizedBox(height: 10),
+                    if (_expanded) ...[
+                      const Divider(height: 1, color: Color(0xFFE0E0E0)),
+                      const SizedBox(height: 10),
+                      RichMessageWidget(text: details),
+                      const SizedBox(height: 8),
+                      GestureDetector(
+                        onTap: () => setState(() => _expanded = false),
+                        child: Row(mainAxisSize: MainAxisSize.min, children: [
+                          Icon(Icons.keyboard_arrow_up_rounded, size: 18, color: widget.categoryColor),
+                          const SizedBox(width: 4),
+                          Text('Nascondi dettagli', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: widget.categoryColor)),
+                        ]),
+                      ),
+                    ] else
+                      GestureDetector(
+                        onTap: () => setState(() => _expanded = true),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(colors: [
+                              widget.categoryColor.withValues(alpha: 0.08),
+                              widget.categoryColor.withValues(alpha: 0.04),
+                            ]),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: widget.categoryColor.withValues(alpha: 0.2)),
+                          ),
+                          child: Row(mainAxisSize: MainAxisSize.min, children: [
+                            Icon(Icons.info_outline_rounded, size: 16, color: widget.categoryColor),
+                            const SizedBox(width: 6),
+                            Text('Maggiori dettagli', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: widget.categoryColor)),
+                            const SizedBox(width: 4),
+                            Icon(Icons.keyboard_arrow_down_rounded, size: 18, color: widget.categoryColor),
+                          ]),
+                        ),
+                      ),
+                  ],
+                ],
               ),
             ),
           ),

@@ -4,9 +4,7 @@ import 'package:provider/provider.dart';
 import 'core/theme/app_theme.dart';
 import 'core/services/language_service.dart';
 import 'features/home/home_screen.dart';
-import 'features/guide/guide_list_screen.dart';
 import 'features/agevolazioni/agevolazioni_screen.dart';
-import 'features/strumenti/strumenti_tab_screen.dart';
 import 'features/sbroglia/sbroglia_chat_screen.dart';
 import 'features/profilo/profilo_screen.dart';
 import 'core/widgets/app_nav_bar.dart';
@@ -61,16 +59,14 @@ class _MainShellState extends State<MainShell> {
         index: _currentIndex,
         children: [
           HomeScreen(
-            onNavigateToGuide: () => _navigateTo(1),
-            onNavigateToAgevolazioni: () => _navigateTo(2),
-            onNavigateToStrumenti: () => _navigateTo(3),
-            onNavigateToSbroglia: () => _navigateTo(4),
+            onNavigateToGuide: () {},
+            onNavigateToAgevolazioni: () => _navigateTo(1),
+            onNavigateToStrumenti: () {},
+            onNavigateToSbroglia: () => _navigateTo(2),
           ),
-          const GuideListScreen(),
-          const AgevolazioniScreen(),
-          const StrumentiTabScreen(),
-          const SbrogliaScreen(),   // index 4 — Sbroglia.AI
-          const ProfiloScreen(),    // index 5 — Profilo
+          const AgevolazioniScreen(),    // index 1 — Bonus
+          const SbrogliaScreen(),        // index 2 — Sbroglia.AI
+          const ProfiloScreen(),         // index 3 — Profilo
         ],
       ),
       bottomNavigationBar: AppNavBar(

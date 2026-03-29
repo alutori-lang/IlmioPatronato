@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../services/ad_service.dart';
@@ -16,12 +17,14 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   @override
   void initState() {
     super.initState();
-    _bannerAd = AdService().createBannerAd(
-      onLoaded: () {
-        if (mounted) setState(() => _isLoaded = true);
-      },
-    );
-    _bannerAd!.load();
+    if (!kIsWeb) {
+      _bannerAd = AdService().createBannerAd(
+        onLoaded: () {
+          if (mounted) setState(() => _isLoaded = true);
+        },
+      );
+      _bannerAd!.load();
+    }
   }
 
   @override
@@ -32,7 +35,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (!_isLoaded || _bannerAd == null) return const SizedBox.shrink();
+    if (kIsWeb || !_isLoaded || _bannerAd == null) return const SizedBox.shrink();
     return Container(
       width: _bannerAd!.size.width.toDouble(),
       height: _bannerAd!.size.height.toDouble(),

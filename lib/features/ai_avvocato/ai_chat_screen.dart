@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 import '../../config/constants.dart';
 import '../../core/services/gemini_service.dart';
 import '../../core/widgets/document_upload_widget.dart';
+import '../../core/widgets/rich_message_widget.dart';
 
 class AiChatScreen extends StatefulWidget {
   const AiChatScreen({super.key});
@@ -27,16 +29,46 @@ class _AiChatScreenState extends State<AiChatScreen> {
   bool _isTyping = false;
   File? _pendingImage;
 
+  // Speech to text
+  final stt.SpeechToText _speech = stt.SpeechToText();
+  bool _isListening = false;
+  bool _speechAvailable = false;
+
   static const _systemPrompt =
       'Sei un assistente esperto in immigrazione italiana, diritto del lavoro, bonus, agevolazioni e pratiche burocratiche. '
+      'HAI ACCESSO A INFORMAZIONI IN TEMPO REALE tramite ricerca web. '
       'Rispondi sempre in italiano, in modo chiaro, pratico e comprensibile. '
+      'Quando ricevi risultati di ricerca web, usali per dare informazioni aggiornate e precise. '
       'Se l\'utente invia una foto di un documento, analizzalo e spiega cosa contiene. '
       'Se non sei sicuro di qualcosa, consiglia di consultare un patronato o un professionista. '
-      'Non inventare leggi o numeri: se non sai, dillo.';
+      'Non inventare leggi o numeri: se non sai, dillo.\n\n'
+      'REGOLE DI FORMATTAZIONE (OBBLIGATORIE):\n'
+      '1. Rispondi in modo BREVE e CHIARO. Massimo 3-4 righe di riassunto iniziale.\n'
+      '2. Poi aggiungi una riga vuota e scrivi esattamente "---DETTAGLI---"\n'
+      '3. Dopo "---DETTAGLI---" scrivi i dettagli.\n'
+      '4. NON usare MAI asterischi ** per il grassetto. Scrivi il testo normalmente.\n'
+      '5. Per i link: scrivi SEMPRE il link come URL completo su una riga separata, es:\nhttps://www.inps.it/bonus\n'
+      '6. Per le liste numerate scrivi:\n1. Primo passo\n2. Secondo passo\n'
+      '7. Per i titoli di sezione, mettili su una riga separata con ## davanti, es:\n## Come fare domanda\n'
+      '8. Scrivi frasi CORTE. Vai a capo spesso. NON fare muri di testo.\n'
+      '9. Quando dai un link, metti PRIMA una breve descrizione e poi il link su riga nuova.\n'
+      '10. NON mettere parentesi tonde o quadre attorno ai link.\n'
+      'Esempio di risposta perfetta:\n'
+      'Puoi richiedere il bonus bebè sul sito INPS.\n\n'
+      '## Come fare domanda\n'
+      '1. Vai sul sito INPS\nhttps://www.inps.it\n'
+      '2. Accedi con SPID o CIE\n'
+      '3. Cerca "Bonus bebè" nella barra di ricerca\n'
+      '4. Compila il modulo online\n\n'
+      '---DETTAGLI---\n'
+      '## Requisiti\n'
+      '- ISEE inferiore a 40.000 euro\n'
+      '- Figlio nato o adottato nel 2026\n';
 
   @override
   void initState() {
     super.initState();
+    _initSpeech();
     _messages.add(_ChatMessage(
       text: 'Ciao! Sono il tuo Assistente AI Immigrazione.\n\n'
           'Posso aiutarti con:\n'
@@ -46,21 +78,65 @@ class _AiChatScreenState extends State<AiChatScreen> {
           '• Documenti e pratiche\n'
           '• Diritti dei lavoratori\n'
           '• Analisi documenti (inviami una foto!)\n\n'
-          'Scrivi la tua domanda!',
+          'Scrivi o parla con il microfono!',
       isUser: false,
     ));
+  }
+
+  Future<void> _initSpeech() async {
+    _speechAvailable = await _speech.initialize(
+      onError: (_) => setState(() => _isListening = false),
+      onStatus: (status) {
+        if (status == 'notListening' || status == 'done') {
+          setState(() => _isListening = false);
+        }
+      },
+    );
+    setState(() {});
+  }
+
+  void _toggleListening() async {
+    if (_isListening) {
+      await _speech.stop();
+      setState(() => _isListening = false);
+    } else {
+      if (_speechAvailable) {
+        setState(() => _isListening = true);
+        await _speech.listen(
+          onResult: (result) {
+            setState(() {
+              _controller.text = result.recognizedWords;
+              _controller.selection = TextSelection.fromPosition(
+                TextPosition(offset: _controller.text.length),
+              );
+            });
+            if (result.finalResult) {
+              setState(() => _isListening = false);
+            }
+          },
+          localeId: 'it_IT',
+          listenMode: stt.ListenMode.dictation,
+        );
+      }
+    }
   }
 
   @override
   void dispose() {
     _controller.dispose();
     _scrollController.dispose();
+    _speech.stop();
     super.dispose();
   }
 
   Future<void> _sendMessage() async {
     final text = _controller.text.trim();
     if (text.isEmpty && _pendingImage == null) return;
+
+    if (_isListening) {
+      await _speech.stop();
+      setState(() => _isListening = false);
+    }
 
     final image = _pendingImage;
     setState(() {
@@ -74,17 +150,16 @@ class _AiChatScreenState extends State<AiChatScreen> {
     AiResponse response;
 
     if (image != null) {
-      // Send with image
       response = await GeminiService().chatWithImage(
         imageFile: image,
         text: text.isNotEmpty ? text : 'Analizza questo documento e dimmi cosa contiene.',
         systemPrompt: _systemPrompt,
       );
     } else {
-      // Text-only: build conversation
       _apiMessages.add({'role': 'user', 'content': text});
-      response = await GeminiService().chat(
+      response = await GeminiService().chatWithSearch(
         messages: _apiMessages,
+        userMessage: text,
         systemPrompt: _systemPrompt,
       );
     }
@@ -132,7 +207,9 @@ class _AiChatScreenState extends State<AiChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      body: Column(children: [
       // Header
       Container(
         padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 10, left: 20, right: 20, bottom: 14),
@@ -174,7 +251,7 @@ class _AiChatScreenState extends State<AiChatScreen> {
             _chip('Cittadinanza'),
             _chip('SPID'),
             _chip('ISEE'),
-            _chip('Bonus 2025'),
+            _chip('Bonus 2026'),
           ],
         ),
       ),
@@ -190,6 +267,21 @@ class _AiChatScreenState extends State<AiChatScreen> {
           },
         ),
       ),
+      // Listening indicator
+      if (_isListening)
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          color: AppColors.primary.withValues(alpha: 0.08),
+          child: Row(children: [
+            Icon(Icons.mic, color: Colors.red.shade400, size: 20),
+            const SizedBox(width: 8),
+            const Expanded(child: Text('Sto ascoltando... parla ora', style: TextStyle(fontSize: 13, color: AppColors.textMedium, fontStyle: FontStyle.italic))),
+            GestureDetector(
+              onTap: _toggleListening,
+              child: const Icon(Icons.close, size: 20, color: AppColors.textLight),
+            ),
+          ]),
+        ),
       // Pending image preview
       if (_pendingImage != null)
         Container(
@@ -269,7 +361,26 @@ class _AiChatScreenState extends State<AiChatScreen> {
               ),
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 6),
+          // Mic button
+          GestureDetector(
+            onTap: _isTyping ? null : _toggleListening,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: _isListening ? Colors.red.shade50 : AppColors.primary.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(12),
+                border: _isListening ? Border.all(color: Colors.red.shade300, width: 1.5) : null,
+              ),
+              child: Icon(
+                _isListening ? Icons.mic : Icons.mic_none,
+                color: _isListening ? Colors.red : AppColors.primary,
+                size: 20,
+              ),
+            ),
+          ),
+          const SizedBox(width: 6),
+          // Send button
           GestureDetector(
             onTap: _isTyping ? null : _sendMessage,
             child: Container(
@@ -280,7 +391,8 @@ class _AiChatScreenState extends State<AiChatScreen> {
           ),
         ]),
       ),
-    ]);
+    ]),
+    );
   }
 
   Widget _chip(String text) {
@@ -329,31 +441,8 @@ class _AiChatScreenState extends State<AiChatScreen> {
         ),
       );
     }
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12, right: 40),
-      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Container(
-          width: 32, height: 32,
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(colors: [Color(0xFF1976D2), Color(0xFF42A5F5)]),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: const Icon(Icons.smart_toy, color: Colors.white, size: 18),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16).copyWith(bottomLeft: const Radius.circular(4)),
-              boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10)],
-            ),
-            child: SelectableText(msg.text, style: const TextStyle(fontSize: 14, color: AppColors.textDark, height: 1.4)),
-          ),
-        ),
-      ]),
-    );
+    // AI message with expandable details
+    return _ExpandableAiMessage(text: msg.text);
   }
 
   Widget _typingIndicator() {
@@ -378,6 +467,114 @@ class _AiChatScreenState extends State<AiChatScreen> {
           child: const Row(mainAxisSize: MainAxisSize.min, children: [
             _Dot(delay: 0), SizedBox(width: 4), _Dot(delay: 200), SizedBox(width: 4), _Dot(delay: 400),
           ]),
+        ),
+      ]),
+    );
+  }
+}
+
+// ── Messaggio AI con "Maggiori dettagli" espandibile ──
+
+class _ExpandableAiMessage extends StatefulWidget {
+  final String text;
+  const _ExpandableAiMessage({required this.text});
+
+  @override
+  State<_ExpandableAiMessage> createState() => _ExpandableAiMessageState();
+}
+
+class _ExpandableAiMessageState extends State<_ExpandableAiMessage> {
+  bool _expanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    // Separa riassunto e dettagli
+    String summary;
+    String? details;
+
+    final separatorIndex = widget.text.indexOf('---DETTAGLI---');
+    if (separatorIndex != -1) {
+      summary = widget.text.substring(0, separatorIndex).trim();
+      details = widget.text.substring(separatorIndex + 14).trim();
+    } else {
+      // Fallback: se l'AI non ha usato il formato, mostra le prime 4 righe come riassunto
+      final lines = widget.text.split('\n');
+      if (lines.length > 5) {
+        summary = lines.take(4).join('\n');
+        details = lines.skip(4).join('\n');
+      } else {
+        summary = widget.text;
+        details = null;
+      }
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12, right: 40),
+      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Container(
+          width: 32, height: 32,
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(colors: [Color(0xFF1976D2), Color(0xFF42A5F5)]),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: const Icon(Icons.smart_toy, color: Colors.white, size: 18),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16).copyWith(bottomLeft: const Radius.circular(4)),
+              boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10)],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Riassunto (sempre visibile)
+                RichMessageWidget(text: summary),
+                // Dettagli espandibili
+                if (details != null && details.isNotEmpty) ...[
+                  const SizedBox(height: 10),
+                  if (_expanded) ...[
+                    const Divider(height: 1, color: Color(0xFFE0E0E0)),
+                    const SizedBox(height: 10),
+                    RichMessageWidget(text: details),
+                    const SizedBox(height: 8),
+                    GestureDetector(
+                      onTap: () => setState(() => _expanded = false),
+                      child: Row(mainAxisSize: MainAxisSize.min, children: [
+                        Icon(Icons.keyboard_arrow_up_rounded, size: 18, color: AppColors.primary),
+                        const SizedBox(width: 4),
+                        Text('Nascondi dettagli', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.primary)),
+                      ]),
+                    ),
+                  ] else
+                    GestureDetector(
+                      onTap: () => setState(() => _expanded = true),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [
+                            AppColors.primary.withValues(alpha: 0.08),
+                            AppColors.primary.withValues(alpha: 0.04),
+                          ]),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
+                        ),
+                        child: Row(mainAxisSize: MainAxisSize.min, children: [
+                          Icon(Icons.info_outline_rounded, size: 16, color: AppColors.primary),
+                          const SizedBox(width: 6),
+                          Text('Maggiori dettagli', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppColors.primary)),
+                          const SizedBox(width: 4),
+                          Icon(Icons.keyboard_arrow_down_rounded, size: 18, color: AppColors.primary),
+                        ]),
+                      ),
+                    ),
+                ],
+              ],
+            ),
+          ),
         ),
       ]),
     );
