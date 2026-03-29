@@ -1,5 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../config/constants.dart';
+import '../../core/services/gemini_service.dart';
+import '../../core/widgets/document_upload_widget.dart';
 
 class AiChatScreen extends StatefulWidget {
   const AiChatScreen({super.key});
@@ -11,14 +15,24 @@ class AiChatScreen extends StatefulWidget {
 class _ChatMessage {
   final String text;
   final bool isUser;
-  _ChatMessage({required this.text, required this.isUser});
+  final File? image;
+  _ChatMessage({required this.text, required this.isUser, this.image});
 }
 
 class _AiChatScreenState extends State<AiChatScreen> {
   final _controller = TextEditingController();
   final _scrollController = ScrollController();
   final List<_ChatMessage> _messages = [];
+  final List<Map<String, dynamic>> _apiMessages = [];
   bool _isTyping = false;
+  File? _pendingImage;
+
+  static const _systemPrompt =
+      'Sei un assistente esperto in immigrazione italiana, diritto del lavoro, bonus, agevolazioni e pratiche burocratiche. '
+      'Rispondi sempre in italiano, in modo chiaro, pratico e comprensibile. '
+      'Se l\'utente invia una foto di un documento, analizzalo e spiega cosa contiene. '
+      'Se non sei sicuro di qualcosa, consiglia di consultare un patronato o un professionista. '
+      'Non inventare leggi o numeri: se non sai, dillo.';
 
   @override
   void initState() {
@@ -30,7 +44,8 @@ class _AiChatScreenState extends State<AiChatScreen> {
           '• Cittadinanza italiana\n'
           '• Ricongiungimento familiare\n'
           '• Documenti e pratiche\n'
-          '• Diritti dei lavoratori\n\n'
+          '• Diritti dei lavoratori\n'
+          '• Analisi documenti (inviami una foto!)\n\n'
           'Scrivi la tua domanda!',
       isUser: false,
     ));
@@ -43,48 +58,76 @@ class _AiChatScreenState extends State<AiChatScreen> {
     super.dispose();
   }
 
-  void _sendMessage() {
+  Future<void> _sendMessage() async {
     final text = _controller.text.trim();
-    if (text.isEmpty) return;
+    if (text.isEmpty && _pendingImage == null) return;
+
+    final image = _pendingImage;
     setState(() {
-      _messages.add(_ChatMessage(text: text, isUser: true));
+      _messages.add(_ChatMessage(text: text, isUser: true, image: image));
       _isTyping = true;
+      _pendingImage = null;
     });
     _controller.clear();
     _scrollToBottom();
-    Future.delayed(const Duration(milliseconds: 1500), () {
-      if (!mounted) return;
+
+    AiResponse response;
+
+    if (image != null) {
+      // Send with image
+      response = await GeminiService().chatWithImage(
+        imageFile: image,
+        text: text.isNotEmpty ? text : 'Analizza questo documento e dimmi cosa contiene.',
+        systemPrompt: _systemPrompt,
+      );
+    } else {
+      // Text-only: build conversation
+      _apiMessages.add({'role': 'user', 'content': text});
+      response = await GeminiService().chat(
+        messages: _apiMessages,
+        systemPrompt: _systemPrompt,
+      );
+    }
+
+    if (!mounted) return;
+
+    if (response.isSuccess) {
+      if (image == null) {
+        _apiMessages.add({'role': 'assistant', 'content': response.text});
+      }
       setState(() {
         _isTyping = false;
-        _messages.add(_ChatMessage(text: _getResponse(text), isUser: false));
+        _messages.add(_ChatMessage(text: response.text, isUser: false));
       });
-      _scrollToBottom();
-    });
+    } else {
+      setState(() {
+        _isTyping = false;
+        _messages.add(_ChatMessage(
+          text: response.errorMessage ?? 'Errore nella risposta. Riprova.',
+          isUser: false,
+        ));
+      });
+    }
+    _scrollToBottom();
   }
 
   void _scrollToBottom() {
     Future.delayed(const Duration(milliseconds: 100), () {
       if (_scrollController.hasClients) {
-        _scrollController.animateTo(_scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
       }
     });
   }
 
-  String _getResponse(String query) {
-    final q = query.toLowerCase();
-    if (q.contains('permesso') || q.contains('soggiorno')) {
-      return 'Per il permesso di soggiorno:\n\nDocumenti necessari:\n• Kit postale (uffici postali)\n• Passaporto + fotocopia\n• 4 foto tessera\n• Marca da bollo €16\n• Contributo €40-€100\n\nTempi: 60-90 giorni\n\nConsiglio: Invia il kit il prima possibile. Il cedolino ti copre fino alla convocazione.\n\nQuesto è solo informativo. Consulta un patronato per il tuo caso specifico.';
+  Future<void> _pickImage(ImageSource source) async {
+    final file = await pickImage(source);
+    if (file != null) {
+      setState(() => _pendingImage = file);
     }
-    if (q.contains('cittadinanza')) {
-      return 'Cittadinanza italiana - 2 vie:\n\nPer matrimonio:\n• Sposato/a con italiano/a da 2+ anni\n• Livello italiano B1\n• Domanda online su portale ALI\n• Tempi: ~24 mesi\n\nPer residenza:\n• 10 anni di residenza legale (UE: 4 anni)\n• Reddito sufficiente\n• Nessun precedente penale\n\nCosti: €250 contributo + €16 marca da bollo';
-    }
-    if (q.contains('spid')) {
-      return 'Per creare lo SPID:\n\nMetodo più semplice - Poste Italiane:\n1. Vai all\'ufficio postale con:\n   • Documento o permesso di soggiorno\n   • Codice fiscale\n   • Email e telefono\n2. Chiedi di attivare PosteID\n3. Gratuito in ufficio!\n\nCon lo SPID accedi a INPS, Agenzia Entrate, ANPR e tutti i servizi online.';
-    }
-    if (q.contains('isee')) {
-      return 'L\'ISEE - Indicatore Situazione Economica:\n\nA cosa serve:\n• Richiedere bonus e agevolazioni\n• ADI (Assegno di Inclusione)\n• Bonus bollette, asilo nido\n\nDocumenti per il CAF:\n• Documenti identità di tutti in famiglia\n• Codici fiscali\n• CU (Certificazione Unica)\n• Saldi conti correnti al 31/12\n\nL\'ISEE al CAF è GRATUITO!';
-    }
-    return 'Grazie per la domanda!\n\nNella versione completa, collegherò Gemini AI per risposte personalizzate.\n\nIntanto consulta:\n• Le 18 Guide nella sezione Guide\n• Le Domande della community\n\nProva a chiedermi di: permesso di soggiorno, cittadinanza, SPID, ISEE';
   }
 
   @override
@@ -106,13 +149,17 @@ class _AiChatScreenState extends State<AiChatScreen> {
           const SizedBox(width: 12),
           const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text('AI Avvocato', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800)),
-            Text('Assistente legale', style: TextStyle(color: AppColors.textSubtitle, fontSize: 11)),
+            Text('Assistente legale con Claude AI', style: TextStyle(color: AppColors.textSubtitle, fontSize: 11)),
           ]),
           const Spacer(),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            decoration: BoxDecoration(color: AppColors.badge, borderRadius: BorderRadius.circular(12)),
-            child: const Text('AI', style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w700)),
+            decoration: BoxDecoration(color: const Color(0xFF4CAF50), borderRadius: BorderRadius.circular(12)),
+            child: const Row(mainAxisSize: MainAxisSize.min, children: [
+              Icon(Icons.smart_toy, color: Colors.white, size: 12),
+              SizedBox(width: 4),
+              Text('AI', style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w700)),
+            ]),
           ),
         ]),
       ),
@@ -127,6 +174,7 @@ class _AiChatScreenState extends State<AiChatScreen> {
             _chip('Cittadinanza'),
             _chip('SPID'),
             _chip('ISEE'),
+            _chip('Bonus 2025'),
           ],
         ),
       ),
@@ -142,6 +190,23 @@ class _AiChatScreenState extends State<AiChatScreen> {
           },
         ),
       ),
+      // Pending image preview
+      if (_pendingImage != null)
+        Container(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+          child: Row(children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.file(_pendingImage!, width: 60, height: 60, fit: BoxFit.cover),
+            ),
+            const SizedBox(width: 8),
+            const Expanded(child: Text('Foto allegata', style: TextStyle(fontSize: 12, color: AppColors.textMedium))),
+            GestureDetector(
+              onTap: () => setState(() => _pendingImage = null),
+              child: const Icon(Icons.close, size: 20, color: AppColors.textLight),
+            ),
+          ]),
+        ),
       // Input
       Container(
         padding: EdgeInsets.only(left: 16, right: 16, top: 10, bottom: MediaQuery.of(context).padding.bottom + 10),
@@ -151,6 +216,43 @@ class _AiChatScreenState extends State<AiChatScreen> {
           boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 10, offset: const Offset(0, -2))],
         ),
         child: Row(children: [
+          // Attach image button
+          GestureDetector(
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+                builder: (_) => SafeArea(child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(mainAxisSize: MainAxisSize.min, children: [
+                    Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(2))),
+                    const SizedBox(height: 20),
+                    const Text('Allega documento', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700)),
+                    const SizedBox(height: 16),
+                    ListTile(
+                      leading: const Icon(Icons.camera_alt, color: AppColors.primary),
+                      title: const Text('Fotocamera'),
+                      onTap: () { Navigator.pop(context); _pickImage(ImageSource.camera); },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.photo_library, color: AppColors.primary),
+                      title: const Text('Galleria'),
+                      onTap: () { Navigator.pop(context); _pickImage(ImageSource.gallery); },
+                    ),
+                  ]),
+                )),
+              );
+            },
+            child: Container(
+              width: 38, height: 38,
+              margin: const EdgeInsets.only(right: 8),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Icon(Icons.attach_file, color: AppColors.primary, size: 20),
+            ),
+          ),
           Expanded(
             child: Container(
               decoration: BoxDecoration(color: AppColors.background, borderRadius: BorderRadius.circular(12)),
@@ -158,8 +260,10 @@ class _AiChatScreenState extends State<AiChatScreen> {
                 controller: _controller,
                 style: const TextStyle(fontSize: 14),
                 decoration: const InputDecoration(
-                  hintText: 'Chiedi all\'avvocato AI...', hintStyle: TextStyle(color: AppColors.textLight, fontSize: 13),
-                  border: InputBorder.none, contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  hintText: 'Chiedi all\'avvocato AI...',
+                  hintStyle: TextStyle(color: AppColors.textLight, fontSize: 13),
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                 ),
                 onSubmitted: (_) => _sendMessage(),
               ),
@@ -167,7 +271,7 @@ class _AiChatScreenState extends State<AiChatScreen> {
           ),
           const SizedBox(width: 10),
           GestureDetector(
-            onTap: _sendMessage,
+            onTap: _isTyping ? null : _sendMessage,
             child: Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(gradient: AppColors.buttonGradient, borderRadius: BorderRadius.circular(12)),
@@ -186,9 +290,11 @@ class _AiChatScreenState extends State<AiChatScreen> {
         onTap: () { _controller.text = text; _sendMessage(); },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20),
+          decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(20),
             border: Border.all(color: const Color(0xFFE0E0E0)),
-            boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8)]),
+            boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8)],
+          ),
           child: Text(text, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.primary)),
         ),
       ),
@@ -201,14 +307,25 @@ class _AiChatScreenState extends State<AiChatScreen> {
         padding: const EdgeInsets.only(bottom: 12, left: 50),
         child: Align(
           alignment: Alignment.centerRight,
-          child: Container(
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              gradient: AppColors.buttonGradient, borderRadius: BorderRadius.circular(16).copyWith(bottomRight: const Radius.circular(4)),
-              boxShadow: [BoxShadow(color: AppColors.primary.withValues(alpha: 0.2), blurRadius: 10, offset: const Offset(0, 2))],
-            ),
-            child: Text(msg.text, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white, height: 1.4)),
-          ),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+            if (msg.image != null)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(14),
+                child: Image.file(msg.image!, width: 180, height: 180, fit: BoxFit.cover),
+              ),
+            if (msg.text.isNotEmpty) ...[
+              if (msg.image != null) const SizedBox(height: 6),
+              Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  gradient: AppColors.buttonGradient,
+                  borderRadius: BorderRadius.circular(16).copyWith(bottomRight: const Radius.circular(4)),
+                  boxShadow: [BoxShadow(color: AppColors.primary.withValues(alpha: 0.2), blurRadius: 10, offset: const Offset(0, 2))],
+                ),
+                child: Text(msg.text, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white, height: 1.4)),
+              ),
+            ],
+          ]),
         ),
       );
     }
@@ -217,7 +334,10 @@ class _AiChatScreenState extends State<AiChatScreen> {
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Container(
           width: 32, height: 32,
-          decoration: BoxDecoration(gradient: const LinearGradient(colors: [Color(0xFF1976D2), Color(0xFF42A5F5)]), borderRadius: BorderRadius.circular(10)),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(colors: [Color(0xFF1976D2), Color(0xFF42A5F5)]),
+            borderRadius: BorderRadius.circular(10),
+          ),
           child: const Icon(Icons.smart_toy, color: Colors.white, size: 18),
         ),
         const SizedBox(width: 8),
@@ -225,10 +345,11 @@ class _AiChatScreenState extends State<AiChatScreen> {
           child: Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(16).copyWith(bottomLeft: const Radius.circular(4)),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16).copyWith(bottomLeft: const Radius.circular(4)),
               boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10)],
             ),
-            child: Text(msg.text, style: const TextStyle(fontSize: 14, color: AppColors.textDark, height: 1.4)),
+            child: SelectableText(msg.text, style: const TextStyle(fontSize: 14, color: AppColors.textDark, height: 1.4)),
           ),
         ),
       ]),
@@ -241,14 +362,19 @@ class _AiChatScreenState extends State<AiChatScreen> {
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Container(
           width: 32, height: 32,
-          decoration: BoxDecoration(gradient: const LinearGradient(colors: [Color(0xFF1976D2), Color(0xFF42A5F5)]), borderRadius: BorderRadius.circular(10)),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(colors: [Color(0xFF1976D2), Color(0xFF42A5F5)]),
+            borderRadius: BorderRadius.circular(10),
+          ),
           child: const Icon(Icons.smart_toy, color: Colors.white, size: 18),
         ),
         const SizedBox(width: 8),
         Container(
           padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16),
-            boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10)]),
+          decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(16),
+            boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10)],
+          ),
           child: const Row(mainAxisSize: MainAxisSize.min, children: [
             _Dot(delay: 0), SizedBox(width: 4), _Dot(delay: 200), SizedBox(width: 4), _Dot(delay: 400),
           ]),

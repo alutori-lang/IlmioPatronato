@@ -44,8 +44,9 @@ class StrumentiScreen extends StatelessWidget {
                   icon: Icons.description,
                   color: Colors.purple.shade700,
                   title: 'Generatore CV Europass',
-                  description: 'Crea CV professionale in PDF',
-                  badge: 'PDF',
+                  description: 'Carica CV + foto, AI suggerisce esperienze',
+                  badge: 'AI',
+                  badgeColor: const Color(0xFF4CAF50),
                   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const CvEuropassScreen())),
                 ),
                 const SizedBox(height: 12),
@@ -53,7 +54,9 @@ class StrumentiScreen extends StatelessWidget {
                   icon: Icons.receipt,
                   color: Colors.orange.shade700,
                   title: 'Busta Paga Spiegata',
-                  description: 'Ogni voce spiegata in modo semplice',
+                  description: 'Carica foto busta paga, AI analizza tutto',
+                  badge: 'AI',
+                  badgeColor: const Color(0xFF4CAF50),
                   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const BustaPagaScreen())),
                 ),
                 const SizedBox(height: 12),
@@ -61,8 +64,9 @@ class StrumentiScreen extends StatelessWidget {
                   icon: Icons.assignment,
                   color: Colors.teal.shade700,
                   title: 'Generatore Delega',
-                  description: 'Crea delega formale in PDF',
-                  badge: 'PDF',
+                  description: 'Scansiona documento, AI compila la delega',
+                  badge: 'AI',
+                  badgeColor: const Color(0xFF4CAF50),
                   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DelegaScreen())),
                 ),
                 const SizedBox(height: 12),
@@ -70,7 +74,9 @@ class StrumentiScreen extends StatelessWidget {
                   icon: Icons.compare_arrows,
                   color: Colors.red.shade700,
                   title: 'Confronto Offerte Lavoro',
-                  description: 'Confronta 2 RAL e scopri quale conviene',
+                  description: 'Carica contratti, AI confronta le offerte',
+                  badge: 'AI',
+                  badgeColor: const Color(0xFF4CAF50),
                   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ConfrontoLavoroScreen())),
                 ),
               ]),
@@ -132,6 +138,7 @@ class _StrumentoCard extends StatelessWidget {
   final String title;
   final String description;
   final String? badge;
+  final Color? badgeColor;
   final VoidCallback onTap;
 
   const _StrumentoCard({
@@ -140,6 +147,7 @@ class _StrumentoCard extends StatelessWidget {
     required this.title,
     required this.description,
     this.badge,
+    this.badgeColor,
     required this.onTap,
   });
 
@@ -180,10 +188,10 @@ class _StrumentoCard extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                           decoration: BoxDecoration(
-                            color: color.withValues(alpha: 0.15),
+                            color: (badgeColor ?? color).withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: Text(badge!, style: TextStyle(fontSize: 9, fontWeight: FontWeight.w700, color: color)),
+                          child: Text(badge!, style: TextStyle(fontSize: 9, fontWeight: FontWeight.w700, color: badgeColor ?? color)),
                         ),
                       ],
                     ],

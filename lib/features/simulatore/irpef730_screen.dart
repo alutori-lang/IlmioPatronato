@@ -1,6 +1,10 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../config/constants.dart';
+import '../../core/services/gemini_service.dart';
+import '../../core/widgets/document_upload_widget.dart';
 
 class Irpef730Screen extends StatefulWidget {
   const Irpef730Screen({super.key});
@@ -31,6 +35,9 @@ class _Irpef730ScreenState extends State<Irpef730Screen>
 
   // ── Addizionali ──
   String _regione = 'Lazio';
+
+  // ── AI upload ──
+  bool _isAnalyzingDoc = false;
 
   // ── Risultato ──
   bool _showResult = false;
@@ -83,6 +90,76 @@ class _Irpef730ScreenState extends State<Irpef730Screen>
   double _p(String s) {
     if (s.isEmpty) return 0;
     return double.tryParse(s.replaceAll('.', '').replaceAll(',', '.')) ?? 0;
+  }
+
+  double _pAi(dynamic v) {
+    if (v == null) return 0;
+    final s = v.toString().replaceAll('€', '').replaceAll(' ', '').replaceAll('.', '').replaceAll(',', '.');
+    return double.tryParse(s) ?? 0;
+  }
+
+  Future<void> _pickAndAnalyze730(ImageSource source) async {
+    final file = await pickImage(source);
+    if (file == null) return;
+
+    setState(() => _isAnalyzingDoc = true);
+
+    final response = await GeminiService().analyzeDocument(
+      imageFile: file,
+      prompt: '''Analizza questo documento fiscale italiano (CU o Modello 730). Estrai e restituisci SOLO un JSON valido (senza markdown):
+{
+  "reddito_complessivo": "importo numerico",
+  "contributi_previdenziali": "importo numerico o null",
+  "spese_mediche": "importo numerico o null",
+  "interessi_mutuo": "importo numerico o null",
+  "canone_affitto": "importo numerico o null"
+}
+Importi come numeri senza simbolo €. Se un campo non è leggibile, metti null.''',
+    );
+
+    if (!mounted) return;
+
+    if (response.isSuccess) {
+      final parsed = response.tryParseJson();
+      if (parsed != null) {
+        setState(() {
+          final reddito = _pAi(parsed['reddito_complessivo']);
+          if (reddito > 0) _redditoLordoCtrl.text = reddito.toStringAsFixed(0);
+          final contrib = _pAi(parsed['contributi_previdenziali']);
+          if (contrib > 0) _contributiCtrl.text = contrib.toStringAsFixed(0);
+          final med = _pAi(parsed['spese_mediche']);
+          if (med > 0) _speseMediacheCtrl.text = med.toStringAsFixed(0);
+          final mutuo = _pAi(parsed['interessi_mutuo']);
+          if (mutuo > 0) _interessiMutuoCtrl.text = mutuo.toStringAsFixed(0);
+          final affitto = _pAi(parsed['canone_affitto']);
+          if (affitto > 0) _affittoCtrl.text = affitto.toStringAsFixed(0);
+          _isAnalyzingDoc = false;
+        });
+        _calcola();
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Dati importati dal documento! Puoi modificarli.'),
+            backgroundColor: Color(0xFF4CAF50),
+          ));
+        }
+      } else {
+        setState(() => _isAnalyzingDoc = false);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Impossibile leggere i dati. Riprova con una foto più nitida.'),
+            backgroundColor: Color(0xFFF44336),
+          ));
+        }
+      }
+    } else {
+      setState(() => _isAnalyzingDoc = false);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(response.errorMessage ?? 'Errore'),
+          backgroundColor: const Color(0xFFF44336),
+        ));
+      }
+    }
   }
 
   // ─────────────────────────────────────────────
@@ -286,6 +363,7 @@ class _Irpef730ScreenState extends State<Irpef730Screen>
         child: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(child: _buildHeader(context)),
+            SliverToBoxAdapter(child: _buildAiUploadBanner730()),
             SliverToBoxAdapter(child: _buildInfoBanner()),
             SliverToBoxAdapter(child: _sectionTitle('Tipo Contribuente')),
             SliverToBoxAdapter(child: _buildTipoContribuente()),
@@ -352,6 +430,68 @@ class _Irpef730ScreenState extends State<Irpef730Screen>
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildAiUploadBanner730() {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(16, 14, 16, 0),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(colors: [AppColors.primary.withValues(alpha: 0.06), const Color(0xFF42A5F5).withValues(alpha: 0.06)]),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(14),
+          onTap: _isAnalyzingDoc ? null : () {
+            showModalBottomSheet(
+              context: context,
+              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+              builder: (_) => SafeArea(child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(2))),
+                  const SizedBox(height: 20),
+                  const Text('Carica CU o Modello 730', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700)),
+                  const SizedBox(height: 20),
+                  ListTile(
+                    leading: Container(width: 44, height: 44, decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+                      child: const Icon(Icons.camera_alt, color: AppColors.primary)),
+                    title: const Text('Fotocamera', style: TextStyle(fontWeight: FontWeight.w600)),
+                    onTap: () { Navigator.pop(context); _pickAndAnalyze730(ImageSource.camera); },
+                  ),
+                  ListTile(
+                    leading: Container(width: 44, height: 44, decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+                      child: const Icon(Icons.photo_library, color: AppColors.primary)),
+                    title: const Text('Galleria', style: TextStyle(fontWeight: FontWeight.w600)),
+                    onTap: () { Navigator.pop(context); _pickAndAnalyze730(ImageSource.gallery); },
+                  ),
+                ]),
+              )),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(14),
+            child: Row(children: [
+              Container(
+                width: 42, height: 42,
+                decoration: BoxDecoration(gradient: AppColors.buttonGradient, borderRadius: BorderRadius.circular(12)),
+                child: _isAnalyzingDoc
+                    ? const Padding(padding: EdgeInsets.all(10), child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                    : const Icon(Icons.document_scanner, color: Colors.white, size: 22),
+              ),
+              const SizedBox(width: 12),
+              Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(_isAnalyzingDoc ? 'Analisi AI in corso...' : 'Carica CU o Modello 730', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.primary)),
+                Text(_isAnalyzingDoc ? 'Claude sta leggendo il documento' : 'Foto → auto-compila reddito e detrazioni', style: const TextStyle(fontSize: 11, color: AppColors.textLight)),
+              ])),
+              if (!_isAnalyzingDoc) const Icon(Icons.chevron_right, color: AppColors.primary),
+            ]),
+          ),
+        ),
       ),
     );
   }

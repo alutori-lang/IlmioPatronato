@@ -36,7 +36,8 @@ class AppNavBar extends StatelessWidget {
           _NavItem(icon: Icons.menu_book_rounded, label: 'Guide', index: 1, current: currentIndex, onTap: onTap),
           _NavItem(icon: Icons.card_giftcard, label: 'Bonus', index: 2, current: currentIndex, onTap: onTap),
           _NavItem(icon: Icons.build_circle, label: 'Strumenti', index: 3, current: currentIndex, onTap: onTap),
-          _NavItem(icon: Icons.person_rounded, label: 'Profilo', index: 4, current: currentIndex, onTap: onTap),
+          _NavItemSbroglia(index: 4, current: currentIndex, onTap: onTap),
+          _NavItem(icon: Icons.person_rounded, label: 'Profilo', index: 5, current: currentIndex, onTap: onTap),
         ],
       ),
     );
@@ -66,7 +67,7 @@ class _NavItem extends StatelessWidget {
       onTap: () => onTap(index),
       behavior: HitTestBehavior.opaque,
       child: SizedBox(
-        width: 64,
+        width: 56,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -91,9 +92,98 @@ class _NavItem extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                fontSize: 10,
+                fontSize: 9,
                 fontWeight: FontWeight.w600,
                 color: isActive ? AppColors.primary : AppColors.navInactive,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Tab speciale Sbroglia.AI con badge colorato
+class _NavItemSbroglia extends StatelessWidget {
+  final int index;
+  final int current;
+  final ValueChanged<int> onTap;
+
+  const _NavItemSbroglia({
+    required this.index,
+    required this.current,
+    required this.onTap,
+  });
+
+  bool get isActive => index == current;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => onTap(index),
+      behavior: HitTestBehavior.opaque,
+      child: SizedBox(
+        width: 60,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (isActive)
+              Container(
+                width: 28,
+                height: 3,
+                margin: const EdgeInsets.only(bottom: 4),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF6A1B9A),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              )
+            else
+              const SizedBox(height: 7),
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  width: 34,
+                  height: 26,
+                  decoration: BoxDecoration(
+                    gradient: isActive
+                        ? const LinearGradient(
+                            colors: [Color(0xFF6A1B9A), Color(0xFFAB47BC)],
+                          )
+                        : null,
+                    color: isActive ? null : Colors.transparent,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(
+                    Icons.psychology_rounded,
+                    size: 20,
+                    color: isActive ? Colors.white : AppColors.navInactive,
+                  ),
+                ),
+                if (!isActive)
+                  Positioned(
+                    top: -3,
+                    right: -4,
+                    child: Container(
+                      width: 7,
+                      height: 7,
+                      decoration: const BoxDecoration(
+                        color: Color(0xFF4CAF50),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 3),
+            Text(
+              'AI',
+              style: TextStyle(
+                fontSize: 9,
+                fontWeight: FontWeight.w800,
+                color: isActive ? const Color(0xFF6A1B9A) : AppColors.navInactive,
               ),
             ),
           ],

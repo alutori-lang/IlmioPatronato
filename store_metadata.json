@@ -1,0 +1,55 @@
+{
+  "appName": "Il Mio Patronato",
+  "shortDescription": "Bonus, guide e calcolatori per immigrati in Italia. Tutto in un'app.",
+  "fullDescription": "🛡️ IL MIO PATRONATO — Il Patronato in Tasca\n\nL'app completa per l'assistenza all'immigrazione in Italia. Trova bonus, segui guide passo-passo, calcola ISEE, stipendio netto e molto altro.\n\n✨ FUNZIONALITÀ PRINCIPALI:\n\n📋 53 AGEVOLAZIONI & BONUS\n• NASpI, Assegno Unico, ADI, Bonus Affitto\n• Bonus Luce, Gas, Acqua, Trasporti\n• Agevolazioni per famiglia, lavoro, casa, salute\n• Requisiti, documenti e link ufficiali per ogni bonus\n\n📖 18 GUIDE STEP-BY-STEP\n• Permesso di Soggiorno (primo rilascio e rinnovo)\n• Ricongiungimento Familiare\n• Cittadinanza Italiana\n• Codice Fiscale, SPID, CIE\n• Contratto di lavoro, TFR, previdenza\n\n🧮 14 CALCOLATORI\n• ISEE (formula ufficiale DPCM 159/2013)\n• Stipendio Netto da lordo\n• IRPEF / 730\n• NASpI - durata e importo\n• Assegno Unico Figli\n• Codice Fiscale Generator\n• Costo Permesso di Soggiorno\n• Countdown Cittadinanza\n• IMU, TFR, Bollo Auto, Rata Mutuo\n\n📝 COMPILATORE MODULI PDF\n• 6 moduli ufficiali pronti da compilare\n• Wizard passo-passo con auto-compilazione\n• Genera PDF professionale da condividere\n\n🔧 STRUMENTI EXTRA\n• Quiz Cittadinanza (218 domande)\n• CV Europass in PDF\n• Busta Paga Spiegata voce per voce\n• Confronto Offerte di Lavoro\n• Generatore Delega in PDF\n• Document Wallet\n\n🌍 MULTILINGUA\nDisponibile in 12 lingue: Italiano, English, العربية, Shqip, Română, 中文, বাংলা, اردو, Українська, Français, हिन्दी, ਪੰਜਾਬੀ\n\n💡 PERCHÉ SCEGLIERE IL MIO PATRONATO?\n• 100% GRATUITA — nessun abbonamento obbligatorio\n• OFFLINE — funziona anche senza internet\n• AGGIORNATA — dati 2025 sempre attuali\n• SEMPLICE — interfaccia chiara e intuitiva\n• SICURA — nessun dato personale raccolto\n\nScarica ora e porta il Patronato sempre con te! 🇮🇹",
+  "category": "TOOLS",
+  "tags": ["immigrazione", "patronato", "bonus", "ISEE", "permesso soggiorno"],
+
+  "contentRating": {
+    "violence": "none",
+    "sexual": "none",
+    "language": "none",
+    "drugs": "none",
+    "gambling": false,
+    "paidServices": false,
+    "adsPresent": true,
+    "targetAgeGroup": "all_ages",
+    "isNewsApp": false,
+    "socialFeatures": false
+  },
+
+  "dataSafety": {
+    "collectsData": false,
+    "sharesData": false,
+    "dataEncrypted": true,
+    "dataDeleteRequest": true,
+    "dataTypes": {
+      "personalInfo": false,
+      "financialInfo": false,
+      "healthInfo": false,
+      "messages": false,
+      "photosVideos": false,
+      "audioFiles": false,
+      "filesAndDocs": false,
+      "calendar": false,
+      "contacts": false,
+      "appActivity": false,
+      "webBrowsing": false,
+      "deviceInfo": false,
+      "location": false
+    },
+    "purposes": []
+  },
+
+  "permissions": ["android.permission.INTERNET"],
+  "privacyPolicyUrl": "https://sites.google.com/view/ilmiopatronatoitalia/home-page",
+  "isFreemium": false,
+  "containsAds": true,
+  "targetCountries": ["IT"],
+  "whatIsNew": "Prima versione! 53 agevolazioni, 18 guide, 14 calcolatori, compilatore PDF e quiz cittadinanza.",
+  "developerNotes": "App di assistenza per immigrati in Italia con bonus, guide pratiche, calcolatori finanziari e compilazione moduli PDF.",
+  "version": "1.0.0",
+  "developerName": "MioPatronato",
+  "developerEmail": "alutori@gmail.com",
+  "packageName": "com.docflow.docflow_immigrati"
+}

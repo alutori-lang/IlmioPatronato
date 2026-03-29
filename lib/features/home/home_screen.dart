@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../config/constants.dart';
-import '../../core/widgets/service_card.dart';
 import '../../core/widgets/banner_ad_widget.dart';
 import '../../core/services/agevolazioni_service.dart';
 import '../agevolazioni/agevolazioni_data.dart' as data;
 import '../agevolazioni/agevolazione_detail_screen.dart';
-import '../agevolazioni/agevolazione_ai_detail_screen.dart';
+import '../simulatore/simulatore_screen.dart';
+import '../compilatore/compilatore_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final VoidCallback onNavigateToGuide;
@@ -45,6 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void _push(Widget screen) {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => screen));
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -52,12 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
         SliverToBoxAdapter(child: _buildHeader(context)),
         SliverToBoxAdapter(child: _buildBanner(context)),
         SliverToBoxAdapter(child: _buildAgevolazioneDelGiorno(context)),
-        SliverToBoxAdapter(child: _sectionTitle('Cosa vuoi fare?')),
-        SliverToBoxAdapter(child: _buildServicesGrid(context)),
-        SliverToBoxAdapter(child: _buildStats()),
-        SliverToBoxAdapter(child: _sectionTitle('Agevolazioni Nuove Questa Settimana')),
-        SliverToBoxAdapter(child: _buildNovitaAgevolazioni(context)),
-        const SliverToBoxAdapter(child: SizedBox(height: 12)),
+        const SliverToBoxAdapter(child: SizedBox(height: 20)),
+        SliverToBoxAdapter(child: _buildCardsSection(context)),
+        const SliverToBoxAdapter(child: SizedBox(height: 16)),
         const SliverToBoxAdapter(child: _DisclaimerBox()),
         const SliverToBoxAdapter(
           child: Padding(
@@ -70,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // ─── HEADER ──────────────────────────────────────────────────────────────
   Widget _buildHeader(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
@@ -99,11 +101,25 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+          const SizedBox(width: 8),
+          // ── Icona Assistente AI ──
+          GestureDetector(
+            onTap: widget.onNavigateToSbroglia,
+            child: Container(
+              width: 40, height: 40,
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(Icons.search, color: Colors.white, size: 22),
+            ),
+          ),
         ],
       ),
     );
   }
 
+  // ─── BANNER ──────────────────────────────────────────────────────────────
   Widget _buildBanner(BuildContext context) {
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 14, 16, 0),
@@ -126,16 +142,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text('Il Mio Patronato', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800, height: 1.2)),
-                  const SizedBox(height: 4),
-                  const Text('Pratiche, Bonus e Servizi per Immigrati', style: TextStyle(color: AppColors.bannerText, fontSize: 12)),
+                  Text('Il Mio Patronato', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800, height: 1.2)),
+                  SizedBox(height: 4),
+                  Text('Pratiche, Bonus e Servizi per Immigrati', style: TextStyle(color: AppColors.bannerText, fontSize: 12)),
                 ],
               ),
             ),
@@ -145,6 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // ─── AGEVOLAZIONE DEL GIORNO ─────────────────────────────────────────────
   Widget _buildAgevolazioneDelGiorno(BuildContext context) {
     final a = data.agevolazioneDelGiorno();
     return GestureDetector(
@@ -207,225 +224,95 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _sectionTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 18, 20, 10),
-      child: Text(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: AppColors.textDark)),
-    );
-  }
-
-  Widget _buildServicesGrid(BuildContext context) {
+  // ─── MAIN CARDS SECTION ──────────────────────────────────────────────────
+  Widget _buildCardsSection(BuildContext context) {
     final bonusCount = 53 + _nuoveAgevolazioni.length;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: GridView.count(
-        crossAxisCount: 3, shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        mainAxisSpacing: 12, crossAxisSpacing: 12, childAspectRatio: 0.78,
-        children: [
-          ServiceCard(
-            icon: Icons.card_giftcard, title: 'Agevolazioni', subtitle: '$bonusCount bonus & diritti',
-            iconGradient: const [Color(0xFFFFF3E0), Color(0xFFFFE0B2)], iconColor: const Color(0xFFE65100),
-            onTap: widget.onNavigateToAgevolazioni,
-          ),
-          ServiceCard(
-            icon: Icons.build_circle, title: 'Strumenti', subtitle: '20+ tools',
-            iconGradient: const [AppColors.serviceGreenLight, AppColors.serviceGreenMed], iconColor: AppColors.iconGreen,
-            onTap: widget.onNavigateToStrumenti,
-          ),
-          ServiceCard(
-            icon: Icons.psychology_rounded, title: 'Chiedi AI', subtitle: 'Patronato AI',
-            iconGradient: const [Color(0xFFEDE7F6), Color(0xFFD1C4E9)], iconColor: Color(0xFF6A1B9A),
-            onTap: widget.onNavigateToSbroglia,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildStats() {
-    final bonusCount = 53 + _nuoveAgevolazioni.length;
-    return Container(
-      margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
-      decoration: BoxDecoration(
-        color: Colors.white, borderRadius: BorderRadius.circular(14),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 15, offset: const Offset(0, 2))],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _StatItem(value: '$bonusCount', label: 'BONUS'),
-          const _StatItem(value: '18', label: 'GUIDE'),
-          const _StatItem(value: '14', label: 'CALCOLATORI'),
-          const _StatItem(value: '6', label: 'PDF'),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNovitaAgevolazioni(BuildContext context) {
-    if (_loading) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-        child: Center(child: Column(
-          children: [
-            SizedBox(width: 28, height: 28, child: CircularProgressIndicator(strokeWidth: 2.5, color: Color(0xFFE65100))),
-            SizedBox(height: 10),
-            Text('Cerco agevolazioni reali...', style: TextStyle(fontSize: 12, color: AppColors.textLight)),
-          ],
-        )),
-      );
-    }
-
-    if (_nuoveAgevolazioni.isEmpty) {
-      // Fallback: mostra 3 agevolazioni statiche come prima
-      final nuove = data.novita().take(3).toList();
-      return _buildStaticNovita(context, nuove);
-    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ..._nuoveAgevolazioni.take(4).map((a) => _buildAgevolazioneCard(context, a)),
+          const Text('I Tuoi Servizi', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: AppColors.textDark)),
           const SizedBox(height: 4),
-          GestureDetector(
-            onTap: widget.onNavigateToAgevolazioni,
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              decoration: BoxDecoration(
-                color: const Color(0xFFE65100).withValues(alpha: 0.08),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Center(
-                child: Text(
-                  'Vedi tutte le ${53 + _nuoveAgevolazioni.length} Agevolazioni →',
-                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Color(0xFFE65100)),
+          Text('Tutto quello che ti serve, in un posto', style: TextStyle(fontSize: 12, color: Colors.grey.shade500)),
+          const SizedBox(height: 14),
+
+          // ── ROW 1: Agevolazioni + Calcolatori ──
+          Row(
+            children: [
+              Expanded(
+                child: _HomeCard(
+                  gradient: const [Color(0xFFFF6F00), Color(0xFFE65100)],
+                  icon: Icons.card_giftcard,
+                  title: 'Agevolazioni',
+                  subtitle: '$bonusCount bonus & diritti',
+                  items: _loading
+                    ? ['Caricamento...']
+                    : [
+                        'Assegno Unico',
+                        'NASpI & ADI',
+                        'Bonus Bollette',
+                        if (_nuoveAgevolazioni.isNotEmpty) '+${_nuoveAgevolazioni.length} nuovi',
+                      ],
+                  onTap: widget.onNavigateToAgevolazioni,
                 ),
               ),
-            ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _HomeCard(
+                  gradient: const [Color(0xFF6A1B9A), Color(0xFF4A148C)],
+                  icon: Icons.calculate,
+                  title: 'Calcolatori',
+                  subtitle: '14 simulatori',
+                  items: const [
+                    'ISEE & 730',
+                    'Stipendio Netto',
+                    'NASpI & TFR',
+                    'IMU & Mutuo',
+                  ],
+                  onTap: () => _push(const SimulatoreScreen()),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
-  }
+          const SizedBox(height: 12),
 
-  Widget _buildAgevolazioneCard(BuildContext context, Agevolazione a) {
-    return GestureDetector(
-      onTap: () => Navigator.push(context, MaterialPageRoute(
-        builder: (_) => AgevolazioneAiDetailScreen(agevolazione: a),
-      )),
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 10),
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(14),
-          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 12, offset: const Offset(0, 2))],
-          border: Border.all(color: const Color(0xFFE65100).withValues(alpha: 0.15)),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 40, height: 40,
-              decoration: BoxDecoration(
-                color: const Color(0xFFE65100).withValues(alpha: 0.08),
-                borderRadius: BorderRadius.circular(10),
+          // ── ROW 2: Strumenti & Guide + Moduli PDF ──
+          Row(
+            children: [
+              Expanded(
+                child: _HomeCard(
+                  gradient: const [Color(0xFF2E7D32), Color(0xFF1B5E20)],
+                  icon: Icons.build_circle,
+                  title: 'Strumenti & Guide',
+                  subtitle: '18 guide + 6 tools',
+                  items: const [
+                    '18 Guide Pratiche',
+                    'Wallet Documenti',
+                    'Quiz Cittadinanza',
+                    'CV Europass',
+                  ],
+                  onTap: widget.onNavigateToStrumenti,
+                ),
               ),
-              child: Center(child: Text(a.categoriaIcon, style: const TextStyle(fontSize: 20))),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(a.titolo, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.textDark), maxLines: 1, overflow: TextOverflow.ellipsis),
-                  const SizedBox(height: 2),
-                  Text(a.descrizione, style: const TextStyle(fontSize: 11, color: AppColors.textLight), maxLines: 2, overflow: TextOverflow.ellipsis),
-                  const SizedBox(height: 4),
-                  Row(children: [
-                    if (a.importo.isNotEmpty) ...[
-                      Text(a.importo, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Colors.green.shade700)),
-                      const SizedBox(width: 8),
-                    ],
-                    Icon(Icons.access_time, size: 11, color: Colors.grey.shade500),
-                    const SizedBox(width: 3),
-                    Text(a.tempoRelativo, style: TextStyle(fontSize: 10, color: Colors.grey.shade500)),
-                    if (a.fonte.isNotEmpty) ...[
-                      const SizedBox(width: 8),
-                      Icon(Icons.source, size: 11, color: Colors.grey.shade400),
-                      const SizedBox(width: 3),
-                      Flexible(child: Text(a.fonte, style: TextStyle(fontSize: 10, color: Colors.grey.shade400), overflow: TextOverflow.ellipsis)),
-                    ],
-                  ]),
-                ],
+              const SizedBox(width: 12),
+              Expanded(
+                child: _HomeCard(
+                  gradient: const [Color(0xFFC62828), Color(0xFFB71C1C)],
+                  icon: Icons.description,
+                  title: 'Moduli & PDF',
+                  subtitle: '6 moduli + generatori',
+                  items: const [
+                    'Compila Moduli',
+                    'Generatore Delega',
+                    'Confronto Offerte',
+                    'Prenotazioni',
+                  ],
+                  onTap: () => _push(const CompilatoreScreen()),
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildStaticNovita(BuildContext context, List<dynamic> nuove) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        children: [
-          ...nuove.map((a) => GestureDetector(
-            onTap: () => Navigator.push(context, MaterialPageRoute(
-              builder: (_) => AgevolazioneDetailScreen(agevolazione: a, icon: Icons.card_giftcard, color: const Color(0xFFE65100)),
-            )),
-            child: Container(
-              margin: const EdgeInsets.only(bottom: 10),
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(14),
-                boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 12, offset: const Offset(0, 2))],
-                border: Border.all(color: Colors.red.shade100),
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 40, height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.red.shade50,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Icon(Icons.fiber_new, color: Colors.red.shade600, size: 22),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(a.titolo, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.textDark), maxLines: 1, overflow: TextOverflow.ellipsis),
-                        const SizedBox(height: 2),
-                        Text(a.importo, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Colors.green.shade700)),
-                      ],
-                    ),
-                  ),
-                  Icon(Icons.chevron_right, color: Colors.grey.shade400, size: 20),
-                ],
-              ),
-            ),
-          )),
-          GestureDetector(
-            onTap: widget.onNavigateToAgevolazioni,
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              decoration: BoxDecoration(
-                color: const Color(0xFFE65100).withValues(alpha: 0.08),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: const Center(
-                child: Text('Vedi tutte le 53 Agevolazioni →', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Color(0xFFE65100))),
-              ),
-            ),
+            ],
           ),
         ],
       ),
@@ -433,22 +320,139 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-// ─── StatItem ──────────────────────────────────────────────────────────────
+// ─── HOME CARD ─────────────────────────────────────────────────────────────
 
-class _StatItem extends StatelessWidget {
-  final String value;
-  final String label;
-  const _StatItem({required this.value, required this.label});
+class _HomeCard extends StatelessWidget {
+  final List<Color> gradient;
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final List<String> items;
+  final VoidCallback onTap;
+
+  const _HomeCard({
+    required this.gradient,
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.items,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Text(value, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: AppColors.primary)),
-      const SizedBox(height: 2),
-      Text(label, style: const TextStyle(fontSize: 9, color: AppColors.textLight, letterSpacing: 0.5)),
-    ]);
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: gradient,
+          ),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: gradient[0].withValues(alpha: 0.35),
+              blurRadius: 16,
+              offset: const Offset(0, 6),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Icon + Arrow
+            Row(
+              children: [
+                Container(
+                  width: 42, height: 42,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(icon, color: Colors.white, size: 22),
+                ),
+                const Spacer(),
+                Container(
+                  width: 28, height: 28,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Icon(Icons.arrow_forward, color: Colors.white, size: 14),
+                ),
+              ],
+            ),
+            const SizedBox(height: 14),
+
+            // Title
+            Text(
+              title,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w800,
+                height: 1.1,
+              ),
+            ),
+            const SizedBox(height: 3),
+
+            // Subtitle
+            Text(
+              subtitle,
+              style: TextStyle(
+                color: Colors.white.withValues(alpha: 0.7),
+                fontSize: 11,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 12),
+
+            // Divider
+            Container(
+              height: 1,
+              color: Colors.white.withValues(alpha: 0.15),
+            ),
+            const SizedBox(height: 10),
+
+            // Items list
+            ...items.map((item) => Padding(
+              padding: const EdgeInsets.only(bottom: 5),
+              child: Row(
+                children: [
+                  Container(
+                    width: 5, height: 5,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.6),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      item,
+                      style: TextStyle(
+                        color: Colors.white.withValues(alpha: 0.85),
+                        fontSize: 11,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            )),
+          ],
+        ),
+      ),
+    );
   }
 }
+
+// ─── DISCLAIMER ────────────────────────────────────────────────────────────
 
 class _DisclaimerBox extends StatelessWidget {
   const _DisclaimerBox();
@@ -456,7 +460,7 @@ class _DisclaimerBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+      margin: const EdgeInsets.fromLTRB(16, 8, 16, 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.grey.shade100,

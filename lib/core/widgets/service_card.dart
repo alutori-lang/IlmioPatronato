@@ -37,25 +37,26 @@ class ServiceCard extends StatelessWidget {
           ],
           border: Border.all(color: Colors.black.withValues(alpha: 0.03)),
         ),
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 14),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Stack(
               clipBehavior: Clip.none,
               children: [
                 Container(
-                  width: 60,
-                  height: 60,
+                  width: 52,
+                  height: 52,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(14),
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: iconGradient,
                     ),
                   ),
-                  child: Icon(icon, size: 28, color: iconColor),
+                  child: Icon(icon, size: 24, color: iconColor),
                 ),
                 Positioned(
                   top: -4,
@@ -73,7 +74,7 @@ class ServiceCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 7),
             Flexible(
               child: Text(
                 title,

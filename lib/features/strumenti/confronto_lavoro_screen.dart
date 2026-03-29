@@ -1,6 +1,11 @@
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import '../../config/constants.dart';
+import '../../core/services/gemini_service.dart';
+import '../../core/widgets/document_upload_widget.dart';
 
 class ConfrontoLavoroScreen extends StatefulWidget {
   const ConfrontoLavoroScreen({super.key});
@@ -34,6 +39,10 @@ class _ConfrontoLavoroScreenState extends State<ConfrontoLavoroScreen>
   bool _autoAziendaleB = false;
   bool _telefonoB = false;
   bool _assicurazioneB = false;
+
+  // ── AI scanning ──
+  bool _isAnalyzingA = false;
+  bool _isAnalyzingB = false;
 
   // ── Risultati ──
   bool _showResult = false;
@@ -174,6 +183,175 @@ class _ConfrontoLavoroScreenState extends State<ConfrontoLavoroScreen>
       valoreBenefit: valoreBenefit,
       totaleValoreReale: totaleValoreReale,
     );
+  }
+
+  // ─────────────────────────────────────────────
+  // AI DOCUMENT SCANNING
+  // ─────────────────────────────────────────────
+  Future<void> _pickAndAnalyzeOffer(ImageSource source, bool isOfferA) async {
+    final file = await pickImage(source);
+    if (file == null) return;
+
+    setState(() {
+      if (isOfferA) {
+        _isAnalyzingA = true;
+      } else {
+        _isAnalyzingB = true;
+      }
+    });
+
+    try {
+      final response = await GeminiService().analyzeDocument(
+        imageFile: file,
+        prompt:
+            'Analizza questa offerta di lavoro o contratto italiano. '
+            'Estrai e restituisci SOLO un JSON valido (senza markdown): '
+            '{"azienda": "", "ral_annua": "numero", '
+            '"tipo_contratto": "indeterminato/determinato/apprendistato", '
+            '"mensilita": "13 o 14", '
+            '"buoni_pasto_valore": "numero o null", '
+            '"smart_working_giorni": "numero o null"}. '
+            'Importi come numeri senza simbolo \u20AC.',
+      );
+
+      if (!mounted) return;
+
+      if (response.isSuccess) {
+        final json = response.tryParseJson();
+        if (json != null) {
+          _fillFieldsFromJson(json, isOfferA);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Offerta ${isOfferA ? "A" : "B"} compilata automaticamente!',
+              ),
+              backgroundColor: const Color(0xFF4CAF50),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text(
+                  'Non sono riuscito a estrarre i dati. Riprova con una foto pi\u00F9 nitida.'),
+              backgroundColor: Colors.orange.shade700,
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+            ),
+          );
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(response.errorMessage ?? 'Errore durante l\'analisi'),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10)),
+          ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Errore: $e'),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          if (isOfferA) {
+            _isAnalyzingA = false;
+          } else {
+            _isAnalyzingB = false;
+          }
+        });
+      }
+    }
+  }
+
+  void _fillFieldsFromJson(Map<String, dynamic> json, bool isOfferA) {
+    setState(() {
+      // Azienda
+      final azienda = json['azienda']?.toString() ?? '';
+      if (azienda.isNotEmpty) {
+        if (isOfferA) {
+          _aziendaACtrl.text = azienda;
+        } else {
+          _aziendaBCtrl.text = azienda;
+        }
+      }
+
+      // RAL
+      final ral = json['ral_annua']?.toString() ?? '';
+      if (ral.isNotEmpty && ral != 'null') {
+        if (isOfferA) {
+          _ralACtrl.text = ral;
+        } else {
+          _ralBCtrl.text = ral;
+        }
+      }
+
+      // Tipo contratto
+      final tipo = (json['tipo_contratto']?.toString() ?? '').toLowerCase();
+      if (tipo.contains('indeterminato')) {
+        if (isOfferA) {
+          _contrattoA = 'Indeterminato';
+        } else {
+          _contrattoB = 'Indeterminato';
+        }
+      } else if (tipo.contains('determinato')) {
+        if (isOfferA) {
+          _contrattoA = 'Determinato';
+        } else {
+          _contrattoB = 'Determinato';
+        }
+      } else if (tipo.contains('apprendist')) {
+        if (isOfferA) {
+          _contrattoA = 'Apprendista';
+        } else {
+          _contrattoB = 'Apprendista';
+        }
+      }
+
+      // Mensilita
+      final mens = int.tryParse(json['mensilita']?.toString() ?? '');
+      if (mens == 13 || mens == 14) {
+        if (isOfferA) {
+          _mensilitaA = mens!;
+        } else {
+          _mensilitaB = mens!;
+        }
+      }
+
+      // Buoni pasto
+      final buoni = json['buoni_pasto_valore']?.toString() ?? '';
+      if (buoni.isNotEmpty && buoni != 'null') {
+        if (isOfferA) {
+          _buoniPastoACtrl.text = buoni;
+        } else {
+          _buoniPastoBCtrl.text = buoni;
+        }
+      }
+
+      // Smart working
+      final sw = int.tryParse(json['smart_working_giorni']?.toString() ?? '');
+      if (sw != null && sw >= 0 && sw <= 5) {
+        if (isOfferA) {
+          _smartWorkingA = sw;
+        } else {
+          _smartWorkingB = sw;
+        }
+      }
+    });
   }
 
   void _confronta() {
@@ -357,6 +535,220 @@ class _ConfrontoLavoroScreenState extends State<ConfrontoLavoroScreen>
     );
   }
 
+  // ── Upload banner (AI scan) ──
+  Widget _buildUploadBanner(bool isA, Color color) {
+    final isAnalyzing = isA ? _isAnalyzingA : _isAnalyzingB;
+    final label = isA ? 'A' : 'B';
+
+    if (isAnalyzing) {
+      return Container(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: color.withValues(alpha: 0.05),
+          border: Border.all(color: color.withValues(alpha: 0.2)),
+        ),
+        child: Column(
+          children: [
+            SizedBox(
+              width: 32,
+              height: 32,
+              child: CircularProgressIndicator(
+                strokeWidth: 3,
+                color: color,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'AI sta analizzando l\'offerta $label...',
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
+                color: color,
+              ),
+            ),
+            const SizedBox(height: 4),
+            const Text(
+              'Estrazione dati dal documento',
+              style: TextStyle(fontSize: 11, color: AppColors.textLight),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return GestureDetector(
+      onTap: () => _showUploadSheet(isA),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          gradient: LinearGradient(
+            colors: [
+              color.withValues(alpha: 0.08),
+              color.withValues(alpha: 0.03),
+            ],
+          ),
+          border: Border.all(color: color.withValues(alpha: 0.2)),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [color, color.withValues(alpha: 0.7)],
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Icon(
+                Icons.document_scanner_rounded,
+                color: Colors.white,
+                size: 20,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Carica Contratto/Offerta',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      color: color,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  const Text(
+                    'AI compila i campi automaticamente',
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: AppColors.textLight,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              Icons.auto_awesome,
+              color: color.withValues(alpha: 0.6),
+              size: 20,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showUploadSheet(bool isOfferA) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (_) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Carica Offerta ${isOfferA ? "A" : "B"}',
+                style: const TextStyle(
+                    fontSize: 17, fontWeight: FontWeight.w700),
+              ),
+              const SizedBox(height: 6),
+              const Text(
+                'Scatta una foto o scegli dalla galleria.\nL\'AI estrarra\u0300 i dati automaticamente.',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 12, color: AppColors.textLight),
+              ),
+              const SizedBox(height: 20),
+              _sheetUploadOption(
+                Icons.camera_alt_rounded,
+                'Scatta foto',
+                'Fotografa il contratto o la lettera d\'offerta',
+                () {
+                  Navigator.pop(context);
+                  _pickAndAnalyzeOffer(ImageSource.camera, isOfferA);
+                },
+              ),
+              const SizedBox(height: 10),
+              _sheetUploadOption(
+                Icons.photo_library_rounded,
+                'Scegli dalla galleria',
+                'Seleziona una foto gia\u0300 presente sul telefono',
+                () {
+                  Navigator.pop(context);
+                  _pickAndAnalyzeOffer(ImageSource.gallery, isOfferA);
+                },
+              ),
+              const SizedBox(height: 10),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _sheetUploadOption(
+      IconData icon, String title, String desc, VoidCallback onTap) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(14),
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: Colors.grey.shade200),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 44,
+                height: 44,
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(icon, color: AppColors.primary, size: 22),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title,
+                        style: const TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w600)),
+                    Text(desc,
+                        style: const TextStyle(
+                            fontSize: 11, color: AppColors.textLight)),
+                  ],
+                ),
+              ),
+              const Icon(Icons.chevron_right, color: AppColors.textLight),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   // ── Offer card ──
   Widget _buildOfferCard({required bool isA}) {
     final aziendaCtrl = isA ? _aziendaACtrl : _aziendaBCtrl;
@@ -407,6 +799,10 @@ class _ConfrontoLavoroScreenState extends State<ConfrontoLavoroScreen>
               ),
             ],
           ),
+          const SizedBox(height: 14),
+
+          // AI Upload banner
+          _buildUploadBanner(isA, color),
           const SizedBox(height: 14),
 
           // Azienda

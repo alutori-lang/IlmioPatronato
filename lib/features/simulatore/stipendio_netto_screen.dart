@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 import '../../config/constants.dart';
+import '../../core/services/gemini_service.dart';
+import '../../core/widgets/document_upload_widget.dart';
 
 class StipendioNettoScreen extends StatefulWidget {
   const StipendioNettoScreen({super.key});
@@ -11,24 +17,23 @@ class StipendioNettoScreen extends StatefulWidget {
 
 class _StipendioNettoScreenState extends State<StipendioNettoScreen>
     with SingleTickerProviderStateMixin {
-  // -- Input fields --
-  final _ralCtrl = TextEditingController();
-  String _tipoContratto = 'dipendente'; // dipendente, apprendista, cococo
+  bool _isAnalyzingDoc = false;
+  bool _showResult = false;
+  bool _needRegione = false;
+
+  // Dati estratti dall'AI
+  double _ral = 0;
+  String _tipoContratto = 'dipendente';
   String _settore = 'Commercio';
   String _regione = 'Lazio';
-  int _figliACarico = 0;
-  bool _coniugeACarico = false;
+  String _dipendente = '';
+  String _azienda = '';
 
-  // -- Result --
-  bool _showResult = false;
-  double _ral = 0;
+  // Risultati calcolo
   double _contributiInps = 0;
   double _imponibileIrpef = 0;
   double _irpefLorda = 0;
   double _detrazioniLavoro = 0;
-  double _detrazioniFigli = 0;
-  double _detrazioneConiuge = 0;
-  double _detrazioniTotali = 0;
   double _irpefNetta = 0;
   double _addizionaleRegionale = 0;
   double _addizionaleComunale = 0;
@@ -64,39 +69,154 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
 
   @override
   void dispose() {
-    _ralCtrl.dispose();
     _animController.dispose();
     super.dispose();
   }
 
-  double _p(String s) {
-    if (s.isEmpty) return 0;
-    return double.tryParse(s.replaceAll('.', '').replaceAll(',', '.')) ?? 0;
+  double _pAi(dynamic v) {
+    if (v == null) return 0;
+    final s = v.toString().replaceAll('€', '').replaceAll(' ', '').replaceAll('.', '').replaceAll(',', '.');
+    return double.tryParse(s) ?? 0;
   }
 
-  // -----------------------------------------------
-  // CALCOLO STIPENDIO NETTO (busta paga italiana 2025)
-  // -----------------------------------------------
+  Future<void> _pickAndAnalyze(ImageSource source) async {
+    final file = await pickImage(source);
+    if (file == null) return;
+
+    setState(() {
+      _isAnalyzingDoc = true;
+      _showResult = false;
+      _needRegione = false;
+    });
+
+    final response = await GeminiService().analyzeDocument(
+      imageFile: file,
+      prompt: '''Analizza questa busta paga o contratto di lavoro italiano. Estrai TUTTI i dati e restituisci SOLO un JSON valido (senza markdown):
+{
+  "ral": "retribuzione annua lorda numerico",
+  "tipo_contratto": "dipendente o apprendista o cococo",
+  "settore": "Commercio o Industria o Artigianato o Pubblico",
+  "regione": "regione sede di lavoro",
+  "dipendente": "nome del dipendente",
+  "azienda": "nome azienda o datore di lavoro"
+}
+Importi come numeri senza simbolo €. Se un campo non è leggibile, metti null.''',
+    );
+
+    if (!mounted) return;
+
+    if (response.isSuccess) {
+      final parsed = response.tryParseJson();
+      if (parsed != null) {
+        final ral = _pAi(parsed['ral']);
+
+        if (ral <= 0) {
+          setState(() => _isAnalyzingDoc = false);
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('RAL non trovata nel documento. Riprova con una foto piu nitida.'),
+              backgroundColor: Color(0xFFF44336),
+            ));
+          }
+          return;
+        }
+
+        _ral = ral;
+        _dipendente = parsed['dipendente']?.toString() ?? '';
+        _azienda = parsed['azienda']?.toString() ?? '';
+
+        final tipo = parsed['tipo_contratto']?.toString().toLowerCase() ?? '';
+        if (tipo.contains('apprend')) {
+          _tipoContratto = 'apprendista';
+        } else if (tipo.contains('cococo') || tipo.contains('co.co')) {
+          _tipoContratto = 'cococo';
+        } else {
+          _tipoContratto = 'dipendente';
+        }
+
+        final settore = parsed['settore']?.toString() ?? '';
+        if (settore.isNotEmpty) {
+          for (final s in _settori) {
+            if (settore.toLowerCase().contains(s.toLowerCase())) {
+              _settore = s;
+              break;
+            }
+          }
+        }
+
+        // Check regione
+        final regione = parsed['regione']?.toString() ?? '';
+        bool regioneFound = false;
+        if (regione.isNotEmpty) {
+          for (final r in _regioni) {
+            if (regione.toLowerCase().contains(r.toLowerCase())) {
+              _regione = r;
+              regioneFound = true;
+              break;
+            }
+          }
+        }
+
+        if (!regioneFound) {
+          setState(() {
+            _isAnalyzingDoc = false;
+            _needRegione = true;
+          });
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('Regione non trovata. Selezionala per completare il calcolo.'),
+              backgroundColor: Color(0xFFFF9800),
+            ));
+          }
+          return;
+        }
+
+        _calcola();
+        setState(() => _isAnalyzingDoc = false);
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Busta paga analizzata con successo!'),
+            backgroundColor: Color(0xFF4CAF50),
+          ));
+        }
+      } else {
+        setState(() => _isAnalyzingDoc = false);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Impossibile leggere i dati. Riprova con una foto piu nitida.'),
+            backgroundColor: Color(0xFFF44336),
+          ));
+        }
+      }
+    } else {
+      setState(() => _isAnalyzingDoc = false);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(response.errorMessage ?? 'Errore'),
+          backgroundColor: const Color(0xFFF44336),
+        ));
+      }
+    }
+  }
+
+  // ── CALCOLO STIPENDIO NETTO ──
   void _calcola() {
-    _ral = _p(_ralCtrl.text);
     if (_ral <= 0) return;
 
-    // 1. Contributi INPS a carico del lavoratore
+    // 1. Contributi INPS
     switch (_tipoContratto) {
       case 'apprendista':
         _aliquotaInps = 5.84;
         break;
       case 'cococo':
-        // Co.Co.Co: aliquota 1/3 del 33.72% (quota lavoratore)
         _aliquotaInps = 11.24;
         break;
       default:
-        // Dipendente: 9.19% standard
-        // con riduzione per RAL fino a 35.000 (esonero 2024-2025 prorogato)
         if (_ral <= 25000) {
-          _aliquotaInps = 2.19; // 9.19% - 7% esonero
+          _aliquotaInps = 2.19;
         } else if (_ral <= 35000) {
-          _aliquotaInps = 3.19; // 9.19% - 6% esonero
+          _aliquotaInps = 3.19;
         } else {
           _aliquotaInps = 9.19;
         }
@@ -133,30 +253,11 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
 
     _irpefLorda = imposta;
 
-    // 4. Detrazioni lavoro dipendente (formula reale 2025)
-    if (_tipoContratto == 'cococo') {
-      // Co.Co.Co assimilati ai dipendenti per detrazioni
-      _detrazioniLavoro = _detrazioneLavoroDipendente(_imponibileIrpef);
-    } else {
-      _detrazioniLavoro = _detrazioneLavoroDipendente(_imponibileIrpef);
-    }
-
-    // 5. Detrazioni figli a carico (>21 anni)
-    _detrazioniFigli = 0;
-    if (_figliACarico > 0) {
-      _detrazioniFigli = _calcolaDetrazioneFigli(_imponibileIrpef, _figliACarico);
-    }
-
-    // 6. Detrazione coniuge a carico
-    _detrazioneConiuge = 0;
-    if (_coniugeACarico) {
-      _detrazioneConiuge = _calcolaDetrazioneConiuge(_imponibileIrpef);
-    }
-
-    _detrazioniTotali = _detrazioniLavoro + _detrazioniFigli + _detrazioneConiuge;
+    // 4. Detrazioni lavoro dipendente
+    _detrazioniLavoro = _detrazioneLavoroDipendente(_imponibileIrpef);
 
     // 5. IRPEF Netta
-    _irpefNetta = (_irpefLorda - _detrazioniTotali).clamp(0.0, double.infinity);
+    _irpefNetta = (_irpefLorda - _detrazioniLavoro).clamp(0.0, double.infinity);
 
     // 6. Addizionale regionale
     _addizionaleRegionale = _calcolaAddizionaleRegionale(_imponibileIrpef, _regione);
@@ -173,11 +274,13 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
     _nettoMensile13 = _nettoAnnuo / 13;
     _nettoMensile14 = _nettoAnnuo / 14;
 
-    setState(() => _showResult = true);
+    setState(() {
+      _showResult = true;
+      _needRegione = false;
+    });
     _animController.forward(from: 0);
   }
 
-  // -- Detrazione lavoro dipendente (2025) --
   double _detrazioneLavoroDipendente(double reddito) {
     if (reddito <= 15000) {
       return 1955.0;
@@ -189,38 +292,6 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
     return 0;
   }
 
-  // -- Detrazione figli a carico (>21 anni, 950 per figlio) --
-  double _calcolaDetrazioneFigli(double reddito, int figli) {
-    if (reddito > 95000) return 0;
-    final base = 950.0 * figli;
-    return base * ((95000 - reddito) / 95000);
-  }
-
-  // -- Detrazione coniuge a carico --
-  double _calcolaDetrazioneConiuge(double reddito) {
-    if (reddito <= 15000) {
-      return 800.0 - 110.0 * (reddito / 15000);
-    } else if (reddito <= 29000) {
-      return 690.0;
-    } else if (reddito <= 29200) {
-      return 700.0;
-    } else if (reddito <= 34700) {
-      return 710.0;
-    } else if (reddito <= 35000) {
-      return 720.0;
-    } else if (reddito <= 35100) {
-      return 710.0;
-    } else if (reddito <= 35200) {
-      return 700.0;
-    } else if (reddito <= 40000) {
-      return 690.0;
-    } else if (reddito <= 80000) {
-      return 690.0 * ((80000 - reddito) / 40000);
-    }
-    return 0;
-  }
-
-  // -- Addizionale regionale (aliquote medie 2025) --
   double _calcolaAddizionaleRegionale(double imponibile, String regione) {
     final aliquote = <String, double>{
       'Abruzzo': 0.0173, 'Basilicata': 0.0123, 'Calabria': 0.0203,
@@ -235,45 +306,101 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
     return imponibile * aliquota;
   }
 
-  // -----------------------------------------------
-  // BUILD
-  // -----------------------------------------------
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(child: _buildHeader(context)),
-            SliverToBoxAdapter(child: _buildInfoBanner()),
-            SliverToBoxAdapter(child: _sectionTitle('RAL - Reddito Annuo Lordo')),
-            SliverToBoxAdapter(child: _buildRalSection()),
-            SliverToBoxAdapter(child: _sectionTitle('Tipo Contratto')),
-            SliverToBoxAdapter(child: _buildTipoContratto()),
-            SliverToBoxAdapter(child: _sectionTitle('Settore')),
-            SliverToBoxAdapter(child: _buildSettoreSection()),
-            SliverToBoxAdapter(child: _sectionTitle('Regione di Residenza')),
-            SliverToBoxAdapter(child: _buildRegioneSection()),
-            SliverToBoxAdapter(child: _sectionTitle('Carichi Familiari')),
-            SliverToBoxAdapter(child: _buildCarichiFamiliari()),
-            SliverToBoxAdapter(child: _buildCalcolaButton()),
-            if (_showResult) ...[
-              SliverToBoxAdapter(child: _buildNettoResultCard()),
-              SliverToBoxAdapter(child: _buildSplitBarsCard()),
-              SliverToBoxAdapter(child: _buildScaglioniCard()),
-              SliverToBoxAdapter(child: _buildDettaglioCard()),
-              SliverToBoxAdapter(child: _buildMensileCard()),
-            ],
-            const SliverToBoxAdapter(child: SizedBox(height: 40)),
+  Future<void> _generaPdf() async {
+    final pdf = pw.Document();
+    pdf.addPage(pw.Page(
+      pageFormat: PdfPageFormat.a4,
+      build: (pw.Context context) {
+        return pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            pw.Text('CALCOLO STIPENDIO NETTO', style: pw.TextStyle(fontSize: 22, fontWeight: pw.FontWeight.bold)),
+            pw.SizedBox(height: 20),
+            if (_dipendente.isNotEmpty) pw.Text('Dipendente: $_dipendente', style: const pw.TextStyle(fontSize: 14)),
+            if (_azienda.isNotEmpty) pw.Text('Azienda: $_azienda', style: const pw.TextStyle(fontSize: 14)),
+            pw.SizedBox(height: 16),
+            pw.Divider(),
+            pw.SizedBox(height: 12),
+            _pdfRow('RAL (lordo annuo)', '\u20AC ${_fmt.format(_ral)}'),
+            _pdfRow('Tipo contratto', _tipoContratto),
+            _pdfRow('Settore', _settore),
+            _pdfRow('Regione', _regione),
+            pw.SizedBox(height: 12),
+            pw.Divider(),
+            pw.SizedBox(height: 8),
+            _pdfRow('Contributi INPS (${_aliquotaInps.toStringAsFixed(2)}%)', '- \u20AC ${_fmt.format(_contributiInps)}'),
+            _pdfRow('Imponibile IRPEF', '\u20AC ${_fmt.format(_imponibileIrpef)}'),
+            _pdfRow('IRPEF lorda', '\u20AC ${_fmt.format(_irpefLorda)}'),
+            _pdfRow('Detrazioni lavoro', '- \u20AC ${_fmt.format(_detrazioniLavoro)}'),
+            _pdfRow('IRPEF netta', '\u20AC ${_fmt.format(_irpefNetta)}'),
+            _pdfRow('Addizionale regionale', '- \u20AC ${_fmt.format(_addizionaleRegionale)}'),
+            _pdfRow('Addizionale comunale', '- \u20AC ${_fmt.format(_addizionaleComunale)}'),
+            pw.SizedBox(height: 12),
+            pw.Divider(),
+            pw.SizedBox(height: 8),
+            _pdfRow('NETTO ANNUO', '\u20AC ${_fmt.format(_nettoAnnuo)}'),
+            _pdfRow('Netto mensile x12', '\u20AC ${_fmt.format(_nettoMensile12)}'),
+            _pdfRow('Netto mensile x13', '\u20AC ${_fmt.format(_nettoMensile13)}'),
+            _pdfRow('Netto mensile x14', '\u20AC ${_fmt.format(_nettoMensile14)}'),
+            pw.SizedBox(height: 20),
+            pw.Text('Generato da Il Mio Patronato', style: const pw.TextStyle(fontSize: 10, color: PdfColors.grey)),
           ],
-        ),
+        );
+      },
+    ));
+
+    await Printing.sharePdf(bytes: await pdf.save(), filename: 'stipendio_netto.pdf');
+  }
+
+  pw.Widget _pdfRow(String label, String value) {
+    return pw.Padding(
+      padding: const pw.EdgeInsets.symmetric(vertical: 3),
+      child: pw.Row(
+        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+        children: [
+          pw.Text(label, style: const pw.TextStyle(fontSize: 12)),
+          pw.Text(value, style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold)),
+        ],
       ),
     );
   }
 
-  // -- Header --
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(child: _buildHeader(context)),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
+          SliverToBoxAdapter(
+            child: DocumentUploadWidget(
+              label: 'Carica Busta Paga / Contratto',
+              subtitle: 'Scatta una foto e l\'AI calcola il netto automaticamente',
+              icon: Icons.payments,
+              isLoading: _isAnalyzingDoc,
+              onPickCamera: () => _pickAndAnalyze(ImageSource.camera),
+              onPickGallery: () => _pickAndAnalyze(ImageSource.gallery),
+            ),
+          ),
+          if (_needRegione)
+            SliverToBoxAdapter(child: _buildRegioneSelector()),
+          if (!_showResult && !_isAnalyzingDoc && !_needRegione)
+            SliverToBoxAdapter(child: _buildHint()),
+          if (_showResult) ...[
+            SliverToBoxAdapter(child: _buildNettoResultCard()),
+            SliverToBoxAdapter(child: _buildSplitBarsCard()),
+            SliverToBoxAdapter(child: _buildScaglioniCard()),
+            SliverToBoxAdapter(child: _buildDettaglioCard()),
+            SliverToBoxAdapter(child: _buildMensileCard()),
+            SliverToBoxAdapter(child: _buildActionButtons()),
+          ],
+          const SliverToBoxAdapter(child: SizedBox(height: 40)),
+        ],
+      ),
+    );
+  }
+
   Widget _buildHeader(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
@@ -287,10 +414,7 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
             onTap: () => Navigator.pop(context),
             child: Container(
               width: 38, height: 38,
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.1),
-                shape: BoxShape.circle,
-              ),
+              decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.1), shape: BoxShape.circle),
               child: const Icon(Icons.arrow_back, color: Colors.white, size: 18),
             ),
           ),
@@ -310,7 +434,7 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
               children: [
                 Text('STIPENDIO NETTO', style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w800, letterSpacing: 0.5)),
                 SizedBox(height: 1),
-                Text('Da lordo a netto - Busta paga 2025', style: TextStyle(color: AppColors.textSubtitle, fontSize: 11)),
+                Text('Carica busta paga e calcola', style: TextStyle(color: AppColors.textSubtitle, fontSize: 11)),
               ],
             ),
           ),
@@ -319,230 +443,91 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
     );
   }
 
-  // -- Info banner --
-  Widget _buildInfoBanner() {
+  Widget _buildHint() {
     return Container(
-      margin: const EdgeInsets.fromLTRB(16, 14, 16, 0),
-      padding: const EdgeInsets.all(14),
+      margin: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFF8E1),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFFFC107).withValues(alpha: 0.3)),
+        color: const Color(0xFFF3E5F5),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFF9C27B0).withValues(alpha: 0.2)),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
-          const Icon(Icons.info_outline, color: Color(0xFFFFA000), size: 20),
-          const SizedBox(width: 10),
-          Expanded(
-            child: RichText(
-              text: const TextSpan(
-                style: TextStyle(fontSize: 12, color: Color(0xFF5D4037), height: 1.4),
-                children: [
-                  TextSpan(text: 'Calcolo indicativo. ', style: TextStyle(fontWeight: FontWeight.w700)),
-                  TextSpan(text: 'Include esonero contributivo 2025 per RAL fino a \u20AC35.000. Per il cedolino ufficiale rivolgiti al consulente del lavoro.'),
-                ],
-              ),
-            ),
+          Icon(Icons.auto_awesome, color: Colors.purple.shade300, size: 40),
+          const SizedBox(height: 12),
+          const Text(
+            'Carica una foto della busta paga',
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textDark),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 6),
+          const Text(
+            'L\'AI leggera automaticamente la RAL, il tipo di contratto e il settore, calcolando IRPEF, contributi e netto mensile.',
+            style: TextStyle(fontSize: 12, color: AppColors.textMedium, height: 1.4),
+            textAlign: TextAlign.center,
           ),
         ],
       ),
     );
   }
 
-  Widget _sectionTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
-      child: Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.textDark)),
-    );
-  }
-
-  // -- RAL input --
-  Widget _buildRalSection() {
+  Widget _buildRegioneSelector() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       padding: const EdgeInsets.all(16),
-      decoration: _cardDeco(),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFF3E0),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFFFF9800).withValues(alpha: 0.3)),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Inserisci la tua Retribuzione Annua Lorda (RAL) prevista dal contratto',
-              style: TextStyle(fontSize: 12, color: AppColors.textMedium, height: 1.3)),
-          const SizedBox(height: 12),
-          _moneyField(_ralCtrl, 'RAL - Reddito Annuo Lordo'),
-        ],
-      ),
-    );
-  }
-
-  // -- Tipo contratto --
-  Widget _buildTipoContratto() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      padding: const EdgeInsets.all(12),
-      decoration: _cardDeco(),
-      child: Row(
-        children: [
-          _tipoChip('dipendente', 'Dipendente', Icons.work),
-          const SizedBox(width: 8),
-          _tipoChip('apprendista', 'Apprendista', Icons.school),
-          const SizedBox(width: 8),
-          _tipoChip('cococo', 'Co.Co.Co', Icons.handshake),
-        ],
-      ),
-    );
-  }
-
-  Widget _tipoChip(String value, String label, IconData icon) {
-    final selected = _tipoContratto == value;
-    return Expanded(
-      child: GestureDetector(
-        onTap: () => setState(() => _tipoContratto = value),
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          decoration: BoxDecoration(
-            color: selected ? AppColors.primary.withValues(alpha: 0.1) : Colors.grey.shade50,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: selected ? AppColors.primary : Colors.grey.shade200,
-              width: selected ? 2 : 1,
-            ),
-          ),
-          child: Column(
+          const Row(
             children: [
-              Icon(icon, size: 22, color: selected ? AppColors.primary : AppColors.textLight),
-              const SizedBox(height: 4),
-              Text(label, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: selected ? AppColors.primary : AppColors.textMedium)),
+              Icon(Icons.location_on, color: Color(0xFFFF9800), size: 22),
+              SizedBox(width: 8),
+              Text('Seleziona la Regione', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textDark)),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  // -- Settore --
-  Widget _buildSettoreSection() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      padding: const EdgeInsets.all(12),
-      decoration: _cardDeco(),
-      child: Wrap(
-        spacing: 8,
-        runSpacing: 8,
-        children: _settori.map((s) {
-          final selected = _settore == s;
-          final IconData icon;
-          switch (s) {
-            case 'Commercio':
-              icon = Icons.storefront;
-              break;
-            case 'Industria':
-              icon = Icons.factory;
-              break;
-            case 'Artigianato':
-              icon = Icons.construction;
-              break;
-            case 'Pubblico':
-              icon = Icons.account_balance;
-              break;
-            default:
-              icon = Icons.business;
-          }
-          return GestureDetector(
-            onTap: () => setState(() => _settore = s),
-            child: Container(
-              width: (MediaQuery.of(context).size.width - 72) / 2,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-              decoration: BoxDecoration(
-                color: selected ? AppColors.primary.withValues(alpha: 0.1) : Colors.grey.shade50,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: selected ? AppColors.primary : Colors.grey.shade200,
-                  width: selected ? 2 : 1,
-                ),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(icon, size: 18, color: selected ? AppColors.primary : AppColors.textLight),
-                  const SizedBox(width: 8),
-                  Flexible(
-                    child: Text(s, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: selected ? AppColors.primary : AppColors.textMedium)),
-                  ),
-                ],
-              ),
+          const SizedBox(height: 8),
+          const Text('La regione non e\' stata trovata nel documento. Selezionala per calcolare l\'addizionale regionale.',
+              style: TextStyle(fontSize: 12, color: AppColors.textMedium, height: 1.3)),
+          const SizedBox(height: 12),
+          DropdownButtonFormField<String>(
+            initialValue: _regione,
+            isExpanded: true,
+            decoration: InputDecoration(
+              filled: true, fillColor: Colors.white,
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.grey.shade200)),
+              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.grey.shade200)),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             ),
-          );
-        }).toList(),
-      ),
-    );
-  }
-
-  // -- Regione --
-  Widget _buildRegioneSection() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      padding: const EdgeInsets.all(16),
-      decoration: _cardDeco(),
-      child: DropdownButtonFormField<String>(
-        initialValue: _regione,
-        isExpanded: true,
-        decoration: InputDecoration(
-          labelText: 'Regione (per addizionale regionale)',
-          labelStyle: const TextStyle(fontSize: 13, color: AppColors.textMedium),
-          filled: true,
-          fillColor: Colors.grey.shade50,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.grey.shade200)),
-          enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.grey.shade200)),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        ),
-        items: _regioni.map((r) => DropdownMenuItem(value: r, child: Text(r, style: const TextStyle(fontSize: 14)))).toList(),
-        onChanged: (v) => setState(() => _regione = v ?? 'Lazio'),
-      ),
-    );
-  }
-
-  // -- Carichi familiari --
-  Widget _buildCarichiFamiliari() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      padding: const EdgeInsets.all(16),
-      decoration: _cardDeco(),
-      child: Column(
-        children: [
-          _buildCounter('Figli a carico (>21 anni)', _figliACarico, 0, 10, (v) => setState(() => _figliACarico = v)),
-          const Divider(height: 20),
-          _buildSwitch('Coniuge a carico', _coniugeACarico, (v) => setState(() => _coniugeACarico = v)),
+            items: _regioni.map((r) => DropdownMenuItem(value: r, child: Text(r, style: const TextStyle(fontSize: 14)))).toList(),
+            onChanged: (v) => setState(() => _regione = v ?? 'Lazio'),
+          ),
+          const SizedBox(height: 12),
+          GestureDetector(
+            onTap: () {
+              _calcola();
+            },
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              decoration: BoxDecoration(
+                gradient: AppColors.buttonGradient,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Text('CALCOLA NETTO', textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w700)),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  // -- Calcola button --
-  Widget _buildCalcolaButton() {
-    return GestureDetector(
-      onTap: _calcola,
-      child: Container(
-        margin: const EdgeInsets.fromLTRB(16, 24, 16, 0),
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        decoration: BoxDecoration(
-          gradient: AppColors.buttonGradient,
-          borderRadius: BorderRadius.circular(14),
-          boxShadow: [BoxShadow(color: AppColors.primary.withValues(alpha: 0.35), blurRadius: 12, offset: const Offset(0, 4))],
-        ),
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.payments, color: Colors.white, size: 20),
-            SizedBox(width: 10),
-            Text('CALCOLA NETTO', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700, letterSpacing: 0.8)),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // -- Green netto result card --
   Widget _buildNettoResultCard() {
     return FadeTransition(
       opacity: _fadeAnim,
@@ -565,7 +550,7 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
             const SizedBox(height: 8),
             Text('\u20AC ${_fmt.format(_nettoMensile13)}', style: const TextStyle(color: Colors.white, fontSize: 38, fontWeight: FontWeight.w900)),
             const SizedBox(height: 4),
-            const Text('su 13 mensilit\u00E0', style: TextStyle(color: Colors.white70, fontSize: 13, fontWeight: FontWeight.w500)),
+            const Text('su 13 mensilita', style: TextStyle(color: Colors.white70, fontSize: 13, fontWeight: FontWeight.w500)),
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -603,7 +588,6 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
     );
   }
 
-  // -- Split bars (visual pie-chart like) --
   Widget _buildSplitBarsCard() {
     final totaleTrattenute = _contributiInps + _irpefNetta + _addizionaleRegionale + _addizionaleComunale;
     if (_ral <= 0) return const SizedBox.shrink();
@@ -627,29 +611,16 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
             Text('Totale trattenute: \u20AC ${_fmt.format(totaleTrattenute)} (${(totaleTrattenute / _ral * 100).toStringAsFixed(1)}%)',
                 style: const TextStyle(fontSize: 12, color: AppColors.textLight)),
             const SizedBox(height: 16),
-            // Stacked bar
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: SizedBox(
                 height: 28,
                 child: Row(
                   children: [
-                    Flexible(
-                      flex: (percNetto * 10).round().clamp(1, 1000),
-                      child: Container(color: const Color(0xFF4CAF50)),
-                    ),
-                    Flexible(
-                      flex: (percInps * 10).round().clamp(1, 1000),
-                      child: Container(color: const Color(0xFFFF9800)),
-                    ),
-                    Flexible(
-                      flex: (percIrpef * 10).round().clamp(1, 1000),
-                      child: Container(color: const Color(0xFFF44336)),
-                    ),
-                    Flexible(
-                      flex: (percAddiz * 10).round().clamp(1, 1000),
-                      child: Container(color: const Color(0xFF9C27B0)),
-                    ),
+                    Flexible(flex: (percNetto * 10).round().clamp(1, 1000), child: Container(color: const Color(0xFF4CAF50))),
+                    Flexible(flex: (percInps * 10).round().clamp(1, 1000), child: Container(color: const Color(0xFFFF9800))),
+                    Flexible(flex: (percIrpef * 10).round().clamp(1, 1000), child: Container(color: const Color(0xFFF44336))),
+                    Flexible(flex: (percAddiz * 10).round().clamp(1, 1000), child: Container(color: const Color(0xFF9C27B0))),
                   ],
                 ),
               ),
@@ -671,14 +642,9 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
   Widget _legendRow(Color color, String label, double perc, double amount) {
     return Row(
       children: [
-        Container(
-          width: 14, height: 14,
-          decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(4)),
-        ),
+        Container(width: 14, height: 14, decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(4))),
         const SizedBox(width: 10),
-        Expanded(
-          child: Text(label, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppColors.textDark)),
-        ),
+        Expanded(child: Text(label, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppColors.textDark))),
         Text('${perc.toStringAsFixed(1)}%', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppColors.textMedium)),
         const SizedBox(width: 8),
         Text('\u20AC ${_fmt.format(amount)}', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.textDark)),
@@ -686,7 +652,6 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
     );
   }
 
-  // -- Scaglioni IRPEF card --
   Widget _buildScaglioniCard() {
     return FadeTransition(
       opacity: _fadeAnim,
@@ -739,7 +704,6 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
     );
   }
 
-  // -- Dettaglio calcolo step-by-step --
   Widget _buildDettaglioCard() {
     return FadeTransition(
       opacity: _fadeAnim,
@@ -752,19 +716,19 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
           children: [
             const Text('Dettaglio Calcolo', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textDark)),
             const SizedBox(height: 14),
+            if (_dipendente.isNotEmpty) _row('Dipendente', _dipendente),
+            if (_azienda.isNotEmpty) _row('Azienda', _azienda),
+            _row('Tipo contratto', _tipoContratto),
+            _row('Settore', _settore),
+            _row('Regione', _regione),
+            const Divider(height: 16),
             _row('1. RAL (lordo annuo)', '\u20AC ${_fmt.format(_ral)}', bold: true),
             const SizedBox(height: 4),
             _row('2. Contributi INPS (${_aliquotaInps.toStringAsFixed(2)}%)', '- \u20AC ${_fmt.format(_contributiInps)}', color: const Color(0xFFFF9800)),
             _row('3. Imponibile IRPEF', '\u20AC ${_fmt.format(_imponibileIrpef)}'),
             const Divider(height: 16),
             _row('4. IRPEF Lorda', '\u20AC ${_fmt.format(_irpefLorda)}'),
-            if (_detrazioniLavoro > 0)
-              _row('   Detraz. lavoro dipendente', '- \u20AC ${_fmt.format(_detrazioniLavoro)}', color: const Color(0xFF4CAF50)),
-            if (_detrazioniFigli > 0)
-              _row('   Detraz. figli a carico', '- \u20AC ${_fmt.format(_detrazioniFigli)}', color: const Color(0xFF4CAF50)),
-            if (_detrazioneConiuge > 0)
-              _row('   Detraz. coniuge a carico', '- \u20AC ${_fmt.format(_detrazioneConiuge)}', color: const Color(0xFF4CAF50)),
-            _row('   Detrazioni totali', '- \u20AC ${_fmt.format(_detrazioniTotali)}', color: const Color(0xFF4CAF50)),
+            _row('   Detraz. lavoro dipendente', '- \u20AC ${_fmt.format(_detrazioniLavoro)}', color: const Color(0xFF4CAF50)),
             _row('5. IRPEF Netta', '\u20AC ${_fmt.format(_irpefNetta)}', bold: true),
             const Divider(height: 16),
             _row('6. Addizionale regionale ($_regione)', '- \u20AC ${_fmt.format(_addizionaleRegionale)}'),
@@ -777,7 +741,6 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
     );
   }
 
-  // -- Mensile breakdown card --
   Widget _buildMensileCard() {
     return FadeTransition(
       opacity: _fadeAnim,
@@ -796,11 +759,11 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
             const SizedBox(height: 16),
             Row(
               children: [
-                _mensileBox('12 mensilit\u00E0', _nettoMensile12, 'Senza tredicesima'),
+                _mensileBox('12 mensilita', _nettoMensile12, 'Senza tredicesima'),
                 const SizedBox(width: 10),
-                _mensileBox('13 mensilit\u00E0', _nettoMensile13, 'Standard'),
+                _mensileBox('13 mensilita', _nettoMensile13, 'Standard'),
                 const SizedBox(width: 10),
-                _mensileBox('14 mensilit\u00E0', _nettoMensile14, 'Commercio/CCNL'),
+                _mensileBox('14 mensilita', _nettoMensile14, 'Commercio/CCNL'),
               ],
             ),
             const SizedBox(height: 14),
@@ -817,10 +780,10 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
                   Expanded(
                     child: Text(
                       _settore == 'Commercio'
-                          ? 'Il CCNL Commercio prevede 14 mensilit\u00E0.'
+                          ? 'Il CCNL Commercio prevede 14 mensilita.'
                           : _settore == 'Pubblico'
-                              ? 'Il settore pubblico prevede 13 mensilit\u00E0.'
-                              : 'Le mensilit\u00E0 dipendono dal CCNL applicato. Verifica il tuo contratto.',
+                              ? 'Il settore pubblico prevede 13 mensilita.'
+                              : 'Le mensilita dipendono dal CCNL applicato. Verifica il tuo contratto.',
                       style: const TextStyle(fontSize: 11, color: Color(0xFF4A148C), height: 1.3),
                     ),
                   ),
@@ -857,68 +820,62 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
     );
   }
 
-  // -----------------------------------------------
-  // REUSABLE WIDGETS
-  // -----------------------------------------------
+  Widget _buildActionButtons() {
+    return FadeTransition(
+      opacity: _fadeAnim,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+        child: Row(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onTap: _generaPdf,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  decoration: BoxDecoration(
+                    gradient: AppColors.buttonGradient,
+                    borderRadius: BorderRadius.circular(14),
+                    boxShadow: [BoxShadow(color: AppColors.primary.withValues(alpha: 0.35), blurRadius: 12, offset: const Offset(0, 4))],
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.picture_as_pdf, color: Colors.white, size: 20),
+                      SizedBox(width: 8),
+                      Text('PDF & Condividi', style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w700)),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            GestureDetector(
+              onTap: () => setState(() {
+                _showResult = false;
+                _isAnalyzingDoc = false;
+                _needRegione = false;
+              }),
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+                ),
+                child: const Icon(Icons.refresh, color: AppColors.primary, size: 22),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   BoxDecoration _cardDeco() {
     return BoxDecoration(
       color: Colors.white,
       borderRadius: BorderRadius.circular(16),
       boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 15, offset: const Offset(0, 3))],
-    );
-  }
-
-  Widget _moneyField(TextEditingController ctrl, String label) {
-    return TextField(
-      controller: ctrl,
-      keyboardType: TextInputType.number,
-      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textDark),
-      decoration: InputDecoration(
-        labelText: label,
-        labelStyle: const TextStyle(fontSize: 13, color: AppColors.textMedium),
-        prefixText: '\u20AC  ',
-        prefixStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textDark),
-        filled: true,
-        fillColor: Colors.grey.shade50,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.grey.shade200)),
-        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.grey.shade200)),
-        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: AppColors.primary, width: 2)),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      ),
-    );
-  }
-
-  Widget _buildCounter(String label, int value, int min, int max, ValueChanged<int> onChanged) {
-    return Row(
-      children: [
-        Expanded(child: Text(label, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.textDark))),
-        _cBtn(Icons.remove, value > min, () => onChanged(value - 1)),
-        Container(width: 40, alignment: Alignment.center, child: Text('$value', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: AppColors.textDark))),
-        _cBtn(Icons.add, value < max, () => onChanged(value + 1)),
-      ],
-    );
-  }
-
-  Widget _cBtn(IconData icon, bool enabled, VoidCallback onTap) {
-    return GestureDetector(
-      onTap: enabled ? onTap : null,
-      child: Container(
-        width: 34, height: 34,
-        decoration: BoxDecoration(
-          color: enabled ? AppColors.primary.withValues(alpha: 0.1) : Colors.grey.shade100,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Icon(icon, size: 18, color: enabled ? AppColors.primary : Colors.grey.shade400),
-      ),
-    );
-  }
-
-  Widget _buildSwitch(String label, bool value, ValueChanged<bool> onChanged) {
-    return Row(
-      children: [
-        Expanded(child: Text(label, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: AppColors.textDark))),
-        Switch.adaptive(value: value, onChanged: onChanged, activeTrackColor: AppColors.primary),
-      ],
     );
   }
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/banner_ad_widget.dart';
+import '../../core/services/ad_service.dart';
 import '../../models/guida.dart';
 import 'guide_data.dart';
 import 'guide_detail_screen.dart';
@@ -53,6 +55,12 @@ class _GuideListScreenState extends State<GuideListScreen> {
               (context, i) => _buildGuideCard(_filteredGuide[i]),
               childCount: _filteredGuide.length,
             ),
+          ),
+        ),
+        const SliverToBoxAdapter(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: BannerAdWidget(),
           ),
         ),
         const SliverToBoxAdapter(child: SizedBox(height: 20)),
@@ -125,7 +133,10 @@ class _GuideListScreenState extends State<GuideListScreen> {
 
   Widget _buildGuideCard(Guida guida) {
     return GestureDetector(
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => GuideDetailScreen(guida: guida))),
+      onTap: () {
+        AdService().onNavigateToDetail();
+        Navigator.push(context, MaterialPageRoute(builder: (_) => GuideDetailScreen(guida: guida)));
+      },
       child: Container(
         margin: const EdgeInsets.only(bottom: 12),
         decoration: BoxDecoration(
