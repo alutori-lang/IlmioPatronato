@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 import '../../core/services/agevolazioni_service.dart';
 import '../../core/services/gemini_service.dart';
 
@@ -196,8 +197,8 @@ class _AgevolazioneAiDetailScreenState extends State<AgevolazioneAiDetailScreen>
           // Disclaimer
           const SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(16, 14, 16, 0),
-              child: _DisclaimerNote(),
+              padding: EdgeInsets.only(top: 6),
+              child: DisclaimerBox(),
             ),
           ),
 
@@ -459,36 +460,7 @@ class _AgevolazioneAiDetailScreenState extends State<AgevolazioneAiDetailScreen>
   }
 }
 
-class _DisclaimerNote extends StatelessWidget {
-  const _DisclaimerNote();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.grey.shade300),
-      ),
-      child: const Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(Icons.info_outline, size: 15, color: Colors.grey),
-          SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              'Informazioni a scopo orientativo basate su fonti ufficiali (INPS, Agenzia delle Entrate, Ministeri). '
-              'Questa app non è un ente governativo. '
-              'Verifica sempre i dettagli sul sito ufficiale prima di presentare domanda.',
-              style: TextStyle(fontSize: 10, color: Colors.grey, height: 1.5),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+// _DisclaimerNote removed — now using shared DisclaimerBox from core/widgets/disclaimer_widget.dart
 
 class _InfoBox extends StatelessWidget {
   final IconData icon;

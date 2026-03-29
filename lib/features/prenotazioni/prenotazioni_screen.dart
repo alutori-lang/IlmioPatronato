@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 
 // ---------------------------------------------------------------------------
 // Data model for a government office
@@ -318,6 +319,7 @@ class _PrenotazioniScreenState extends State<PrenotazioniScreen> {
             ),
             SliverToBoxAdapter(child: _buildSectionTitle('Suggerimenti')),
             SliverToBoxAdapter(child: _buildTipsCard()),
+            const SliverToBoxAdapter(child: DisclaimerBox()),
             const SliverToBoxAdapter(child: SizedBox(height: 100)),
           ],
         ),

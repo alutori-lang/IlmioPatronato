@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 
 class CostoPermessoScreen extends StatefulWidget {
   const CostoPermessoScreen({super.key});
@@ -126,6 +127,7 @@ class _CostoPermessoScreenState extends State<CostoPermessoScreen>
             SliverToBoxAdapter(child: _buildReceiptCard()),
             SliverToBoxAdapter(child: _buildNoteCard()),
           ],
+          SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: "tariffe Ministero dell'Interno")),
           const SliverToBoxAdapter(child: SizedBox(height: 30)),
         ],
       ),
