@@ -65,6 +65,103 @@ class _BolloAutoScreenState extends State<BolloAutoScreen>
     return double.tryParse(s) ?? 0;
   }
 
+  Future<void> _pickPdf() async {
+    final file = await pickPdfFile();
+    if (file == null) return;
+
+    setState(() {
+      _isAnalyzingDoc = true;
+      _showResult = false;
+      _needRegione = false;
+    });
+
+    final response = await GeminiService().analyzeDocument(
+      imageFile: file,
+      prompt: '''Analizza questa foto del libretto di circolazione auto italiano. Estrai TUTTI i dati possibili e restituisci SOLO un JSON valido (senza markdown):
+{
+  "potenza_kw": "potenza in kW numerico",
+  "classe_euro": "numero classe euro (0-6)",
+  "marca": "marca del veicolo",
+  "modello": "modello del veicolo",
+  "targa": "numero di targa",
+  "regione": "regione di immatricolazione se visibile"
+}
+Se un campo non e leggibile, metti null.''',
+    );
+
+    if (!mounted) return;
+
+    if (response.isSuccess) {
+      final parsed = response.tryParseJson();
+      if (parsed != null) {
+        final kw = _pAi(parsed['potenza_kw']);
+        if (kw <= 0) {
+          setState(() => _isAnalyzingDoc = false);
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('Potenza kW non trovata. Riprova con una foto piu nitida.'),
+              backgroundColor: Color(0xFFF44336),
+            ));
+          }
+          return;
+        }
+
+        _kwValue = kw;
+        final euro = _pAi(parsed['classe_euro']);
+        if (euro >= 0 && euro <= 6) _classeEuro = euro.toInt();
+        _marca = parsed['marca']?.toString() ?? '';
+        _modello = parsed['modello']?.toString() ?? '';
+        _targa = parsed['targa']?.toString() ?? '';
+
+        final regioneAi = parsed['regione']?.toString() ?? '';
+        bool regioneTrovata = false;
+        if (regioneAi.isNotEmpty) {
+          for (final r in _regioni) {
+            if (regioneAi.toLowerCase().contains(r.toLowerCase())) {
+              _regione = r;
+              regioneTrovata = true;
+              break;
+            }
+          }
+        }
+
+        if (!regioneTrovata) {
+          setState(() {
+            _isAnalyzingDoc = false;
+            _needRegione = true;
+          });
+          return;
+        }
+
+        _calcola();
+        setState(() => _isAnalyzingDoc = false);
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Libretto analizzato con successo!'),
+            backgroundColor: Color(0xFF4CAF50),
+          ));
+        }
+      } else {
+        setState(() => _isAnalyzingDoc = false);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Impossibile leggere i dati. Riprova con una foto piu nitida.'),
+            backgroundColor: Color(0xFFF44336),
+          ));
+        }
+      }
+    } else {
+      setState(() => _isAnalyzingDoc = false);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(response.errorMessage ?? 'Errore'),
+          backgroundColor: const Color(0xFFF44336),
+        ));
+      }
+    }
+  }
+
   Future<void> _pickAndAnalyze(ImageSource source) async {
     final file = await pickImage(source);
     if (file == null) return;
@@ -297,6 +394,7 @@ Se un campo non e leggibile, metti null.''',
               isLoading: _isAnalyzingDoc,
               onPickCamera: () => _pickAndAnalyze(ImageSource.camera),
               onPickGallery: () => _pickAndAnalyze(ImageSource.gallery),
+              onPickPdf: _pickPdf,
             ),
           ),
           if (_needRegione)

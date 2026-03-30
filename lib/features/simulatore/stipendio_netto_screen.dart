@@ -79,6 +79,126 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
     return double.tryParse(s) ?? 0;
   }
 
+  Future<void> _pickPdf() async {
+    final file = await pickPdfFile();
+    if (file == null) return;
+
+    setState(() {
+      _isAnalyzingDoc = true;
+      _showResult = false;
+      _needRegione = false;
+    });
+
+    final response = await GeminiService().analyzeDocument(
+      imageFile: file,
+      prompt: '''Analizza questa busta paga o contratto di lavoro italiano. Estrai TUTTI i dati e restituisci SOLO un JSON valido (senza markdown):
+{
+  "ral": "retribuzione annua lorda numerico",
+  "tipo_contratto": "dipendente o apprendista o cococo",
+  "settore": "Commercio o Industria o Artigianato o Pubblico",
+  "regione": "regione sede di lavoro",
+  "dipendente": "nome del dipendente",
+  "azienda": "nome azienda o datore di lavoro"
+}
+Importi come numeri senza simbolo €. Se un campo non è leggibile, metti null.''',
+    );
+
+    if (!mounted) return;
+
+    if (response.isSuccess) {
+      final parsed = response.tryParseJson();
+      if (parsed != null) {
+        final ral = _pAi(parsed['ral']);
+
+        if (ral <= 0) {
+          setState(() => _isAnalyzingDoc = false);
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('RAL non trovata nel documento. Riprova con una foto piu nitida.'),
+              backgroundColor: Color(0xFFF44336),
+            ));
+          }
+          return;
+        }
+
+        _ral = ral;
+        _dipendente = parsed['dipendente']?.toString() ?? '';
+        _azienda = parsed['azienda']?.toString() ?? '';
+
+        final tipo = parsed['tipo_contratto']?.toString().toLowerCase() ?? '';
+        if (tipo.contains('apprend')) {
+          _tipoContratto = 'apprendista';
+        } else if (tipo.contains('cococo') || tipo.contains('co.co')) {
+          _tipoContratto = 'cococo';
+        } else {
+          _tipoContratto = 'dipendente';
+        }
+
+        final settore = parsed['settore']?.toString() ?? '';
+        if (settore.isNotEmpty) {
+          for (final s in _settori) {
+            if (settore.toLowerCase().contains(s.toLowerCase())) {
+              _settore = s;
+              break;
+            }
+          }
+        }
+
+        final regione = parsed['regione']?.toString() ?? '';
+        bool regioneFound = false;
+        if (regione.isNotEmpty) {
+          for (final r in _regioni) {
+            if (regione.toLowerCase().contains(r.toLowerCase())) {
+              _regione = r;
+              regioneFound = true;
+              break;
+            }
+          }
+        }
+
+        if (!regioneFound) {
+          setState(() {
+            _isAnalyzingDoc = false;
+            _needRegione = true;
+          });
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('Regione non trovata. Selezionala per completare il calcolo.'),
+              backgroundColor: Color(0xFFFF9800),
+            ));
+          }
+          return;
+        }
+
+        _calcola();
+        setState(() => _isAnalyzingDoc = false);
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Busta paga analizzata con successo!'),
+            backgroundColor: Color(0xFF4CAF50),
+          ));
+        }
+      } else {
+        setState(() => _isAnalyzingDoc = false);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Impossibile leggere i dati. Riprova con una foto piu nitida.'),
+            backgroundColor: Color(0xFFF44336),
+          ));
+        }
+      }
+    } else {
+      setState(() => _isAnalyzingDoc = false);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(response.errorMessage ?? 'Errore'),
+          backgroundColor: const Color(0xFFF44336),
+        ));
+      }
+    }
+  }
+
   Future<void> _pickAndAnalyze(ImageSource source) async {
     final file = await pickImage(source);
     if (file == null) return;
@@ -381,6 +501,7 @@ Importi come numeri senza simbolo €. Se un campo non è leggibile, metti null.
               isLoading: _isAnalyzingDoc,
               onPickCamera: () => _pickAndAnalyze(ImageSource.camera),
               onPickGallery: () => _pickAndAnalyze(ImageSource.gallery),
+              onPickPdf: _pickPdf,
             ),
           ),
           if (_needRegione)

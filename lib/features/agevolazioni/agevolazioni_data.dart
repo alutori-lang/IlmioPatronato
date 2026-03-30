@@ -50,8 +50,38 @@ final List<Map<String, dynamic>> categorie = [
   {'nome': 'Pensione & Anziani', 'icon': 'elderly', 'color': 0xFF546E7A},
 ];
 
-// ── DATABASE 53 AGEVOLAZIONI REALI ──
+// ── DATABASE AGEVOLAZIONI REALI ──
 final List<Agevolazione> allAgevolazioni = [
+
+  // ═══════════════ NOVITÀ 2026 ═══════════════
+  Agevolazione(
+    id: 'bonus_nuovi_nati_2026',
+    titolo: 'Bonus Nuovi Nati 2026',
+    descrizione: '1.000€ una tantum per ogni bambino nato o adottato nel 2025-2026.',
+    descrizioneCompleta: 'Il Bonus Nuovi Nati è un contributo di 1.000 euro una tantum riconosciuto ai genitori di bambini nati, in affido preadottivo o adottati dal 1° gennaio 2025. La misura è confermata anche per il 2026 con un fondo di 360 milioni di euro. Il requisito principale è un ISEE per prestazioni ai minorenni non superiore a 40.000 euro annui. Nel calcolo ISEE non si tiene conto degli importi dell\'Assegno Unico Universale (AUU). La domanda va presentata entro 120 giorni dalla nascita o dall\'ingresso in famiglia del minore.',
+    categoria: 'Famiglia & Figli',
+    tags: ['neonati', 'nascita', 'adozione', 'famiglia', '2026', 'INPS'],
+    requisiti: [
+      'Bambino nato o adottato dal 1° gennaio 2025',
+      'ISEE minorenni non superiore a 40.000€',
+      'Residenza in Italia del genitore richiedente',
+      'Cittadinanza italiana/UE o permesso di soggiorno valido',
+    ],
+    documenti: [
+      'ISEE in corso di validità (minorenni)',
+      'Documento di identità del richiedente',
+      'Codice fiscale del neonato/adottato',
+      'Certificato di nascita o decreto di adozione',
+    ],
+    comeRichiederlo: 'Domanda online su INPS.it (sezione "Bonus nuovi nati"), tramite Contact Center INPS (803 164) o tramite Patronato. Presentare entro 120 giorni dalla nascita/adozione.',
+    importo: '1.000€ una tantum',
+    scadenza: 'Entro 120 giorni dalla nascita (anno 2026)',
+    ente: 'INPS',
+    linkUfficiale: 'https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.bonus-nuovi-nati.html',
+    isNuovo: true,
+    dataAggiunta: DateTime(2026, 1, 1),
+    iconName: 'child_friendly',
+  ),
 
   // ═══════════════ LAVORO ═══════════════
   Agevolazione(
@@ -128,7 +158,7 @@ final List<Agevolazione> allAgevolazioni = [
     ],
     comeRichiederlo: '1. L\'azienda verifica i requisiti del lavoratore\n2. Procede con l\'assunzione a tempo indeterminato\n3. Presenta domanda online all\'INPS\n4. Applica l\'esonero in busta paga tramite flusso UniEmens',
     importo: 'Esonero fino a €6.000/anno per 36 mesi',
-    scadenza: '31 dicembre 2025',
+    scadenza: '31 dicembre 2026',
     ente: 'INPS',
     linkUfficiale: 'https://www.inps.it/prestazioni-servizi/esonero-giovani',
     iconName: 'person_add',
@@ -154,7 +184,7 @@ final List<Agevolazione> allAgevolazioni = [
     ],
     comeRichiederlo: '1. Verificare requisiti della lavoratrice\n2. Procedere con l\'assunzione\n3. Domanda online INPS\n4. Applicare esonero nel flusso UniEmens',
     importo: 'Esonero fino a €6.000/anno per 18 mesi',
-    scadenza: '31 dicembre 2025',
+    scadenza: '31 dicembre 2026',
     ente: 'INPS',
     linkUfficiale: 'https://www.inps.it/prestazioni-servizi/incentivo-donne',
     iconName: 'woman',
@@ -201,7 +231,7 @@ final List<Agevolazione> allAgevolazioni = [
     ],
     comeRichiederlo: '1. Effettuare l\'assunzione a tempo indeterminato\n2. Verificare incremento occupazionale\n3. Applicare la maxi-deduzione in dichiarazione dei redditi\n4. Per bonus trasferimento: domanda all\'INPS',
     importo: 'Deduzione 120-130% + bonus €3.000',
-    scadenza: '31 dicembre 2025',
+    scadenza: '31 dicembre 2026',
     ente: 'Agenzia delle Entrate / INPS',
     linkUfficiale: 'https://www.agenziaentrate.gov.it',
     isNuovo: true,
@@ -284,7 +314,7 @@ final List<Agevolazione> allAgevolazioni = [
     ],
     comeRichiederlo: '1. Ottenere ISEE aggiornato\n2. Richiedere mutuo con Fondo Garanzia Consap\n3. Comunicare al notaio i requisiti under 36\n4. Il notaio applica le esenzioni al rogito',
     importo: 'Esenzione imposte + garanzia mutuo 80%',
-    scadenza: '31 dicembre 2025',
+    scadenza: '31 dicembre 2026',
     ente: 'Agenzia delle Entrate / Consap',
     linkUfficiale: 'https://www.consap.it/fondo-prima-casa/',
     iconName: 'house',
@@ -311,7 +341,7 @@ final List<Agevolazione> allAgevolazioni = [
     ],
     comeRichiederlo: '1. Delibera assembleare condominiale\n2. Presentare CILAS al Comune\n3. Iniziare i lavori con impresa qualificata\n4. Ottenere asseverazione energetica\n5. Indicare in dichiarazione redditi o cessione credito',
     importo: 'Detrazione 65-70% in 4 anni',
-    scadenza: '31 dicembre 2025',
+    scadenza: '31 dicembre 2026',
     ente: 'Agenzia delle Entrate / ENEA',
     linkUfficiale: 'https://www.agenziaentrate.gov.it/portale/superbonus',
     isNuovo: true,
@@ -339,7 +369,7 @@ final List<Agevolazione> allAgevolazioni = [
     ],
     comeRichiederlo: '1. Avere in corso o conclusa una ristrutturazione\n2. Acquistare mobili/elettrodomestici con pagamento tracciabile\n3. Conservare fatture e ricevute\n4. Indicare la detrazione nel 730',
     importo: 'Detrazione 50% fino a €5.000',
-    scadenza: '31 dicembre 2025',
+    scadenza: '31 dicembre 2026',
     ente: 'Agenzia delle Entrate',
     linkUfficiale: 'https://www.agenziaentrate.gov.it/portale/bonus-mobili',
     iconName: 'chair',
@@ -365,7 +395,7 @@ final List<Agevolazione> allAgevolazioni = [
     ],
     comeRichiederlo: '1. Presentare pratica edilizia al Comune\n2. Eseguire lavori con impresa regolare\n3. Pagare con bonifico parlante\n4. Indicare detrazione nel 730',
     importo: 'Detrazione 50% fino a €96.000',
-    scadenza: '31 dicembre 2025',
+    scadenza: '31 dicembre 2026',
     ente: 'Agenzia delle Entrate',
     linkUfficiale: 'https://www.agenziaentrate.gov.it/portale/ristrutturazioni-edilizie',
     iconName: 'construction',
@@ -390,7 +420,7 @@ final List<Agevolazione> allAgevolazioni = [
     ],
     comeRichiederlo: '1. Verificare conformità intervento al DM 236/1989\n2. Eseguire lavori con impresa qualificata\n3. Pagare con bonifico parlante\n4. Ottenere asseverazione tecnica\n5. Indicare detrazione nel 730',
     importo: 'Detrazione 75% (tetto €30.000-€50.000)',
-    scadenza: '31 dicembre 2025',
+    scadenza: '31 dicembre 2026',
     ente: 'Agenzia delle Entrate',
     linkUfficiale: 'https://www.agenziaentrate.gov.it/portale/bonus-barriere-architettoniche',
     iconName: 'accessible',
@@ -499,7 +529,7 @@ final List<Agevolazione> allAgevolazioni = [
     ],
     comeRichiederlo: '1. Iscrivere il bambino al nido\n2. Ottenere ISEE minorenni\n3. Domanda su inps.it con SPID\n4. Allegare ricevute di pagamento\n5. Rimborso mensile su IBAN',
     importo: 'Fino a €3.600/anno (€300/mese)',
-    scadenza: '31 dicembre 2025',
+    scadenza: '31 dicembre 2026',
     ente: 'INPS',
     linkUfficiale: 'https://www.inps.it/prestazioni-servizi/bonus-asilo-nido',
     isNuovo: true,
@@ -1217,7 +1247,7 @@ final List<Agevolazione> allAgevolazioni = [
     ],
     comeRichiederlo: '1. Ottenere ISEE aggiornato\n2. Scegliere banca convenzionata Consap\n3. Richiedere mutuo con accesso al Fondo Garanzia\n4. La banca trasmette la domanda a Consap\n5. Esito entro 20 giorni',
     importo: 'Garanzia statale 80% del mutuo',
-    scadenza: '31 dicembre 2025',
+    scadenza: '31 dicembre 2026',
     ente: 'Consap / MEF',
     linkUfficiale: 'https://www.consap.it/fondo-prima-casa/',
     iconName: 'house',
@@ -1457,13 +1487,22 @@ List<Agevolazione> novita() {
   return nuove;
 }
 
-/// Agevolazione del giorno (ruota ogni giorno)
-Agevolazione agevolazioneDelGiorno() {
+/// Agevolazione della settimana — mostra le novità più recenti, ruota settimanalmente
+Agevolazione agevolazioneDellaSettimana() {
+  // Prendi le agevolazioni nuove ordinate per data
+  final nuove = allAgevolazioni.where((a) => a.isNuovo && a.dataAggiunta != null).toList();
+  nuove.sort((a, b) => b.dataAggiunta!.compareTo(a.dataAggiunta!));
+
+  if (nuove.isEmpty) return allAgevolazioni.first;
+
   final now = DateTime.now();
-  final dayOfYear = now.difference(DateTime(now.year, 1, 1)).inDays;
-  final index = dayOfYear % allAgevolazioni.length;
-  return allAgevolazioni[index];
+  final weekOfYear = (now.difference(DateTime(now.year, 1, 1)).inDays / 7).floor();
+  final index = weekOfYear % nuove.length;
+  return nuove[index];
 }
+
+/// Alias per compatibilità
+Agevolazione agevolazioneDelGiorno() => agevolazioneDellaSettimana();
 
 /// Filtra per categoria
 List<Agevolazione> perCategoria(String cat) {

@@ -42,6 +42,79 @@ class _BustaPagaScreenState extends State<BustaPagaScreen> {
     });
   }
 
+  Future<void> _pickPdf() async {
+    final file = await pickPdfFile();
+    if (file == null) return;
+
+    setState(() {
+      _selectedFile = file;
+      _isAnalyzing = true;
+      _errorMessage = null;
+      _aiData = null;
+      _aiAnalysis = null;
+      _showExample = false;
+    });
+
+    final response = await GeminiService().analyzeDocument(
+      imageFile: file,
+      prompt: '''Analizza questa busta paga italiana. Estrai i dati e restituisci SOLO un JSON valido (senza markdown, senza ```), con questa struttura esatta:
+{
+  "azienda": "nome azienda",
+  "dipendente": "nome e cognome",
+  "qualifica": "qualifica/mansione",
+  "livello_ccnl": "livello contratto",
+  "periodo_riferimento": "mese anno",
+  "ore_lavorate": "numero",
+  "stipendio_lordo": "importo",
+  "paga_base": "importo",
+  "contingenza": "importo o null",
+  "superminimo": "importo o null",
+  "straordinario": "importo o null",
+  "scatti_anzianita": "importo o null",
+  "tredicesima_rateo": "importo o null",
+  "altre_competenze": "importo o null",
+  "contributi_inps": "importo",
+  "irpef": "importo",
+  "addizionale_regionale": "importo o null",
+  "addizionale_comunale": "importo o null",
+  "detrazioni_lavoro": "importo o null",
+  "stipendio_netto": "importo",
+  "tfr_maturato": "importo o null",
+  "ferie_maturate": "giorni o ore",
+  "ferie_godute": "giorni o ore",
+  "ferie_residue": "giorni o ore",
+  "permessi_maturati": "ore o null",
+  "permessi_goduti": "ore o null",
+  "permessi_residui": "ore o null",
+  "analisi": "Analisi breve della posizione del dipendente: come sono i contributi, il netto rispetto al lordo, TFR, ferie residue, consigli pratici. 3-5 frasi."
+}
+Se un campo non è leggibile, metti null. Importi con il simbolo €.''',
+    );
+
+    if (!mounted) return;
+
+    if (response.isSuccess) {
+      final parsed = response.tryParseJson();
+      if (parsed != null) {
+        setState(() {
+          _aiData = parsed;
+          _aiAnalysis = parsed['analisi'] as String?;
+          _isAnalyzing = false;
+        });
+      } else {
+        setState(() {
+          _errorMessage = 'Impossibile leggere i dati dal documento. Riprova con una foto più nitida.';
+          _isAnalyzing = false;
+        });
+      }
+    } else {
+      setState(() {
+        _errorMessage = response.errorMessage;
+        _isAnalyzing = false;
+      });
+    }
+  }
+
   Future<void> _pickAndAnalyze(ImageSource source) async {
     final file = await pickImage(source);
     if (file == null) return;
@@ -197,6 +270,7 @@ Se un campo non è leggibile, metti null. Importi con il simbolo €.''',
         isLoading: _isAnalyzing,
         onPickCamera: () => _pickAndAnalyze(ImageSource.camera),
         onPickGallery: () => _pickAndAnalyze(ImageSource.gallery),
+        onPickPdf: _pickPdf,
         onRemove: _resetAnalysis,
       ),
     );

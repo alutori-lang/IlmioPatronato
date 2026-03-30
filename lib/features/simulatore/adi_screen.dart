@@ -77,6 +77,101 @@ class _AdiScreenState extends State<AdiScreen>
     return double.tryParse(s) ?? 0;
   }
 
+  Future<void> _pickPdf() async {
+    final file = await pickPdfFile();
+    if (file == null) return;
+
+    setState(() {
+      _isAnalyzingDoc = true;
+      _showResult = false;
+      _needPermesso = false;
+    });
+
+    final response = await GeminiService().analyzeDocument(
+      imageFile: file,
+      prompt: '''Analizza questa attestazione ISEE o documento relativo ai requisiti ADI (Assegno di Inclusione) italiano. Estrai TUTTI i dati e restituisci SOLO un JSON valido (senza markdown):
+{
+  "isee": "valore ISEE numerico",
+  "immobiliare": "patrimonio immobiliare numerico",
+  "mobiliare": "patrimonio mobiliare numerico",
+  "componenti": "numero componenti nucleo familiare",
+  "minori": "numero figli minori",
+  "disabili": "numero componenti disabili",
+  "over60": "numero componenti over 60",
+  "anni_residenza": "anni di residenza in Italia",
+  "intestatario": "nome e cognome del richiedente"
+}
+Importi come numeri senza simbolo €. Se un campo non è leggibile, metti null.''',
+    );
+
+    if (!mounted) return;
+
+    if (response.isSuccess) {
+      final parsed = response.tryParseJson();
+      if (parsed != null) {
+        final isee = _pAi(parsed['isee']);
+
+        if (isee <= 0) {
+          setState(() => _isAnalyzingDoc = false);
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('Valore ISEE non trovato. Riprova con una foto piu nitida.'),
+              backgroundColor: Color(0xFFF44336),
+            ));
+          }
+          return;
+        }
+
+        _isee = isee;
+        _intestatario = parsed['intestatario']?.toString() ?? '';
+
+        final imm = _pAi(parsed['immobiliare']);
+        if (imm > 0) _immobiliare = imm;
+        final mob = _pAi(parsed['mobiliare']);
+        if (mob > 0) _mobiliare = mob;
+
+        final comp = _pAi(parsed['componenti']);
+        if (comp > 0) _componenti = comp.toInt().clamp(1, 20);
+        final min = _pAi(parsed['minori']);
+        if (min > 0) _minori = min.toInt();
+        final dis = _pAi(parsed['disabili']);
+        if (dis > 0) _disabili = dis.toInt();
+        final over = _pAi(parsed['over60']);
+        if (over > 0) _over60 = over.toInt();
+        final anni = _pAi(parsed['anni_residenza']);
+        if (anni > 0) _anniResidenza = anni.toInt();
+
+        setState(() {
+          _isAnalyzingDoc = false;
+          _needPermesso = true;
+        });
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Dati ISEE estratti! Seleziona il tipo di permesso per verificare.'),
+            backgroundColor: Color(0xFF4CAF50),
+          ));
+        }
+      } else {
+        setState(() => _isAnalyzingDoc = false);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Impossibile leggere i dati. Riprova con una foto piu nitida.'),
+            backgroundColor: Color(0xFFF44336),
+          ));
+        }
+      }
+    } else {
+      setState(() => _isAnalyzingDoc = false);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(response.errorMessage ?? 'Errore'),
+          backgroundColor: const Color(0xFFF44336),
+        ));
+      }
+    }
+  }
+
   Future<void> _pickAndAnalyze(ImageSource source) async {
     final file = await pickImage(source);
     if (file == null) return;
@@ -350,6 +445,7 @@ Importi come numeri senza simbolo €. Se un campo non è leggibile, metti null.
               isLoading: _isAnalyzingDoc,
               onPickCamera: () => _pickAndAnalyze(ImageSource.camera),
               onPickGallery: () => _pickAndAnalyze(ImageSource.gallery),
+              onPickPdf: _pickPdf,
             ),
           ),
           if (_needPermesso)

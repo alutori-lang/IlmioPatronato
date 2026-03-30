@@ -63,6 +63,153 @@ class _DelegaScreenState extends State<DelegaScreen>
     super.dispose();
   }
 
+  Future<void> _pickPdfDelegante() async {
+    final file = await pickPdfFile();
+    if (file == null) return;
+
+    setState(() {
+      _isAnalyzingDelegante = true;
+    });
+
+    final response = await GeminiService().analyzeDocument(
+      imageFile: file,
+      prompt: 'Analizza questo documento d\'identita italiano (CI, passaporto, permesso di soggiorno, patente). '
+          'Estrai TUTTI i dati e restituisci SOLO un JSON valido (senza markdown): '
+          '{"nome": "", "cognome": "", "data_nascita": "gg/mm/aaaa", "luogo_nascita": "", '
+          '"codice_fiscale": "", "tipo_documento": "", "numero_documento": "", "residenza": ""}. '
+          'Se un campo non e\' leggibile, metti null.',
+    );
+
+    if (!mounted) return;
+
+    if (response.isSuccess) {
+      final parsed = response.tryParseJson();
+      if (parsed != null) {
+        setState(() {
+          _delNome = parsed['nome']?.toString() ?? '';
+          _delCognome = parsed['cognome']?.toString() ?? '';
+          _delNatoA = parsed['luogo_nascita']?.toString() ?? '';
+          _delDataNascita = parsed['data_nascita']?.toString() ?? '';
+          _delResidente = parsed['residenza']?.toString() ?? '';
+          _delCf = parsed['codice_fiscale']?.toString() ?? '';
+          _delDocNumero = parsed['numero_documento']?.toString() ?? '';
+          final tipo = parsed['tipo_documento']?.toString().toLowerCase() ?? '';
+          if (tipo.contains('passaporto')) {
+            _delDocTipo = 'Passaporto';
+          } else if (tipo.contains('patente')) {
+            _delDocTipo = 'Patente di guida';
+          } else if (tipo.contains('permesso') || tipo.contains('soggiorno')) {
+            _delDocTipo = 'Permesso di soggiorno';
+          } else {
+            _delDocTipo = 'Carta d\'identita';
+          }
+          _isAnalyzingDelegante = false;
+          _deleganteOk = _delNome.isNotEmpty && _delCognome.isNotEmpty;
+        });
+
+        if (_deleganteOk && _delegatoOk && _motivoCtrl.text.isNotEmpty) {
+          _mostraRisultato();
+        }
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Documento delegante analizzato!'),
+            backgroundColor: Color(0xFF4CAF50),
+          ));
+        }
+      } else {
+        setState(() => _isAnalyzingDelegante = false);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Impossibile leggere i dati. Riprova con una foto piu nitida.'),
+            backgroundColor: Color(0xFFF44336),
+          ));
+        }
+      }
+    } else {
+      setState(() => _isAnalyzingDelegante = false);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(response.errorMessage ?? 'Errore'),
+          backgroundColor: const Color(0xFFF44336),
+        ));
+      }
+    }
+  }
+
+  Future<void> _pickPdfDelegato() async {
+    final file = await pickPdfFile();
+    if (file == null) return;
+
+    setState(() {
+      _isAnalyzingDelegato = true;
+    });
+
+    final response = await GeminiService().analyzeDocument(
+      imageFile: file,
+      prompt: 'Analizza questo documento d\'identita italiano (CI, passaporto, permesso di soggiorno, patente). '
+          'Estrai TUTTI i dati e restituisci SOLO un JSON valido (senza markdown): '
+          '{"nome": "", "cognome": "", "data_nascita": "gg/mm/aaaa", "luogo_nascita": "", '
+          '"codice_fiscale": "", "tipo_documento": "", "numero_documento": "", "residenza": ""}. '
+          'Se un campo non e\' leggibile, metti null.',
+    );
+
+    if (!mounted) return;
+
+    if (response.isSuccess) {
+      final parsed = response.tryParseJson();
+      if (parsed != null) {
+        setState(() {
+          _datoNome = parsed['nome']?.toString() ?? '';
+          _datoCognome = parsed['cognome']?.toString() ?? '';
+          _datoNatoA = parsed['luogo_nascita']?.toString() ?? '';
+          _datoDataNascita = parsed['data_nascita']?.toString() ?? '';
+          _datoCf = parsed['codice_fiscale']?.toString() ?? '';
+          _datoDocNumero = parsed['numero_documento']?.toString() ?? '';
+          final tipo = parsed['tipo_documento']?.toString().toLowerCase() ?? '';
+          if (tipo.contains('passaporto')) {
+            _datoDocTipo = 'Passaporto';
+          } else if (tipo.contains('patente')) {
+            _datoDocTipo = 'Patente di guida';
+          } else if (tipo.contains('permesso') || tipo.contains('soggiorno')) {
+            _datoDocTipo = 'Permesso di soggiorno';
+          } else {
+            _datoDocTipo = 'Carta d\'identita';
+          }
+          _isAnalyzingDelegato = false;
+          _delegatoOk = _datoNome.isNotEmpty && _datoCognome.isNotEmpty;
+        });
+
+        if (_deleganteOk && _delegatoOk && _motivoCtrl.text.isNotEmpty) {
+          _mostraRisultato();
+        }
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Documento delegato analizzato!'),
+            backgroundColor: Color(0xFF4CAF50),
+          ));
+        }
+      } else {
+        setState(() => _isAnalyzingDelegato = false);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Impossibile leggere i dati. Riprova con una foto piu nitida.'),
+            backgroundColor: Color(0xFFF44336),
+          ));
+        }
+      }
+    } else {
+      setState(() => _isAnalyzingDelegato = false);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(response.errorMessage ?? 'Errore'),
+          backgroundColor: const Color(0xFFF44336),
+        ));
+      }
+    }
+  }
+
   Future<void> _pickAndAnalyze(ImageSource source, {required bool isDelegante}) async {
     final file = await pickImage(source);
     if (file == null) return;
@@ -391,6 +538,7 @@ class _DelegaScreenState extends State<DelegaScreen>
                       isLoading: _isAnalyzingDelegante,
                       onPickCamera: () => _pickAndAnalyze(ImageSource.camera, isDelegante: true),
                       onPickGallery: () => _pickAndAnalyze(ImageSource.gallery, isDelegante: true),
+                      onPickPdf: _pickPdfDelegante,
                     ),
             ),
             const SliverToBoxAdapter(child: SizedBox(height: 12)),
@@ -406,6 +554,7 @@ class _DelegaScreenState extends State<DelegaScreen>
                       isLoading: _isAnalyzingDelegato,
                       onPickCamera: () => _pickAndAnalyze(ImageSource.camera, isDelegante: false),
                       onPickGallery: () => _pickAndAnalyze(ImageSource.gallery, isDelegante: false),
+                      onPickPdf: _pickPdfDelegato,
                     ),
             ),
             const SliverToBoxAdapter(child: SizedBox(height: 12)),

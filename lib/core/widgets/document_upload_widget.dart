@@ -1,10 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 import '../../config/constants.dart';
 
 // ---------------------------------------------------------------------------
-// Widget riutilizzabile per caricare e mostrare un documento (foto/galleria)
+// Widget riutilizzabile per caricare e mostrare un documento (foto/galleria/PDF)
 // ---------------------------------------------------------------------------
 class DocumentUploadWidget extends StatelessWidget {
   final String label;
@@ -14,17 +15,19 @@ class DocumentUploadWidget extends StatelessWidget {
   final bool isLoading;
   final VoidCallback onPickCamera;
   final VoidCallback onPickGallery;
+  final VoidCallback? onPickPdf;
   final VoidCallback? onRemove;
 
   const DocumentUploadWidget({
     super.key,
     required this.label,
-    this.subtitle = 'Scatta una foto o scegli dalla galleria',
+    this.subtitle = 'Scatta foto, scegli immagine o carica PDF',
     this.icon = Icons.document_scanner_rounded,
     this.selectedFile,
     this.isLoading = false,
     required this.onPickCamera,
     required this.onPickGallery,
+    this.onPickPdf,
     this.onRemove,
   });
 
@@ -34,6 +37,8 @@ class DocumentUploadWidget extends StatelessWidget {
     if (selectedFile != null) return _buildPreview();
     return _buildUploadArea(context);
   }
+
+  bool get _isPdf => selectedFile != null && selectedFile!.path.toLowerCase().endsWith('.pdf');
 
   Widget _buildUploadArea(BuildContext context) {
     return Container(
@@ -81,9 +86,11 @@ class DocumentUploadWidget extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _actionChip(Icons.camera_alt_rounded, 'Fotocamera', onPickCamera),
-                    const SizedBox(width: 12),
-                    _actionChip(Icons.photo_library_rounded, 'Galleria', onPickGallery),
+                    _actionChip(Icons.camera_alt_rounded, 'Foto', onPickCamera),
+                    const SizedBox(width: 8),
+                    _actionChip(Icons.photo_library_rounded, 'Immagine', onPickGallery),
+                    const SizedBox(width: 8),
+                    _actionChip(Icons.picture_as_pdf_rounded, 'PDF', onPickPdf ?? () {}),
                   ],
                 ),
               ],
@@ -98,7 +105,7 @@ class DocumentUploadWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
@@ -114,11 +121,11 @@ class DocumentUploadWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(icon, size: 16, color: AppColors.primary),
-            const SizedBox(width: 6),
+            const SizedBox(width: 5),
             Text(
               label,
               style: const TextStyle(
-                fontSize: 12,
+                fontSize: 11,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primary,
               ),
@@ -139,25 +146,49 @@ class DocumentUploadWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
-            child: Image.file(
-              selectedFile!,
+          if (_isPdf)
+            Container(
               height: 180,
               width: double.infinity,
-              fit: BoxFit.cover,
+              decoration: BoxDecoration(
+                color: Colors.red.shade50,
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.picture_as_pdf, color: Colors.red.shade700, size: 56),
+                  const SizedBox(height: 8),
+                  Text(
+                    selectedFile!.path.split('/').last,
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.red.shade700),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            )
+          else
+            ClipRRect(
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
+              child: Image.file(
+                selectedFile!,
+                height: 180,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
           Padding(
             padding: const EdgeInsets.all(12),
             child: Row(
               children: [
                 const Icon(Icons.check_circle, color: Color(0xFF4CAF50), size: 20),
                 const SizedBox(width: 8),
-                const Expanded(
+                Expanded(
                   child: Text(
-                    'Documento caricato',
-                    style: TextStyle(
+                    _isPdf ? 'PDF caricato' : 'Documento caricato',
+                    style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
                       color: Color(0xFF4CAF50),
@@ -264,11 +295,21 @@ class DocumentUploadWidget extends StatelessWidget {
               const SizedBox(height: 10),
               _sheetOption(
                 Icons.photo_library_rounded,
-                'Scegli dalla galleria',
-                'Seleziona una foto già presente sul telefono',
+                'Carica Immagine',
+                'Seleziona una foto dalla galleria',
                 () {
                   Navigator.pop(context);
                   onPickGallery();
+                },
+              ),
+              const SizedBox(height: 10),
+              _sheetOption(
+                Icons.picture_as_pdf_rounded,
+                'Carica PDF',
+                'Seleziona un file PDF dal telefono',
+                () {
+                  Navigator.pop(context);
+                  if (onPickPdf != null) onPickPdf!();
                 },
               ),
               const SizedBox(height: 10),
@@ -334,4 +375,16 @@ Future<File?> pickImage(ImageSource source) async {
   );
   if (picked == null) return null;
   return File(picked.path);
+}
+
+// ---------------------------------------------------------------------------
+// Helper per pick PDF
+// ---------------------------------------------------------------------------
+Future<File?> pickPdfFile() async {
+  final result = await FilePicker.platform.pickFiles(
+    type: FileType.custom,
+    allowedExtensions: ['pdf'],
+  );
+  if (result == null || result.files.isEmpty || result.files.single.path == null) return null;
+  return File(result.files.single.path!);
 }

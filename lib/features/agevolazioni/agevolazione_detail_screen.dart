@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../config/constants.dart';
 import 'agevolazioni_data.dart';
+import 'agevolazioni_screen.dart';
 
 class AgevolazioneDetailScreen extends StatelessWidget {
   final Agevolazione agevolazione;
@@ -47,6 +48,9 @@ class AgevolazioneDetailScreen extends StatelessWidget {
 
           // ── LINK UFFICIALE ──
           SliverToBoxAdapter(child: _buildLinkButton(context)),
+
+          // ── SCOPRI ALTRE AGEVOLAZIONI ──
+          SliverToBoxAdapter(child: _buildAltreAgevolazioni(context)),
 
           const SliverToBoxAdapter(child: SizedBox(height: 30)),
         ],
@@ -283,6 +287,40 @@ class AgevolazioneDetailScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildAltreAgevolazioni(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => const AgevolazioniScreen()));
+        },
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: color.withValues(alpha: 0.3), width: 1.5),
+            boxShadow: [BoxShadow(color: color.withValues(alpha: 0.1), blurRadius: 12, offset: const Offset(0, 4))],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.explore, color: color, size: 20),
+              const SizedBox(width: 10),
+              Text(
+                'Scopri Altre Agevolazioni',
+                style: TextStyle(color: color, fontSize: 14, fontWeight: FontWeight.w800),
+              ),
+              const SizedBox(width: 8),
+              Icon(Icons.arrow_forward_rounded, color: color, size: 18),
+            ],
+          ),
+        ),
       ),
     );
   }

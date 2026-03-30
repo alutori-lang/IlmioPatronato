@@ -87,6 +87,90 @@ class _ImuScreenState extends State<ImuScreen> with SingleTickerProviderStateMix
     return double.tryParse(s) ?? 0;
   }
 
+  Future<void> _pickPdf() async {
+    final file = await pickPdfFile();
+    if (file == null) return;
+
+    setState(() {
+      _isAnalyzingDoc = true;
+      _showResult = false;
+      _needAliquota = false;
+    });
+
+    final response = await GeminiService().analyzeDocument(
+      imageFile: file,
+      prompt: '''Analizza questa visura catastale o documento immobiliare italiano. Estrai TUTTI i dati e restituisci SOLO un JSON valido (senza markdown):
+{
+  "rendita_catastale": "rendita catastale numerico",
+  "categoria": "categoria catastale es. A/2, C/6, D/1 ecc.",
+  "quota_possesso": "percentuale di possesso numerico (es. 100, 50)",
+  "indirizzo": "indirizzo dell'immobile",
+  "proprietario": "nome del proprietario",
+  "comune": "nome del comune"
+}
+Importi come numeri senza simbolo €. Se un campo non è leggibile, metti null.''',
+    );
+
+    if (!mounted) return;
+
+    if (response.isSuccess) {
+      final parsed = response.tryParseJson();
+      if (parsed != null) {
+        final rendita = _pAi(parsed['rendita_catastale']);
+
+        if (rendita <= 0) {
+          setState(() => _isAnalyzingDoc = false);
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('Rendita catastale non trovata. Riprova con una foto piu nitida.'),
+              backgroundColor: Color(0xFFF44336),
+            ));
+          }
+          return;
+        }
+
+        _rendita = rendita;
+        _indirizzo = parsed['indirizzo']?.toString() ?? '';
+        _proprietario = parsed['proprietario']?.toString() ?? '';
+        _comune = parsed['comune']?.toString() ?? '';
+
+        final cat = parsed['categoria']?.toString() ?? '';
+        if (cat.isNotEmpty && _categorie.containsKey(cat)) _categoriaSelected = cat;
+
+        final quota = _pAi(parsed['quota_possesso']);
+        if (quota > 0) _quotaPossesso = quota.clamp(10, 100);
+
+        setState(() {
+          _isAnalyzingDoc = false;
+          _needAliquota = true;
+        });
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Dati catastali estratti! Conferma l\'aliquota per calcolare.'),
+            backgroundColor: Color(0xFF4CAF50),
+          ));
+        }
+      } else {
+        setState(() => _isAnalyzingDoc = false);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Impossibile leggere i dati. Riprova con una foto piu nitida.'),
+            backgroundColor: Color(0xFFF44336),
+          ));
+        }
+      }
+    } else {
+      setState(() => _isAnalyzingDoc = false);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(response.errorMessage ?? 'Errore'),
+          backgroundColor: const Color(0xFFF44336),
+        ));
+      }
+    }
+  }
+
   Future<void> _pickAndAnalyze(ImageSource source) async {
     final file = await pickImage(source);
     if (file == null) return;
@@ -285,6 +369,7 @@ Importi come numeri senza simbolo €. Se un campo non è leggibile, metti null.
               isLoading: _isAnalyzingDoc,
               onPickCamera: () => _pickAndAnalyze(ImageSource.camera),
               onPickGallery: () => _pickAndAnalyze(ImageSource.gallery),
+              onPickPdf: _pickPdf,
             ),
           ),
           if (_needAliquota)

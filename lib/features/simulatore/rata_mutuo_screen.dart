@@ -62,6 +62,85 @@ class _RataMutuoScreenState extends State<RataMutuoScreen>
     return double.tryParse(s) ?? 0;
   }
 
+  Future<void> _pickPdf() async {
+    final file = await pickPdfFile();
+    if (file == null) return;
+
+    setState(() {
+      _isAnalyzingDoc = true;
+      _showResult = false;
+    });
+
+    final response = await GeminiService().analyzeDocument(
+      imageFile: file,
+      prompt: '''Analizza questo contratto di mutuo o contratto casa. Estrai TUTTI i dati possibili e restituisci SOLO un JSON valido (senza markdown):
+{
+  "importo": "importo del mutuo numerico",
+  "tasso": "tasso di interesse annuo numerico (es. 3.5)",
+  "durata_anni": "durata in anni numerico",
+  "tipo_tasso": "Fisso o Variabile",
+  "banca": "nome banca o istituto",
+  "intestatario": "nome intestatario"
+}
+Importi come numeri senza simbolo €. Se un campo non è leggibile, metti null.''',
+    );
+
+    if (!mounted) return;
+
+    if (response.isSuccess) {
+      final parsed = response.tryParseJson();
+      if (parsed != null) {
+        final importo = _pAi(parsed['importo']);
+        final tasso = _pAi(parsed['tasso']);
+        final durata = _pAi(parsed['durata_anni']);
+
+        if (importo <= 0 || tasso <= 0 || durata <= 0) {
+          setState(() => _isAnalyzingDoc = false);
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('Dati insufficienti nel documento. Riprova con una foto piu nitida.'),
+              backgroundColor: Color(0xFFF44336),
+            ));
+          }
+          return;
+        }
+
+        _importo = importo;
+        _tassoAnnuo = tasso;
+        _durataAnni = durata.toInt().clamp(1, 40);
+        _tipoTasso = (parsed['tipo_tasso']?.toString() ?? '').contains('ariabil') ? 'Variabile' : 'Fisso';
+        _banca = parsed['banca']?.toString() ?? '';
+        _intestatario = parsed['intestatario']?.toString() ?? '';
+
+        _calcola();
+        setState(() => _isAnalyzingDoc = false);
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Contratto analizzato con successo!'),
+            backgroundColor: Color(0xFF4CAF50),
+          ));
+        }
+      } else {
+        setState(() => _isAnalyzingDoc = false);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Impossibile leggere i dati. Riprova con una foto piu nitida.'),
+            backgroundColor: Color(0xFFF44336),
+          ));
+        }
+      }
+    } else {
+      setState(() => _isAnalyzingDoc = false);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(response.errorMessage ?? 'Errore'),
+          backgroundColor: const Color(0xFFF44336),
+        ));
+      }
+    }
+  }
+
   Future<void> _pickAndAnalyze(ImageSource source) async {
     final file = await pickImage(source);
     if (file == null) return;
@@ -230,6 +309,7 @@ Importi come numeri senza simbolo €. Se un campo non è leggibile, metti null.
               isLoading: _isAnalyzingDoc,
               onPickCamera: () => _pickAndAnalyze(ImageSource.camera),
               onPickGallery: () => _pickAndAnalyze(ImageSource.gallery),
+              onPickPdf: _pickPdf,
             ),
           ),
           if (!_showResult && !_isAnalyzingDoc)

@@ -60,6 +60,82 @@ class _NaspiScreenState extends State<NaspiScreen>
     return double.tryParse(s) ?? 0;
   }
 
+  Future<void> _pickPdf() async {
+    final file = await pickPdfFile();
+    if (file == null) return;
+
+    setState(() {
+      _isAnalyzingDoc = true;
+      _showResult = false;
+    });
+
+    final response = await GeminiService().analyzeDocument(
+      imageFile: file,
+      prompt: '''Analizza questa busta paga e/o contratto di lavoro italiano. Estrai TUTTI i dati possibili e restituisci SOLO un JSON valido (senza markdown):
+{
+  "retribuzione_media": "retribuzione media mensile lorda numerico",
+  "settimane_contributi": "settimane di contributi totali numerico (se non presente, stima dalle date di assunzione)",
+  "azienda": "nome azienda/datore di lavoro",
+  "dipendente": "nome dipendente",
+  "tipo_contratto": "tipo contratto (indeterminato, determinato, ecc.)"
+}
+Importi come numeri senza simbolo €. Se un campo non e leggibile, metti null.''',
+    );
+
+    if (!mounted) return;
+
+    if (response.isSuccess) {
+      final parsed = response.tryParseJson();
+      if (parsed != null) {
+        final retrib = _pAi(parsed['retribuzione_media']);
+
+        if (retrib <= 0) {
+          setState(() => _isAnalyzingDoc = false);
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('Retribuzione non trovata. Riprova con una foto piu nitida.'),
+              backgroundColor: Color(0xFFF44336),
+            ));
+          }
+          return;
+        }
+
+        _retribuzioneLorda = retrib;
+        final sett = _pAi(parsed['settimane_contributi']);
+        _settimaneContributi = sett > 0 ? sett.toInt().clamp(13, 208) : 52;
+        _azienda = parsed['azienda']?.toString() ?? '';
+        _dipendente = parsed['dipendente']?.toString() ?? '';
+        _tipoContratto = parsed['tipo_contratto']?.toString() ?? '';
+
+        _calcola();
+        setState(() => _isAnalyzingDoc = false);
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Documento analizzato con successo!'),
+            backgroundColor: Color(0xFF4CAF50),
+          ));
+        }
+      } else {
+        setState(() => _isAnalyzingDoc = false);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Impossibile leggere i dati. Riprova con una foto piu nitida.'),
+            backgroundColor: Color(0xFFF44336),
+          ));
+        }
+      }
+    } else {
+      setState(() => _isAnalyzingDoc = false);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(response.errorMessage ?? 'Errore'),
+          backgroundColor: const Color(0xFFF44336),
+        ));
+      }
+    }
+  }
+
   Future<void> _pickAndAnalyze(ImageSource source) async {
     final file = await pickImage(source);
     if (file == null) return;
@@ -240,6 +316,7 @@ Importi come numeri senza simbolo €. Se un campo non e leggibile, metti null.'
               isLoading: _isAnalyzingDoc,
               onPickCamera: () => _pickAndAnalyze(ImageSource.camera),
               onPickGallery: () => _pickAndAnalyze(ImageSource.gallery),
+              onPickPdf: _pickPdf,
             ),
           ),
           if (!_showResult && !_isAnalyzingDoc)

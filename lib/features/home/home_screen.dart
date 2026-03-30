@@ -7,6 +7,7 @@ import '../agevolazioni/agevolazione_detail_screen.dart';
 import '../simulatore/simulatore_screen.dart';
 import '../compilatore/compilatore_screen.dart';
 import '../ai_avvocato/ai_chat_screen.dart';
+import '../strumenti/strumenti_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final VoidCallback onNavigateToGuide;
@@ -164,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // ─── AGEVOLAZIONE DEL GIORNO ─────────────────────────────────────────────
   Widget _buildAgevolazioneDelGiorno(BuildContext context) {
-    final a = data.agevolazioneDelGiorno();
+    final a = data.agevolazioneDellaSettimana();
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(
@@ -204,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
                     decoration: BoxDecoration(color: Colors.amber.shade600, borderRadius: BorderRadius.circular(4)),
-                    child: const Text('AGEVOLAZIONE DEL GIORNO', style: TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.w800)),
+                    child: const Text('AGEVOLAZIONE DELLA SETTIMANA', style: TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.w800)),
                   ),
                   const SizedBox(height: 4),
                   Text(a.titolo, style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w700), maxLines: 1, overflow: TextOverflow.ellipsis),
@@ -298,15 +299,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icons.build_circle_rounded,
                   badge: 'TOOL',
                   badgeColor: const Color(0xFF69F0AE),
-                  title: 'Strumenti & Guide',
-                  subtitle: '18 guide + 6 tools',
+                  title: 'Strumenti',
+                  subtitle: '6 tools professionali',
                   items: const [
-                    '18 Guide Pratiche',
                     'Wallet Documenti',
                     'Quiz Cittadinanza',
                     'CV Europass',
+                    'Busta Paga Spiegata',
                   ],
-                  onTap: widget.onNavigateToStrumenti,
+                  onTap: () => _push(const StrumentiScreen()),
                 ),
               ),
               const SizedBox(width: 12),
