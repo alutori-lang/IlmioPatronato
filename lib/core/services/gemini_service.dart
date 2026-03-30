@@ -1,7 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui' as ui;
 import 'package:http/http.dart' as http;
+import 'package:pdfx/pdfx.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart' as syncpdf;
 import 'web_search_service.dart';
 
 // ---------------------------------------------------------------------------
@@ -129,7 +133,69 @@ class GeminiService {
     required String prompt,
     String? systemPrompt,
   }) async {
+    final ext = imageFile.path.split('.').last.toLowerCase();
+
     try {
+      // ── PDF: estrai testo e usa modello testo (più affidabile) ──
+      if (ext == 'pdf') {
+        try {
+          // Estrai testo dal PDF con Syncfusion
+          final bytes = await imageFile.readAsBytes();
+          final pdfDoc = syncpdf.PdfDocument(inputBytes: bytes);
+          final extractor = syncpdf.PdfTextExtractor(pdfDoc);
+          final extractedText = extractor.extractText();
+          pdfDoc.dispose();
+
+          // Se c'è testo, usa il modello testo (molto più affidabile dei numeri!)
+          if (extractedText.trim().length > 30) {
+            return chat(
+              messages: [
+                {'role': 'user', 'content': 'Ecco il testo di una busta paga italiana:\n\n$extractedText\n\n$prompt'},
+              ],
+              systemPrompt: systemPrompt,
+            );
+          }
+
+          // Se il PDF non ha testo (scansionato), converti in immagine ad alta risoluzione
+          final doc = await PdfDocument.openFile(imageFile.path);
+          final page = await doc.getPage(1);
+          final pageImage = await page.render(
+            width: page.width * 4,
+            height: page.height * 4,
+            format: PdfPageImageFormat.jpeg,
+            quality: 100,
+          );
+          await page.close();
+          await doc.close();
+
+          if (pageImage == null) {
+            return AiResponse.error('PDF non leggibile. Prova con una foto.');
+          }
+
+          final tempDir = await getTemporaryDirectory();
+          final tempFile = File('${tempDir.path}/pdf_page_${DateTime.now().millisecondsSinceEpoch}.jpg');
+          await tempFile.writeAsBytes(pageImage.bytes);
+
+          final imgBytes = await tempFile.readAsBytes();
+          final base64Img = base64Encode(imgBytes);
+          final imgMessages = <Map<String, dynamic>>[];
+          if (systemPrompt != null) imgMessages.add({'role': 'system', 'content': systemPrompt});
+          imgMessages.add({'role': 'user', 'content': [
+            {'type': 'image_url', 'image_url': {'url': 'data:image/jpeg;base64,$base64Img'}},
+            {'type': 'text', 'text': prompt},
+          ]});
+          final imgResponse = await http.post(
+            Uri.parse(_baseUrl),
+            headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $_apiKey'},
+            body: jsonEncode({'model': _modelVision, 'messages': imgMessages, 'max_tokens': 4096}),
+          ).timeout(const Duration(seconds: 30));
+          return _parseResponse(imgResponse);
+        } catch (e) {
+          return AiResponse.error('Errore lettura PDF: $e');
+        }
+      }
+
+      // ── Immagine: usa modello vision ──
       final bytes = await imageFile.readAsBytes();
       final base64Image = base64Encode(bytes);
       final mimeType = _getMimeType(imageFile.path);
@@ -165,13 +231,14 @@ class GeminiService {
           'max_tokens': 4096,
         }),
       ).timeout(const Duration(seconds: 30));
+
       return _parseResponse(response);
     } on TimeoutException {
-      return AiResponse.error('Timeout analisi immagine.');
+      return AiResponse.error('Timeout analisi documento. Riprova.');
     } on SocketException {
       return AiResponse.error('Nessuna connessione internet.');
     } catch (e) {
-      return AiResponse.error('Errore analisi immagine: $e');
+      return AiResponse.error('Errore analisi documento: $e');
     }
   }
 

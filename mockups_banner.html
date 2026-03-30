@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Mio Patronato - Banner Mockups V2</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<style>
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+@keyframes pulse { 0%,100%{opacity:0.6} 50%{opacity:1} }
+@keyframes spin { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+@keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+@keyframes glow { 0%,100%{box-shadow:0 0 15px rgba(255,215,0,0.3)} 50%{box-shadow:0 0 30px rgba(255,215,0,0.7)} }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: #0a0a12;
+  padding: 30px 16px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+h1 { text-align: center; font-size: 18px; color: #fff; margin-bottom: 6px; }
+p.sub { text-align: center; font-size: 12px; color: #666; margin-bottom: 30px; }
+.label {
+  display: inline-block;
+  background: linear-gradient(90deg, #ff006e, #8338ec, #3a86ff);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 5px 16px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+  letter-spacing: 0.5px;
+}
+.spacer { height: 32px; }
+
+/* ═══════════ STYLE 1 — Aurora Boreale ═══════════ */
+.card1 {
+  position: relative;
+  border-radius: 24px;
+  padding: 24px;
+  background: #080818;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.card1 .aurora {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(0,255,170,0.25), transparent),
+    radial-gradient(ellipse 60% 80% at 80% 30%, rgba(100,0,255,0.3), transparent),
+    radial-gradient(ellipse 70% 50% at 50% 90%, rgba(0,150,255,0.2), transparent);
+  filter: blur(30px);
+}
+.card1 .stars {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+}
+.card1 .star {
+  position: absolute; width: 2px; height: 2px; background: #fff; border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+.card1 .content { position: relative; z-index: 2; text-align: center; }
+.card1 .emoji { font-size: 42px; margin-bottom: 8px; animation: float 3s ease-in-out infinite; display: inline-block; }
+.card1 .title {
+  color: #fff; font-size: 24px; font-weight: 900; letter-spacing: -0.5px;
+  background: linear-gradient(90deg, #00ffaa, #7c4dff, #00b0ff);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.card1 .sub2 { color: rgba(255,255,255,0.5); font-size: 12px; font-weight: 500; margin-top: 4px; }
+.card1 .line { width: 50px; height: 2px; background: linear-gradient(90deg, #00ffaa, #7c4dff); margin: 14px auto; border-radius: 2px; }
+.card1 .pills { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; }
+.card1 .pill {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px; padding: 5px 12px;
+  color: rgba(255,255,255,0.7); font-size: 10px; font-weight: 600;
+  display: flex; align-items: center; gap: 4px;
+}
+.card1 .pill .material-icons-round { font-size: 12px; color: #00ffaa; }
+
+/* ═══════════ STYLE 2 — Lava 3D ═══════════ */
+.card2 {
+  position: relative;
+  border-radius: 24px;
+  padding: 0;
+  overflow: hidden;
+  background: #1a0a2e;
+  box-shadow: 0 20px 60px rgba(139, 0, 255, 0.3);
+}
+.card2 .lava-top {
+  height: 80px;
+  background: linear-gradient(135deg, #ff0080, #ff8c00, #ff0080);
+  background-size: 200% 200%;
+  animation: shimmer 4s linear infinite;
+  position: relative;
+}
+.card2 .lava-top::after {
+  content: '';
+  position: absolute; bottom: -20px; left: 0; right: 0;
+  height: 40px;
+  background: #1a0a2e;
+  border-radius: 50% 50% 0 0;
+}
+.card2 .floating-icon {
+  position: absolute; top: 40px; left: 50%; transform: translateX(-50%);
+  width: 64px; height: 64px; border-radius: 20px;
+  background: linear-gradient(135deg, #ff0080, #7928ca);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 3;
+  box-shadow: 0 8px 25px rgba(255, 0, 128, 0.5);
+  animation: glow 2s infinite;
+  border: 3px solid #1a0a2e;
+}
+.card2 .floating-icon .material-icons-round { color: #fff; font-size: 30px; }
+.card2 .body { padding: 40px 22px 22px; text-align: center; position: relative; z-index: 2; }
+.card2 .title { color: #fff; font-size: 22px; font-weight: 900; }
+.card2 .sub2 { color: rgba(255,255,255,0.4); font-size: 11px; margin-top: 4px; }
+.card2 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+.card2 .cell {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px; padding: 12px 8px; text-align: center;
+}
+.card2 .cell-num { font-size: 20px; font-weight: 900; background: linear-gradient(135deg, #ff0080, #ff8c00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.card2 .cell-label { color: rgba(255,255,255,0.4); font-size: 9px; font-weight: 700; letter-spacing: 0.5px; margin-top: 2px; }
+
+/* ═══════════ STYLE 3 — Retro Vaporwave ═══════════ */
+.card3 {
+  position: relative;
+  border-radius: 24px;
+  padding: 22px;
+  background: linear-gradient(180deg, #1a0533, #2d1b69, #1a0533);
+  overflow: hidden;
+  border: 1px solid rgba(255, 0, 255, 0.2);
+  box-shadow: 0 0 40px rgba(255, 0, 255, 0.15);
+}
+.card3 .grid-bg {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 60%;
+  background:
+    linear-gradient(rgba(255,0,255,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,0,255,0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+  perspective: 300px;
+  transform: rotateX(50deg);
+  transform-origin: bottom;
+  opacity: 0.5;
+}
+.card3 .sun {
+  position: absolute; top: 8px; right: 20px;
+  width: 60px; height: 60px; border-radius: 50%;
+  background: linear-gradient(180deg, #ff6ec7, #ff0080, #ff8c00);
+  box-shadow: 0 0 30px rgba(255, 110, 199, 0.5);
+  overflow: hidden;
+}
+.card3 .sun-line { width: 100%; height: 3px; background: #1a0533; margin-top: 4px; }
+.card3 .content { position: relative; z-index: 2; }
+.card3 .title {
+  font-size: 26px; font-weight: 900; letter-spacing: -0.5px; line-height: 1;
+  background: linear-gradient(180deg, #ff6ec7, #ffb3e6);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.card3 .title2 {
+  font-size: 14px; font-weight: 700; color: #00ffff; margin-top: 2px;
+  text-shadow: 0 0 10px rgba(0,255,255,0.5);
+  letter-spacing: 3px; text-transform: uppercase;
+}
+.card3 .divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,0,255,0.5), transparent); margin: 14px 0; }
+.card3 .row { display: flex; gap: 8px; }
+.card3 .chip {
+  flex: 1; text-align: center;
+  background: rgba(255,0,255,0.08);
+  border: 1px solid rgba(255,0,255,0.2);
+  border-radius: 10px; padding: 8px 4px;
+}
+.card3 .chip-icon { font-size: 18px; margin-bottom: 2px; }
+.card3 .chip-text { color: #ff6ec7; font-size: 9px; font-weight: 700; }
+
+/* ═══════════ STYLE 4 — Liquid Gold ═══════════ */
+.card4 {
+  position: relative;
+  border-radius: 24px;
+  padding: 22px;
+  background: linear-gradient(145deg, #1a1a2e, #16213e);
+  overflow: hidden;
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+}
+.card4 .gold-streak {
+  position: absolute; top: -20px; right: -40px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(255,215,0,0.15), transparent 60%);
+}
+.card4 .gold-streak2 {
+  position: absolute; bottom: -30px; left: -20px;
+  width: 150px; height: 150px;
+  background: radial-gradient(circle, rgba(255,165,0,0.1), transparent 60%);
+}
+.card4 .content { position: relative; z-index: 2; }
+.card4 .crown { font-size: 36px; animation: float 2.5s ease-in-out infinite; display: inline-block; }
+.card4 .top-row { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.card4 .title-col {}
+.card4 .title {
+  font-size: 21px; font-weight: 900;
+  background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.card4 .sub2 { color: rgba(255,255,255,0.4); font-size: 11px; font-weight: 500; margin-top: 2px; }
+.card4 .gold-bar {
+  width: 100%; height: 1px; margin: 0 0 14px;
+  background: linear-gradient(90deg, transparent, rgba(255,215,0,0.4), transparent);
+}
+.card4 .features { display: flex; gap: 6px; flex-wrap: wrap; }
+.card4 .feat {
+  background: rgba(255,215,0,0.06);
+  border: 1px solid rgba(255,215,0,0.12);
+  border-radius: 12px;
+  padding: 8px 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.card4 .feat .material-icons-round { font-size: 16px; color: #ffd700; }
+.card4 .feat-text { color: rgba(255,255,255,0.7); font-size: 10px; font-weight: 700; }
+
+/* ═══════════ STYLE 5 — Holographic Chaos ═══════════ */
+.card5 {
+  position: relative;
+  border-radius: 24px;
+  padding: 22px;
+  background: #0d0d0d;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.card5 .holo {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    conic-gradient(from 0deg at 30% 40%, #ff006e, #8338ec, #3a86ff, #06d6a0, #ffd166, #ff006e);
+  opacity: 0.12;
+  filter: blur(40px);
+  animation: spin 15s linear infinite;
+}
+.card5 .noise {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-radial-gradient(circle at 50% 50%, transparent 0, rgba(255,255,255,0.02) 1px, transparent 2px);
+}
+.card5 .content { position: relative; z-index: 2; display: flex; align-items: center; gap: 16px; }
+.card5 .icon-box {
+  width: 70px; height: 70px; border-radius: 22px;
+  background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 8px 30px rgba(131, 56, 236, 0.4);
+  position: relative;
+}
+.card5 .icon-box::after {
+  content: '';
+  position: absolute; inset: -2px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff, #06d6a0);
+  z-index: -1;
+  filter: blur(8px);
+  opacity: 0.5;
+}
+.card5 .icon-box .material-icons-round { color: #fff; font-size: 34px; }
+.card5 .right { flex: 1; }
+.card5 .title { color: #fff; font-size: 20px; font-weight: 900; letter-spacing: -0.3px; }
+.card5 .sub2 { color: rgba(255,255,255,0.35); font-size: 10px; font-weight: 500; margin-top: 2px; margin-bottom: 10px; }
+.card5 .tags { display: flex; gap: 4px; flex-wrap: wrap; }
+.card5 .tag {
+  padding: 3px 8px; border-radius: 6px; font-size: 9px; font-weight: 700; color: #fff;
+}
+.card5 .tag:nth-child(1) { background: rgba(255,0,110,0.3); }
+.card5 .tag:nth-child(2) { background: rgba(131,56,236,0.3); }
+.card5 .tag:nth-child(3) { background: rgba(58,134,255,0.3); }
+.card5 .tag:nth-child(4) { background: rgba(6,214,160,0.3); }
+</style>
+</head>
+<body>
+
+<h1>Banner V2 — Stili Strani</h1>
+<p class="sub">5 nuovi design unici — scegli il numero</p>
+
+<!-- ═══ STYLE 1 — Aurora ═══ -->
+<span class="label">1 — Aurora Boreale</span>
+<div class="card1">
+  <div class="aurora"></div>
+  <div class="stars">
+    <div class="star" style="top:15%;left:10%;animation-delay:0s"></div>
+    <div class="star" style="top:25%;left:75%;animation-delay:0.5s"></div>
+    <div class="star" style="top:60%;left:30%;animation-delay:1s"></div>
+    <div class="star" style="top:40%;left:90%;animation-delay:1.5s"></div>
+    <div class="star" style="top:80%;left:60%;animation-delay:0.8s"></div>
+    <div class="star" style="top:10%;left:50%;animation-delay:1.2s"></div>
+    <div class="star" style="top:70%;left:85%;animation-delay:0.3s"></div>
+  </div>
+  <div class="content">
+    <div class="emoji">🛡️</div>
+    <div class="title">Il Mio Patronato</div>
+    <div class="sub2">Il Patronato in Tasca</div>
+    <div class="line"></div>
+    <div class="pills">
+      <div class="pill"><span class="material-icons-round">card_giftcard</span> Bonus</div>
+      <div class="pill"><span class="material-icons-round">description</span> Pratiche</div>
+      <div class="pill"><span class="material-icons-round">calculate</span> Simulatori</div>
+      <div class="pill"><span class="material-icons-round">smart_toy</span> AI</div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- ═══ STYLE 2 — Lava 3D ═══ -->
+<span class="label">2 — Lava 3D</span>
+<div class="card2">
+  <div class="lava-top"></div>
+  <div class="floating-icon"><span class="material-icons-round">shield</span></div>
+  <div class="body">
+    <div class="title">Il Mio Patronato</div>
+    <div class="sub2">Pratiche, Bonus e Servizi per Immigrati</div>
+    <div class="grid">
+      <div class="cell"><div class="cell-num">53+</div><div class="cell-label">BONUS</div></div>
+      <div class="cell"><div class="cell-num">14</div><div class="cell-label">SIMULATORI</div></div>
+      <div class="cell"><div class="cell-num">6</div><div class="cell-label">STRUMENTI</div></div>
+      <div class="cell"><div class="cell-num">AI</div><div class="cell-label">ASSISTENTE</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- ═══ STYLE 3 — Vaporwave ═══ -->
+<span class="label">3 — Retro Vaporwave</span>
+<div class="card3">
+  <div class="grid-bg"></div>
+  <div class="sun">
+    <div style="height:28px"></div>
+    <div class="sun-line"></div>
+    <div style="height:3px"></div>
+    <div class="sun-line"></div>
+    <div style="height:4px"></div>
+    <div class="sun-line"></div>
+    <div style="height:5px"></div>
+    <div class="sun-line"></div>
+  </div>
+  <div class="content">
+    <div class="title">Il Mio<br>Patronato</div>
+    <div class="title2">in tasca</div>
+    <div class="divider"></div>
+    <div class="row">
+      <div class="chip"><div class="chip-icon">🎁</div><div class="chip-text">BONUS</div></div>
+      <div class="chip"><div class="chip-icon">📋</div><div class="chip-text">PRATICHE</div></div>
+      <div class="chip"><div class="chip-icon">🧮</div><div class="chip-text">CALCOLI</div></div>
+      <div class="chip"><div class="chip-icon">🤖</div><div class="chip-text">AI</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- ═══ STYLE 4 — Liquid Gold ═══ -->
+<span class="label">4 — Liquid Gold</span>
+<div class="card4">
+  <div class="gold-streak"></div>
+  <div class="gold-streak2"></div>
+  <div class="content">
+    <div class="top-row">
+      <div class="crown">👑</div>
+      <div class="title-col">
+        <div class="title">Il Mio Patronato</div>
+        <div class="sub2">Il Patronato in Tasca</div>
+      </div>
+    </div>
+    <div class="gold-bar"></div>
+    <div class="features">
+      <div class="feat"><span class="material-icons-round">card_giftcard</span><span class="feat-text">53+ Bonus</span></div>
+      <div class="feat"><span class="material-icons-round">calculate</span><span class="feat-text">Simulatori</span></div>
+      <div class="feat"><span class="material-icons-round">build_circle</span><span class="feat-text">Strumenti</span></div>
+      <div class="feat"><span class="material-icons-round">smart_toy</span><span class="feat-text">AI</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- ═══ STYLE 5 — Holographic ═══ -->
+<span class="label">5 — Holographic Chaos</span>
+<div class="card5">
+  <div class="holo"></div>
+  <div class="noise"></div>
+  <div class="content">
+    <div class="icon-box"><span class="material-icons-round">shield</span></div>
+    <div class="right">
+      <div class="title">Il Mio Patronato</div>
+      <div class="sub2">Pratiche, Bonus e Servizi per Immigrati</div>
+      <div class="tags">
+        <span class="tag">Bonus</span>
+        <span class="tag">Pratiche</span>
+        <span class="tag">Simulatori</span>
+        <span class="tag">AI</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+<div class="spacer"></div>
+
+</body>
+</html>

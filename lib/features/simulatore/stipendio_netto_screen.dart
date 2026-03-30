@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,6 +21,8 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
   bool _isAnalyzingDoc = false;
   bool _showResult = false;
   bool _needRegione = false;
+  bool _needManualRal = false;
+  final _ralController = TextEditingController();
 
   // Dati estratti dall'AI
   double _ral = 0;
@@ -79,173 +82,129 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
     return double.tryParse(s) ?? 0;
   }
 
+  static const _bustaPagaPrompt = '''Sei un esperto di buste paga italiane. Analizza questo documento e trova gli importi. Rispondi SOLO con un JSON valido, niente altro testo:
+{"lordo":"importo lordo mensile","netto":"importo netto mensile","tipo":"dipendente","settore":"Commercio","regione":"regione","nome":"nome dipendente","azienda":"nome azienda"}
+Metti i numeri senza euro, con punto decimale. Esempio: 1850.50''';
+
   Future<void> _pickPdf() async {
     final file = await pickPdfFile();
     if (file == null) return;
-
-    setState(() {
-      _isAnalyzingDoc = true;
-      _showResult = false;
-      _needRegione = false;
-    });
-
-    final response = await GeminiService().analyzeDocument(
-      imageFile: file,
-      prompt: '''Analizza questa busta paga o contratto di lavoro italiano. Estrai TUTTI i dati e restituisci SOLO un JSON valido (senza markdown):
-{
-  "ral": "retribuzione annua lorda numerico",
-  "tipo_contratto": "dipendente o apprendista o cococo",
-  "settore": "Commercio o Industria o Artigianato o Pubblico",
-  "regione": "regione sede di lavoro",
-  "dipendente": "nome del dipendente",
-  "azienda": "nome azienda o datore di lavoro"
-}
-Importi come numeri senza simbolo €. Se un campo non è leggibile, metti null.''',
-    );
-
-    if (!mounted) return;
-
-    if (response.isSuccess) {
-      final parsed = response.tryParseJson();
-      if (parsed != null) {
-        final ral = _pAi(parsed['ral']);
-
-        if (ral <= 0) {
-          setState(() => _isAnalyzingDoc = false);
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text('RAL non trovata nel documento. Riprova con una foto piu nitida.'),
-              backgroundColor: Color(0xFFF44336),
-            ));
-          }
-          return;
-        }
-
-        _ral = ral;
-        _dipendente = parsed['dipendente']?.toString() ?? '';
-        _azienda = parsed['azienda']?.toString() ?? '';
-
-        final tipo = parsed['tipo_contratto']?.toString().toLowerCase() ?? '';
-        if (tipo.contains('apprend')) {
-          _tipoContratto = 'apprendista';
-        } else if (tipo.contains('cococo') || tipo.contains('co.co')) {
-          _tipoContratto = 'cococo';
-        } else {
-          _tipoContratto = 'dipendente';
-        }
-
-        final settore = parsed['settore']?.toString() ?? '';
-        if (settore.isNotEmpty) {
-          for (final s in _settori) {
-            if (settore.toLowerCase().contains(s.toLowerCase())) {
-              _settore = s;
-              break;
-            }
-          }
-        }
-
-        final regione = parsed['regione']?.toString() ?? '';
-        bool regioneFound = false;
-        if (regione.isNotEmpty) {
-          for (final r in _regioni) {
-            if (regione.toLowerCase().contains(r.toLowerCase())) {
-              _regione = r;
-              regioneFound = true;
-              break;
-            }
-          }
-        }
-
-        if (!regioneFound) {
-          setState(() {
-            _isAnalyzingDoc = false;
-            _needRegione = true;
-          });
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text('Regione non trovata. Selezionala per completare il calcolo.'),
-              backgroundColor: Color(0xFFFF9800),
-            ));
-          }
-          return;
-        }
-
-        _calcola();
-        setState(() => _isAnalyzingDoc = false);
-
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Busta paga analizzata con successo!'),
-            backgroundColor: Color(0xFF4CAF50),
-          ));
-        }
-      } else {
-        setState(() => _isAnalyzingDoc = false);
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Impossibile leggere i dati. Riprova con una foto piu nitida.'),
-            backgroundColor: Color(0xFFF44336),
-          ));
-        }
-      }
-    } else {
-      setState(() => _isAnalyzingDoc = false);
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(response.errorMessage ?? 'Errore'),
-          backgroundColor: const Color(0xFFF44336),
-        ));
-      }
-    }
+    _analyzeFile(file);
   }
 
   Future<void> _pickAndAnalyze(ImageSource source) async {
     final file = await pickImage(source);
     if (file == null) return;
+    _analyzeFile(file);
+  }
 
+  Future<void> _analyzeFile(File file) async {
     setState(() {
       _isAnalyzingDoc = true;
       _showResult = false;
       _needRegione = false;
+      _needManualRal = false;
     });
 
     final response = await GeminiService().analyzeDocument(
       imageFile: file,
-      prompt: '''Analizza questa busta paga o contratto di lavoro italiano. Estrai TUTTI i dati e restituisci SOLO un JSON valido (senza markdown):
-{
-  "ral": "retribuzione annua lorda numerico",
-  "tipo_contratto": "dipendente o apprendista o cococo",
-  "settore": "Commercio o Industria o Artigianato o Pubblico",
-  "regione": "regione sede di lavoro",
-  "dipendente": "nome del dipendente",
-  "azienda": "nome azienda o datore di lavoro"
-}
-Importi come numeri senza simbolo €. Se un campo non è leggibile, metti null.''',
+      prompt: _bustaPagaPrompt,
     );
 
     if (!mounted) return;
 
     if (response.isSuccess) {
+      // Prova a parsare JSON dalla risposta AI
       final parsed = response.tryParseJson();
-      if (parsed != null) {
-        final ral = _pAi(parsed['ral']);
 
-        if (ral <= 0) {
-          setState(() => _isAnalyzingDoc = false);
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text('RAL non trovata nel documento. Riprova con una foto piu nitida.'),
-              backgroundColor: Color(0xFFF44336),
-            ));
+      // Se il JSON non è parsabile, prova a estrarre numeri dalla risposta testuale
+      if (parsed == null) {
+        // Cerca qualsiasi numero nella risposta che potrebbe essere lordo/netto
+        final text = response.text;
+        final numRegex = RegExp(r'(\d{1,2}[\.,]\d{3}[\.,]\d{2}|\d{3,5}[\.,]\d{2})');
+        final matches = numRegex.allMatches(text).toList();
+
+        if (matches.length >= 2) {
+          // Primo numero grande = lordo, secondo = netto (tipico ordine busta paga)
+          final nums = matches.map((m) => _pAi(m.group(0))).where((n) => n > 100).toList();
+          if (nums.isNotEmpty) {
+            final lordo = nums.reduce((a, b) => a > b ? a : b); // il più grande = lordo
+            _ral = lordo > 5000 ? lordo : lordo * 13;
+            _calcola();
+            setState(() => _isAnalyzingDoc = false);
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                content: Text('Busta paga analizzata!'),
+                backgroundColor: Color(0xFF4CAF50),
+              ));
+            }
+            return;
           }
-          return;
         }
 
-        _ral = ral;
-        _dipendente = parsed['dipendente']?.toString() ?? '';
-        _azienda = parsed['azienda']?.toString() ?? '';
+        setState(() => _isAnalyzingDoc = false);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('AI risposta: ${text.length > 100 ? text.substring(0, 100) : text}'),
+            backgroundColor: const Color(0xFFF44336),
+            duration: const Duration(seconds: 5),
+          ));
+        }
+        return;
+      }
 
-        final tipo = parsed['tipo_contratto']?.toString().toLowerCase() ?? '';
+      if (parsed != null) {
+        _dipendente = (parsed['nome'] ?? parsed['dipendente'] ?? '').toString();
+        _azienda = (parsed['azienda'] ?? '').toString();
+
+        // Prova tutti i possibili nomi per lordo e netto
+        double lordoMensile = 0;
+        double nettoMensile = 0;
+        // Cerca in tutte le chiavi del JSON un valore numerico > 500 (probabile stipendio)
+        for (final entry in parsed.entries) {
+          final val = _pAi(entry.value);
+          final key = entry.key.toString().toLowerCase();
+          if (val > 0) {
+            if (key.contains('lord') || key.contains('competen') || key.contains('lordo') || key.contains('ral') || key.contains('retribuz')) {
+              if (val > lordoMensile) lordoMensile = val;
+            } else if (key.contains('nett') || key.contains('pagar') || key.contains('busta')) {
+              if (val > nettoMensile) nettoMensile = val;
+            }
+          }
+        }
+        // Fallback: se non trovati con nome specifico, prova i campi diretti
+        if (lordoMensile <= 0) lordoMensile = _pAi(parsed['lordo'] ?? parsed['totale_competenze'] ?? parsed['stipendio_lordo_mensile']);
+        if (nettoMensile <= 0) nettoMensile = _pAi(parsed['netto'] ?? parsed['netto_in_busta'] ?? parsed['stipendio_netto']);
+
+        // Calcola RAL automaticamente
+        if (lordoMensile > 0) {
+          _ral = lordoMensile > 5000 ? lordoMensile : lordoMensile * 13;
+        } else if (nettoMensile > 0) {
+          _ral = nettoMensile * 1.45 * 13;
+        } else {
+          // Ultimo tentativo: cerca qualsiasi valore numerico > 500 nel JSON
+          double maxVal = 0;
+          for (final v in parsed.values) {
+            final n = _pAi(v);
+            if (n > maxVal) maxVal = n;
+          }
+          if (maxVal > 500) {
+            _ral = maxVal > 5000 ? maxVal : maxVal * 13;
+          } else {
+            setState(() => _isAnalyzingDoc = false);
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text('Dati trovati ma importi non leggibili. JSON: ${parsed.toString().substring(0, parsed.toString().length.clamp(0, 80))}'),
+                backgroundColor: const Color(0xFFF44336),
+                duration: const Duration(seconds: 5),
+              ));
+            }
+            return;
+          }
+        }
+
+        // Tipo contratto
+        final tipo = (parsed['tipo'] ?? parsed['tipo_contratto'] ?? '').toString().toLowerCase();
         if (tipo.contains('apprend')) {
           _tipoContratto = 'apprendista';
         } else if (tipo.contains('cococo') || tipo.contains('co.co')) {
@@ -254,41 +213,26 @@ Importi come numeri senza simbolo €. Se un campo non è leggibile, metti null.
           _tipoContratto = 'dipendente';
         }
 
-        final settore = parsed['settore']?.toString() ?? '';
-        if (settore.isNotEmpty) {
+        // Settore
+        final ccnl = (parsed['settore'] ?? parsed['ccnl'] ?? '').toString();
+        if (ccnl.isNotEmpty) {
           for (final s in _settori) {
-            if (settore.toLowerCase().contains(s.toLowerCase())) {
+            if (ccnl.toLowerCase().contains(s.toLowerCase())) {
               _settore = s;
               break;
             }
           }
         }
 
-        // Check regione
-        final regione = parsed['regione']?.toString() ?? '';
-        bool regioneFound = false;
+        // Regione — se non trovata usa Lazio come default
+        final regione = (parsed['regione'] ?? '').toString();
         if (regione.isNotEmpty) {
           for (final r in _regioni) {
             if (regione.toLowerCase().contains(r.toLowerCase())) {
               _regione = r;
-              regioneFound = true;
               break;
             }
           }
-        }
-
-        if (!regioneFound) {
-          setState(() {
-            _isAnalyzingDoc = false;
-            _needRegione = true;
-          });
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text('Regione non trovata. Selezionala per completare il calcolo.'),
-              backgroundColor: Color(0xFFFF9800),
-            ));
-          }
-          return;
         }
 
         _calcola();
@@ -304,7 +248,7 @@ Importi come numeri senza simbolo €. Se un campo non è leggibile, metti null.
         setState(() => _isAnalyzingDoc = false);
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Impossibile leggere i dati. Riprova con una foto piu nitida.'),
+            content: Text('Documento non leggibile. Riprova con una foto piu chiara.'),
             backgroundColor: Color(0xFFF44336),
           ));
         }
@@ -557,6 +501,110 @@ Importi come numeri senza simbolo €. Se un campo non è leggibile, metti null.
                 SizedBox(height: 1),
                 Text('Carica busta paga e calcola', style: TextStyle(color: AppColors.textSubtitle, fontSize: 11)),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildManualRalForm() {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 12, offset: const Offset(0, 4))],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 40, height: 40,
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Icon(Icons.edit_note, color: AppColors.primary, size: 22),
+              ),
+              const SizedBox(width: 12),
+              const Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Inserisci il tuo stipendio', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                    SizedBox(height: 2),
+                    Text('Quanto prendi al mese?', style: TextStyle(fontSize: 11, color: AppColors.textLight)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          if (_dipendente.isNotEmpty || _azienda.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Text(
+                '${_dipendente.isNotEmpty ? _dipendente : ""} ${_azienda.isNotEmpty ? "- $_azienda" : ""}',
+                style: const TextStyle(fontSize: 12, color: AppColors.textMedium, fontWeight: FontWeight.w600),
+              ),
+            ),
+          TextField(
+            controller: _ralController,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            decoration: InputDecoration(
+              labelText: 'Stipendio Netto Mensile',
+              hintText: 'Es: 1200',
+              helperText: 'Quanto ti arriva in banca ogni mese',
+              helperMaxLines: 2,
+              prefixIcon: const Icon(Icons.euro, size: 20),
+              suffixText: '€ netto/mese',
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: AppColors.primary, width: 2),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              onPressed: () {
+                final text = _ralController.text.replaceAll('.', '').replaceAll(',', '.').replaceAll('€', '').trim();
+                final netto = double.tryParse(text) ?? 0;
+                if (netto <= 0) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Inserisci lo stipendio netto mensile'),
+                    backgroundColor: Color(0xFFF44336),
+                  ));
+                  return;
+                }
+                // Stima RAL dal netto: netto x 1.45 x 13 mensilità
+                _ral = netto * 1.45 * 13;
+                _needManualRal = false;
+
+                // Check regione
+                if (_regione.isEmpty) {
+                  setState(() => _needRegione = true);
+                  return;
+                }
+
+                _calcola();
+                setState(() {});
+              },
+              icon: const Icon(Icons.calculate),
+              label: const Text('CALCOLA STIPENDIO NETTO', style: TextStyle(fontWeight: FontWeight.w700)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              ),
             ),
           ),
         ],
