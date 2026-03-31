@@ -82,9 +82,9 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
     return double.tryParse(s) ?? 0;
   }
 
-  static const _bustaPagaPrompt = '''Sei un esperto di buste paga italiane. Analizza questo documento e trova gli importi. Rispondi SOLO con un JSON valido, niente altro testo:
-{"lordo":"importo lordo mensile","netto":"importo netto mensile","tipo":"dipendente","settore":"Commercio","regione":"regione","nome":"nome dipendente","azienda":"nome azienda"}
-Metti i numeri senza euro, con punto decimale. Esempio: 1850.50''';
+  static const _bustaPagaPrompt = '''Sei un esperto di buste paga italiane. Trova lo stipendio MENSILE (di UN mese, NON annuale). Rispondi SOLO con JSON:
+{"lordo_mensile":1850.50,"netto_mensile":1350.00,"tipo":"dipendente","settore":"Commercio","regione":"Lombardia","nome":"Mario Rossi","azienda":"Azienda Srl"}
+ATTENZIONE: lordo_mensile e netto_mensile devono essere importi di UN SINGOLO MESE (tipicamente tra 800 e 5000 euro). NON mettere il totale annuale. Usa punto come decimale, senza euro.''';
 
   Future<void> _pickPdf() async {
     final file = await pickPdfFile();
@@ -157,50 +157,29 @@ Metti i numeri senza euro, con punto decimale. Esempio: 1850.50''';
         _dipendente = (parsed['nome'] ?? parsed['dipendente'] ?? '').toString();
         _azienda = (parsed['azienda'] ?? '').toString();
 
-        // Prova tutti i possibili nomi per lordo e netto
-        double lordoMensile = 0;
-        double nettoMensile = 0;
-        // Cerca in tutte le chiavi del JSON un valore numerico > 500 (probabile stipendio)
-        for (final entry in parsed.entries) {
-          final val = _pAi(entry.value);
-          final key = entry.key.toString().toLowerCase();
-          if (val > 0) {
-            if (key.contains('lord') || key.contains('competen') || key.contains('lordo') || key.contains('ral') || key.contains('retribuz')) {
-              if (val > lordoMensile) lordoMensile = val;
-            } else if (key.contains('nett') || key.contains('pagar') || key.contains('busta')) {
-              if (val > nettoMensile) nettoMensile = val;
-            }
-          }
-        }
-        // Fallback: se non trovati con nome specifico, prova i campi diretti
-        if (lordoMensile <= 0) lordoMensile = _pAi(parsed['lordo'] ?? parsed['totale_competenze'] ?? parsed['stipendio_lordo_mensile']);
-        if (nettoMensile <= 0) nettoMensile = _pAi(parsed['netto'] ?? parsed['netto_in_busta'] ?? parsed['stipendio_netto']);
+        // Cerca lordo e netto mensile
+        double lordoMensile = _pAi(parsed['lordo_mensile'] ?? parsed['lordo'] ?? parsed['totale_competenze'] ?? parsed['stipendio_lordo_mensile']);
+        double nettoMensile = _pAi(parsed['netto_mensile'] ?? parsed['netto'] ?? parsed['netto_in_busta'] ?? parsed['stipendio_netto']);
 
-        // Calcola RAL automaticamente
+        // Sanity check: se i numeri sono troppo alti, probabilmente sono annuali
+        if (lordoMensile > 8000) lordoMensile = lordoMensile / 13;
+        if (nettoMensile > 6000) nettoMensile = nettoMensile / 13;
+
+        // Calcola RAL: lordo mensile x 13
         if (lordoMensile > 0) {
-          _ral = lordoMensile > 5000 ? lordoMensile : lordoMensile * 13;
+          _ral = lordoMensile * 13;
         } else if (nettoMensile > 0) {
           _ral = nettoMensile * 1.45 * 13;
         } else {
-          // Ultimo tentativo: cerca qualsiasi valore numerico > 500 nel JSON
-          double maxVal = 0;
-          for (final v in parsed.values) {
-            final n = _pAi(v);
-            if (n > maxVal) maxVal = n;
+          setState(() => _isAnalyzingDoc = false);
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('Importi non trovati. Dati: ${parsed.toString().substring(0, parsed.toString().length.clamp(0, 80))}'),
+              backgroundColor: const Color(0xFFF44336),
+              duration: const Duration(seconds: 5),
+            ));
           }
-          if (maxVal > 500) {
-            _ral = maxVal > 5000 ? maxVal : maxVal * 13;
-          } else {
-            setState(() => _isAnalyzingDoc = false);
-            if (mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text('Dati trovati ma importi non leggibili. JSON: ${parsed.toString().substring(0, parsed.toString().length.clamp(0, 80))}'),
-                backgroundColor: const Color(0xFFF44336),
-                duration: const Duration(seconds: 5),
-              ));
-            }
-            return;
-          }
+          return;
         }
 
         // Tipo contratto

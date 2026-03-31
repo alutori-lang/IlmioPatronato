@@ -148,9 +148,13 @@ class GeminiService {
 
           // Se c'è testo, usa il modello testo (molto più affidabile dei numeri!)
           if (extractedText.trim().length > 30) {
+            // Taglia il testo a max 3000 caratteri per stare nei limiti API
+            final trimmedText = extractedText.length > 3000
+                ? extractedText.substring(0, 3000)
+                : extractedText;
             return chat(
               messages: [
-                {'role': 'user', 'content': 'Ecco il testo di una busta paga italiana:\n\n$extractedText\n\n$prompt'},
+                {'role': 'user', 'content': 'Testo busta paga:\n$trimmedText\n\n$prompt'},
               ],
               systemPrompt: systemPrompt,
             );
