@@ -78,13 +78,31 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
 
   double _pAi(dynamic v) {
     if (v == null) return 0;
-    final s = v.toString().replaceAll('€', '').replaceAll(' ', '').replaceAll('.', '').replaceAll(',', '.');
+    if (v is num) return v.toDouble();
+    String s = v.toString().replaceAll('€', '').replaceAll(' ', '').trim();
+    if (s.isEmpty) return 0;
+    // Formato italiano: 1.309,18 (punto = migliaia, virgola = decimale)
+    if (s.contains('.') && s.contains(',')) {
+      s = s.replaceAll('.', '').replaceAll(',', '.');
+    } else if (s.contains(',')) {
+      // Solo virgola = decimale (1309,18)
+      s = s.replaceAll(',', '.');
+    }
+    // Solo punto = già formato corretto (1309.18)
     return double.tryParse(s) ?? 0;
   }
 
-  static const _bustaPagaPrompt = '''Sei un esperto di buste paga italiane. Trova lo stipendio MENSILE (di UN mese, NON annuale). Rispondi SOLO con JSON:
-{"lordo_mensile":1850.50,"netto_mensile":1350.00,"tipo":"dipendente","settore":"Commercio","regione":"Lombardia","nome":"Mario Rossi","azienda":"Azienda Srl"}
-ATTENZIONE: lordo_mensile e netto_mensile devono essere importi di UN SINGOLO MESE (tipicamente tra 800 e 5000 euro). NON mettere il totale annuale. Usa punto come decimale, senza euro.''';
+  static const _bustaPagaPrompt = '''Sei un consulente del lavoro italiano. Leggi questa busta paga e dimmi i dati. Rispondi SOLO con JSON, niente altro testo:
+{"nome":"nome dipendente","azienda":"nome azienda","lordo":0,"netto":0,"inps":0,"irpef":0,"regione":"","contratto":"dipendente","settore":"Commercio"}
+
+IMPORTANTE - cerca ESATTAMENTE questi campi nel documento:
+- "lordo" = cerca la riga "Totale competenze" o "Retribuzione lorda del mese" e copia quel numero
+- "netto" = cerca la riga "Netto" o "Netto a pagare" o "Netto in busta" e copia quel numero
+- "inps" = cerca "INPS" o "Contributi" nelle trattenute
+- "irpef" = cerca "IRPEF" nelle trattenute
+- NON sommare, NON calcolare, copia SOLO i numeri che vedi scritti
+- I numeri sono tipicamente tra 100 e 3000 euro per una busta paga mensile
+- Usa punto decimale: 1234.56''';
 
   Future<void> _pickPdf() async {
     final file = await pickPdfFile();
@@ -114,38 +132,14 @@ ATTENZIONE: lordo_mensile e netto_mensile devono essere importi di UN SINGOLO ME
     if (!mounted) return;
 
     if (response.isSuccess) {
-      // Prova a parsare JSON dalla risposta AI
       final parsed = response.tryParseJson();
 
-      // Se il JSON non è parsabile, prova a estrarre numeri dalla risposta testuale
       if (parsed == null) {
-        // Cerca qualsiasi numero nella risposta che potrebbe essere lordo/netto
-        final text = response.text;
-        final numRegex = RegExp(r'(\d{1,2}[\.,]\d{3}[\.,]\d{2}|\d{3,5}[\.,]\d{2})');
-        final matches = numRegex.allMatches(text).toList();
-
-        if (matches.length >= 2) {
-          // Primo numero grande = lordo, secondo = netto (tipico ordine busta paga)
-          final nums = matches.map((m) => _pAi(m.group(0))).where((n) => n > 100).toList();
-          if (nums.isNotEmpty) {
-            final lordo = nums.reduce((a, b) => a > b ? a : b); // il più grande = lordo
-            _ral = lordo > 5000 ? lordo : lordo * 13;
-            _calcola();
-            setState(() => _isAnalyzingDoc = false);
-            if (mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                content: Text('Busta paga analizzata!'),
-                backgroundColor: Color(0xFF4CAF50),
-              ));
-            }
-            return;
-          }
-        }
-
         setState(() => _isAnalyzingDoc = false);
         if (mounted) {
+          final t = response.text;
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('AI risposta: ${text.length > 100 ? text.substring(0, 100) : text}'),
+            content: Text('Risposta AI: ${t.length > 120 ? t.substring(0, 120) : t}'),
             backgroundColor: const Color(0xFFF44336),
             duration: const Duration(seconds: 5),
           ));
@@ -153,33 +147,42 @@ ATTENZIONE: lordo_mensile e netto_mensile devono essere importi di UN SINGOLO ME
         return;
       }
 
-      if (parsed != null) {
-        _dipendente = (parsed['nome'] ?? parsed['dipendente'] ?? '').toString();
-        _azienda = (parsed['azienda'] ?? '').toString();
-
-        // Cerca lordo e netto mensile
-        double lordoMensile = _pAi(parsed['lordo_mensile'] ?? parsed['lordo'] ?? parsed['totale_competenze'] ?? parsed['stipendio_lordo_mensile']);
-        double nettoMensile = _pAi(parsed['netto_mensile'] ?? parsed['netto'] ?? parsed['netto_in_busta'] ?? parsed['stipendio_netto']);
-
-        // Sanity check: se i numeri sono troppo alti, probabilmente sono annuali
-        if (lordoMensile > 8000) lordoMensile = lordoMensile / 13;
-        if (nettoMensile > 6000) nettoMensile = nettoMensile / 13;
-
-        // Calcola RAL: lordo mensile x 13
-        if (lordoMensile > 0) {
-          _ral = lordoMensile * 13;
-        } else if (nettoMensile > 0) {
-          _ral = nettoMensile * 1.45 * 13;
-        } else {
+      {
+        // Check se non è una busta paga
+        if (parsed.containsKey('errore')) {
           setState(() => _isAnalyzingDoc = false);
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('Importi non trovati. Dati: ${parsed.toString().substring(0, parsed.toString().length.clamp(0, 80))}'),
+              content: Text(parsed['errore'].toString()),
               backgroundColor: const Color(0xFFF44336),
-              duration: const Duration(seconds: 5),
             ));
           }
           return;
+        }
+
+        _dipendente = (parsed['nome'] ?? parsed['dipendente'] ?? '').toString();
+        _azienda = (parsed['azienda'] ?? '').toString();
+
+        // Numeri dalla busta paga
+        double lordo = _pAi(parsed['lordo'] ?? parsed['lordo_mensile']);
+        double netto = _pAi(parsed['netto'] ?? parsed['netto_mensile']);
+
+        if (lordo <= 0 && netto <= 0) {
+          setState(() => _isAnalyzingDoc = false);
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('Importi non trovati. Riprova con foto più chiara.'),
+              backgroundColor: Color(0xFFF44336),
+            ));
+          }
+          return;
+        }
+
+        // Se lordo trovato, calcola RAL
+        if (lordo > 0) {
+          _ral = lordo * 13;
+        } else {
+          _ral = netto * 1.45 * 13;
         }
 
         // Tipo contratto
@@ -221,14 +224,6 @@ ATTENZIONE: lordo_mensile e netto_mensile devono essere importi di UN SINGOLO ME
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text('Busta paga analizzata con successo!'),
             backgroundColor: Color(0xFF4CAF50),
-          ));
-        }
-      } else {
-        setState(() => _isAnalyzingDoc = false);
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Documento non leggibile. Riprova con una foto piu chiara.'),
-            backgroundColor: Color(0xFFF44336),
           ));
         }
       }
@@ -432,11 +427,7 @@ ATTENZIONE: lordo_mensile e netto_mensile devono essere importi di UN SINGOLO ME
           if (!_showResult && !_isAnalyzingDoc && !_needRegione)
             SliverToBoxAdapter(child: _buildHint()),
           if (_showResult) ...[
-            SliverToBoxAdapter(child: _buildNettoResultCard()),
-            SliverToBoxAdapter(child: _buildSplitBarsCard()),
-            SliverToBoxAdapter(child: _buildScaglioniCard()),
-            SliverToBoxAdapter(child: _buildDettaglioCard()),
-            SliverToBoxAdapter(child: _buildMensileCard()),
+            SliverToBoxAdapter(child: _buildSimpleResult()),
             SliverToBoxAdapter(child: _buildActionButtons()),
           ],
           const SliverToBoxAdapter(child: SizedBox(height: 40)),
@@ -585,6 +576,111 @@ ATTENZIONE: lordo_mensile e netto_mensile devono essere importi di UN SINGOLO ME
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSimpleResult() {
+    final totaleTasse = _irpefNetta + _addizionaleRegionale + _addizionaleComunale;
+    final ferieMese = 2.17; // Giorni ferie maturati al mese (26/12)
+
+    return Container(
+      margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      child: Column(
+        children: [
+          // ── NETTO MENSILE (grande) ──
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 28),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFF2E7D32), Color(0xFF43A047)],
+              ),
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [BoxShadow(color: const Color(0xFF2E7D32).withValues(alpha: 0.3), blurRadius: 16, offset: const Offset(0, 6))],
+            ),
+            child: Column(
+              children: [
+                const Text('STIPENDIO NETTO', style: TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.w700, letterSpacing: 1)),
+                const SizedBox(height: 6),
+                Text(
+                  '\u20AC ${_fmt.format(_nettoMensile13)}',
+                  style: const TextStyle(color: Colors.white, fontSize: 38, fontWeight: FontWeight.w900),
+                ),
+                const Text('al mese', style: TextStyle(color: Colors.white60, fontSize: 13)),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // ── INFO DIPENDENTE ──
+          if (_dipendente.isNotEmpty || _azienda.isNotEmpty)
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(14),
+              margin: const EdgeInsets.only(bottom: 12),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(14),
+                boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8)],
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.person, color: AppColors.primary, size: 20),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      '${_dipendente.isNotEmpty ? _dipendente : ""} ${_azienda.isNotEmpty ? "- $_azienda" : ""}',
+                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+          // ── DETTAGLI SEMPLICI ──
+          _simpleRow(Icons.euro, 'Stipendio Lordo', '\u20AC ${_fmt.format(_ral / 13)}', '/mese', const Color(0xFF1565C0)),
+          _simpleRow(Icons.account_balance, 'INPS (contributi)', '- \u20AC ${_fmt.format(_contributiInps / 13)}', '/mese', const Color(0xFFFF8F00)),
+          _simpleRow(Icons.receipt_long, 'IRPEF (tasse)', '- \u20AC ${_fmt.format(totaleTasse / 13)}', '/mese', const Color(0xFFE53935)),
+          _simpleRow(Icons.savings, 'Netto Annuo', '\u20AC ${_fmt.format(_nettoAnnuo)}', '/anno', const Color(0xFF2E7D32)),
+          _simpleRow(Icons.beach_access, 'Ferie', '~${ferieMese.toStringAsFixed(1)} giorni', '/mese', const Color(0xFF7B1FA2)),
+          _simpleRow(Icons.card_giftcard, 'Tredicesima', '\u20AC ${_fmt.format(_nettoAnnuo / 13)}', 'a dicembre', const Color(0xFF00838F)),
+        ],
+      ),
+    );
+  }
+
+  Widget _simpleRow(IconData icon, String label, String value, String sub, Color color) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 8)],
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 36, height: 36,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(icon, color: color, size: 18),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(label, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textDark)),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(value, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: color)),
+              Text(sub, style: const TextStyle(fontSize: 10, color: AppColors.textLight)),
+            ],
           ),
         ],
       ),

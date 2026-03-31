@@ -1,42 +1,42 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:ui' as ui;
 import 'package:http/http.dart' as http;
-import 'package:pdfx/pdfx.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart' as syncpdf;
 import 'web_search_service.dart';
 
 // ---------------------------------------------------------------------------
-// Servizio Groq AI — Singleton
-// - chat testuale: llama-3.1-8b-instant (14.400 req/giorno gratis)
-// - chat con immagine: llama-3.2-11b-vision-preview (vision gratuita)
+// Servizio Claude AI (Anthropic) — Singleton
+// - Modello: claude-haiku-4-5-20251001 (veloce, economico, preciso)
+// - Supporta: testo, immagini, PDF nativamente
 // ---------------------------------------------------------------------------
 class GeminiService {
   static final GeminiService _instance = GeminiService._();
   factory GeminiService() => _instance;
   GeminiService._();
 
-  static const _apiKey = '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';
-  static const _modelText   = 'llama-3.1-8b-instant';
-  static const _modelVision = 'meta-llama/llama-4-scout-17b-16e-instruct';
-  static const _baseUrl = 'https://api.groq.com/openai/v1/chat/completions';
+  static const _apiKey = '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';
+  static const _model = 'claude-sonnet-4-6';
+  static const _modelFast = 'claude-haiku-4-5-20251001';
+  static const _baseUrl = 'https://api.anthropic.com/v1/messages';
+
+  // ── Headers Anthropic ──
+  Map<String, String> get _headers => {
+    'Content-Type': 'application/json',
+    'x-api-key': _apiKey,
+    'anthropic-version': '2023-06-01',
+    'anthropic-beta': 'pdfs-2024-09-25',
+  };
 
   // ── Verifica connessione API ──
-
   Future<bool> testConnection() async {
     try {
       final response = await http.post(
         Uri.parse(_baseUrl),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $_apiKey',
-        },
+        headers: _headers,
         body: jsonEncode({
-          'model': _modelText,
-          'messages': [{'role': 'user', 'content': 'OK'}],
+          'model': _model,
           'max_tokens': 8,
+          'messages': [{'role': 'user', 'content': 'OK'}],
         }),
       );
       return response.statusCode == 200;
@@ -46,17 +46,14 @@ class GeminiService {
   }
 
   // ── Chat testuale ──
-
   Future<AiResponse> chat({
     required List<Map<String, dynamic>> messages,
     String? systemPrompt,
   }) async {
-    final groqMessages = <Map<String, dynamic>>[];
-    if (systemPrompt != null) {
-      groqMessages.add({'role': 'system', 'content': systemPrompt});
-    }
+    final claudeMessages = <Map<String, dynamic>>[];
     for (final msg in messages) {
       final role = msg['role'] as String;
+      if (role == 'system') continue; // system va separato in Anthropic
       final content = msg['content'];
       String text;
       if (content is String) {
@@ -70,31 +67,26 @@ class GeminiService {
       } else {
         continue;
       }
-      groqMessages.add({'role': role, 'content': text});
+      claudeMessages.add({'role': role, 'content': text});
     }
 
     try {
-      // Future.any garantisce timeout anche su Android
+      final body = <String, dynamic>{
+        'model': _modelFast,
+        'max_tokens': 2048,
+        'messages': claudeMessages,
+      };
+      if (systemPrompt != null && systemPrompt.isNotEmpty) {
+        body['system'] = systemPrompt;
+      }
+
       final result = await Future.any([
-        http.post(
-          Uri.parse(_baseUrl),
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer $_apiKey',
-          },
-          body: jsonEncode({
-            'model': _modelText,
-            'messages': groqMessages,
-            'max_tokens': 1024,
-            'temperature': 0.3,
-          }),
-        ).then((r) => r as Object),
-        Future.delayed(const Duration(seconds: 15), () => 'timeout' as Object),
+        http.post(Uri.parse(_baseUrl), headers: _headers, body: jsonEncode(body))
+            .then((r) => r as Object),
+        Future.delayed(const Duration(seconds: 20), () => 'timeout' as Object),
       ]);
 
-      if (result == 'timeout') {
-        return AiResponse.error('Timeout.');
-      }
+      if (result == 'timeout') return AiResponse.error('Timeout.');
       return _parseResponse(result as http.Response);
     } on SocketException {
       return AiResponse.error('Nessuna connessione internet.');
@@ -104,7 +96,6 @@ class GeminiService {
   }
 
   // ── Chat con ricerca web integrata ──
-
   Future<AiResponse> chatWithSearch({
     required List<Map<String, dynamic>> messages,
     required String userMessage,
@@ -113,21 +104,18 @@ class GeminiService {
     final search = WebSearchService();
     String enrichedPrompt = systemPrompt ?? '';
 
-    // Se la domanda richiede info aggiornate, cerca su web
     if (search.needsWebSearch(userMessage)) {
       final results = await search.search('$userMessage Italia 2026');
       if (results.isNotEmpty) {
-        enrichedPrompt += '\n\n--- INFORMAZIONI AGGIORNATE DA INTERNET (usa questi dati per rispondere) ---\n$results\n--- FINE RISULTATI WEB ---\n'
-            'Usa le informazioni sopra per dare una risposta aggiornata e precisa. '
-            'La data di oggi è ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}.';
+        enrichedPrompt += '\n\n--- INFORMAZIONI DA INTERNET ---\n$results\n--- FINE ---\n'
+            'Rispondi in modo aggiornato. Oggi è ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}.';
       }
     }
 
     return chat(messages: messages, systemPrompt: enrichedPrompt);
   }
 
-  // ── Analisi documento con immagine (Groq Vision) ──
-
+  // ── Analisi documento (2 chiamate: trascrivi + estrai) ──
   Future<AiResponse> analyzeDocument({
     required File imageFile,
     required String prompt,
@@ -136,107 +124,57 @@ class GeminiService {
     final ext = imageFile.path.split('.').last.toLowerCase();
 
     try {
-      // ── PDF: estrai testo e usa modello testo (più affidabile) ──
-      if (ext == 'pdf') {
-        try {
-          // Estrai testo dal PDF con Syncfusion
-          final bytes = await imageFile.readAsBytes();
-          final pdfDoc = syncpdf.PdfDocument(inputBytes: bytes);
-          final extractor = syncpdf.PdfTextExtractor(pdfDoc);
-          final extractedText = extractor.extractText();
-          pdfDoc.dispose();
-
-          // Se c'è testo, usa il modello testo (molto più affidabile dei numeri!)
-          if (extractedText.trim().length > 30) {
-            // Taglia il testo a max 3000 caratteri per stare nei limiti API
-            final trimmedText = extractedText.length > 3000
-                ? extractedText.substring(0, 3000)
-                : extractedText;
-            return chat(
-              messages: [
-                {'role': 'user', 'content': 'Testo busta paga:\n$trimmedText\n\n$prompt'},
-              ],
-              systemPrompt: systemPrompt,
-            );
-          }
-
-          // Se il PDF non ha testo (scansionato), converti in immagine ad alta risoluzione
-          final doc = await PdfDocument.openFile(imageFile.path);
-          final page = await doc.getPage(1);
-          final pageImage = await page.render(
-            width: page.width * 4,
-            height: page.height * 4,
-            format: PdfPageImageFormat.jpeg,
-            quality: 100,
-          );
-          await page.close();
-          await doc.close();
-
-          if (pageImage == null) {
-            return AiResponse.error('PDF non leggibile. Prova con una foto.');
-          }
-
-          final tempDir = await getTemporaryDirectory();
-          final tempFile = File('${tempDir.path}/pdf_page_${DateTime.now().millisecondsSinceEpoch}.jpg');
-          await tempFile.writeAsBytes(pageImage.bytes);
-
-          final imgBytes = await tempFile.readAsBytes();
-          final base64Img = base64Encode(imgBytes);
-          final imgMessages = <Map<String, dynamic>>[];
-          if (systemPrompt != null) imgMessages.add({'role': 'system', 'content': systemPrompt});
-          imgMessages.add({'role': 'user', 'content': [
-            {'type': 'image_url', 'image_url': {'url': 'data:image/jpeg;base64,$base64Img'}},
-            {'type': 'text', 'text': prompt},
-          ]});
-          final imgResponse = await http.post(
-            Uri.parse(_baseUrl),
-            headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $_apiKey'},
-            body: jsonEncode({'model': _modelVision, 'messages': imgMessages, 'max_tokens': 4096}),
-          ).timeout(const Duration(seconds: 30));
-          return _parseResponse(imgResponse);
-        } catch (e) {
-          return AiResponse.error('Errore lettura PDF: $e');
-        }
-      }
-
-      // ── Immagine: usa modello vision ──
       final bytes = await imageFile.readAsBytes();
-      final base64Image = base64Encode(bytes);
+      final base64Data = base64Encode(bytes);
       final mimeType = _getMimeType(imageFile.path);
 
-      final userContent = <dynamic>[
+      // ── CHIAMATA 1: Trascrivi TUTTO il testo dal documento ──
+      final transcribeBlocks = <dynamic>[
         {
-          'type': 'image_url',
-          'image_url': {
-            'url': 'data:$mimeType;base64,$base64Image',
+          'type': ext == 'pdf' ? 'document' : 'image',
+          'source': {
+            'type': 'base64',
+            'media_type': mimeType,
+            'data': base64Data,
           },
         },
         {
           'type': 'text',
-          'text': prompt,
+          'text': 'Trascrivi TUTTO il testo visibile in questo documento. '
+              'Il documento potrebbe essere ruotato, storto, fotografato di lato. '
+              'Trascrivi OGNI parola, numero, codice e data che riesci a leggere, riga per riga. '
+              'Non saltare nulla. Non aggiungere commenti. Solo il testo che vedi.',
         },
       ];
 
-      final groqMessages = <Map<String, dynamic>>[];
-      if (systemPrompt != null) {
-        groqMessages.add({'role': 'system', 'content': systemPrompt});
-      }
-      groqMessages.add({'role': 'user', 'content': userContent});
+      final transcribeBody = <String, dynamic>{
+        'model': _model,
+        'max_tokens': 2000,
+        'messages': [
+          {'role': 'user', 'content': transcribeBlocks},
+        ],
+      };
 
-      final response = await http.post(
+      final transcribeResponse = await http.post(
         Uri.parse(_baseUrl),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $_apiKey',
-        },
-        body: jsonEncode({
-          'model': _modelVision,
-          'messages': groqMessages,
-          'max_tokens': 4096,
-        }),
-      ).timeout(const Duration(seconds: 30));
+        headers: _headers,
+        body: jsonEncode(transcribeBody),
+      ).timeout(const Duration(seconds: 45));
 
-      return _parseResponse(response);
+      final transcribeResult = _parseResponse(transcribeResponse);
+      if (!transcribeResult.isSuccess) return transcribeResult;
+
+      final transcribedText = transcribeResult.text;
+
+      // ── CHIAMATA 2: Estrai dati dal testo (NO immagine) ──
+      final extractResult = await chat(
+        messages: [
+          {'role': 'user', 'content': 'Testo trascritto da un documento:\n\n$transcribedText\n\n$prompt'},
+        ],
+        systemPrompt: systemPrompt,
+      );
+
+      return extractResult;
     } on TimeoutException {
       return AiResponse.error('Timeout analisi documento. Riprova.');
     } on SocketException {
@@ -247,7 +185,6 @@ class GeminiService {
   }
 
   // ── Chat con immagine allegata ──
-
   Future<AiResponse> chatWithImage({
     required File imageFile,
     required String text,
@@ -261,13 +198,16 @@ class GeminiService {
   }
 
   // ── Helpers ──
-
   AiResponse _parseResponse(http.Response response) {
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
-      final choices = json['choices'] as List?;
-      if (choices != null && choices.isNotEmpty) {
-        final text = choices[0]['message']?['content'] ?? '';
+      // Anthropic format: { content: [ { type: "text", text: "..." } ] }
+      final content = json['content'] as List?;
+      if (content != null && content.isNotEmpty) {
+        final text = content.firstWhere(
+          (c) => c['type'] == 'text',
+          orElse: () => {'text': ''},
+        )['text'] ?? '';
         return AiResponse.success(text);
       }
       return AiResponse.error('Risposta vuota dal server.');
