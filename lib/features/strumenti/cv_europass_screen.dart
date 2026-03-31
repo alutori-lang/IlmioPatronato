@@ -70,6 +70,24 @@ class _CvEuropassScreenState extends State<CvEuropassScreen> {
   ];
   static const _patenteOpts = ['A', 'B', 'C', 'D', 'E'];
 
+  // Suggerimenti lavori per categoria
+  static const _jobSuggestions = <String, List<String>>{
+    'operaio': ['Operaio generico', 'Operaio metalmeccanico', 'Operaio edile', 'Operaio di produzione', 'Addetto linea di montaggio', 'Saldatore', 'Carpentiere', 'Tornitore CNC'],
+    'magazzin': ['Magazziniere', 'Carrellista', 'Addetto logistica', 'Preparatore ordini', 'Addetto spedizioni', 'Mulettista'],
+    'pulizi': ['Addetto pulizie', 'Operatore ecologico', 'Addetto sanificazione', 'Cameriera ai piani'],
+    'ristoraz': ['Cuoco', 'Aiuto cuoco', 'Cameriere', 'Barista', 'Lavapiatti', 'Pizzaiolo', 'Addetto mensa'],
+    'cucina': ['Cuoco', 'Aiuto cuoco', 'Pizzaiolo', 'Pasticcere', 'Addetto mensa'],
+    'edil': ['Muratore', 'Carpentiere', 'Piastrellista', 'Imbianchino', 'Elettricista', 'Idraulico', 'Manovale edile'],
+    'trasport': ['Autista', 'Corriere', 'Autista consegne', 'Rider', 'Autista bus', 'Camionista'],
+    'autist': ['Autista patente B', 'Autista patente C', 'Camionista', 'Corriere', 'Autista consegne', 'Autista NCC'],
+    'vendita': ['Commesso', 'Addetto vendite', 'Cassiere', 'Visual merchandiser', 'Promoter'],
+    'agricol': ['Bracciante agricolo', 'Operaio agricolo', 'Raccoglitore', 'Giardiniere', 'Vivaista'],
+    'facchin': ['Facchino', 'Addetto carico/scarico', 'Magazziniere', 'Movimentatore merci'],
+    'confezion': ['Addetto confezionamento', 'Operaio confezionamento', 'Addetto packaging', 'Operaio alimentare'],
+    'badant': ['Badante', 'Assistente familiare', 'OSS', 'Assistente anziani'],
+    'colf': ['Colf', 'Collaboratrice domestica', 'Baby sitter', 'Governante'],
+  };
+
   @override
   void dispose() {
     _nomeCtrl.dispose(); _cognomeCtrl.dispose(); _dataNascitaCtrl.dispose();
@@ -388,6 +406,39 @@ class _CvEuropassScreenState extends State<CvEuropassScreen> {
   // ══════════════════════════════════════════════════════════════
   // STEP 4: ESPERIENZE LAVORATIVE
   // ══════════════════════════════════════════════════════════════
+  List<Widget> _buildJobSuggestions() {
+    final input = _lavoroCercatoCtrl.text.trim().toLowerCase();
+    final suggestions = <String>{};
+    for (final entry in _jobSuggestions.entries) {
+      if (input.contains(entry.key) || entry.key.contains(input)) {
+        suggestions.addAll(entry.value);
+      }
+    }
+    if (suggestions.isEmpty) return [];
+    return [
+      const SizedBox(height: 8),
+      Wrap(
+        spacing: 6,
+        runSpacing: 6,
+        children: suggestions.map((job) => GestureDetector(
+          onTap: () {
+            _lavoroCercatoCtrl.text = job;
+            setState(() {});
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.purple.shade200),
+            ),
+            child: Text(job, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Colors.purple.shade700)),
+          ),
+        )).toList(),
+      ),
+    ];
+  }
+
   Widget _step4Esperienze() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       // AI Generator
@@ -405,18 +456,22 @@ class _CvEuropassScreenState extends State<CvEuropassScreen> {
             Text('AI Completa il CV', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.purple)),
           ]),
           const SizedBox(height: 8),
-          const Text('Scrivi che lavoro cerchi e AI aggiunge esperienze pertinenti', style: TextStyle(fontSize: 12, color: AppColors.textMedium)),
+          const Text('Scrivi che lavoro cerchi e AI aggiunge esperienze', style: TextStyle(fontSize: 12, color: AppColors.textMedium)),
           const SizedBox(height: 10),
           TextField(
             controller: _lavoroCercatoCtrl,
+            onChanged: (_) => setState(() {}),
             decoration: InputDecoration(
-              hintText: 'Es: confezionamento, magazziniere, pulizie...',
+              hintText: 'Es: operaio, magazziniere, pulizie...',
               hintStyle: const TextStyle(fontSize: 13),
               filled: true, fillColor: Colors.white,
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
               contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             ),
           ),
+          // Suggerimenti smart
+          if (_lavoroCercatoCtrl.text.trim().length >= 3)
+            ..._buildJobSuggestions(),
           const SizedBox(height: 10),
           GestureDetector(
             onTap: _isGenerating ? null : _generateExperiences,
@@ -693,6 +748,7 @@ class _CvEuropassScreenState extends State<CvEuropassScreen> {
       telefono: _telCtrl.text.trim(),
       email: _emailCtrl.text.trim(),
       esperienze: _esperienze,
+      posizione: _lavoroCercatoCtrl.text.trim(),
       haPatente: _haPatente,
       patenti: _patenti.toList()..sort(),
       linguaMadre: _linguaMadre,
@@ -785,6 +841,13 @@ class _CvEuropassScreenState extends State<CvEuropassScreen> {
           ));
         }
 
+        // ── Posizione desiderata ──
+        if (d.posizione.isNotEmpty) {
+          widgets.add(pw.SizedBox(height: 12));
+          widgets.add(_pdfSection('POSIZIONE DESIDERATA', accent));
+          widgets.add(pw.Text(d.posizione, style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold)));
+        }
+
         // ── Esperienze ──
         if (d.esperienze.isNotEmpty) {
           widgets.add(pw.SizedBox(height: 12));
@@ -846,7 +909,7 @@ class _StyleInfo {
 }
 
 class _CvData {
-  final String nome, dataNascita, luogoNascita, nazionalita, cf, indirizzo, telefono, email;
+  final String nome, dataNascita, luogoNascita, nazionalita, cf, indirizzo, telefono, email, posizione;
   final List<_Esperienza> esperienze;
   final bool haPatente;
   final List<String> patenti;
@@ -857,6 +920,6 @@ class _CvData {
     required this.nazionalita, required this.cf, required this.indirizzo,
     required this.telefono, required this.email, required this.esperienze,
     required this.haPatente, required this.patenti, required this.linguaMadre,
-    required this.italianoLevel, this.photo,
+    required this.italianoLevel, this.photo, this.posizione = '',
   });
 }
