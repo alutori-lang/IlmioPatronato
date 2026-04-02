@@ -71,15 +71,31 @@ class _TfrScreenState extends State<TfrScreen>
 
     final response = await GeminiService().analyzeDocument(
       imageFile: file,
-      prompt: '''Analizza questa busta paga o contratto di lavoro italiano. Estrai TUTTI i dati possibili e restituisci SOLO un JSON valido (senza markdown):
-{
-  "ral_annua": "retribuzione annua lorda numerico",
-  "anni_lavoro": "anni di anzianita/lavoro numerico",
-  "azienda": "nome azienda/datore di lavoro",
-  "dipendente": "nome dipendente",
-  "ccnl": "tipo contratto CCNL se presente"
-}
-Importi come numeri senza simbolo €. Se un campo non e leggibile, metti null.''',
+      prompt: '''Sei un consulente del lavoro italiano. Guarda questa busta paga e leggi i valori ESATTI per calcolare il TFR.
+
+Rispondi SOLO con JSON valido, niente altro testo:
+{"ral_annua": 0, "retribuzione_mensile": 0, "anni_lavoro": 0, "azienda": "", "dipendente": "", "ccnl": ""}
+
+COME TROVARE I CAMPI:
+
+RETRIBUZIONE MENSILE:
+- Cerca la retribuzione mensile piena nella sezione "elementi retributivi" (MINIMO + EDR + EPA + altri)
+- Oppure il "totale" degli elementi retributivi
+- È lo stipendio PIENO mensile da contratto (NON l'imponibile lordo che può essere parziale)
+- Tipicamente tra 800 e 4000 euro
+
+RAL ANNUA:
+- Se trovi "RAL" o "retribuzione annua lorda" usa quel valore
+- Se NON trovi la RAL, metti 0 e compila retribuzione_mensile (la calcolo io: mensile × 13)
+
+ANNI LAVORO:
+- Calcola dalla data di assunzione ad oggi (aprile 2026)
+- Se assunto da pochi mesi, metti 1
+
+FORMATO NUMERI (IMPORTANTISSIMO):
+- Usa punto come decimale: 1657.00
+- Se nel documento vedi "1.657,00" → scrivi 1657.00
+- La retribuzione mensile è tra 800 e 4000, la RAL tra 10000 e 60000''',
     );
 
     if (!mounted) return;
@@ -87,8 +103,18 @@ Importi come numeri senza simbolo €. Se un campo non e leggibile, metti null.'
     if (response.isSuccess) {
       final parsed = response.tryParseJson();
       if (parsed != null) {
-        final ral = _pAi(parsed['ral_annua']);
+        double ral = _pAi(parsed['ral_annua']);
+        final mensile = _pAi(parsed['retribuzione_mensile']);
         final anni = _pAi(parsed['anni_lavoro']);
+
+        // Se RAL non trovata ma mensile sì, calcola RAL
+        if (ral <= 0 && mensile > 0) {
+          final m = mensile > 5000 ? mensile / 10 : mensile;
+          ral = m * 13;
+        }
+        // Sanity check RAL
+        if (ral > 100000) ral = ral / 100;
+        if (ral > 60000) ral = ral / 10;
 
         if (ral <= 0) {
           setState(() => _isAnalyzingDoc = false);
@@ -147,15 +173,31 @@ Importi come numeri senza simbolo €. Se un campo non e leggibile, metti null.'
 
     final response = await GeminiService().analyzeDocument(
       imageFile: file,
-      prompt: '''Analizza questa busta paga o contratto di lavoro italiano. Estrai TUTTI i dati possibili e restituisci SOLO un JSON valido (senza markdown):
-{
-  "ral_annua": "retribuzione annua lorda numerico",
-  "anni_lavoro": "anni di anzianita/lavoro numerico",
-  "azienda": "nome azienda/datore di lavoro",
-  "dipendente": "nome dipendente",
-  "ccnl": "tipo contratto CCNL se presente"
-}
-Importi come numeri senza simbolo €. Se un campo non e leggibile, metti null.''',
+      prompt: '''Sei un consulente del lavoro italiano. Guarda questa busta paga e leggi i valori ESATTI per calcolare il TFR.
+
+Rispondi SOLO con JSON valido, niente altro testo:
+{"ral_annua": 0, "retribuzione_mensile": 0, "anni_lavoro": 0, "azienda": "", "dipendente": "", "ccnl": ""}
+
+COME TROVARE I CAMPI:
+
+RETRIBUZIONE MENSILE:
+- Cerca la retribuzione mensile piena nella sezione "elementi retributivi" (MINIMO + EDR + EPA + altri)
+- Oppure il "totale" degli elementi retributivi
+- È lo stipendio PIENO mensile da contratto (NON l'imponibile lordo che può essere parziale)
+- Tipicamente tra 800 e 4000 euro
+
+RAL ANNUA:
+- Se trovi "RAL" o "retribuzione annua lorda" usa quel valore
+- Se NON trovi la RAL, metti 0 e compila retribuzione_mensile (la calcolo io: mensile × 13)
+
+ANNI LAVORO:
+- Calcola dalla data di assunzione ad oggi (aprile 2026)
+- Se assunto da pochi mesi, metti 1
+
+FORMATO NUMERI (IMPORTANTISSIMO):
+- Usa punto come decimale: 1657.00
+- Se nel documento vedi "1.657,00" → scrivi 1657.00
+- La retribuzione mensile è tra 800 e 4000, la RAL tra 10000 e 60000''',
     );
 
     if (!mounted) return;
@@ -163,8 +205,18 @@ Importi come numeri senza simbolo €. Se un campo non e leggibile, metti null.'
     if (response.isSuccess) {
       final parsed = response.tryParseJson();
       if (parsed != null) {
-        final ral = _pAi(parsed['ral_annua']);
+        double ral = _pAi(parsed['ral_annua']);
+        final mensile = _pAi(parsed['retribuzione_mensile']);
         final anni = _pAi(parsed['anni_lavoro']);
+
+        // Se RAL non trovata ma mensile sì, calcola RAL
+        if (ral <= 0 && mensile > 0) {
+          final m = mensile > 5000 ? mensile / 10 : mensile;
+          ral = m * 13;
+        }
+        // Sanity check RAL
+        if (ral > 100000) ral = ral / 100;
+        if (ral > 60000) ral = ral / 10;
 
         if (ral <= 0) {
           setState(() => _isAnalyzingDoc = false);
@@ -435,6 +487,7 @@ Importi come numeri senza simbolo €. Se un campo non e leggibile, metti null.'
   }
 
   Widget _buildDettaglioCard() {
+    final tfrMensile = _tfrAnnuoNetto / 12;
     return FadeTransition(
       opacity: _fadeAnim,
       child: Container(
@@ -444,22 +497,28 @@ Importi come numeri senza simbolo €. Se un campo non e leggibile, metti null.'
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Dati Estratti e Calcolo', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textDark)),
-            const SizedBox(height: 14),
-            if (_dipendente.isNotEmpty) _row('Dipendente', _dipendente),
-            if (_azienda.isNotEmpty) _row('Azienda', _azienda),
-            if (_ccnl.isNotEmpty) _row('CCNL', _ccnl),
-            _row('RAL annua', '\u20AC ${_fmt.format(_ral)}'),
-            _row('Anni di lavoro', '$_anniLavoro'),
-            const Divider(height: 16),
-            _row('TFR annuo lordo (RAL / 13.5)', '\u20AC ${_fmt.format(_tfrAnnuoLordo)}'),
-            _row('Contributo INPS 0.5%', '- \u20AC ${_fmt.format(_contributoInps)}', color: const Color(0xFFF44336)),
-            _row('TFR annuo netto INPS', '\u20AC ${_fmt.format(_tfrAnnuoNetto)}'),
-            const Divider(height: 16),
-            _row('TFR lordo accumulato', '\u20AC ${_fmt.format(_tfrLordo)}', bold: true),
-            _row('Aliquota tassazione separata', '${(_aliquotaMedia * 100).toStringAsFixed(1)}%'),
-            _row('Tassazione separata', '- \u20AC ${_fmt.format(_tassazioneSeparata)}', color: const Color(0xFFF44336)),
-            _row('TFR NETTO', '\u20AC ${_fmt.format(_tfrNetto)}', bold: true),
+            if (_dipendente.isNotEmpty || _azienda.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: Row(
+                  children: [
+                    const Icon(Icons.person, color: AppColors.primary, size: 20),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        '${_dipendente.isNotEmpty ? _dipendente : ""} ${_azienda.isNotEmpty ? "- $_azienda" : ""}',
+                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            _row('TFR mensile', '\u20AC ${_fmt.format(tfrMensile)}', bold: true),
+            _row('TFR annuo', '\u20AC ${_fmt.format(_tfrAnnuoNetto)}', bold: true),
+            if (_anniLavoro > 0)
+              _row('TFR totale (${_anniLavoro} anni)', '\u20AC ${_fmt.format(_tfrNetto)}', bold: true, color: AppColors.primary),
           ],
         ),
       ),
@@ -591,7 +650,7 @@ Importi come numeri senza simbolo €. Se un campo non e leggibile, metti null.'
         children: [
           Flexible(child: Text(label, style: TextStyle(fontSize: 13, color: bold ? AppColors.textDark : AppColors.textMedium, fontWeight: bold ? FontWeight.w600 : FontWeight.w400))),
           const SizedBox(width: 10),
-          Text(value, style: TextStyle(fontSize: 13, fontWeight: bold ? FontWeight.w800 : FontWeight.w600, color: color ?? (bold ? AppColors.primary : AppColors.textDark))),
+          Flexible(child: Text(value, style: TextStyle(fontSize: 13, fontWeight: bold ? FontWeight.w800 : FontWeight.w600, color: color ?? (bold ? AppColors.primary : AppColors.textDark)), textAlign: TextAlign.end, overflow: TextOverflow.ellipsis)),
         ],
       ),
     );
