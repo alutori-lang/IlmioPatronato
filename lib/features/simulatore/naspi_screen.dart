@@ -71,15 +71,35 @@ class _NaspiScreenState extends State<NaspiScreen>
 
     final response = await GeminiService().analyzeDocument(
       imageFile: file,
-      prompt: '''Analizza questa busta paga e/o contratto di lavoro italiano. Estrai TUTTI i dati possibili e restituisci SOLO un JSON valido (senza markdown):
+      prompt: '''Sei un consulente del lavoro italiano. Guarda questa busta paga e leggi i valori ESATTI per calcolare la NASpI.
+
+Rispondi SOLO con JSON valido, niente altro testo:
 {
-  "retribuzione_media": "retribuzione media mensile lorda numerico",
-  "settimane_contributi": "settimane di contributi totali numerico (se non presente, stima dalle date di assunzione)",
-  "azienda": "nome azienda/datore di lavoro",
+  "retribuzione_media": 0,
+  "settimane_contributi": 0,
+  "azienda": "nome azienda",
   "dipendente": "nome dipendente",
-  "tipo_contratto": "tipo contratto (indeterminato, determinato, ecc.)"
+  "tipo_contratto": "tipo contratto"
 }
-Importi come numeri senza simbolo €. Se un campo non e leggibile, metti null.''',
+
+COME TROVARE I CAMPI:
+
+RETRIBUZIONE MEDIA MENSILE LORDA:
+- Cerca la RETRIBUZIONE MENSILE piena (es. "MINIMO" + "EDR" + "EPA" oppure il totale degli "elementi retributivi")
+- Oppure cerca "totale" nella sezione elementi retributivi
+- NON usare "imponibile lordo" perché quello è il lordo del mese parziale se il dipendente non ha lavorato tutto il mese
+- La retribuzione media è lo stipendio PIENO mensile come da contratto
+
+SETTIMANE CONTRIBUTI:
+- Cerca la data di assunzione e calcola le settimane fino ad oggi (aprile 2026)
+- Se ci sono contributi precedenti da altri lavori, sommali
+- Se non trovi info, metti null
+
+FORMATO NUMERI (IMPORTANTISSIMO):
+- Usa punto come decimale: 1657.00 (NON 16570, NON 1.657,00)
+- La retribuzione mensile in Italia è tipicamente tra 800 e 4000 euro
+- Se leggi "1.657,00" nel documento, il punto è separatore migliaia e la virgola è decimale → scrivi 1657.00 nel JSON
+- La retribuzione media per NASpI è quella CONTRATTUALE piena, non quella di un mese parziale''',
     );
 
     if (!mounted) return;
@@ -100,7 +120,8 @@ Importi come numeri senza simbolo €. Se un campo non e leggibile, metti null.'
           return;
         }
 
-        _retribuzioneLorda = retrib;
+        // Sanity check: stipendio mensile italiano tra 400 e 5000
+        _retribuzioneLorda = retrib > 5000 ? retrib / 10 : retrib;
         final sett = _pAi(parsed['settimane_contributi']);
         _settimaneContributi = sett > 0 ? sett.toInt().clamp(13, 208) : 52;
         _azienda = parsed['azienda']?.toString() ?? '';
@@ -147,15 +168,35 @@ Importi come numeri senza simbolo €. Se un campo non e leggibile, metti null.'
 
     final response = await GeminiService().analyzeDocument(
       imageFile: file,
-      prompt: '''Analizza questa busta paga e/o contratto di lavoro italiano. Estrai TUTTI i dati possibili e restituisci SOLO un JSON valido (senza markdown):
+      prompt: '''Sei un consulente del lavoro italiano. Guarda questa busta paga e leggi i valori ESATTI per calcolare la NASpI.
+
+Rispondi SOLO con JSON valido, niente altro testo:
 {
-  "retribuzione_media": "retribuzione media mensile lorda numerico",
-  "settimane_contributi": "settimane di contributi totali numerico (se non presente, stima dalle date di assunzione)",
-  "azienda": "nome azienda/datore di lavoro",
+  "retribuzione_media": 0,
+  "settimane_contributi": 0,
+  "azienda": "nome azienda",
   "dipendente": "nome dipendente",
-  "tipo_contratto": "tipo contratto (indeterminato, determinato, ecc.)"
+  "tipo_contratto": "tipo contratto"
 }
-Importi come numeri senza simbolo €. Se un campo non e leggibile, metti null.''',
+
+COME TROVARE I CAMPI:
+
+RETRIBUZIONE MEDIA MENSILE LORDA:
+- Cerca la RETRIBUZIONE MENSILE piena (es. "MINIMO" + "EDR" + "EPA" oppure il totale degli "elementi retributivi")
+- Oppure cerca "totale" nella sezione elementi retributivi
+- NON usare "imponibile lordo" perché quello è il lordo del mese parziale se il dipendente non ha lavorato tutto il mese
+- La retribuzione media è lo stipendio PIENO mensile come da contratto
+
+SETTIMANE CONTRIBUTI:
+- Cerca la data di assunzione e calcola le settimane fino ad oggi (aprile 2026)
+- Se ci sono contributi precedenti da altri lavori, sommali
+- Se non trovi info, metti null
+
+FORMATO NUMERI (IMPORTANTISSIMO):
+- Usa punto come decimale: 1657.00 (NON 16570, NON 1.657,00)
+- La retribuzione mensile in Italia è tipicamente tra 800 e 4000 euro
+- Se leggi "1.657,00" nel documento, il punto è separatore migliaia e la virgola è decimale → scrivi 1657.00 nel JSON
+- La retribuzione media per NASpI è quella CONTRATTUALE piena, non quella di un mese parziale''',
     );
 
     if (!mounted) return;
@@ -176,7 +217,8 @@ Importi come numeri senza simbolo €. Se un campo non e leggibile, metti null.'
           return;
         }
 
-        _retribuzioneLorda = retrib;
+        // Sanity check: stipendio mensile italiano tra 400 e 5000
+        _retribuzioneLorda = retrib > 5000 ? retrib / 10 : retrib;
         final sett = _pAi(parsed['settimane_contributi']);
         _settimaneContributi = sett > 0 ? sett.toInt().clamp(13, 208) : 52;
         _azienda = parsed['azienda']?.toString() ?? '';
@@ -658,7 +700,7 @@ Importi come numeri senza simbolo €. Se un campo non e leggibile, metti null.'
         children: [
           Flexible(child: Text(label, style: TextStyle(fontSize: 13, color: bold ? AppColors.textDark : AppColors.textMedium, fontWeight: bold ? FontWeight.w600 : FontWeight.w400))),
           const SizedBox(width: 10),
-          Text(value, style: TextStyle(fontSize: 13, fontWeight: bold ? FontWeight.w800 : FontWeight.w600, color: bold ? AppColors.primary : AppColors.textDark)),
+          Flexible(child: Text(value, style: TextStyle(fontSize: 13, fontWeight: bold ? FontWeight.w800 : FontWeight.w600, color: bold ? AppColors.primary : AppColors.textDark), textAlign: TextAlign.end, overflow: TextOverflow.ellipsis, maxLines: 2)),
         ],
       ),
     );
