@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pdf/pdf.dart';
@@ -31,6 +32,12 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
   String _regione = 'Lazio';
   String _dipendente = '';
   String _azienda = '';
+  String? _ocrDebugText;
+  bool _fromBustaPaga = false;
+  double _bpInps = 0;
+  double _bpIrpef = 0;
+  double _bpNetto = 0;
+  double _bpLordo = 0;
 
   // Risultati calcolo
   double _contributiInps = 0;
@@ -92,17 +99,41 @@ class _StipendioNettoScreenState extends State<StipendioNettoScreen>
     return double.tryParse(s) ?? 0;
   }
 
-  static const _bustaPagaPrompt = '''Sei un consulente del lavoro italiano. Leggi questa busta paga e dimmi i dati. Rispondi SOLO con JSON, niente altro testo:
+  static const _bustaPagaPrompt = '''Sei un consulente del lavoro italiano esperto. Guarda questa busta paga e leggi i valori ESATTI.
+
+Rispondi SOLO con JSON valido, niente altro testo:
 {"nome":"nome dipendente","azienda":"nome azienda","lordo":0,"netto":0,"inps":0,"irpef":0,"regione":"","contratto":"dipendente","settore":"Commercio"}
 
-IMPORTANTE - cerca ESATTAMENTE questi campi nel documento:
-- "lordo" = cerca la riga "Totale competenze" o "Retribuzione lorda del mese" e copia quel numero
-- "netto" = cerca la riga "Netto" o "Netto a pagare" o "Netto in busta" e copia quel numero
-- "inps" = cerca "INPS" o "Contributi" nelle trattenute
-- "irpef" = cerca "IRPEF" nelle trattenute
-- NON sommare, NON calcolare, copia SOLO i numeri che vedi scritti
-- I numeri sono tipicamente tra 100 e 3000 euro per una busta paga mensile
-- Usa punto decimale: 1234.56''';
+COME TROVARE OGNI CAMPO (le buste paga hanno formati diversi):
+
+NETTO (il dato PIÙ IMPORTANTE - cercalo per primo):
+- Cerca "NETTO A PAGARE" o "NETTO BUSTA" o "NETTO IN BUSTA"
+- È il numero più grande in basso, spesso evidenziato o in grassetto
+- È quello che il dipendente riceve sul conto
+
+LORDO (lo stipendio lordo EFFETTIVO del mese):
+- Cerca "IMPONIBILE LORDO" o "TOTALE LORDO" o "TOTALE COMPETENZE"
+- ATTENZIONE: se c'è sia "totale" (stipendio pieno) che "imponibile lordo" (effettivo), usa "IMPONIBILE LORDO" perché il dipendente potrebbe aver lavorato solo parte del mese
+- Il lordo è sempre MAGGIORE del netto ma non di molto (di solito lordo = netto × 1.3-1.5)
+- Se il lordo che trovi è più del DOPPIO del netto, stai leggendo il campo sbagliato!
+
+INPS (contributi previdenziali):
+- Cerca "IMPONIBILE INPS" con la percentuale (9,19%) e il risultato
+- Oppure "TOT. CONTR. SOC." o "CONTRIBUTO 1"
+- È circa 9-10% del lordo
+
+IRPEF (tasse):
+- Cerca "IMPOSTA PAGATA" o "IRPEF PAGATA" o "TOT. TRAT. IRPEF"
+- È l'IRPEF NETTA (= IMPOSTA LORDA meno DETRAZIONI)
+- NON usare "IMPOSTA LORDA" da sola
+
+REGIONE: deduci dal comune di residenza del dipendente
+
+IMPORTANTE:
+- Leggi i numeri ESATTI, NON calcolare
+- Tutti i valori sono MENSILI
+- Usa punto decimale: 1234.56
+- VERIFICA: lordo > netto > 0, e lordo NON deve essere il doppio del netto''';
 
   Future<void> _pickPdf() async {
     final file = await pickPdfFile();
@@ -132,6 +163,7 @@ IMPORTANTE - cerca ESATTAMENTE questi campi nel documento:
     if (!mounted) return;
 
     if (response.isSuccess) {
+      _ocrDebugText = response.ocrText;
       final parsed = response.tryParseJson();
 
       if (parsed == null) {
@@ -166,6 +198,11 @@ IMPORTANTE - cerca ESATTAMENTE questi campi nel documento:
         // Numeri dalla busta paga
         double lordo = _pAi(parsed['lordo'] ?? parsed['lordo_mensile']);
         double netto = _pAi(parsed['netto'] ?? parsed['netto_mensile']);
+        _bpInps = _pAi(parsed['inps']);
+        _bpIrpef = _pAi(parsed['irpef']);
+        _bpNetto = netto;
+        _bpLordo = lordo;
+        _fromBustaPaga = true;
 
         if (lordo <= 0 && netto <= 0) {
           setState(() => _isAnalyzingDoc = false);
@@ -583,8 +620,14 @@ IMPORTANTE - cerca ESATTAMENTE questi campi nel documento:
   }
 
   Widget _buildSimpleResult() {
-    final totaleTasse = _irpefNetta + _addizionaleRegionale + _addizionaleComunale;
-    final ferieMese = 2.17; // Giorni ferie maturati al mese (26/12)
+    // Se i dati vengono dalla busta paga, mostra quelli reali
+    final bool useBp = _fromBustaPaga && _bpLordo > 0;
+    final double lordo = useBp ? _bpLordo : _ral / 13;
+    final double inps = useBp ? _bpInps : _contributiInps / 13;
+    final double irpef = useBp ? _bpIrpef : (_irpefNetta + _addizionaleRegionale + _addizionaleComunale) / 13;
+    final double netto = useBp ? _bpNetto : _nettoMensile13;
+    final double nettoAnnuo = useBp ? _bpNetto * 13 : _nettoAnnuo;
+    final ferieMese = 2.17;
 
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
@@ -606,10 +649,10 @@ IMPORTANTE - cerca ESATTAMENTE questi campi nel documento:
                 const Text('STIPENDIO NETTO', style: TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.w700, letterSpacing: 1)),
                 const SizedBox(height: 6),
                 Text(
-                  '\u20AC ${_fmt.format(_nettoMensile13)}',
+                  '\u20AC ${_fmt.format(netto)}',
                   style: const TextStyle(color: Colors.white, fontSize: 38, fontWeight: FontWeight.w900),
                 ),
-                const Text('al mese', style: TextStyle(color: Colors.white60, fontSize: 13)),
+                Text(useBp ? 'da busta paga' : 'al mese', style: const TextStyle(color: Colors.white60, fontSize: 13)),
               ],
             ),
           ),
@@ -641,12 +684,12 @@ IMPORTANTE - cerca ESATTAMENTE questi campi nel documento:
             ),
 
           // ── DETTAGLI SEMPLICI ──
-          _simpleRow(Icons.euro, 'Stipendio Lordo', '\u20AC ${_fmt.format(_ral / 13)}', '/mese', const Color(0xFF1565C0)),
-          _simpleRow(Icons.account_balance, 'INPS (contributi)', '- \u20AC ${_fmt.format(_contributiInps / 13)}', '/mese', const Color(0xFFFF8F00)),
-          _simpleRow(Icons.receipt_long, 'IRPEF (tasse)', '- \u20AC ${_fmt.format(totaleTasse / 13)}', '/mese', const Color(0xFFE53935)),
-          _simpleRow(Icons.savings, 'Netto Annuo', '\u20AC ${_fmt.format(_nettoAnnuo)}', '/anno', const Color(0xFF2E7D32)),
+          _simpleRow(Icons.euro, 'Stipendio Lordo', '\u20AC ${_fmt.format(lordo)}', '/mese', const Color(0xFF1565C0)),
+          _simpleRow(Icons.account_balance, 'INPS (contributi)', '- \u20AC ${_fmt.format(inps)}', '/mese', const Color(0xFFFF8F00)),
+          _simpleRow(Icons.receipt_long, 'IRPEF (tasse)', '- \u20AC ${_fmt.format(irpef)}', '/mese', const Color(0xFFE53935)),
+          _simpleRow(Icons.savings, 'Netto Annuo', '\u20AC ${_fmt.format(nettoAnnuo)}', '/anno', const Color(0xFF2E7D32)),
           _simpleRow(Icons.beach_access, 'Ferie', '~${ferieMese.toStringAsFixed(1)} giorni', '/mese', const Color(0xFF7B1FA2)),
-          _simpleRow(Icons.card_giftcard, 'Tredicesima', '\u20AC ${_fmt.format(_nettoAnnuo / 13)}', 'a dicembre', const Color(0xFF00838F)),
+          _simpleRow(Icons.card_giftcard, 'Tredicesima', '\u20AC ${_fmt.format(netto)}', 'a dicembre', const Color(0xFF00838F)),
         ],
       ),
     );
@@ -1067,7 +1110,8 @@ IMPORTANTE - cerca ESATTAMENTE questi campi nel documento:
   Widget _buildActionButtons() {
     return FadeTransition(
       opacity: _fadeAnim,
-      child: Padding(
+      child: Column(children: [
+      Padding(
         padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
         child: Row(
           children: [
@@ -1112,6 +1156,7 @@ IMPORTANTE - cerca ESATTAMENTE questi campi nel documento:
           ],
         ),
       ),
+    ]),
     );
   }
 

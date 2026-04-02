@@ -31,6 +31,7 @@ class _BustaPagaScreenState extends State<BustaPagaScreen> {
   String? _aiAnalysis;
   String? _errorMessage;
   bool _showExample = false;
+  String? _ocrDebugText;
 
   void _toggle(String id) {
     setState(() {
@@ -57,7 +58,25 @@ class _BustaPagaScreenState extends State<BustaPagaScreen> {
 
     final response = await GeminiService().analyzeDocument(
       imageFile: file,
-      prompt: '''Analizza questa busta paga italiana. Estrai i dati e restituisci SOLO un JSON valido (senza markdown, senza ```), con questa struttura esatta:
+      prompt: '''Sei un consulente del lavoro italiano esperto. Guarda questa busta paga e leggi i valori ESATTI.
+
+COME TROVARE OGNI CAMPO (le buste paga hanno formati diversi):
+
+NETTO (cercalo per primo):
+- Cerca "NETTO A PAGARE" o "NETTO BUSTA" o "NETTO IN BUSTA"
+
+LORDO (stipendio lordo EFFETTIVO del mese):
+- Cerca "IMPONIBILE LORDO" o "TOTALE LORDO" o "TOTALE COMPETENZE"
+- Se c'è sia "totale" che "imponibile lordo", usa "IMPONIBILE LORDO"
+- VERIFICA: il lordo deve essere maggiore del netto ma NON il doppio. Se è il doppio, stai leggendo il campo sbagliato.
+
+INPS: cerca "IMPONIBILE INPS" con percentuale e risultato, oppure "TOT. CONTR. SOC."
+IRPEF: cerca "IMPOSTA PAGATA" o "IRPEF PAGATA" (NON "IMPOSTA LORDA")
+ADDIZIONALI: cerca "ADDIZ. REGIONALE" e "ADDIZ. COMUNALE"
+
+IMPORTANTE: leggi numeri ESATTI, NON calcolare. Valori MENSILI. Importi con €.
+
+Restituisci SOLO JSON valido (senza markdown, senza backtick):
 {
   "azienda": "nome azienda",
   "dipendente": "nome e cognome",
@@ -66,7 +85,7 @@ class _BustaPagaScreenState extends State<BustaPagaScreen> {
   "periodo_riferimento": "mese anno",
   "ore_lavorate": "numero",
   "stipendio_lordo": "importo",
-  "paga_base": "importo",
+  "paga_base": "importo orario o mensile",
   "contingenza": "importo o null",
   "superminimo": "importo o null",
   "straordinario": "importo o null",
@@ -86,9 +105,9 @@ class _BustaPagaScreenState extends State<BustaPagaScreen> {
   "permessi_maturati": "ore o null",
   "permessi_goduti": "ore o null",
   "permessi_residui": "ore o null",
-  "analisi": "Analisi breve della posizione del dipendente: come sono i contributi, il netto rispetto al lordo, TFR, ferie residue, consigli pratici. 3-5 frasi."
+  "analisi": "Analisi breve: contributi, netto vs lordo, TFR, ferie residue, consigli. 3-5 frasi."
 }
-Se un campo non è leggibile, metti null. Importi con il simbolo €.''',
+Se un campo non è leggibile, metti null.''',
     );
 
     if (!mounted) return;
@@ -99,11 +118,13 @@ Se un campo non è leggibile, metti null. Importi con il simbolo €.''',
         setState(() {
           _aiData = parsed;
           _aiAnalysis = parsed['analisi'] as String?;
+          _ocrDebugText = response.ocrText;
           _isAnalyzing = false;
         });
       } else {
         setState(() {
           _errorMessage = 'Impossibile leggere i dati dal documento. Riprova con una foto più nitida.';
+          _ocrDebugText = response.ocrText;
           _isAnalyzing = false;
         });
       }
@@ -130,7 +151,25 @@ Se un campo non è leggibile, metti null. Importi con il simbolo €.''',
 
     final response = await GeminiService().analyzeDocument(
       imageFile: file,
-      prompt: '''Analizza questa busta paga italiana. Estrai i dati e restituisci SOLO un JSON valido (senza markdown, senza ```), con questa struttura esatta:
+      prompt: '''Sei un consulente del lavoro italiano esperto. Guarda questa busta paga e leggi i valori ESATTI.
+
+COME TROVARE OGNI CAMPO (le buste paga hanno formati diversi):
+
+NETTO (cercalo per primo):
+- Cerca "NETTO A PAGARE" o "NETTO BUSTA" o "NETTO IN BUSTA"
+
+LORDO (stipendio lordo EFFETTIVO del mese):
+- Cerca "IMPONIBILE LORDO" o "TOTALE LORDO" o "TOTALE COMPETENZE"
+- Se c'è sia "totale" che "imponibile lordo", usa "IMPONIBILE LORDO"
+- VERIFICA: il lordo deve essere maggiore del netto ma NON il doppio. Se è il doppio, stai leggendo il campo sbagliato.
+
+INPS: cerca "IMPONIBILE INPS" con percentuale e risultato, oppure "TOT. CONTR. SOC."
+IRPEF: cerca "IMPOSTA PAGATA" o "IRPEF PAGATA" (NON "IMPOSTA LORDA")
+ADDIZIONALI: cerca "ADDIZ. REGIONALE" e "ADDIZ. COMUNALE"
+
+IMPORTANTE: leggi numeri ESATTI, NON calcolare. Valori MENSILI. Importi con €.
+
+Restituisci SOLO JSON valido (senza markdown, senza backtick):
 {
   "azienda": "nome azienda",
   "dipendente": "nome e cognome",
@@ -139,7 +178,7 @@ Se un campo non è leggibile, metti null. Importi con il simbolo €.''',
   "periodo_riferimento": "mese anno",
   "ore_lavorate": "numero",
   "stipendio_lordo": "importo",
-  "paga_base": "importo",
+  "paga_base": "importo orario o mensile",
   "contingenza": "importo o null",
   "superminimo": "importo o null",
   "straordinario": "importo o null",
@@ -159,9 +198,9 @@ Se un campo non è leggibile, metti null. Importi con il simbolo €.''',
   "permessi_maturati": "ore o null",
   "permessi_goduti": "ore o null",
   "permessi_residui": "ore o null",
-  "analisi": "Analisi breve della posizione del dipendente: come sono i contributi, il netto rispetto al lordo, TFR, ferie residue, consigli pratici. 3-5 frasi."
+  "analisi": "Analisi breve: contributi, netto vs lordo, TFR, ferie residue, consigli. 3-5 frasi."
 }
-Se un campo non è leggibile, metti null. Importi con il simbolo €.''',
+Se un campo non è leggibile, metti null.''',
     );
 
     if (!mounted) return;
@@ -172,11 +211,13 @@ Se un campo non è leggibile, metti null. Importi con il simbolo €.''',
         setState(() {
           _aiData = parsed;
           _aiAnalysis = parsed['analisi'] as String?;
+          _ocrDebugText = response.ocrText;
           _isAnalyzing = false;
         });
       } else {
         setState(() {
           _errorMessage = 'Impossibile leggere i dati dal documento. Riprova con una foto più nitida.';
+          _ocrDebugText = response.ocrText;
           _isAnalyzing = false;
         });
       }
@@ -232,6 +273,8 @@ Se un campo non è leggibile, metti null. Importi con il simbolo €.''',
             SliverToBoxAdapter(child: _sectionHeader('FERIE E PERMESSI', Icons.event_available, const Color(0xFF00897B))),
             SliverToBoxAdapter(child: _buildAiSection(_aiFerie())),
             SliverToBoxAdapter(child: _buildResetButton()),
+            if (_ocrDebugText != null)
+              SliverToBoxAdapter(child: _buildOcrDebugButton()),
           ],
 
           // ── Static Example (original behavior) ──
@@ -344,6 +387,74 @@ Se un campo non è leggibile, metti null. Importi con il simbolo €.''',
             Icon(Icons.add_photo_alternate, color: Colors.white, size: 18),
             SizedBox(width: 8),
             Text('Analizza un\'altra busta paga', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white)),
+          ]),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOcrDebugButton() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
+      child: GestureDetector(
+        onTap: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            backgroundColor: Colors.white,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            ),
+            builder: (_) => DraggableScrollableSheet(
+              initialChildSize: 0.85,
+              minChildSize: 0.3,
+              maxChildSize: 0.95,
+              expand: false,
+              builder: (_, scrollController) => Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.bug_report, color: Colors.orange),
+                        const SizedBox(width: 8),
+                        const Text('Testo OCR (Google Vision)',
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+                        const Spacer(),
+                        IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(height: 1),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      controller: scrollController,
+                      padding: const EdgeInsets.all(16),
+                      child: SelectableText(
+                        _ocrDebugText ?? 'Nessun testo OCR disponibile',
+                        style: const TextStyle(fontSize: 12, fontFamily: 'monospace', height: 1.5),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          decoration: BoxDecoration(
+            color: Colors.orange.shade50,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: Colors.orange.shade200),
+          ),
+          child: const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Icon(Icons.bug_report, color: Colors.orange, size: 18),
+            SizedBox(width: 8),
+            Text('Vedi testo OCR (debug)', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Colors.orange)),
           ]),
         ),
       ),

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'web_search_service.dart';
+import 'vision_service.dart';
 
 // ---------------------------------------------------------------------------
 // Servizio Claude AI (Anthropic) — Singleton
@@ -115,7 +116,7 @@ class GeminiService {
     return chat(messages: messages, systemPrompt: enrichedPrompt);
   }
 
-  // ── Analisi documento (2 chiamate: trascrivi + estrai) ──
+  // ── Analisi documento (1 chiamata Sonnet: vede immagine + analizza) ──
   Future<AiResponse> analyzeDocument({
     required File imageFile,
     required String prompt,
@@ -126,10 +127,13 @@ class GeminiService {
     try {
       final bytes = await imageFile.readAsBytes();
       final base64Data = base64Encode(bytes);
-      final mimeType = _getMimeType(imageFile.path);
+      final mimeType = ext == 'pdf' ? 'application/pdf'
+          : ext == 'png' ? 'image/png'
+          : ext == 'webp' ? 'image/webp'
+          : ext == 'gif' ? 'image/gif'
+          : 'image/jpeg';
 
-      // ── CHIAMATA 1: Trascrivi TUTTO il testo dal documento ──
-      final transcribeBlocks = <dynamic>[
+      final contentBlocks = <dynamic>[
         {
           'type': ext == 'pdf' ? 'document' : 'image',
           'source': {
@@ -140,41 +144,28 @@ class GeminiService {
         },
         {
           'type': 'text',
-          'text': 'Trascrivi TUTTO il testo visibile in questo documento. '
-              'Il documento potrebbe essere ruotato, storto, fotografato di lato. '
-              'Trascrivi OGNI parola, numero, codice e data che riesci a leggere, riga per riga. '
-              'Non saltare nulla. Non aggiungere commenti. Solo il testo che vedi.',
+          'text': prompt,
         },
       ];
 
-      final transcribeBody = <String, dynamic>{
-        'model': _model,
-        'max_tokens': 2000,
+      final body = <String, dynamic>{
+        'model': _model, // claude-sonnet (vede e capisce tabelle)
+        'max_tokens': 2048,
         'messages': [
-          {'role': 'user', 'content': transcribeBlocks},
+          {'role': 'user', 'content': contentBlocks},
         ],
       };
+      if (systemPrompt != null && systemPrompt.isNotEmpty) {
+        body['system'] = systemPrompt;
+      }
 
-      final transcribeResponse = await http.post(
+      final response = await http.post(
         Uri.parse(_baseUrl),
         headers: _headers,
-        body: jsonEncode(transcribeBody),
-      ).timeout(const Duration(seconds: 45));
+        body: jsonEncode(body),
+      ).timeout(const Duration(seconds: 60));
 
-      final transcribeResult = _parseResponse(transcribeResponse);
-      if (!transcribeResult.isSuccess) return transcribeResult;
-
-      final transcribedText = transcribeResult.text;
-
-      // ── CHIAMATA 2: Estrai dati dal testo (NO immagine) ──
-      final extractResult = await chat(
-        messages: [
-          {'role': 'user', 'content': 'Testo trascritto da un documento:\n\n$transcribedText\n\n$prompt'},
-        ],
-        systemPrompt: systemPrompt,
-      );
-
-      return extractResult;
+      return _parseResponse(response);
     } on TimeoutException {
       return AiResponse.error('Timeout analisi documento. Riprova.');
     } on SocketException {
@@ -226,16 +217,6 @@ class GeminiService {
     }
   }
 
-  String _getMimeType(String path) {
-    final ext = path.split('.').last.toLowerCase();
-    switch (ext) {
-      case 'png':  return 'image/png';
-      case 'gif':  return 'image/gif';
-      case 'webp': return 'image/webp';
-      case 'pdf':  return 'application/pdf';
-      default:     return 'image/jpeg';
-    }
-  }
 }
 
 // ---------------------------------------------------------------------------
@@ -245,11 +226,12 @@ class AiResponse {
   final bool isSuccess;
   final String text;
   final String? errorMessage;
+  final String? ocrText;
 
-  AiResponse._({required this.isSuccess, required this.text, this.errorMessage});
+  AiResponse._({required this.isSuccess, required this.text, this.errorMessage, this.ocrText});
 
-  factory AiResponse.success(String text) =>
-      AiResponse._(isSuccess: true, text: text);
+  factory AiResponse.success(String text, {String? ocrText}) =>
+      AiResponse._(isSuccess: true, text: text, ocrText: ocrText);
 
   factory AiResponse.error(String message) =>
       AiResponse._(isSuccess: false, text: '', errorMessage: message);
