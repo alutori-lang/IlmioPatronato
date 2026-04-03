@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../config/constants.dart';
 import '../../core/widgets/banner_ad_widget.dart';
 import '../../core/services/agevolazioni_service.dart';
+import '../../core/services/profilo_utente_service.dart';
 import '../agevolazioni/agevolazioni_data.dart' as data;
 import '../agevolazioni/agevolazione_detail_screen.dart';
 import '../simulatore/simulatore_screen.dart';
 import '../compilatore/compilatore_screen.dart';
 import '../ai_avvocato/ai_chat_screen.dart';
 import '../strumenti/strumenti_screen.dart';
+import '../ilmiocaso/compila_profilo_screen.dart';
+import '../ilmiocaso/risultati_diritti_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final VoidCallback onNavigateToGuide;
@@ -56,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(child: _buildHeader(context)),
+        SliverToBoxAdapter(child: _buildIlMioCasoBanner(context)),
         SliverToBoxAdapter(child: _buildBanner(context)),
         SliverToBoxAdapter(child: _buildAgevolazioneDelGiorno(context)),
         const SliverToBoxAdapter(child: SizedBox(height: 20)),
@@ -70,6 +75,72 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         const SliverToBoxAdapter(child: SizedBox(height: 20)),
       ],
+    );
+  }
+
+  // ─── IL MIO CASO BANNER ──────────────────────────────────────────────────
+  Widget _buildIlMioCasoBanner(BuildContext context) {
+    final profiloService = context.watch<ProfiloUtenteService>();
+    final hasProfile = profiloService.hasProfile;
+
+    return GestureDetector(
+      onTap: () {
+        if (hasProfile) {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (_) => RisultatiDirittiScreen(profilo: profiloService.profilo!),
+          ));
+        } else {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (_) => CompilaProfiloScreen(service: profiloService),
+          ));
+        }
+      },
+      child: Container(
+        margin: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [Color(0xFF1B5E20), Color(0xFF4CAF50)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: [BoxShadow(color: const Color(0xFF1B5E20).withValues(alpha: 0.35), blurRadius: 16, offset: const Offset(0, 6))],
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: const Icon(Icons.star, color: Colors.white, size: 28),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    hasProfile ? 'VEDI I TUOI DIRITTI' : 'SCOPRI I TUOI DIRITTI',
+                    style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w900, letterSpacing: 0.5),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    hasProfile
+                        ? 'Clicca per vedere i bonus a cui hai diritto'
+                        : 'Compila il profilo e scopri tutti i bonus e agevolazioni che puoi ottenere!',
+                    style: const TextStyle(color: Colors.white70, fontSize: 12, height: 1.3),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            const Icon(Icons.arrow_forward_ios, color: Colors.white70, size: 18),
+          ],
+        ),
+      ),
     );
   }
 
