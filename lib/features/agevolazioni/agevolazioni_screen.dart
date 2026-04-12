@@ -196,7 +196,7 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    Text('${nuove.length} nuove agevolazioni', style: TextStyle(fontSize: 12, color: AppColors.textMedium)),
+                    Flexible(child: Text('${nuove.length} nuove agevolazioni', style: TextStyle(fontSize: 12, color: AppColors.textMedium), overflow: TextOverflow.ellipsis)),
                   ],
                 ),
               ),
@@ -236,13 +236,17 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
                     color: AppColors.primary,
                   ),
                   const SizedBox(width: 8),
-                  Text(
-                    _searchController.text.isNotEmpty
-                        ? '${_risultati.length} risultati trovati'
-                        : _selectedCategoria.isNotEmpty
-                            ? _selectedCategoria
-                            : 'Tutte le Agevolazioni (${_risultati.length})',
-                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textDark),
+                  Flexible(
+                    child: Text(
+                      _searchController.text.isNotEmpty
+                          ? '${_risultati.length} risultati trovati'
+                          : _selectedCategoria.isNotEmpty
+                              ? _selectedCategoria
+                              : 'Tutte le Agevolazioni (${_risultati.length})',
+                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textDark),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),
@@ -313,7 +317,7 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
               ]),
             ),
             const SizedBox(width: 8),
-            if (!_aiLoading) Text('${_aiNuove.length} agevolazioni reali', style: const TextStyle(fontSize: 12, color: AppColors.textMedium)),
+            if (!_aiLoading) Flexible(child: Text('${_aiNuove.length} agevolazioni reali', style: const TextStyle(fontSize: 12, color: AppColors.textMedium), overflow: TextOverflow.ellipsis)),
           ]),
         ),
         if (_aiLoading)
@@ -371,7 +375,7 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
                       const SizedBox(height: 4),
                       Row(children: [
                         if (a.importo.isNotEmpty) ...[
-                          Text(a.importo, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Colors.green.shade700)),
+                          Flexible(child: Text(a.importo, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Colors.green.shade700), overflow: TextOverflow.ellipsis)),
                           const SizedBox(width: 8),
                         ],
                         Icon(Icons.access_time, size: 11, color: Colors.grey.shade500),
@@ -503,29 +507,25 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
         child: Row(
           children: [
             Container(
-              width: 56, height: 56,
+              width: 48, height: 48,
               decoration: BoxDecoration(
                 color: Colors.white.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(_getAgevolazioneIcon(a.iconName), color: Colors.white, size: 28),
+              child: Icon(_getAgevolazioneIcon(a.iconName), color: Colors.white, size: 24),
             ),
-            const SizedBox(width: 14),
+            const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                        decoration: BoxDecoration(
-                          color: Colors.amber.shade600,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: const Text('AGEVOLAZIONE DEL GIORNO', style: TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.w800, letterSpacing: 0.5)),
-                      ),
-                    ],
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: Colors.amber.shade600,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: const Text('AGEVOLAZIONE DEL GIORNO', style: TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.w800, letterSpacing: 0.5)),
                   ),
                   const SizedBox(height: 6),
                   Text(a.titolo, style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700), maxLines: 1, overflow: TextOverflow.ellipsis),
@@ -536,8 +536,8 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
                     children: [
                       Icon(Icons.euro, color: Colors.amber.shade300, size: 13),
                       const SizedBox(width: 4),
-                      Text(a.importo, style: TextStyle(color: Colors.amber.shade300, fontSize: 11, fontWeight: FontWeight.w600)),
-                      const Spacer(),
+                      Flexible(child: Text(a.importo, style: TextStyle(color: Colors.amber.shade300, fontSize: 11, fontWeight: FontWeight.w600), maxLines: 1, overflow: TextOverflow.ellipsis)),
+                      const SizedBox(width: 8),
                       Text('Scopri →', style: TextStyle(color: Colors.white.withValues(alpha: 0.7), fontSize: 11, fontWeight: FontWeight.w600)),
                     ],
                   ),
@@ -552,10 +552,10 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
 
   Widget _buildCategorie() {
     return SizedBox(
-      height: 48,
+      height: 56,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
+        padding: const EdgeInsets.fromLTRB(16, 10, 16, 4),
         itemCount: categorie.length,
         itemBuilder: (context, index) {
           final cat = categorie[index];
@@ -692,11 +692,14 @@ class _AgevolazioneCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 2),
-                  Text(
-                    agevolazione.descrizione,
-                    style: const TextStyle(fontSize: 11, color: AppColors.textMedium),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+                  SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      agevolazione.descrizione,
+                      style: const TextStyle(fontSize: 11, color: AppColors.textMedium),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Row(
@@ -712,10 +715,10 @@ class _AgevolazioneCard extends StatelessWidget {
                           style: TextStyle(fontSize: 9, fontWeight: FontWeight.w600, color: color),
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: 6),
                       Icon(Icons.euro, size: 11, color: Colors.green.shade600),
                       const SizedBox(width: 2),
-                      Flexible(
+                      Expanded(
                         child: Text(
                           agevolazione.importo,
                           style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: Colors.green.shade700),

@@ -391,7 +391,7 @@ class _InfoBox extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 6),
-          Text(value, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.textDark), maxLines: 2, overflow: TextOverflow.ellipsis),
+          Flexible(child: Text(value, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.textDark), maxLines: 2, overflow: TextOverflow.ellipsis)),
         ],
       ),
     );
