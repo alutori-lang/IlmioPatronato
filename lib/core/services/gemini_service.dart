@@ -15,7 +15,10 @@ class GeminiService {
   factory GeminiService() => _instance;
   GeminiService._();
 
-  static const _apiKey = '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';
+  static const _apiKey = String.fromEnvironment(
+    'CLAUDE_API_KEY',
+    defaultValue: '',
+  );
   static const _model = 'claude-sonnet-4-6';
   static const _modelFast = 'claude-haiku-4-5-20251001';
   static const _baseUrl = 'https://api.anthropic.com/v1/messages';

@@ -13,11 +13,11 @@ class AdService {
   static const String _androidInterstitialId =
       'ca-app-pub-9396424020196768/3586366378';
 
-  // ── iOS Ad Unit IDs (da aggiungere quando crei l'app iOS su AdMob) ──
+  // ── iOS Ad Unit IDs (test IDs ufficiali Google — sostituire con i tuoi quando crei l'app iOS su AdMob) ──
   static const String _iosBannerId =
-      'ca-app-pub-9396424020196768/7002867207'; // TODO: sostituire con iOS ID
+      'ca-app-pub-3940256099942544/2934735716';
   static const String _iosInterstitialId =
-      'ca-app-pub-9396424020196768/3586366378'; // TODO: sostituire con iOS ID
+      'ca-app-pub-3940256099942544/4411468910';
 
   static String get bannerAdUnitId =>
       Platform.isAndroid ? _androidBannerId : _iosBannerId;
