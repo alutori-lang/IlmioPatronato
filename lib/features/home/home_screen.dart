@@ -4,8 +4,6 @@ import '../../config/constants.dart';
 import '../../core/widgets/banner_ad_widget.dart';
 import '../../core/services/agevolazioni_service.dart';
 import '../../core/services/profilo_utente_service.dart';
-import '../agevolazioni/agevolazioni_data.dart' as data;
-import '../agevolazioni/agevolazione_detail_screen.dart';
 import '../simulatore/simulatore_screen.dart';
 import '../compilatore/compilatore_screen.dart';
 import '../ai_avvocato/ai_chat_screen.dart';
@@ -44,8 +42,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _loadAgevolazioni() async {
     try {
-      final result = await _agevolazioniService.getAgevolazioni();
+      // Novità ultime 48h per il banner "del giorno"
+      final result = await _agevolazioniService.getNovita48h();
       if (mounted) setState(() { _nuoveAgevolazioni = result; _loading = false; });
+      // In background: aggiorna lista completa per i contatori
+      _agevolazioniService.getAgevolazioni();
     } catch (_) {
       if (mounted) setState(() => _loading = false);
     }
@@ -61,7 +62,6 @@ class _HomeScreenState extends State<HomeScreen> {
       slivers: [
         SliverToBoxAdapter(child: _buildHeader(context)),
         SliverToBoxAdapter(child: _buildIlMioCasoBanner(context)),
-        SliverToBoxAdapter(child: _buildBanner(context)),
         SliverToBoxAdapter(child: _buildAgevolazioneDelGiorno(context)),
         const SliverToBoxAdapter(child: SizedBox(height: 20)),
         SliverToBoxAdapter(child: _buildCardsSection(context)),
@@ -234,29 +234,49 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // ─── AGEVOLAZIONE DEL GIORNO ─────────────────────────────────────────────
+  // ─── ULTIME 48H — NOVITÀ DINAMICA (Gemini + Google Search) ───────────────
   Widget _buildAgevolazioneDelGiorno(BuildContext context) {
-    final a = data.agevolazioneDellaSettimana();
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(
-          builder: (_) => AgevolazioneDetailScreen(
-            agevolazione: a,
-            icon: Icons.card_giftcard,
-            color: const Color(0xFF1565C0),
+    // Loading
+    if (_loading) {
+      return Container(
+        margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [Color(0xFFE65100), Color(0xFFFF8F00)],
+            begin: Alignment.topLeft, end: Alignment.bottomRight,
           ),
-        ));
-      },
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [BoxShadow(color: const Color(0xFFE65100).withValues(alpha: 0.25), blurRadius: 16, offset: const Offset(0, 4))],
+        ),
+        child: const Row(
+          children: [
+            SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2.5, color: Colors.white)),
+            SizedBox(width: 14),
+            Expanded(child: Text('Cerco novità ultime 48h...', style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600))),
+          ],
+        ),
+      );
+    }
+
+    // Nessuna novità 48h → hide
+    if (_nuoveAgevolazioni.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    final a = _nuoveAgevolazioni.first;
+    return GestureDetector(
+      onTap: widget.onNavigateToAgevolazioni,
       child: Container(
         margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           gradient: const LinearGradient(
-            colors: [Color(0xFF1565C0), Color(0xFF0D47A1)],
+            colors: [Color(0xFFE65100), Color(0xFFFF8F00)],
             begin: Alignment.topLeft, end: Alignment.bottomRight,
           ),
           borderRadius: BorderRadius.circular(16),
-          boxShadow: [BoxShadow(color: const Color(0xFF1565C0).withValues(alpha: 0.25), blurRadius: 16, offset: const Offset(0, 4))],
+          boxShadow: [BoxShadow(color: const Color(0xFFE65100).withValues(alpha: 0.25), blurRadius: 16, offset: const Offset(0, 4))],
         ),
         child: Row(
           children: [
@@ -266,7 +286,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.white.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Icon(Icons.card_giftcard, color: Colors.white, size: 24),
+              child: Center(child: Text(a.categoriaIcon, style: const TextStyle(fontSize: 22))),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -275,13 +295,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-                    decoration: BoxDecoration(color: Colors.amber.shade600, borderRadius: BorderRadius.circular(4)),
-                    child: const Text('AGEVOLAZIONE DELLA SETTIMANA', style: TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.w800)),
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(4)),
+                    child: const Row(mainAxisSize: MainAxisSize.min, children: [
+                      Icon(Icons.bolt, size: 10, color: Color(0xFFE65100)),
+                      SizedBox(width: 2),
+                      Text('ULTIME 48H', style: TextStyle(color: Color(0xFFE65100), fontSize: 8, fontWeight: FontWeight.w800)),
+                    ]),
                   ),
                   const SizedBox(height: 4),
                   Text(a.titolo, style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w700), maxLines: 1, overflow: TextOverflow.ellipsis),
                   const SizedBox(height: 2),
-                  Text(a.importo, style: TextStyle(color: Colors.amber.shade300, fontSize: 11, fontWeight: FontWeight.w600)),
+                  Text(a.importo.isNotEmpty ? a.importo : a.tempoRelativo, style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w600)),
                 ],
               ),
             ),
@@ -316,12 +340,12 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Expanded(
                 child: _WowCard(
-                  gradientColors: const [Color(0xFFFF6B35), Color(0xFFFF3D00), Color(0xFFD50000)],
-                  glowColor: const Color(0xFFFF6B35),
+                  gradientColors: const [Color(0xFFE65100)],
+                  glowColor: const Color(0xFFE65100),
                   emoji: '🎁',
                   icon: Icons.card_giftcard,
                   badge: 'HOT',
-                  badgeColor: const Color(0xFFFFD600),
+                  badgeColor: const Color(0xFFE65100),
                   title: 'Agevolazioni',
                   subtitle: '$bonusCount bonus disponibili',
                   items: _loading
@@ -338,12 +362,12 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(width: 12),
               Expanded(
                 child: _WowCard(
-                  gradientColors: const [Color(0xFF7C4DFF), Color(0xFF651FFF), Color(0xFF6200EA)],
-                  glowColor: const Color(0xFF7C4DFF),
+                  gradientColors: const [Color(0xFF5E35B1)],
+                  glowColor: const Color(0xFF5E35B1),
                   emoji: '🧮',
                   icon: Icons.calculate_rounded,
                   badge: '14',
-                  badgeColor: const Color(0xFFB388FF),
+                  badgeColor: const Color(0xFF5E35B1),
                   title: 'Calcolatori',
                   subtitle: 'Simula & calcola tutto',
                   items: const [
@@ -364,12 +388,12 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Expanded(
                 child: _WowCard(
-                  gradientColors: const [Color(0xFF00C853), Color(0xFF00B248), Color(0xFF009624)],
-                  glowColor: const Color(0xFF00C853),
+                  gradientColors: const [Color(0xFF2E7D32)],
+                  glowColor: const Color(0xFF2E7D32),
                   emoji: '🛠',
                   icon: Icons.build_circle_rounded,
                   badge: 'TOOL',
-                  badgeColor: const Color(0xFF69F0AE),
+                  badgeColor: const Color(0xFF2E7D32),
                   title: 'Strumenti',
                   subtitle: '6 tools professionali',
                   items: const [
@@ -384,12 +408,12 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(width: 12),
               Expanded(
                 child: _WowCard(
-                  gradientColors: const [Color(0xFF00B0FF), Color(0xFF0091EA), Color(0xFF0277BD)],
-                  glowColor: const Color(0xFF00B0FF),
+                  gradientColors: const [Color(0xFF1565C0)],
+                  glowColor: const Color(0xFF1565C0),
                   emoji: '💬',
                   icon: Icons.question_answer_rounded,
                   badge: 'AI',
-                  badgeColor: const Color(0xFF80D8FF),
+                  badgeColor: const Color(0xFF1565C0),
                   title: 'Chiedi del Patronato?',
                   subtitle: 'Chiedi qualsiasi cosa',
                   items: const [
@@ -438,214 +462,132 @@ class _WowCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final accent = glowColor;
+    final accentSoft = Color.alphaBlend(accent.withValues(alpha: 0.10), Colors.white);
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: gradientColors,
-          ),
-          borderRadius: BorderRadius.circular(22),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: const Color(0xFFECEFF3), width: 1),
           boxShadow: [
-            // Main glow shadow
             BoxShadow(
-              color: glowColor.withValues(alpha: 0.45),
-              blurRadius: 20,
-              spreadRadius: 1,
-              offset: const Offset(0, 8),
-            ),
-            // Subtle inner light
-            BoxShadow(
-              color: glowColor.withValues(alpha: 0.2),
-              blurRadius: 40,
-              spreadRadius: -5,
-              offset: const Offset(0, 2),
+              color: Colors.black.withValues(alpha: 0.04),
+              blurRadius: 14,
+              offset: const Offset(0, 4),
             ),
           ],
         ),
-        child: Stack(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Background decorative circle (subtle)
-            Positioned(
-              top: -15,
-              right: -15,
-              child: Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white.withValues(alpha: 0.08),
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: -20,
-              left: -10,
-              child: Container(
-                width: 45,
-                height: 45,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white.withValues(alpha: 0.05),
-                ),
-              ),
-            ),
-            // Content
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            // Icon + Badge row
+            Row(
               children: [
-                // Emoji + Badge row
-                Row(
-                  children: [
-                    // Big emoji with glow background
-                    Container(
-                      width: 46, height: 46,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: Colors.white.withValues(alpha: 0.25), width: 1.5),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.white.withValues(alpha: 0.1),
-                            blurRadius: 12,
-                            spreadRadius: 2,
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Text(emoji, style: const TextStyle(fontSize: 22)),
-                      ),
-                    ),
-                    const Spacer(),
-                    // Animated badge
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                      decoration: BoxDecoration(
-                        color: badgeColor,
-                        borderRadius: BorderRadius.circular(8),
-                        boxShadow: [
-                          BoxShadow(
-                            color: badgeColor.withValues(alpha: 0.5),
-                            blurRadius: 8,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Text(
-                        badge,
-                        style: const TextStyle(
-                          color: Color(0xFF1A1A2E),
-                          fontSize: 9,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 0.5,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 14),
-
-                // Title - bold white
-                Text(
-                  title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w900,
-                    height: 1.1,
-                    letterSpacing: -0.3,
+                Container(
+                  width: 44, height: 44,
+                  decoration: BoxDecoration(
+                    color: accentSoft,
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+                  child: Center(
+                    child: Text(emoji, style: const TextStyle(fontSize: 22)),
+                  ),
                 ),
-                const SizedBox(height: 4),
+                const Spacer(),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: accent.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    badge,
+                    style: TextStyle(
+                      color: accent,
+                      fontSize: 9,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 14),
 
-                // Subtitle with accent color
+            // Title
+            Text(
+              title,
+              style: const TextStyle(
+                color: Color(0xFF1A1A1A),
+                fontSize: 15,
+                fontWeight: FontWeight.w800,
+                height: 1.15,
+                letterSpacing: -0.2,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 3),
+
+            // Subtitle
+            Text(
+              subtitle,
+              style: const TextStyle(
+                color: Color(0xFF8A92A3),
+                fontSize: 10.5,
+                fontWeight: FontWeight.w500,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 12),
+
+            // Divider
+            Container(height: 1, color: const Color(0xFFF1F3F5)),
+            const SizedBox(height: 10),
+
+            // Items with check icons
+            ...items.map((item) => Padding(
+              padding: const EdgeInsets.only(bottom: 6),
+              child: Row(
+                children: [
+                  Icon(Icons.check_circle, color: accent, size: 13),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: Text(
+                      item,
+                      style: const TextStyle(
+                        color: Color(0xFF2C3340),
+                        fontSize: 11,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            )),
+
+            const SizedBox(height: 4),
+
+            // Bottom action — solo testo + freccia
+            Row(
+              children: [
                 Text(
-                  subtitle,
+                  'Scopri',
                   style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.75),
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600,
+                    color: accent,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
-                const SizedBox(height: 10),
-
-                // Glowing divider
-                Container(
-                  height: 1.5,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.white.withValues(alpha: 0.0),
-                        Colors.white.withValues(alpha: 0.35),
-                        Colors.white.withValues(alpha: 0.0),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-
-                // Items with checkmark icons
-                ...items.map((item) => Padding(
-                  padding: const EdgeInsets.only(bottom: 5),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 16, height: 16,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.18),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: const Icon(Icons.check, color: Colors.white, size: 10),
-                      ),
-                      const SizedBox(width: 7),
-                      Expanded(
-                        child: Text(
-                          item,
-                          style: TextStyle(
-                            color: Colors.white.withValues(alpha: 0.9),
-                            fontSize: 10.5,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
-                )),
-
-                const SizedBox(height: 8),
-
-                // Bottom action button
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.2),
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Scopri',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 11,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      SizedBox(width: 4),
-                      Icon(Icons.arrow_forward_rounded, color: Colors.white, size: 13),
-                    ],
-                  ),
-                ),
+                const SizedBox(width: 4),
+                Icon(Icons.arrow_forward_rounded, color: accent, size: 14),
               ],
             ),
           ],

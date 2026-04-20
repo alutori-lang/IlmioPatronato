@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup V2 - Frame Style</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f0f2f5;
+    padding: 32px 16px;
+    min-height: 100vh;
+  }
+  h1 {
+    text-align: center;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+    font-size: 24px;
+    font-weight: 800;
+  }
+  .subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 32px;
+    font-size: 14px;
+  }
+  .mockups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+    justify-items: center;
+  }
+  .phone {
+    width: 360px;
+    background: #fff;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    border: 6px solid #1a1a1a;
+  }
+  .option-label {
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    padding: 10px 18px;
+    border-radius: 20px;
+    display: inline-block;
+    background: #fff;
+    color: #1a1a1a;
+    border: 1px solid #e0e0e0;
+    max-width: 340px;
+  }
+  .col { display: flex; flex-direction: column; align-items: center; }
+
+  /* === HEADER === */
+  .header {
+    background: linear-gradient(135deg, #1a237e, #283593);
+    padding: 32px 20px 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .header-icon {
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, #42a5f5, #1e88e5);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+  }
+  .header-title { font-size: 18px; font-weight: 800; letter-spacing: 0.3px; }
+  .header-sub { font-size: 11px; opacity: 0.8; margin-top: 2px; }
+  .header-search {
+    margin-left: auto;
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+
+  .banner-diritti {
+    background: linear-gradient(135deg, #1b5e20, #43a047);
+    margin: 12px 16px 0;
+    padding: 16px;
+    border-radius: 16px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .banner-diritti .icon {
+    width: 42px; height: 42px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .banner-diritti .t1 { font-size: 14px; font-weight: 800; }
+  .banner-diritti .t2 { font-size: 10px; opacity: 0.85; margin-top: 2px; }
+
+  .ultime48 {
+    background: linear-gradient(135deg, #ff6d00, #ff9800);
+    margin: 12px 16px 0;
+    padding: 14px;
+    border-radius: 16px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 6px 18px rgba(255, 109, 0, 0.3);
+  }
+  .ultime48 .icon {
+    width: 42px; height: 42px;
+    background: rgba(255,255,255,0.22);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .badge-new {
+    background: white; color: #ff6d00;
+    font-size: 8px; font-weight: 900;
+    padding: 2px 7px; border-radius: 5px;
+    display: inline-flex; align-items: center; gap: 2px;
+    letter-spacing: 0.5px;
+  }
+  .ultime48 .title { font-size: 13px; font-weight: 800; margin-top: 6px; }
+  .ultime48 .desc { font-size: 10px; opacity: 0.9; margin-top: 2px; }
+
+  .servizi-title {
+    padding: 18px 16px 4px;
+    font-size: 16px; font-weight: 800; color: #1a1a1a;
+  }
+  .servizi-sub {
+    padding: 0 16px 12px;
+    font-size: 11px; color: #888;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 0 16px 20px;
+  }
+
+  /* ============================================ */
+  /* OPZIONE 4: WHITE + ORANGE FRAME             */
+  /* ============================================ */
+  .card4 {
+    background: #ffffff;
+    border: 2px solid #ff6d00;
+    border-radius: 18px;
+    padding: 14px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 4px 14px rgba(255, 109, 0, 0.12);
+  }
+  .card4 .icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 10px;
+    background: #fff3e0;
+    color: #e65100;
+  }
+  .card4 .card-title { font-size: 14px; font-weight: 800; color: #1a1a1a; }
+  .card4 .card-sub { font-size: 10px; color: #888; margin-top: 2px; }
+  .card4 .hot {
+    position: absolute; top: 12px; right: 12px;
+    background: #ff6d00; color: white;
+    font-size: 8px; font-weight: 900;
+    padding: 3px 7px; border-radius: 4px;
+  }
+  .card4 .count {
+    position: absolute; top: 12px; right: 12px;
+    background: #fff3e0; color: #e65100;
+    font-size: 11px; font-weight: 700;
+    padding: 3px 9px; border-radius: 12px;
+  }
+  .card4 .bottom {
+    margin-top: auto;
+    display: flex; align-items: center; gap: 4px;
+    font-size: 11px; color: #e65100; font-weight: 800;
+    padding-top: 8px; border-top: 1px dashed #ffccbc;
+  }
+
+  /* ============================================ */
+  /* OPZIONE 5: GREEN + THIN BLACK FRAME         */
+  /* ============================================ */
+  .card5 {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    border: 1.5px solid #1a1a1a;
+    border-radius: 18px;
+    padding: 14px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 4px 4px 0 #1a1a1a;
+  }
+  .card5 .icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 10px;
+    background: #1a1a1a;
+    color: #4caf50;
+    border: 1.5px solid #1a1a1a;
+  }
+  .card5 .card-title { font-size: 14px; font-weight: 800; color: #1a1a1a; }
+  .card5 .card-sub { font-size: 10px; color: #2e7d32; margin-top: 2px; font-weight: 600; }
+  .card5 .hot {
+    position: absolute; top: 12px; right: 12px;
+    background: #1a1a1a; color: #4caf50;
+    font-size: 8px; font-weight: 900;
+    padding: 3px 7px; border-radius: 4px;
+    border: 1.5px solid #1a1a1a;
+  }
+  .card5 .count {
+    position: absolute; top: 12px; right: 12px;
+    background: white; color: #1a1a1a;
+    font-size: 11px; font-weight: 800;
+    padding: 3px 9px; border-radius: 12px;
+    border: 1.5px solid #1a1a1a;
+  }
+  .card5 .bottom {
+    margin-top: auto;
+    display: flex; align-items: center; gap: 4px;
+    font-size: 11px; color: #1a1a1a; font-weight: 800;
+    padding-top: 8px; border-top: 1.5px solid #1a1a1a;
+  }
+
+  /* ============================================ */
+  /* OPZIONE 6: MIX — white+orange & green+black */
+  /* ============================================ */
+  .card-mix-a {
+    background: #ffffff;
+    border: 2px solid #ff6d00;
+    border-radius: 18px;
+    padding: 14px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 4px 14px rgba(255, 109, 0, 0.12);
+  }
+  .card-mix-a .icon {
+    width: 44px; height: 44px;
+    background: #fff3e0;
+    color: #e65100;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  .card-mix-a .card-title { font-size: 14px; font-weight: 800; color: #1a1a1a; }
+  .card-mix-a .card-sub { font-size: 10px; color: #888; margin-top: 2px; }
+  .card-mix-a .hot {
+    position: absolute; top: 12px; right: 12px;
+    background: #ff6d00; color: white;
+    font-size: 8px; font-weight: 900;
+    padding: 3px 7px; border-radius: 4px;
+  }
+  .card-mix-a .count {
+    position: absolute; top: 12px; right: 12px;
+    background: #fff3e0; color: #e65100;
+    font-size: 11px; font-weight: 700;
+    padding: 3px 9px; border-radius: 12px;
+  }
+  .card-mix-a .bottom {
+    margin-top: auto;
+    font-size: 11px; color: #e65100; font-weight: 800;
+    padding-top: 8px; border-top: 1px dashed #ffccbc;
+  }
+
+  .card-mix-b {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    border: 1.5px solid #1a1a1a;
+    border-radius: 18px;
+    padding: 14px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .card-mix-b .icon {
+    width: 44px; height: 44px;
+    background: #1a1a1a;
+    color: #4caf50;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  .card-mix-b .card-title { font-size: 14px; font-weight: 800; color: #1a1a1a; }
+  .card-mix-b .card-sub { font-size: 10px; color: #2e7d32; margin-top: 2px; font-weight: 600; }
+  .card-mix-b .count {
+    position: absolute; top: 12px; right: 12px;
+    background: white; color: #1a1a1a;
+    font-size: 11px; font-weight: 800;
+    padding: 3px 9px; border-radius: 12px;
+    border: 1.5px solid #1a1a1a;
+  }
+  .card-mix-b .bottom {
+    margin-top: auto;
+    font-size: 11px; color: #1a1a1a; font-weight: 800;
+    padding-top: 8px; border-top: 1.5px solid #1a1a1a;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0 16px;
+    border-top: 1px solid #eee;
+    background: white;
+  }
+  .nav-item {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    font-size: 10px; color: #888;
+  }
+  .nav-item.active { color: #1565c0; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<h1>Frame Style — 3 varianti nuove</h1>
+<p class="subtitle">Bianco con frame arancione · Verde con frame nero · Mix</p>
+
+<div class="mockups">
+
+  <!-- OPZIONE 4: white + orange frame -->
+  <div class="col">
+    <div class="option-label">4. Bianco + frame arancione (tutto)</div>
+    <div class="phone">
+      <div class="header">
+        <div class="header-icon">🛡️</div>
+        <div>
+          <div class="header-title">IL MIO PATRONATO</div>
+          <div class="header-sub">Assistenza Immigrazione</div>
+        </div>
+        <div class="header-search">🔍</div>
+      </div>
+      <div class="banner-diritti">
+        <div class="icon">⭐</div>
+        <div style="flex:1">
+          <div class="t1">VEDI I TUOI DIRITTI</div>
+          <div class="t2">Clicca per vedere i bonus a cui hai diritto</div>
+        </div>
+        <div style="opacity:0.7">›</div>
+      </div>
+      <div class="ultime48">
+        <div class="icon">📋</div>
+        <div style="flex:1">
+          <div class="badge-new">⚡ ULTIME 48H</div>
+          <div class="title">Provvedimento su modalità...</div>
+          <div class="desc">22 ore fa · Agenzia delle Entrate</div>
+        </div>
+        <div>→</div>
+      </div>
+      <div class="servizi-title">I Tuoi Servizi</div>
+      <div class="servizi-sub">Tutto quello che ti serve, in un posto</div>
+      <div class="grid">
+        <div class="card4">
+          <div class="hot">HOT</div>
+          <div class="icon">🎁</div>
+          <div class="card-title">Agevolazioni</div>
+          <div class="card-sub">54 bonus disponibili</div>
+          <div class="bottom">Scopri →</div>
+        </div>
+        <div class="card4">
+          <div class="count">14</div>
+          <div class="icon">🧮</div>
+          <div class="card-title">Calcolatori</div>
+          <div class="card-sub">Simula & calcola</div>
+          <div class="bottom">Scopri →</div>
+        </div>
+        <div class="card4">
+          <div class="count">6</div>
+          <div class="icon">🔧</div>
+          <div class="card-title">Strumenti</div>
+          <div class="card-sub">Tools professionali</div>
+          <div class="bottom">Apri →</div>
+        </div>
+        <div class="card4">
+          <div class="count">AI</div>
+          <div class="icon">💬</div>
+          <div class="card-title">Chiedi AI</div>
+          <div class="card-sub">Qualsiasi domanda</div>
+          <div class="bottom">Chatta →</div>
+        </div>
+      </div>
+      <div class="nav">
+        <div class="nav-item active"><div>🏠</div><div>Home</div></div>
+        <div class="nav-item"><div>🎁</div><div>Bonus</div></div>
+        <div class="nav-item"><div>🤖</div><div>AI</div></div>
+        <div class="nav-item"><div>👤</div><div>Profilo</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPZIONE 5: green + black frame -->
+  <div class="col">
+    <div class="option-label">5. Verde + frame nero (neobrutalism)</div>
+    <div class="phone">
+      <div class="header">
+        <div class="header-icon">🛡️</div>
+        <div>
+          <div class="header-title">IL MIO PATRONATO</div>
+          <div class="header-sub">Assistenza Immigrazione</div>
+        </div>
+        <div class="header-search">🔍</div>
+      </div>
+      <div class="banner-diritti">
+        <div class="icon">⭐</div>
+        <div style="flex:1">
+          <div class="t1">VEDI I TUOI DIRITTI</div>
+          <div class="t2">Clicca per vedere i bonus a cui hai diritto</div>
+        </div>
+        <div style="opacity:0.7">›</div>
+      </div>
+      <div class="ultime48">
+        <div class="icon">📋</div>
+        <div style="flex:1">
+          <div class="badge-new">⚡ ULTIME 48H</div>
+          <div class="title">Provvedimento su modalità...</div>
+          <div class="desc">22 ore fa · Agenzia delle Entrate</div>
+        </div>
+        <div>→</div>
+      </div>
+      <div class="servizi-title">I Tuoi Servizi</div>
+      <div class="servizi-sub">Tutto quello che ti serve, in un posto</div>
+      <div class="grid">
+        <div class="card5">
+          <div class="hot">HOT</div>
+          <div class="icon">🎁</div>
+          <div class="card-title">Agevolazioni</div>
+          <div class="card-sub">54 bonus disponibili</div>
+          <div class="bottom">Scopri →</div>
+        </div>
+        <div class="card5">
+          <div class="count">14</div>
+          <div class="icon">🧮</div>
+          <div class="card-title">Calcolatori</div>
+          <div class="card-sub">Simula & calcola</div>
+          <div class="bottom">Scopri →</div>
+        </div>
+        <div class="card5">
+          <div class="count">6</div>
+          <div class="icon">🔧</div>
+          <div class="card-title">Strumenti</div>
+          <div class="card-sub">Tools professionali</div>
+          <div class="bottom">Apri →</div>
+        </div>
+        <div class="card5">
+          <div class="count">AI</div>
+          <div class="icon">💬</div>
+          <div class="card-title">Chiedi AI</div>
+          <div class="card-sub">Qualsiasi domanda</div>
+          <div class="bottom">Chatta →</div>
+        </div>
+      </div>
+      <div class="nav">
+        <div class="nav-item active"><div>🏠</div><div>Home</div></div>
+        <div class="nav-item"><div>🎁</div><div>Bonus</div></div>
+        <div class="nav-item"><div>🤖</div><div>AI</div></div>
+        <div class="nav-item"><div>👤</div><div>Profilo</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPZIONE 6: MIX — 2 bianche+arancio + 2 verdi+nero -->
+  <div class="col">
+    <div class="option-label">6. MIX — 2 bianche arancio + 2 verdi nero</div>
+    <div class="phone">
+      <div class="header">
+        <div class="header-icon">🛡️</div>
+        <div>
+          <div class="header-title">IL MIO PATRONATO</div>
+          <div class="header-sub">Assistenza Immigrazione</div>
+        </div>
+        <div class="header-search">🔍</div>
+      </div>
+      <div class="banner-diritti">
+        <div class="icon">⭐</div>
+        <div style="flex:1">
+          <div class="t1">VEDI I TUOI DIRITTI</div>
+          <div class="t2">Clicca per vedere i bonus a cui hai diritto</div>
+        </div>
+        <div style="opacity:0.7">›</div>
+      </div>
+      <div class="ultime48">
+        <div class="icon">📋</div>
+        <div style="flex:1">
+          <div class="badge-new">⚡ ULTIME 48H</div>
+          <div class="title">Provvedimento su modalità...</div>
+          <div class="desc">22 ore fa · Agenzia delle Entrate</div>
+        </div>
+        <div>→</div>
+      </div>
+      <div class="servizi-title">I Tuoi Servizi</div>
+      <div class="servizi-sub">Tutto quello che ti serve, in un posto</div>
+      <div class="grid">
+        <div class="card-mix-a">
+          <div class="hot">HOT</div>
+          <div class="icon">🎁</div>
+          <div class="card-title">Agevolazioni</div>
+          <div class="card-sub">54 bonus disponibili</div>
+          <div class="bottom">Scopri →</div>
+        </div>
+        <div class="card-mix-a">
+          <div class="count">14</div>
+          <div class="icon">🧮</div>
+          <div class="card-title">Calcolatori</div>
+          <div class="card-sub">Simula & calcola</div>
+          <div class="bottom">Scopri →</div>
+        </div>
+        <div class="card-mix-b">
+          <div class="count">6</div>
+          <div class="icon">🔧</div>
+          <div class="card-title">Strumenti</div>
+          <div class="card-sub">Tools professionali</div>
+          <div class="bottom">Apri →</div>
+        </div>
+        <div class="card-mix-b">
+          <div class="count">AI</div>
+          <div class="icon">💬</div>
+          <div class="card-title">Chiedi AI</div>
+          <div class="card-sub">Qualsiasi domanda</div>
+          <div class="bottom">Chatta →</div>
+        </div>
+      </div>
+      <div class="nav">
+        <div class="nav-item active"><div>🏠</div><div>Home</div></div>
+        <div class="nav-item"><div>🎁</div><div>Bonus</div></div>
+        <div class="nav-item"><div>🤖</div><div>AI</div></div>
+        <div class="nav-item"><div>👤</div><div>Profilo</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center; margin-top: 40px; color: #666; font-size: 13px; max-width: 800px; margin-left:auto; margin-right:auto;">
+  <strong>Parere onesto:</strong><br>
+  <strong>Opzione 4</strong> (bianco + frame arancione): pulita, coerente con il brand arancione dell'app. Forte.<br>
+  <strong>Opzione 5</strong> (verde + frame nero): stile "neobrutalism" — di moda ma può sembrare duro per un patronato.<br>
+  <strong>Opzione 6</strong> (mix): i colori arancio+verde con il nero possono sembrare Jamaica 🇯🇲 — attenzione.<br><br>
+  La più professionale qui è la <strong>4</strong>.
+</div>
+
+</body>
+</html>

@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'web_search_service.dart';
-import 'vision_service.dart';
 
 // ---------------------------------------------------------------------------
-// Servizio Claude AI (Anthropic) — Singleton
-// - Modello: claude-haiku-4-5-20251001 (veloce, economico, preciso)
+// Servizio Google Gemini AI — Singleton
+// - Modelli: gemini-2.5-flash (analisi), gemini-2.5-flash-lite (chat veloce)
 // - Supporta: testo, immagini, PDF nativamente
+// - Free tier generoso via Google AI Studio
 // ---------------------------------------------------------------------------
 class GeminiService {
   static final GeminiService _instance = GeminiService._();
@@ -16,31 +16,32 @@ class GeminiService {
   GeminiService._();
 
   static const _apiKey = String.fromEnvironment(
-    'CLAUDE_API_KEY',
+    'GEMINI_API_KEY',
     defaultValue: '',
   );
-  static const _model = 'claude-sonnet-4-6';
-  static const _modelFast = 'claude-haiku-4-5-20251001';
-  static const _baseUrl = 'https://api.anthropic.com/v1/messages';
+  static const _model = 'gemini-2.5-flash';
+  static const _modelFast = 'gemini-2.5-flash-lite';
+  static const _baseUrl =
+      'https://generativelanguage.googleapis.com/v1beta/models';
 
-  // ── Headers Anthropic ──
+  Uri _endpoint(String model) =>
+      Uri.parse('$_baseUrl/$model:generateContent?key=$_apiKey');
+
   Map<String, String> get _headers => {
     'Content-Type': 'application/json',
-    'x-api-key': _apiKey,
-    'anthropic-version': '2023-06-01',
-    'anthropic-beta': 'pdfs-2024-09-25',
   };
 
   // ── Verifica connessione API ──
   Future<bool> testConnection() async {
     try {
       final response = await http.post(
-        Uri.parse(_baseUrl),
+        _endpoint(_modelFast),
         headers: _headers,
         body: jsonEncode({
-          'model': _model,
-          'max_tokens': 8,
-          'messages': [{'role': 'user', 'content': 'OK'}],
+          'contents': [
+            {'role': 'user', 'parts': [{'text': 'OK'}]}
+          ],
+          'generationConfig': {'maxOutputTokens': 8},
         }),
       );
       return response.statusCode == 200;
@@ -53,11 +54,15 @@ class GeminiService {
   Future<AiResponse> chat({
     required List<Map<String, dynamic>> messages,
     String? systemPrompt,
+    bool useGoogleSearch = false,
+    int maxTokens = 2048,
+    int timeoutSeconds = 20,
   }) async {
-    final claudeMessages = <Map<String, dynamic>>[];
+    final geminiContents = <Map<String, dynamic>>[];
     for (final msg in messages) {
       final role = msg['role'] as String;
-      if (role == 'system') continue; // system va separato in Anthropic
+      if (role == 'system') continue;
+      final geminiRole = role == 'assistant' ? 'model' : 'user';
       final content = msg['content'];
       String text;
       if (content is String) {
@@ -71,23 +76,33 @@ class GeminiService {
       } else {
         continue;
       }
-      claudeMessages.add({'role': role, 'content': text});
+      geminiContents.add({
+        'role': geminiRole,
+        'parts': [{'text': text}],
+      });
     }
 
     try {
       final body = <String, dynamic>{
-        'model': _modelFast,
-        'max_tokens': 2048,
-        'messages': claudeMessages,
+        'contents': geminiContents,
+        'generationConfig': {'maxOutputTokens': maxTokens},
       };
+      if (useGoogleSearch) {
+        body['tools'] = [{'google_search': {}}];
+      }
       if (systemPrompt != null && systemPrompt.isNotEmpty) {
-        body['system'] = systemPrompt;
+        body['systemInstruction'] = {
+          'parts': [{'text': systemPrompt}],
+        };
       }
 
+      // Con Google Search serve il modello full, non flash-lite
+      final modelToUse = useGoogleSearch ? _model : _modelFast;
+
       final result = await Future.any([
-        http.post(Uri.parse(_baseUrl), headers: _headers, body: jsonEncode(body))
+        http.post(_endpoint(modelToUse), headers: _headers, body: jsonEncode(body))
             .then((r) => r as Object),
-        Future.delayed(const Duration(seconds: 20), () => 'timeout' as Object),
+        Future.delayed(Duration(seconds: timeoutSeconds), () => 'timeout' as Object),
       ]);
 
       if (result == 'timeout') return AiResponse.error('Timeout.');
@@ -119,7 +134,7 @@ class GeminiService {
     return chat(messages: messages, systemPrompt: enrichedPrompt);
   }
 
-  // ── Analisi documento (1 chiamata Sonnet: vede immagine + analizza) ──
+  // ── Analisi documento (immagine o PDF) ──
   Future<AiResponse> analyzeDocument({
     required File imageFile,
     required String prompt,
@@ -136,34 +151,36 @@ class GeminiService {
           : ext == 'gif' ? 'image/gif'
           : 'image/jpeg';
 
-      final contentBlocks = <dynamic>[
+      final parts = <Map<String, dynamic>>[
         {
-          'type': ext == 'pdf' ? 'document' : 'image',
-          'source': {
-            'type': 'base64',
-            'media_type': mimeType,
+          'inline_data': {
+            'mime_type': mimeType,
             'data': base64Data,
           },
         },
-        {
-          'type': 'text',
-          'text': prompt,
-        },
+        {'text': prompt},
       ];
 
+      final promptLower = prompt.toLowerCase();
+      final expectsJson = promptLower.contains('json');
+
       final body = <String, dynamic>{
-        'model': _model, // claude-sonnet (vede e capisce tabelle)
-        'max_tokens': 2048,
-        'messages': [
-          {'role': 'user', 'content': contentBlocks},
+        'contents': [
+          {'role': 'user', 'parts': parts},
         ],
+        'generationConfig': {
+          'maxOutputTokens': 4096,
+          if (expectsJson) 'responseMimeType': 'application/json',
+        },
       };
       if (systemPrompt != null && systemPrompt.isNotEmpty) {
-        body['system'] = systemPrompt;
+        body['systemInstruction'] = {
+          'parts': [{'text': systemPrompt}],
+        };
       }
 
       final response = await http.post(
-        Uri.parse(_baseUrl),
+        _endpoint(_model),
         headers: _headers,
         body: jsonEncode(body),
       ).timeout(const Duration(seconds: 60));
@@ -195,19 +212,24 @@ class GeminiService {
   AiResponse _parseResponse(http.Response response) {
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
-      // Anthropic format: { content: [ { type: "text", text: "..." } ] }
-      final content = json['content'] as List?;
-      if (content != null && content.isNotEmpty) {
-        final text = content.firstWhere(
-          (c) => c['type'] == 'text',
-          orElse: () => {'text': ''},
-        )['text'] ?? '';
-        return AiResponse.success(text);
+      // Gemini format: { candidates: [ { content: { parts: [ { text: "..." } ] } } ] }
+      final candidates = json['candidates'] as List?;
+      if (candidates != null && candidates.isNotEmpty) {
+        final content = candidates.first['content'];
+        final parts = content?['parts'] as List?;
+        if (parts != null && parts.isNotEmpty) {
+          final text = parts
+              .whereType<Map>()
+              .map((p) => p['text'] as String? ?? '')
+              .where((t) => t.isNotEmpty)
+              .join('\n');
+          if (text.isNotEmpty) return AiResponse.success(text);
+        }
       }
       return AiResponse.error('Risposta vuota dal server.');
     } else if (response.statusCode == 429) {
       return AiResponse.error('Troppe richieste. Riprova tra qualche secondo.');
-    } else if (response.statusCode == 401) {
+    } else if (response.statusCode == 401 || response.statusCode == 403) {
       return AiResponse.error('API Key non valida.');
     } else {
       try {

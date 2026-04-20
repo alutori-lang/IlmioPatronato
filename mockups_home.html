@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup Home - IL MIO PATRONATO</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f0f2f5;
+    padding: 32px 16px;
+    min-height: 100vh;
+  }
+  h1 {
+    text-align: center;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+    font-size: 24px;
+    font-weight: 800;
+  }
+  .subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 32px;
+    font-size: 14px;
+  }
+  .mockups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+    justify-items: center;
+  }
+  .phone {
+    width: 360px;
+    background: #fff;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    border: 6px solid #1a1a1a;
+  }
+  .option-label {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    padding: 10px 18px;
+    border-radius: 20px;
+    display: inline-block;
+  }
+  .col { display: flex; flex-direction: column; align-items: center; }
+
+  /* === HEADER COMUNE === */
+  .header {
+    background: linear-gradient(135deg, #1a237e, #283593);
+    padding: 32px 20px 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .header-icon {
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, #42a5f5, #1e88e5);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+  }
+  .header-title { font-size: 18px; font-weight: 800; letter-spacing: 0.3px; }
+  .header-sub { font-size: 11px; opacity: 0.8; margin-top: 2px; }
+  .header-search {
+    margin-left: auto;
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+
+  /* === BANNER VERDE DIRITTI === */
+  .banner-diritti {
+    background: linear-gradient(135deg, #1b5e20, #43a047);
+    margin: 12px 16px 0;
+    padding: 16px;
+    border-radius: 16px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .banner-diritti .icon {
+    width: 42px; height: 42px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .banner-diritti .t1 { font-size: 14px; font-weight: 800; }
+  .banner-diritti .t2 { font-size: 10px; opacity: 0.85; margin-top: 2px; }
+
+  /* === ULTIME 48H === */
+  .ultime48 {
+    background: linear-gradient(135deg, #ff6d00, #ff9800);
+    margin: 12px 16px 0;
+    padding: 14px;
+    border-radius: 16px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 6px 18px rgba(255, 109, 0, 0.3);
+  }
+  .ultime48 .icon {
+    width: 42px; height: 42px;
+    background: rgba(255,255,255,0.22);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .badge-new {
+    background: white; color: #ff6d00;
+    font-size: 8px; font-weight: 900;
+    padding: 2px 7px; border-radius: 5px;
+    display: inline-flex; align-items: center; gap: 2px;
+    letter-spacing: 0.5px;
+  }
+  .ultime48 .title { font-size: 13px; font-weight: 800; margin-top: 6px; }
+  .ultime48 .desc { font-size: 10px; opacity: 0.9; margin-top: 2px; }
+
+  /* === SEZIONE SERVIZI === */
+  .servizi-title {
+    padding: 18px 16px 4px;
+    font-size: 16px; font-weight: 800; color: #1a1a1a;
+  }
+  .servizi-sub {
+    padding: 0 16px 12px;
+    font-size: 11px; color: #888;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 0 16px 20px;
+  }
+
+  /* ============================================ */
+  /* OPZIONE 1: MINIMALE PULITO (Revolut/PagoPA) */
+  /* ============================================ */
+  .opt1 .option-label { background: #ffffff; color: #1a1a1a; border: 1px solid #e0e0e0; }
+  .card1 {
+    background: #ffffff;
+    border: 1px solid #e8eaee;
+    border-radius: 18px;
+    padding: 14px;
+    min-height: 155px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.2s;
+  }
+  .card1 .icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  .card1 .card-title { font-size: 14px; font-weight: 800; color: #1a1a1a; }
+  .card1 .card-sub { font-size: 10px; color: #888; margin-top: 2px; }
+  .card1 .hot {
+    position: absolute; top: 12px; right: 12px;
+    background: #ffecb3; color: #e65100;
+    font-size: 8px; font-weight: 900;
+    padding: 3px 7px; border-radius: 4px;
+  }
+  .card1 .count {
+    position: absolute; top: 12px; right: 12px;
+    background: #f1f3f5; color: #495057;
+    font-size: 11px; font-weight: 700;
+    padding: 3px 9px; border-radius: 12px;
+  }
+  .card1 .bottom {
+    margin-top: auto;
+    display: flex; align-items: center; gap: 4px;
+    font-size: 11px; color: #1e88e5; font-weight: 700;
+    padding-top: 8px; border-top: 1px solid #f1f3f5;
+  }
+  .icon-orange { background: #fff3e0; color: #e65100; }
+  .icon-purple { background: #ede7f6; color: #5e35b1; }
+  .icon-green  { background: #e8f5e9; color: #2e7d32; }
+  .icon-blue   { background: #e3f2fd; color: #1565c0; }
+
+  /* ============================================ */
+  /* OPZIONE 2: DARK / PREMIUM (fintech)         */
+  /* ============================================ */
+  .opt2 .option-label { background: #1a1a1a; color: white; }
+  .opt2 .phone { border-color: #1a1a1a; }
+  .opt2 .phone-body { background: #0f1115; }
+  .opt2 .servizi-title { color: #fff; }
+  .opt2 .servizi-sub { color: #888; }
+  .opt2 .header { background: #0a0d12; }
+
+  .card2 {
+    background: #1a1d24;
+    border: 1px solid #262a33;
+    border-radius: 18px;
+    padding: 14px;
+    min-height: 155px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .card2 .icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  .card2 .card-title { font-size: 14px; font-weight: 800; color: #fff; }
+  .card2 .card-sub { font-size: 10px; color: #8b92a3; margin-top: 2px; }
+  .card2 .bottom {
+    margin-top: auto;
+    display: flex; align-items: center; gap: 4px;
+    font-size: 11px; font-weight: 700;
+    padding-top: 8px; border-top: 1px solid #262a33;
+  }
+  .card2 .hot {
+    position: absolute; top: 12px; right: 12px;
+    background: rgba(255, 109, 0, 0.15); color: #ff9800;
+    font-size: 8px; font-weight: 900;
+    padding: 3px 7px; border-radius: 4px;
+  }
+  .card2 .count {
+    position: absolute; top: 12px; right: 12px;
+    background: #262a33; color: #d0d4dc;
+    font-size: 11px; font-weight: 700;
+    padding: 3px 9px; border-radius: 12px;
+  }
+  .icon-orange-dark { background: rgba(255, 109, 0, 0.15); color: #ff9800; }
+  .icon-purple-dark { background: rgba(138, 86, 255, 0.15); color: #a78bfa; }
+  .icon-green-dark  { background: rgba(52, 211, 153, 0.15); color: #34d399; }
+  .icon-blue-dark   { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+  .accent-orange { color: #ff9800; }
+  .accent-purple { color: #a78bfa; }
+  .accent-green  { color: #34d399; }
+  .accent-blue   { color: #60a5fa; }
+
+  /* ============================================ */
+  /* OPZIONE 3: DESATURATO ELEGANTE              */
+  /* ============================================ */
+  .opt3 .option-label { background: #3d4f3c; color: white; }
+  .card3 {
+    border-radius: 18px;
+    padding: 16px;
+    min-height: 155px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    color: #f5f3ee;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  }
+  .card3 .icon {
+    width: 44px; height: 44px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  .card3 .card-title { font-size: 14px; font-weight: 800; }
+  .card3 .card-sub { font-size: 10px; opacity: 0.8; margin-top: 2px; }
+  .card3 .hot {
+    position: absolute; top: 12px; right: 12px;
+    background: rgba(255,255,255,0.22); color: #fff;
+    font-size: 8px; font-weight: 900;
+    padding: 3px 7px; border-radius: 4px;
+  }
+  .card3 .count {
+    position: absolute; top: 12px; right: 12px;
+    background: rgba(255,255,255,0.2); color: #fff;
+    font-size: 11px; font-weight: 700;
+    padding: 3px 9px; border-radius: 12px;
+  }
+  .card3 .bottom {
+    margin-top: auto;
+    display: flex; align-items: center; gap: 4px;
+    font-size: 11px; font-weight: 700;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    opacity: 0.95;
+  }
+  .bg-navy    { background: linear-gradient(135deg, #2c3e50, #34495e); }
+  .bg-olive   { background: linear-gradient(135deg, #4a5d23, #5e7530); }
+  .bg-bordeaux{ background: linear-gradient(135deg, #7d2e2e, #9c3d3d); }
+  .bg-petrol  { background: linear-gradient(135deg, #264653, #2a5662); }
+
+  /* Bottom nav */
+  .nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0 16px;
+    border-top: 1px solid #eee;
+    background: white;
+  }
+  .opt2 .nav { background: #0f1115; border-top-color: #262a33; }
+  .nav-item {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    font-size: 10px; color: #888;
+  }
+  .nav-item.active { color: #1565c0; font-weight: 700; }
+  .opt2 .nav-item { color: #888; }
+  .opt2 .nav-item.active { color: #60a5fa; }
+</style>
+</head>
+<body>
+
+<h1>IL MIO PATRONATO — 3 proposte stile</h1>
+<p class="subtitle">Parere onesto, scegli quello che ti piace di più</p>
+
+<div class="mockups">
+
+  <!-- ================================================ -->
+  <!-- OPZIONE 1: MINIMALE PULITO                      -->
+  <!-- ================================================ -->
+  <div class="col opt1">
+    <div class="option-label">1. Minimale pulito (stile Revolut / PagoPA)</div>
+    <div class="phone">
+      <div class="header">
+        <div class="header-icon">🛡️</div>
+        <div>
+          <div class="header-title">IL MIO PATRONATO</div>
+          <div class="header-sub">Assistenza Immigrazione</div>
+        </div>
+        <div class="header-search">🔍</div>
+      </div>
+
+      <div class="banner-diritti">
+        <div class="icon">⭐</div>
+        <div style="flex:1">
+          <div class="t1">VEDI I TUOI DIRITTI</div>
+          <div class="t2">Clicca per vedere i bonus a cui hai diritto</div>
+        </div>
+        <div style="opacity:0.7">›</div>
+      </div>
+
+      <div class="ultime48">
+        <div class="icon">📋</div>
+        <div style="flex:1">
+          <div class="badge-new">⚡ ULTIME 48H</div>
+          <div class="title">Provvedimento su modalità...</div>
+          <div class="desc">22 ore fa · Agenzia delle Entrate</div>
+        </div>
+        <div>→</div>
+      </div>
+
+      <div class="servizi-title">I Tuoi Servizi</div>
+      <div class="servizi-sub">Tutto quello che ti serve, in un posto</div>
+
+      <div class="grid">
+        <div class="card1">
+          <div class="hot">HOT</div>
+          <div class="icon icon-orange">🎁</div>
+          <div class="card-title">Agevolazioni</div>
+          <div class="card-sub">54 bonus disponibili</div>
+          <div class="bottom" style="color:#e65100">Scopri →</div>
+        </div>
+        <div class="card1">
+          <div class="count">14</div>
+          <div class="icon icon-purple">🧮</div>
+          <div class="card-title">Calcolatori</div>
+          <div class="card-sub">Simula & calcola tutto</div>
+          <div class="bottom" style="color:#5e35b1">Scopri →</div>
+        </div>
+        <div class="card1">
+          <div class="count">6</div>
+          <div class="icon icon-green">🔧</div>
+          <div class="card-title">Strumenti</div>
+          <div class="card-sub">Tools professionali</div>
+          <div class="bottom" style="color:#2e7d32">Apri →</div>
+        </div>
+        <div class="card1">
+          <div class="count">AI</div>
+          <div class="icon icon-blue">💬</div>
+          <div class="card-title">Chiedi AI</div>
+          <div class="card-sub">Qualsiasi domanda</div>
+          <div class="bottom" style="color:#1565c0">Chatta →</div>
+        </div>
+      </div>
+
+      <div class="nav">
+        <div class="nav-item active"><div>🏠</div><div>Home</div></div>
+        <div class="nav-item"><div>🎁</div><div>Bonus</div></div>
+        <div class="nav-item"><div>🤖</div><div>AI</div></div>
+        <div class="nav-item"><div>👤</div><div>Profilo</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================ -->
+  <!-- OPZIONE 2: DARK / PREMIUM                       -->
+  <!-- ================================================ -->
+  <div class="col opt2">
+    <div class="option-label">2. Dark / Premium (stile fintech)</div>
+    <div class="phone">
+      <div class="phone-body">
+      <div class="header">
+        <div class="header-icon">🛡️</div>
+        <div>
+          <div class="header-title">IL MIO PATRONATO</div>
+          <div class="header-sub">Assistenza Immigrazione</div>
+        </div>
+        <div class="header-search">🔍</div>
+      </div>
+
+      <div class="banner-diritti">
+        <div class="icon">⭐</div>
+        <div style="flex:1">
+          <div class="t1">VEDI I TUOI DIRITTI</div>
+          <div class="t2">Clicca per vedere i bonus a cui hai diritto</div>
+        </div>
+        <div style="opacity:0.7">›</div>
+      </div>
+
+      <div class="ultime48">
+        <div class="icon">📋</div>
+        <div style="flex:1">
+          <div class="badge-new">⚡ ULTIME 48H</div>
+          <div class="title">Provvedimento su modalità...</div>
+          <div class="desc">22 ore fa · Agenzia delle Entrate</div>
+        </div>
+        <div>→</div>
+      </div>
+
+      <div class="servizi-title">I Tuoi Servizi</div>
+      <div class="servizi-sub">Tutto quello che ti serve, in un posto</div>
+
+      <div class="grid">
+        <div class="card2">
+          <div class="hot">HOT</div>
+          <div class="icon icon-orange-dark">🎁</div>
+          <div class="card-title">Agevolazioni</div>
+          <div class="card-sub">54 bonus disponibili</div>
+          <div class="bottom accent-orange">Scopri →</div>
+        </div>
+        <div class="card2">
+          <div class="count">14</div>
+          <div class="icon icon-purple-dark">🧮</div>
+          <div class="card-title">Calcolatori</div>
+          <div class="card-sub">Simula & calcola tutto</div>
+          <div class="bottom accent-purple">Scopri →</div>
+        </div>
+        <div class="card2">
+          <div class="count">6</div>
+          <div class="icon icon-green-dark">🔧</div>
+          <div class="card-title">Strumenti</div>
+          <div class="card-sub">Tools professionali</div>
+          <div class="bottom accent-green">Apri →</div>
+        </div>
+        <div class="card2">
+          <div class="count">AI</div>
+          <div class="icon icon-blue-dark">💬</div>
+          <div class="card-title">Chiedi AI</div>
+          <div class="card-sub">Qualsiasi domanda</div>
+          <div class="bottom accent-blue">Chatta →</div>
+        </div>
+      </div>
+
+      <div class="nav">
+        <div class="nav-item active"><div>🏠</div><div>Home</div></div>
+        <div class="nav-item"><div>🎁</div><div>Bonus</div></div>
+        <div class="nav-item"><div>🤖</div><div>AI</div></div>
+        <div class="nav-item"><div>👤</div><div>Profilo</div></div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================ -->
+  <!-- OPZIONE 3: DESATURATO ELEGANTE                  -->
+  <!-- ================================================ -->
+  <div class="col opt3">
+    <div class="option-label">3. Desaturato elegante (navy/oliva/bordeaux/petrolio)</div>
+    <div class="phone">
+      <div class="header">
+        <div class="header-icon">🛡️</div>
+        <div>
+          <div class="header-title">IL MIO PATRONATO</div>
+          <div class="header-sub">Assistenza Immigrazione</div>
+        </div>
+        <div class="header-search">🔍</div>
+      </div>
+
+      <div class="banner-diritti">
+        <div class="icon">⭐</div>
+        <div style="flex:1">
+          <div class="t1">VEDI I TUOI DIRITTI</div>
+          <div class="t2">Clicca per vedere i bonus a cui hai diritto</div>
+        </div>
+        <div style="opacity:0.7">›</div>
+      </div>
+
+      <div class="ultime48">
+        <div class="icon">📋</div>
+        <div style="flex:1">
+          <div class="badge-new">⚡ ULTIME 48H</div>
+          <div class="title">Provvedimento su modalità...</div>
+          <div class="desc">22 ore fa · Agenzia delle Entrate</div>
+        </div>
+        <div>→</div>
+      </div>
+
+      <div class="servizi-title">I Tuoi Servizi</div>
+      <div class="servizi-sub">Tutto quello che ti serve, in un posto</div>
+
+      <div class="grid">
+        <div class="card3 bg-bordeaux">
+          <div class="hot">HOT</div>
+          <div class="icon">🎁</div>
+          <div class="card-title">Agevolazioni</div>
+          <div class="card-sub">54 bonus disponibili</div>
+          <div class="bottom">Scopri →</div>
+        </div>
+        <div class="card3 bg-navy">
+          <div class="count">14</div>
+          <div class="icon">🧮</div>
+          <div class="card-title">Calcolatori</div>
+          <div class="card-sub">Simula & calcola tutto</div>
+          <div class="bottom">Scopri →</div>
+        </div>
+        <div class="card3 bg-olive">
+          <div class="count">6</div>
+          <div class="icon">🔧</div>
+          <div class="card-title">Strumenti</div>
+          <div class="card-sub">Tools professionali</div>
+          <div class="bottom">Apri →</div>
+        </div>
+        <div class="card3 bg-petrol">
+          <div class="count">AI</div>
+          <div class="icon">💬</div>
+          <div class="card-title">Chiedi AI</div>
+          <div class="card-sub">Qualsiasi domanda</div>
+          <div class="bottom">Chatta →</div>
+        </div>
+      </div>
+
+      <div class="nav">
+        <div class="nav-item active"><div>🏠</div><div>Home</div></div>
+        <div class="nav-item"><div>🎁</div><div>Bonus</div></div>
+        <div class="nav-item"><div>🤖</div><div>AI</div></div>
+        <div class="nav-item"><div>👤</div><div>Profilo</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center; margin-top: 40px; color: #666; font-size: 13px;">
+  <strong>La mia raccomandazione:</strong> Opzione 1 (Minimale pulito) — professionale, moderna, adatta a un'app seria di patronato.
+  <br>Opzione 2 se vuoi look premium/fintech. Opzione 3 se vuoi mantenere colori senza effetto "cartoon".
+</div>
+
+</body>
+</html>

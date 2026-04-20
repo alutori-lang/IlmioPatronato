@@ -34,8 +34,11 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
 
   Future<void> _loadAiAgevolazioni() async {
     try {
-      final result = await _aiService.getAgevolazioni();
+      // Ultime 48h (refresh ogni 48h, fallback su ultime caricate)
+      final result = await _aiService.getNovita48h();
       if (mounted) setState(() { _aiNuove = result; _aiLoading = false; });
+      // In background: aggiorna anche lista completa per filtri/categorie
+      _aiService.getAgevolazioni();
     } catch (_) {
       if (mounted) setState(() => _aiLoading = false);
     }
@@ -146,9 +149,6 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final delGiorno = agevolazioneDelGiorno();
-    final nuove = novita();
-
     return Scaffold(
       backgroundColor: AppColors.background,
       bottomNavigationBar: const BannerAdWidget(),
@@ -162,67 +162,14 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
           // ── SEARCH BAR ──
           SliverToBoxAdapter(child: _buildSearchBar()),
 
-          // ── NUOVE QUESTA SETTIMANA (AI) ──
+          // ── ULTIME 48H (AI) ──
           if (_mostraNovita)
             SliverToBoxAdapter(child: _buildAiNuoveSection()),
-
-          // ── AGEVOLAZIONE DEL GIORNO ──
-          if (_mostraNovita)
-            SliverToBoxAdapter(child: _buildDelGiorno(delGiorno)),
 
           // ── CATEGORIE ──
           SliverToBoxAdapter(child: _buildCategorie()),
 
-          // ── NOVITÀ BADGE ──
-          if (_mostraNovita && nuove.isNotEmpty) ...[
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: Colors.red.shade600,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.fiber_new, color: Colors.white, size: 16),
-                          SizedBox(width: 4),
-                          Text('NOVITÀ 2025', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w800)),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Flexible(child: Text('${nuove.length} nuove agevolazioni', style: TextStyle(fontSize: 12, color: AppColors.textMedium), overflow: TextOverflow.ellipsis)),
-                  ],
-                ),
-              ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    final a = nuove[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: _AgevolazioneCard(
-                        agevolazione: a,
-                        icon: _getAgevolazioneIcon(a.iconName),
-                        color: _getCategoriaColor(a.categoria),
-                        isNew: true,
-                        onTap: () => _openDetail(a),
-                      ),
-                    );
-                  },
-                  childCount: nuove.length,
-                ),
-              ),
-            ),
-          ],
+          // Sezione NOVITÀ statica rimossa: sostituita da ULTIME 48H dinamica sopra
 
           // ── RISULTATI / TUTTE ──
           SliverToBoxAdapter(
@@ -261,11 +208,7 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
                   sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
-                        // skip novità se già mostrate sopra
                         final a = _risultati[index];
-                        if (_mostraNovita && a.isNuovo && _searchController.text.isEmpty && _selectedCategoria.isEmpty) {
-                          return const SizedBox.shrink();
-                        }
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 10),
                           child: _AgevolazioneCard(
@@ -311,13 +254,13 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(color: const Color(0xFFE65100), borderRadius: BorderRadius.circular(8)),
               child: const Row(mainAxisSize: MainAxisSize.min, children: [
-                Icon(Icons.auto_awesome, color: Colors.white, size: 14),
+                Icon(Icons.bolt, color: Colors.white, size: 14),
                 SizedBox(width: 4),
-                Text('QUESTA SETTIMANA', style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w800)),
+                Text('ULTIME 48H', style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w800)),
               ]),
             ),
             const SizedBox(width: 8),
-            if (!_aiLoading) Flexible(child: Text('${_aiNuove.length} agevolazioni reali', style: const TextStyle(fontSize: 12, color: AppColors.textMedium), overflow: TextOverflow.ellipsis)),
+            if (!_aiLoading) Flexible(child: Text('${_aiNuove.length} novità', style: const TextStyle(fontSize: 12, color: AppColors.textMedium), overflow: TextOverflow.ellipsis)),
           ]),
         ),
         if (_aiLoading)
@@ -326,7 +269,7 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
             child: Center(child: Row(mainAxisSize: MainAxisSize.min, children: [
               SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFFE65100))),
               SizedBox(width: 10),
-              Text('Cerco agevolazioni reali...', style: TextStyle(fontSize: 12, color: AppColors.textLight)),
+              Text('Cerco novità ultime 48h...', style: TextStyle(fontSize: 12, color: AppColors.textLight)),
             ])),
           )
         else if (_aiNuove.isEmpty)
@@ -338,7 +281,7 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
               child: const Row(children: [
                 Icon(Icons.info_outline, color: Color(0xFFE65100), size: 18),
                 SizedBox(width: 8),
-                Flexible(child: Text('Nessuna nuova agevolazione trovata questa settimana', style: TextStyle(fontSize: 12, color: AppColors.textMedium))),
+                Flexible(child: Text('Nessuna novità nelle ultime 48h', style: TextStyle(fontSize: 12, color: AppColors.textMedium))),
               ]),
             ),
           )
@@ -350,47 +293,99 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
                 builder: (_) => AgevolazioneAiDetailScreen(agevolazione: a),
               )),
               child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-              child: Container(
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(14),
-                  boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 12, offset: const Offset(0, 2))],
-                  border: Border.all(color: const Color(0xFFE65100).withValues(alpha: 0.2)),
-                ),
-                child: Row(children: [
-                  Container(
-                    width: 40, height: 40,
-                    decoration: BoxDecoration(color: const Color(0xFFE65100).withValues(alpha: 0.08), borderRadius: BorderRadius.circular(10)),
-                    child: Center(child: Text(a.categoriaIcon, style: const TextStyle(fontSize: 20))),
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFFF6D00), Color(0xFFFF9800)],
+                      begin: Alignment.topLeft, end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(18),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFFFF6D00).withValues(alpha: 0.35),
+                        blurRadius: 18, offset: const Offset(0, 6),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(child: Column(
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(a.titolo, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.textDark), maxLines: 1, overflow: TextOverflow.ellipsis),
-                      const SizedBox(height: 2),
-                      Text(a.descrizione, style: const TextStyle(fontSize: 11, color: AppColors.textLight), maxLines: 2, overflow: TextOverflow.ellipsis),
-                      const SizedBox(height: 4),
-                      Row(children: [
-                        if (a.importo.isNotEmpty) ...[
-                          Flexible(child: Text(a.importo, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Colors.green.shade700), overflow: TextOverflow.ellipsis)),
-                          const SizedBox(width: 8),
-                        ],
-                        Icon(Icons.access_time, size: 11, color: Colors.grey.shade500),
-                        const SizedBox(width: 3),
-                        Text(a.tempoRelativo, style: TextStyle(fontSize: 10, color: Colors.grey.shade500)),
-                        if (a.fonte.isNotEmpty) ...[
-                          const SizedBox(width: 8),
-                          Flexible(child: Text(a.fonte, style: TextStyle(fontSize: 10, color: Colors.grey.shade400), overflow: TextOverflow.ellipsis)),
-                        ],
-                      ]),
+                      Container(
+                        width: 46, height: 46,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.22),
+                          borderRadius: BorderRadius.circular(13),
+                        ),
+                        child: Center(child: Text(a.categoriaIcon, style: const TextStyle(fontSize: 22))),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: const Row(mainAxisSize: MainAxisSize.min, children: [
+                                  Icon(Icons.bolt, size: 10, color: Color(0xFFFF6D00)),
+                                  SizedBox(width: 2),
+                                  Text('NUOVO', style: TextStyle(color: Color(0xFFFF6D00), fontSize: 8, fontWeight: FontWeight.w900, letterSpacing: 0.5)),
+                                ]),
+                              ),
+                              const SizedBox(width: 6),
+                              Icon(Icons.access_time, size: 11, color: Colors.white.withValues(alpha: 0.85)),
+                              const SizedBox(width: 3),
+                              Flexible(
+                                child: Text(
+                                  a.tempoRelativo,
+                                  style: TextStyle(fontSize: 10, color: Colors.white.withValues(alpha: 0.85), fontWeight: FontWeight.w600),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ]),
+                            const SizedBox(height: 6),
+                            Text(
+                              a.titolo,
+                              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: Colors.white, height: 1.2),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              a.descrizione,
+                              style: TextStyle(fontSize: 11, color: Colors.white.withValues(alpha: 0.92), height: 1.3),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            if (a.importo.isNotEmpty) ...[
+                              const SizedBox(height: 6),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: 0.22),
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Text(
+                                  a.importo,
+                                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: Colors.white),
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      Icon(Icons.arrow_forward_ios, color: Colors.white.withValues(alpha: 0.85), size: 14),
                     ],
-                  )),
-                ]),
+                  ),
+                ),
               ),
-            ),
             );
           }),
       ],
