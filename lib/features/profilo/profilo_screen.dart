@@ -4,6 +4,7 @@ import '../../config/constants.dart';
 import '../../core/services/language_service.dart';
 import 'info_app_screen.dart';
 import 'scanner_doc_screen.dart';
+import 'translator_screen.dart';
 
 class ProfiloScreen extends StatelessWidget {
   const ProfiloScreen({super.key});
@@ -113,7 +114,7 @@ class ProfiloScreen extends StatelessWidget {
   Widget _buildTools(BuildContext context) {
     final tools = [
       _ToolData(Icons.document_scanner, 'Scanner DOC', AppColors.iconBlue, false),
-      _ToolData(Icons.translate, 'Traduttore', AppColors.iconGreen, true),
+      _ToolData(Icons.translate, 'Traduttore', AppColors.iconGreen, false),
       _ToolData(Icons.track_changes, 'Tracker Pratica', AppColors.iconOrange, true),
       _ToolData(Icons.calculate, 'Simulatore ISEE', AppColors.iconPurple, false),
       _ToolData(Icons.sos, 'SOS Legale', const Color(0xFFE91E63), false),
@@ -134,6 +135,10 @@ class ProfiloScreen extends StatelessWidget {
             onTap: () {
               if (t.label == 'Scanner DOC') {
                 Navigator.push(context, MaterialPageRoute(builder: (_) => const ScannerDocScreen()));
+                return;
+              }
+              if (t.label == 'Traduttore') {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => const TranslatorScreen()));
                 return;
               }
               ScaffoldMessenger.of(context).showSnackBar(
