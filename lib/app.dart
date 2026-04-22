@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'core/theme/app_theme.dart';
 import 'core/services/language_service.dart';
 import 'core/services/profilo_utente_service.dart';
+import 'core/services/scanner_service.dart';
 import 'features/home/home_screen.dart';
 import 'features/agevolazioni/agevolazioni_screen.dart';
 import 'features/sbroglia/sbroglia_chat_screen.dart';
@@ -20,6 +21,7 @@ class MioPatronatoApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => LanguageService()),
         ChangeNotifierProvider(create: (_) => ProfiloUtenteService()..load()),
+        ChangeNotifierProvider(create: (_) => ScannerService()..load()),
       ],
       child: MaterialApp(
         title: 'Il Mio Patronato',

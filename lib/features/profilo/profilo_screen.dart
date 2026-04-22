@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../config/constants.dart';
 import '../../core/services/language_service.dart';
 import 'info_app_screen.dart';
+import 'scanner_doc_screen.dart';
 
 class ProfiloScreen extends StatelessWidget {
   const ProfiloScreen({super.key});
@@ -111,7 +112,7 @@ class ProfiloScreen extends StatelessWidget {
 
   Widget _buildTools(BuildContext context) {
     final tools = [
-      _ToolData(Icons.document_scanner, 'Scanner DOC', AppColors.iconBlue, true),
+      _ToolData(Icons.document_scanner, 'Scanner DOC', AppColors.iconBlue, false),
       _ToolData(Icons.translate, 'Traduttore', AppColors.iconGreen, true),
       _ToolData(Icons.track_changes, 'Tracker Pratica', AppColors.iconOrange, true),
       _ToolData(Icons.calculate, 'Simulatore ISEE', AppColors.iconPurple, false),
@@ -130,9 +131,15 @@ class ProfiloScreen extends StatelessWidget {
         itemBuilder: (_, i) {
           final t = tools[i];
           return GestureDetector(
-            onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(t.isPro ? 'Funzione PRO - Coming Soon!' : 'Coming Soon!'), backgroundColor: t.color),
-            ),
+            onTap: () {
+              if (t.label == 'Scanner DOC') {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => const ScannerDocScreen()));
+                return;
+              }
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(t.isPro ? 'Funzione PRO - Coming Soon!' : 'Coming Soon!'), backgroundColor: t.color),
+              );
+            },
             child: Container(
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14),
                 boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 10)]),
