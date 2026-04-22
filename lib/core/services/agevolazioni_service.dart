@@ -19,10 +19,10 @@ class AgevolazioniService {
   static const _cacheTimeKey = 'agevolazioni_cache_time';
   static const _cacheDuration = Duration(hours: 24);
 
-  // Cache novità 48h (refresh ogni 48h)
-  static const _novitaKey = 'agevolazioni_novita_48h';
-  static const _novitaTimeKey = 'agevolazioni_novita_48h_time';
-  static const _novitaDuration = Duration(hours: 48);
+  // Cache novità ultima settimana (refresh ogni 24h)
+  static const _novitaKey = 'agevolazioni_novita_7d';
+  static const _novitaTimeKey = 'agevolazioni_novita_7d_time';
+  static const _novitaDuration = Duration(hours: 24);
 
   List<Agevolazione> _cached = [];
   List<Agevolazione> _cachedNovita = [];
@@ -159,7 +159,7 @@ class AgevolazioniService {
       messages: [
         {
           'role': 'user',
-          'content': 'Cerca su Google SOLO le agevolazioni, bonus, decreti, circolari e incentivi italiani '
+          'content': 'Cerca su Google le agevolazioni, bonus, decreti, circolari e incentivi italiani '
               'PUBBLICATI o ATTIVATI negli ULTIMI 2 GIORNI (dal $dueGgStr al $oggiStr).\n\n'
               'Fonti prioritarie: inps.it (news), agenziaentrate.gov.it (circolari), mimit.gov.it, invitalia.it, gazzettaufficiale.it, governo.it.\n\n'
               'Categorie da coprire TUTTE:\n'
@@ -168,7 +168,7 @@ class AgevolazioniService {
               '- commercianti, artigiani\n'
               '- agricoltori\n'
               '- famiglie, disabili, giovani, casa, immigrati, pensionati, studenti\n\n'
-              'REGOLE FERREE:\n'
+              'REGOLE:\n'
               '1. SOLO misure pubblicate/aggiornate negli ULTIMI 2 GIORNI\n'
               '2. Se NON ci sono novità in 48h restituisci array vuoto: []\n'
               '3. NON inventare, NON includere vecchie agevolazioni\n'
@@ -185,18 +185,74 @@ class AgevolazioniService {
       final parsed = _parseJsonArray(res.text);
       final nuove = parsed.map((e) => Agevolazione.fromJson(e)).toList();
 
-      // Accetta solo items con data negli ultimi 48h
       final filtered = nuove.where((a) => _isRecentQueDaysUltimate(a.data, 2)).toList();
 
       if (filtered.isNotEmpty) {
-        // Ci sono nuove novità → sovrascrive
         _cachedNovita = filtered;
         await prefs.setString(_novitaKey, jsonEncode(_cachedNovita.map((a) => a.toJson()).toList()));
+        await prefs.setInt(_novitaTimeKey, DateTime.now().millisecondsSinceEpoch);
       }
-      // Se filtered è vuoto → tiene quelle in cache (fallback)
-      // Aggiorna comunque il timestamp per non riprovare subito
-      await prefs.setInt(_novitaTimeKey, DateTime.now().millisecondsSinceEpoch);
     }
+  }
+
+  // Fallback hardcoded: bonus sempre attivi, usati come ULTIMA risorsa
+  // se Gemini non risponde o non ci sono né novità 48h né cache completa.
+  static final List<Agevolazione> _fallbackStatico = [
+    Agevolazione(
+      titolo: 'Assegno Unico Universale',
+      descrizione: 'Sostegno economico mensile per famiglie con figli a carico fino a 21 anni.',
+      importo: 'Fino a € 199,40/mese per figlio',
+      data: '31/12/2026',
+      fonte: 'INPS',
+      categoria: 'famiglia',
+    ),
+    Agevolazione(
+      titolo: 'Bonus Nido 2026',
+      descrizione: 'Contributo per rette asili nido pubblici e privati.',
+      importo: 'Fino a € 3.000/anno',
+      data: '31/12/2026',
+      fonte: 'INPS',
+      categoria: 'famiglia',
+    ),
+    Agevolazione(
+      titolo: 'Bonus Mamme Lavoratrici',
+      descrizione: 'Esonero contributivo per madri lavoratrici con 2 o più figli.',
+      importo: '100% contributi fino € 3.000/anno',
+      data: '31/12/2026',
+      fonte: 'INPS',
+      categoria: 'lavoro',
+    ),
+  ];
+
+  // Ritorna (items, isRecent48h). Fallback in 3 livelli:
+  // 1. Novità 48h da Gemini → isRecent=true
+  // 2. Ultima agevolazione dalla lista completa → isRecent=false
+  // 3. Bonus statico hardcoded (mai vuoto) → isRecent=false
+  Future<({List<Agevolazione> items, bool isRecent})> getNovitaOrLatest() async {
+    try {
+      final novita = await getNovita48h();
+      if (novita.isNotEmpty) {
+        return (items: novita, isRecent: true);
+      }
+    } catch (_) {}
+
+    try {
+      final tutte = await getAgevolazioni();
+      if (tutte.isNotEmpty) {
+        final sorted = List<Agevolazione>.from(tutte)
+          ..sort((a, b) {
+            final da = _parseDate(a.data);
+            final db = _parseDate(b.data);
+            if (da == null && db == null) return 0;
+            if (da == null) return 1;
+            if (db == null) return -1;
+            return db.compareTo(da);
+          });
+        return (items: [sorted.first], isRecent: false);
+      }
+    } catch (_) {}
+
+    return (items: [_fallbackStatico.first], isRecent: false);
   }
 
   // ─────────────────────────────────────────────────────────────────────────

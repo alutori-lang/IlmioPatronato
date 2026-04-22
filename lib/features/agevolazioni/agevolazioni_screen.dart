@@ -24,6 +24,7 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
   final _aiService = ai.AgevolazioniService();
   List<ai.Agevolazione> _aiNuove = [];
   bool _aiLoading = true;
+  bool _aiIsRecent = true;
 
   @override
   void initState() {
@@ -34,10 +35,12 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
 
   Future<void> _loadAiAgevolazioni() async {
     try {
-      // Ultime 48h (refresh ogni 48h, fallback su ultime caricate)
-      final result = await _aiService.getNovita48h();
-      if (mounted) setState(() { _aiNuove = result; _aiLoading = false; });
-      // In background: aggiorna anche lista completa per filtri/categorie
+      final result = await _aiService.getNovitaOrLatest();
+      if (mounted) setState(() {
+        _aiNuove = result.items;
+        _aiIsRecent = result.isRecent;
+        _aiLoading = false;
+      });
       _aiService.getAgevolazioni();
     } catch (_) {
       if (mounted) setState(() => _aiLoading = false);
@@ -244,151 +247,109 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
   }
 
   Widget _buildAiNuoveSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 14, 20, 8),
-          child: Row(children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(color: const Color(0xFFE65100), borderRadius: BorderRadius.circular(8)),
-              child: const Row(mainAxisSize: MainAxisSize.min, children: [
-                Icon(Icons.bolt, color: Colors.white, size: 14),
-                SizedBox(width: 4),
-                Text('ULTIME 48H', style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w800)),
-              ]),
-            ),
-            const SizedBox(width: 8),
-            if (!_aiLoading) Flexible(child: Text('${_aiNuove.length} novità', style: const TextStyle(fontSize: 12, color: AppColors.textMedium), overflow: TextOverflow.ellipsis)),
+    final label = _aiIsRecent ? 'ULTIME 48H · INFO LIVE' : 'ULTIMO BONUS ATTIVO';
+
+    if (_aiLoading) {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(16, 14, 16, 4),
+        child: Container(
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: const Color(0xFFE4E8EF)),
+            borderRadius: BorderRadius.circular(14),
+          ),
+          child: const Row(children: [
+            SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFF1E4A8A))),
+            SizedBox(width: 12),
+            Expanded(child: Text('Cerco ultime novità...', style: TextStyle(color: Color(0xFF475569), fontSize: 13, fontWeight: FontWeight.w500))),
           ]),
         ),
-        if (_aiLoading)
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: Center(child: Row(mainAxisSize: MainAxisSize.min, children: [
-              SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFFE65100))),
-              SizedBox(width: 10),
-              Text('Cerco novità ultime 48h...', style: TextStyle(fontSize: 12, color: AppColors.textLight)),
-            ])),
-          )
-        else if (_aiNuove.isEmpty)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(color: Colors.orange.shade50, borderRadius: BorderRadius.circular(12)),
-              child: const Row(children: [
-                Icon(Icons.info_outline, color: Color(0xFFE65100), size: 18),
-                SizedBox(width: 8),
-                Flexible(child: Text('Nessuna novità nelle ultime 48h', style: TextStyle(fontSize: 12, color: AppColors.textMedium))),
-              ]),
-            ),
-          )
-        else
-          ...List.generate(_aiNuove.length, (i) {
-            final a = _aiNuove[i];
-            return GestureDetector(
+      );
+    }
+
+    if (_aiNuove.isEmpty) return const SizedBox.shrink();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: List.generate(_aiNuove.length, (i) {
+        final a = _aiNuove[i];
+        return Padding(
+          padding: EdgeInsets.fromLTRB(16, i == 0 ? 14 : 0, 16, 10),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
               onTap: () => Navigator.push(context, MaterialPageRoute(
                 builder: (_) => AgevolazioneAiDetailScreen(agevolazione: a),
               )),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+              borderRadius: BorderRadius.circular(14),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(14),
                 child: Container(
-                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFFFF6D00), Color(0xFFFF9800)],
-                      begin: Alignment.topLeft, end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(18),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFFFF6D00).withValues(alpha: 0.35),
-                        blurRadius: 18, offset: const Offset(0, 6),
-                      ),
-                    ],
+                    color: Colors.white,
+                    border: Border.all(color: const Color(0xFFE4E8EF)),
+                    borderRadius: BorderRadius.circular(14),
+                    boxShadow: [BoxShadow(color: const Color(0xFF0D2A4A).withValues(alpha: 0.04), blurRadius: 3, offset: const Offset(0, 1))],
                   ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Stack(
                     children: [
-                      Container(
-                        width: 46, height: 46,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.22),
-                          borderRadius: BorderRadius.circular(13),
-                        ),
-                        child: Center(child: Text(a.categoriaIcon, style: const TextStyle(fontSize: 22))),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
+                      Positioned(left: 0, top: 0, bottom: 0, width: 3, child: Container(color: const Color(0xFF1E4A8A))),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(17, 13, 14, 12),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             Row(children: [
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: const Row(mainAxisSize: MainAxisSize.min, children: [
-                                  Icon(Icons.bolt, size: 10, color: Color(0xFFFF6D00)),
-                                  SizedBox(width: 2),
-                                  Text('NUOVO', style: TextStyle(color: Color(0xFFFF6D00), fontSize: 8, fontWeight: FontWeight.w900, letterSpacing: 0.5)),
-                                ]),
-                              ),
-                              const SizedBox(width: 6),
-                              Icon(Icons.access_time, size: 11, color: Colors.white.withValues(alpha: 0.85)),
-                              const SizedBox(width: 3),
-                              Flexible(
-                                child: Text(
-                                  a.tempoRelativo,
-                                  style: TextStyle(fontSize: 10, color: Colors.white.withValues(alpha: 0.85), fontWeight: FontWeight.w600),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
+                              _LivePulseBadge(animated: _aiIsRecent),
+                              const SizedBox(width: 7),
+                              Text(label, style: const TextStyle(color: Color(0xFF1E4A8A), fontSize: 10, fontWeight: FontWeight.w700, letterSpacing: 0.6)),
                             ]),
-                            const SizedBox(height: 6),
-                            Text(
-                              a.titolo,
-                              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: Colors.white, height: 1.2),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                            const SizedBox(height: 9),
+                            Text(a.titolo, style: const TextStyle(color: Color(0xFF0D2A4A), fontSize: 15, fontWeight: FontWeight.w700, height: 1.25), maxLines: 2, overflow: TextOverflow.ellipsis),
                             const SizedBox(height: 4),
-                            Text(
-                              a.descrizione,
-                              style: TextStyle(fontSize: 11, color: Colors.white.withValues(alpha: 0.92), height: 1.3),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                            Text(a.descrizione, style: const TextStyle(color: Color(0xFF475569), fontSize: 12, height: 1.35), maxLines: 2, overflow: TextOverflow.ellipsis),
                             if (a.importo.isNotEmpty) ...[
-                              const SizedBox(height: 6),
+                              const SizedBox(height: 7),
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withValues(alpha: 0.22),
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                child: Text(
-                                  a.importo,
-                                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: Colors.white),
-                                ),
+                                decoration: BoxDecoration(color: const Color(0xFFEEF3FB), borderRadius: BorderRadius.circular(6)),
+                                child: Text(a.importo, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Color(0xFF1E4A8A))),
                               ),
                             ],
+                            const SizedBox(height: 10),
+                            Container(height: 1, color: const Color(0xFFF1F3F7)),
+                            const SizedBox(height: 9),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    a.fonte.isNotEmpty ? 'Fonte: ${a.fonte}' : 'Fonte ufficiale',
+                                    style: const TextStyle(color: Color(0xFF64748B), fontSize: 11, fontWeight: FontWeight.w500),
+                                    maxLines: 1, overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                const Row(mainAxisSize: MainAxisSize.min, children: [
+                                  Text('Leggi', style: TextStyle(color: Color(0xFF1E4A8A), fontSize: 12, fontWeight: FontWeight.w600)),
+                                  SizedBox(width: 3),
+                                  Icon(Icons.arrow_forward, color: Color(0xFF1E4A8A), size: 14),
+                                ]),
+                              ],
+                            ),
                           ],
                         ),
                       ),
-                      const SizedBox(width: 6),
-                      Icon(Icons.arrow_forward_ios, color: Colors.white.withValues(alpha: 0.85), size: 14),
                     ],
                   ),
                 ),
               ),
-            );
-          }),
-      ],
+            ),
+          ),
+        );
+      }),
     );
   }
 
@@ -731,6 +692,61 @@ class _AgevolazioneCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+// ─── LIVE PULSE BADGE ──────────────────────────────────────────────────────
+class _LivePulseBadge extends StatefulWidget {
+  final bool animated;
+  const _LivePulseBadge({required this.animated});
+
+  @override
+  State<_LivePulseBadge> createState() => _LivePulseBadgeState();
+}
+
+class _LivePulseBadgeState extends State<_LivePulseBadge> with SingleTickerProviderStateMixin {
+  late AnimationController _ctrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 1800));
+    if (widget.animated) _ctrl.repeat();
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final dotColor = widget.animated ? const Color(0xFF10B981) : const Color(0xFF94A3B8);
+    return SizedBox(
+      width: 14, height: 14,
+      child: Stack(alignment: Alignment.center, children: [
+        if (widget.animated)
+          AnimatedBuilder(
+            animation: _ctrl,
+            builder: (_, __) {
+              final t = _ctrl.value;
+              return Container(
+                width: 7 + t * 9,
+                height: 7 + t * 9,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: dotColor.withValues(alpha: 0.35 * (1 - t)),
+                ),
+              );
+            },
+          ),
+        Container(
+          width: 7, height: 7,
+          decoration: BoxDecoration(shape: BoxShape.circle, color: dotColor),
+        ),
+      ]),
     );
   }
 }

@@ -6,7 +6,6 @@ import '../../core/services/agevolazioni_service.dart';
 import '../../core/services/profilo_utente_service.dart';
 import '../simulatore/simulatore_screen.dart';
 import '../compilatore/compilatore_screen.dart';
-import '../ai_avvocato/ai_chat_screen.dart';
 import '../strumenti/strumenti_screen.dart';
 import '../ilmiocaso/compila_profilo_screen.dart';
 import '../ilmiocaso/risultati_diritti_screen.dart';
@@ -33,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final _agevolazioniService = AgevolazioniService();
   List<Agevolazione> _nuoveAgevolazioni = [];
   bool _loading = true;
+  bool _isRecent48h = true;
 
   @override
   void initState() {
@@ -42,10 +42,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _loadAgevolazioni() async {
     try {
-      // Novità ultime 48h per il banner "del giorno"
-      final result = await _agevolazioniService.getNovita48h();
-      if (mounted) setState(() { _nuoveAgevolazioni = result; _loading = false; });
-      // In background: aggiorna lista completa per i contatori
+      final result = await _agevolazioniService.getNovitaOrLatest();
+      if (mounted) setState(() {
+        _nuoveAgevolazioni = result.items;
+        _isRecent48h = result.isRecent;
+        _loading = false;
+      });
       _agevolazioniService.getAgevolazioni();
     } catch (_) {
       if (mounted) setState(() => _loading = false);
@@ -234,88 +236,100 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // ─── ULTIME 48H — NOVITÀ DINAMICA (Gemini + Google Search) ───────────────
+  // ─── ULTIMO BONUS — LIVE PULSE (news-style professionale) ────────────────
   Widget _buildAgevolazioneDelGiorno(BuildContext context) {
-    // Loading
     if (_loading) {
       return Container(
         margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFFE65100), Color(0xFFFF8F00)],
-            begin: Alignment.topLeft, end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [BoxShadow(color: const Color(0xFFE65100).withValues(alpha: 0.25), blurRadius: 16, offset: const Offset(0, 4))],
+          color: Colors.white,
+          border: Border.all(color: const Color(0xFFE4E8EF)),
+          borderRadius: BorderRadius.circular(14),
+          boxShadow: [BoxShadow(color: const Color(0xFF0D2A4A).withValues(alpha: 0.04), blurRadius: 3, offset: const Offset(0, 1))],
         ),
-        child: const Row(
+        child: Row(
           children: [
-            SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2.5, color: Colors.white)),
-            SizedBox(width: 14),
-            Expanded(child: Text('Cerco novità ultime 48h...', style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600))),
+            Container(width: 3, height: 36, decoration: BoxDecoration(gradient: const LinearGradient(colors: [Color(0xFF1E4A8A), Color(0xFF3B82F6)], begin: Alignment.topCenter, end: Alignment.bottomCenter), borderRadius: BorderRadius.circular(2))),
+            const SizedBox(width: 12),
+            const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFF1E4A8A))),
+            const SizedBox(width: 12),
+            const Expanded(child: Text('Cerco ultime novità...', style: TextStyle(color: Color(0xFF475569), fontSize: 13, fontWeight: FontWeight.w500))),
           ],
         ),
       );
     }
 
-    // Nessuna novità 48h → hide
     if (_nuoveAgevolazioni.isEmpty) {
       return const SizedBox.shrink();
     }
 
     final a = _nuoveAgevolazioni.first;
-    return GestureDetector(
-      onTap: widget.onNavigateToAgevolazioni,
-      child: Container(
-        margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFFE65100), Color(0xFFFF8F00)],
-            begin: Alignment.topLeft, end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [BoxShadow(color: const Color(0xFFE65100).withValues(alpha: 0.25), blurRadius: 16, offset: const Offset(0, 4))],
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 46, height: 46,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: widget.onNavigateToAgevolazioni,
+          borderRadius: BorderRadius.circular(14),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(14),
+            child: Container(
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(12),
+                color: Colors.white,
+                border: Border.all(color: const Color(0xFFE4E8EF)),
+                borderRadius: BorderRadius.circular(14),
+                boxShadow: [BoxShadow(color: const Color(0xFF0D2A4A).withValues(alpha: 0.04), blurRadius: 3, offset: const Offset(0, 1))],
               ),
-              child: Center(child: Text(a.categoriaIcon, style: const TextStyle(fontSize: 22))),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Stack(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(4)),
-                    child: const Row(mainAxisSize: MainAxisSize.min, children: [
-                      Icon(Icons.bolt, size: 10, color: Color(0xFFE65100)),
-                      SizedBox(width: 2),
-                      Text('ULTIME 48H', style: TextStyle(color: Color(0xFFE65100), fontSize: 8, fontWeight: FontWeight.w800)),
-                    ]),
+                  Positioned(left: 0, top: 0, bottom: 0, width: 3, child: Container(color: const Color(0xFF1E4A8A))),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(17, 13, 14, 12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(children: [
+                          _LivePulseDot(animated: _isRecent48h),
+                          const SizedBox(width: 7),
+                          Text(
+                            _isRecent48h ? 'ULTIME 48H · INFO LIVE' : 'ULTIMO BONUS ATTIVO',
+                            style: const TextStyle(color: Color(0xFF1E4A8A), fontSize: 10, fontWeight: FontWeight.w700, letterSpacing: 0.6),
+                          ),
+                        ]),
+                        const SizedBox(height: 9),
+                        Text(a.titolo, style: const TextStyle(color: Color(0xFF0D2A4A), fontSize: 15, fontWeight: FontWeight.w700, height: 1.25), maxLines: 2, overflow: TextOverflow.ellipsis),
+                        const SizedBox(height: 3),
+                        Text(a.importo.isNotEmpty ? a.importo : a.tempoRelativo, style: const TextStyle(color: Color(0xFF475569), fontSize: 12, fontWeight: FontWeight.w500)),
+                        const SizedBox(height: 10),
+                        Container(height: 1, color: const Color(0xFFF1F3F7)),
+                        const SizedBox(height: 9),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                a.fonte.isNotEmpty ? 'Fonte: ${a.fonte}' : 'Fonte ufficiale',
+                                style: const TextStyle(color: Color(0xFF64748B), fontSize: 11, fontWeight: FontWeight.w500),
+                                maxLines: 1, overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            const Row(mainAxisSize: MainAxisSize.min, children: [
+                              Text('Leggi', style: TextStyle(color: Color(0xFF1E4A8A), fontSize: 12, fontWeight: FontWeight.w600)),
+                              SizedBox(width: 3),
+                              Icon(Icons.arrow_forward, color: Color(0xFF1E4A8A), size: 14),
+                            ]),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 4),
-                  Text(a.titolo, style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w700), maxLines: 1, overflow: TextOverflow.ellipsis),
-                  const SizedBox(height: 2),
-                  Text(a.importo.isNotEmpty ? a.importo : a.tempoRelativo, style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w600)),
                 ],
               ),
             ),
-            const SizedBox(width: 8),
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(10)),
-              child: const Icon(Icons.arrow_forward, color: Colors.white, size: 16),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -422,7 +436,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     'Bonus & Diritti',
                     'Lavoro & Contratti',
                   ],
-                  onTap: () => _push(const AiChatScreen()),
+                  onTap: widget.onNavigateToSbroglia,
                 ),
               ),
             ],
@@ -593,6 +607,75 @@ class _WowCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+// ─── LIVE PULSE DOT ────────────────────────────────────────────────────────
+// Pallino con ring espansivo: verde se animated (novità live 48h), grigio
+// statico altrimenti (fallback su ultimo bonus attivo).
+
+class _LivePulseDot extends StatefulWidget {
+  final bool animated;
+  const _LivePulseDot({required this.animated});
+
+  @override
+  State<_LivePulseDot> createState() => _LivePulseDotState();
+}
+
+class _LivePulseDotState extends State<_LivePulseDot> with SingleTickerProviderStateMixin {
+  late AnimationController _ctrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 1800));
+    if (widget.animated) _ctrl.repeat();
+  }
+
+  @override
+  void didUpdateWidget(covariant _LivePulseDot oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.animated && !_ctrl.isAnimating) {
+      _ctrl.repeat();
+    } else if (!widget.animated && _ctrl.isAnimating) {
+      _ctrl.stop();
+      _ctrl.reset();
+    }
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final dotColor = widget.animated ? const Color(0xFF10B981) : const Color(0xFF94A3B8);
+    return SizedBox(
+      width: 14, height: 14,
+      child: Stack(alignment: Alignment.center, children: [
+        if (widget.animated)
+          AnimatedBuilder(
+            animation: _ctrl,
+            builder: (_, __) {
+              final t = _ctrl.value;
+              return Container(
+                width: 7 + t * 9,
+                height: 7 + t * 9,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: dotColor.withValues(alpha: 0.35 * (1 - t)),
+                ),
+              );
+            },
+          ),
+        Container(
+          width: 7, height: 7,
+          decoration: BoxDecoration(shape: BoxShape.circle, color: dotColor),
+        ),
+      ]),
     );
   }
 }
