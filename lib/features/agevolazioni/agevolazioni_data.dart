@@ -108,7 +108,7 @@ final List<Agevolazione> allAgevolazioni = [
     importo: 'Fino a €1.550,42/mese (2025)',
     scadenza: 'Entro 68 giorni dalla cessazione del rapporto',
     ente: 'INPS',
-    linkUfficiale: 'https://www.inps.it/prestazioni-servizi/naspi',
+    linkUfficiale: 'https://www.inps.it/it/it/inps-comunica/dossier/la-naspi.html',
     iconName: 'work_off',
   ),
   Agevolazione(

@@ -328,49 +328,89 @@ class AgevolazioneDetailScreen extends StatelessWidget {
   Widget _buildLinkButton(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 0),
-      child: GestureDetector(
-        onTap: () async {
-          final url = Uri.parse(agevolazione.linkUfficiale);
-          try {
-            await launchUrl(url, mode: LaunchMode.externalApplication);
-          } catch (_) {
-            if (context.mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Impossibile aprire il link')),
-              );
-            }
-          }
-        },
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(colors: [color, color.withValues(alpha: 0.8)]),
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [BoxShadow(color: color.withValues(alpha: 0.35), blurRadius: 16, offset: const Offset(0, 6))],
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
+        children: [
+          GestureDetector(
+            onTap: () => _openOfficial(context),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [color, color.withValues(alpha: 0.8)]),
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [BoxShadow(color: color.withValues(alpha: 0.35), blurRadius: 16, offset: const Offset(0, 6))],
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.launch_rounded, color: Colors.white, size: 20),
-                  SizedBox(width: 10),
-                  Text('PRESENTA LA DOMANDA',
-                      style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w800, letterSpacing: 0.5)),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.launch_rounded, color: Colors.white, size: 20),
+                      SizedBox(width: 10),
+                      Text('PRESENTA LA DOMANDA',
+                          style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w800, letterSpacing: 0.5)),
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Sito ufficiale ${agevolazione.ente}',
+                    style: TextStyle(color: Colors.white.withValues(alpha: 0.85), fontSize: 11, fontWeight: FontWeight.w500),
+                  ),
                 ],
               ),
-              const SizedBox(height: 4),
-              Text(
-                'Sito ufficiale ${agevolazione.ente}',
-                style: TextStyle(color: Colors.white.withValues(alpha: 0.85), fontSize: 11, fontWeight: FontWeight.w500),
-              ),
-            ],
+            ),
           ),
-        ),
+          const SizedBox(height: 10),
+          GestureDetector(
+            onTap: () => _openGoogleSearch(context),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: color.withValues(alpha: 0.3), width: 1.5),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.search_rounded, color: color, size: 18),
+                  const SizedBox(width: 8),
+                  Text('Cerca su Google',
+                      style: TextStyle(color: color, fontSize: 13, fontWeight: FontWeight.w700)),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
+  }
+
+  Future<void> _openOfficial(BuildContext context) async {
+    final url = Uri.parse(agevolazione.linkUfficiale);
+    try {
+      final ok = await launchUrl(url, mode: LaunchMode.externalApplication);
+      if (!ok && context.mounted) _openGoogleSearch(context);
+    } catch (_) {
+      if (context.mounted) _openGoogleSearch(context);
+    }
+  }
+
+  Future<void> _openGoogleSearch(BuildContext context) async {
+    final query = Uri.encodeQueryComponent(
+        '${agevolazione.titolo} ${agevolazione.ente} domanda');
+    final url = Uri.parse('https://www.google.com/search?q=$query');
+    try {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } catch (_) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Impossibile aprire il browser')),
+        );
+      }
+    }
   }
 }
 
