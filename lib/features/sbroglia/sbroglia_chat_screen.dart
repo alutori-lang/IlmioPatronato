@@ -194,7 +194,14 @@ class _ChatMessage {
 // ─────────────────────────────────────────────
 
 class SbrogliaScreen extends StatefulWidget {
-  const SbrogliaScreen({super.key});
+  final UserCategory? initialCategory;
+  final String? initialQuestion;
+
+  const SbrogliaScreen({
+    super.key,
+    this.initialCategory,
+    this.initialQuestion,
+  });
 
   @override
   State<SbrogliaScreen> createState() => _SbrogliaScreenState();
@@ -202,6 +209,12 @@ class SbrogliaScreen extends StatefulWidget {
 
 class _SbrogliaScreenState extends State<SbrogliaScreen> {
   UserCategory? _selectedCategory;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedCategory = widget.initialCategory;
+  }
 
   void _selectCategory(UserCategory cat) {
     setState(() => _selectedCategory = cat);
@@ -219,6 +232,7 @@ class _SbrogliaScreenState extends State<SbrogliaScreen> {
     return _ChatScreen(
       category: _selectedCategory!,
       onBack: _resetCategory,
+      initialQuestion: widget.initialCategory != null ? widget.initialQuestion : null,
     );
   }
 }
@@ -506,7 +520,12 @@ class _CategoryCard extends StatelessWidget {
 class _ChatScreen extends StatefulWidget {
   final UserCategory category;
   final VoidCallback onBack;
-  const _ChatScreen({required this.category, required this.onBack});
+  final String? initialQuestion;
+  const _ChatScreen({
+    required this.category,
+    required this.onBack,
+    this.initialQuestion,
+  });
 
   @override
   State<_ChatScreen> createState() => _ChatScreenState();
@@ -530,6 +549,10 @@ class _ChatScreenState extends State<_ChatScreen> {
     super.initState();
     _initSpeech();
     _addWelcomeMessage();
+    final q = widget.initialQuestion?.trim();
+    if (q != null && q.isNotEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _sendMessage(q));
+    }
   }
 
   Future<void> _initSpeech() async {

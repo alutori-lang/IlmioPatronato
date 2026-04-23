@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../config/constants.dart';
+import '../sbroglia/sbroglia_chat_screen.dart';
 import 'agevolazioni_data.dart';
 import 'agevolazioni_screen.dart';
 
@@ -363,22 +364,26 @@ class AgevolazioneDetailScreen extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           GestureDetector(
-            onTap: () => _openGoogleSearch(context),
+            onTap: () => _askPatronatoAi(context),
             child: Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF6A1B9A), Color(0xFF9C27B0)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
                 borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: color.withValues(alpha: 0.3), width: 1.5),
+                boxShadow: [BoxShadow(color: const Color(0xFF6A1B9A).withValues(alpha: 0.3), blurRadius: 12, offset: const Offset(0, 4))],
               ),
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.search_rounded, color: color, size: 18),
-                  const SizedBox(width: 8),
-                  Text('Cerca su Google',
-                      style: TextStyle(color: color, fontSize: 13, fontWeight: FontWeight.w700)),
+                  Icon(Icons.auto_awesome, color: Colors.white, size: 18),
+                  SizedBox(width: 8),
+                  Text('CHIEDI AL PATRONATO AI',
+                      style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w800, letterSpacing: 0.4)),
                 ],
               ),
             ),
@@ -392,24 +397,44 @@ class AgevolazioneDetailScreen extends StatelessWidget {
     final url = Uri.parse(agevolazione.linkUfficiale);
     try {
       final ok = await launchUrl(url, mode: LaunchMode.externalApplication);
-      if (!ok && context.mounted) _openGoogleSearch(context);
+      if (!ok && context.mounted) _askPatronatoAi(context);
     } catch (_) {
-      if (context.mounted) _openGoogleSearch(context);
+      if (context.mounted) _askPatronatoAi(context);
     }
   }
 
-  Future<void> _openGoogleSearch(BuildContext context) async {
-    final query = Uri.encodeQueryComponent(
-        '${agevolazione.titolo} ${agevolazione.ente} domanda');
-    final url = Uri.parse('https://www.google.com/search?q=$query');
-    try {
-      await launchUrl(url, mode: LaunchMode.externalApplication);
-    } catch (_) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Impossibile aprire il browser')),
-        );
-      }
+  void _askPatronatoAi(BuildContext context) {
+    final question = 'Come posso ottenere il "${agevolazione.titolo}"? '
+        'Dimmi i requisiti, i documenti necessari, come fare domanda passo passo e il link ufficiale per presentarla.';
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => SbrogliaScreen(
+          initialCategory: _mapCategoriaToUser(agevolazione.categoria),
+          initialQuestion: question,
+        ),
+      ),
+    );
+  }
+
+  UserCategory _mapCategoriaToUser(String categoria) {
+    switch (categoria) {
+      case 'Casa & Affitto':
+        return UserCategory.casaBonus;
+      case 'Famiglia & Figli':
+      case 'Salute':
+      case 'Disabilità':
+      case 'Immigrazione':
+      case 'Pensione & Anziani':
+        return UserCategory.neogenitore;
+      case 'Studio & Formazione':
+      case 'Giovani':
+        return UserCategory.giovane;
+      case 'Lavoro':
+      case 'Fiscale':
+        return UserCategory.freelance;
+      default:
+        return UserCategory.neogenitore;
     }
   }
 }
