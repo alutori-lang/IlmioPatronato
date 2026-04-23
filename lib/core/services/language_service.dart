@@ -29,6 +29,8 @@ const supportedLanguages = [
   AppLanguage(code: 'fr', name: 'Français', nameEn: 'French', flag: '🇫🇷'),
   AppLanguage(code: 'hi', name: 'हिन्दी', nameEn: 'Hindi', flag: '🇮🇳'),
   AppLanguage(code: 'pa', name: 'ਪੰਜਾਬੀ', nameEn: 'Punjabi', flag: '🇮🇳'),
+  AppLanguage(code: 'es', name: 'Español', nameEn: 'Spanish', flag: '🇪🇸'),
+  AppLanguage(code: 'ru', name: 'Русский', nameEn: 'Russian', flag: '🇷🇺'),
 ];
 
 class LanguageService extends ChangeNotifier {

@@ -9,6 +9,7 @@ import '../compilatore/compilatore_screen.dart';
 import '../strumenti/strumenti_screen.dart';
 import '../ilmiocaso/compila_profilo_screen.dart';
 import '../ilmiocaso/risultati_diritti_screen.dart';
+import '../guide_documenti/guide_documenti_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final VoidCallback onNavigateToGuide;
@@ -64,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
       slivers: [
         SliverToBoxAdapter(child: _buildHeader(context)),
         SliverToBoxAdapter(child: _buildIlMioCasoBanner(context)),
+        SliverToBoxAdapter(child: _buildGuideDocumentiCard(context)),
         SliverToBoxAdapter(child: _buildAgevolazioneDelGiorno(context)),
         const SliverToBoxAdapter(child: SizedBox(height: 20)),
         SliverToBoxAdapter(child: _buildCardsSection(context)),
@@ -77,6 +79,62 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         const SliverToBoxAdapter(child: SizedBox(height: 20)),
       ],
+    );
+  }
+
+  // ─── GUIDA DOCUMENTI CARD ────────────────────────────────────────────────
+  Widget _buildGuideDocumentiCard(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
+      child: GestureDetector(
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const GuideDocumentiScreen()),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Color(0xFF00838F), Color(0xFF00ACC1)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [BoxShadow(color: const Color(0xFF00838F).withValues(alpha: 0.35), blurRadius: 20, offset: const Offset(0, 8))],
+          ),
+          child: Row(children: [
+            Container(
+              width: 54, height: 54,
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.22),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: const Center(child: Text('🇮🇹', style: TextStyle(fontSize: 28))),
+            ),
+            const SizedBox(width: 14),
+            const Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(children: [
+                    Icon(Icons.verified, color: Colors.white, size: 14),
+                    SizedBox(width: 5),
+                    Text('GUIDA COMPLETA',
+                        style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w800, letterSpacing: 0.6)),
+                  ]),
+                  SizedBox(height: 6),
+                  Text('Documenti per stranieri',
+                      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800, height: 1.2)),
+                  SizedBox(height: 4),
+                  Text('Dal visto alla cittadinanza • 14 lingue',
+                      style: TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.w500)),
+                ],
+              ),
+            ),
+            const Icon(Icons.chevron_right, color: Colors.white, size: 26),
+          ]),
+        ),
+      ),
     );
   }
 
