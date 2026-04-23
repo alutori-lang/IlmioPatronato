@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'core/theme/app_theme.dart';
 import 'core/services/language_service.dart';
 import 'core/services/profilo_utente_service.dart';
@@ -11,7 +10,6 @@ import 'features/home/home_screen.dart';
 import 'features/agevolazioni/agevolazioni_screen.dart';
 import 'features/sbroglia/sbroglia_chat_screen.dart';
 import 'features/profilo/profilo_screen.dart';
-import 'features/onboarding/onboarding_screen.dart';
 import 'core/widgets/app_nav_bar.dart';
 import 'config/constants.dart';
 
@@ -41,49 +39,9 @@ class MioPatronatoApp extends StatelessWidget {
           Locale('en', 'US'),
         ],
         locale: const Locale('it', 'IT'),
-        home: const _AppRoot(),
+        home: const MainShell(),
       ),
     );
-  }
-}
-
-class _AppRoot extends StatefulWidget {
-  const _AppRoot();
-
-  @override
-  State<_AppRoot> createState() => _AppRootState();
-}
-
-class _AppRootState extends State<_AppRoot> {
-  bool? _onboardingDone;
-
-  @override
-  void initState() {
-    super.initState();
-    _load();
-  }
-
-  Future<void> _load() async {
-    final prefs = await SharedPreferences.getInstance();
-    final done = prefs.getBool(onboardingDoneKey) ?? false;
-    if (!mounted) return;
-    setState(() => _onboardingDone = done);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (_onboardingDone == null) {
-      return const Scaffold(
-        backgroundColor: AppColors.background,
-        body: Center(child: CircularProgressIndicator(color: AppColors.primary)),
-      );
-    }
-    if (!_onboardingDone!) {
-      return OnboardingScreen(
-        onFinish: () => setState(() => _onboardingDone = true),
-      );
-    }
-    return const MainShell();
   }
 }
 
