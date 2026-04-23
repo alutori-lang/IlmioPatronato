@@ -1,5 +1,9 @@
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../config/constants.dart';
+import '../../core/services/isee_parser_service.dart';
 import '../../core/services/profilo_utente_service.dart';
 import 'risultati_diritti_screen.dart';
 
@@ -30,6 +34,9 @@ class _CompilaProfiloScreenState extends State<CompilaProfiloScreen> {
   double _isee = 0;
   String _citta = '';
   bool _disabilita = false;
+
+  bool _parsingIsee = false;
+  IseeParsed? _iseeImported;
 
   final _nazionalitaCtrl = TextEditingController();
   final _etaCtrl = TextEditingController();
@@ -220,19 +227,257 @@ class _CompilaProfiloScreenState extends State<CompilaProfiloScreen> {
 
   // ── STEP 1: Dati Personali ──
   Widget _stepPersonale() {
-    return _card(
-      'Dati Personali',
-      'Inserisci le tue informazioni di base',
-      Icons.person,
-      [
-        _textField('Nazionalita (es. Pakistan, Romania...)', _nazionalitaCtrl, (v) => _nazionalita = v),
-        const SizedBox(height: 14),
-        _textField('Eta', _etaCtrl, (v) => _eta = int.tryParse(v) ?? 0, isNumber: true),
-        const SizedBox(height: 14),
-        _textField('Citta di residenza', _cittaCtrl, (v) => _citta = v),
-        const SizedBox(height: 14),
-        _switchTile('Hai una disabilita riconosciuta?', _disabilita, (v) => setState(() => _disabilita = v)),
+    return Column(
+      children: [
+        _buildIseeUploadCard(),
+        _card(
+          'Dati Personali',
+          'Inserisci le tue informazioni di base',
+          Icons.person,
+          [
+            _textField('Nazionalita (es. Pakistan, Romania...)', _nazionalitaCtrl, (v) => _nazionalita = v),
+            const SizedBox(height: 14),
+            _textField('Eta', _etaCtrl, (v) => _eta = int.tryParse(v) ?? 0, isNumber: true),
+            const SizedBox(height: 14),
+            _textField('Citta di residenza', _cittaCtrl, (v) => _citta = v),
+            const SizedBox(height: 14),
+            _switchTile('Hai una disabilita riconosciuta?', _disabilita, (v) => setState(() => _disabilita = v)),
+          ],
+        ),
       ],
+    );
+  }
+
+  Widget _buildIseeUploadCard() {
+    final imported = _iseeImported;
+    return Container(
+      margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFF0D47A1), Color(0xFF1976D2)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [BoxShadow(color: const Color(0xFF0D47A1).withValues(alpha: 0.3), blurRadius: 16, offset: const Offset(0, 6))],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(children: [
+            Container(
+              width: 44, height: 44,
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(Icons.auto_awesome, color: Colors.white, size: 22),
+            ),
+            const SizedBox(width: 12),
+            const Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('COMPILA AUTOMATICAMENTE',
+                      style: TextStyle(color: Colors.white70, fontSize: 10, fontWeight: FontWeight.w800, letterSpacing: 0.5)),
+                  SizedBox(height: 2),
+                  Text('Carica il tuo ISEE',
+                      style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w800)),
+                ],
+              ),
+            ),
+          ]),
+          const SizedBox(height: 10),
+          Text(
+            'L\'AI legge la tua attestazione ISEE (foto o PDF) e compila per te ISEE, figli, età e disabilità.',
+            style: TextStyle(color: Colors.white.withValues(alpha: 0.85), fontSize: 12, height: 1.4),
+          ),
+          const SizedBox(height: 14),
+          if (_parsingIsee) ...[
+            const Row(children: [
+              SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white)),
+              SizedBox(width: 12),
+              Text('Leggo l\'ISEE…', style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600)),
+            ]),
+          ] else if (imported != null) ...[
+            _iseePreviewLine('Valore ISEE', imported.isee != null ? '€ ${imported.isee!.toStringAsFixed(0)}' : 'non letto'),
+            _iseePreviewLine('Figli', '${imported.numeroFigli ?? 0}${imported.etaFigli.isEmpty ? '' : ' (${imported.etaFigli.join(", ")} anni)'}'),
+            _iseePreviewLine('Disabilità', imported.hasDisabilita ? 'Sì' : 'No'),
+            const SizedBox(height: 8),
+            Row(children: [
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: () => _startUpload(),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    side: const BorderSide(color: Colors.white),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  ),
+                  icon: const Icon(Icons.refresh, size: 16),
+                  label: const Text('Carica di nuovo', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
+                ),
+              ),
+            ]),
+          ] else ...[
+            Row(children: [
+              Expanded(
+                child: ElevatedButton.icon(
+                  onPressed: () => _startUpload(),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: const Color(0xFF0D47A1),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  ),
+                  icon: const Icon(Icons.upload_file, size: 18),
+                  label: const Text('Carica ISEE', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 13)),
+                ),
+              ),
+            ]),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _iseePreviewLine(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Row(children: [
+        const Icon(Icons.check_circle, color: Colors.white, size: 14),
+        const SizedBox(width: 6),
+        Text('$label: ',
+            style: TextStyle(color: Colors.white.withValues(alpha: 0.7), fontSize: 12, fontWeight: FontWeight.w500)),
+        Expanded(
+          child: Text(value,
+              style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700)),
+        ),
+      ]),
+    );
+  }
+
+  Future<void> _startUpload() async {
+    final source = await showModalBottomSheet<String>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+        ),
+        padding: EdgeInsets.fromLTRB(20, 14, 20, MediaQuery.of(ctx).padding.bottom + 14),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(2))),
+            const SizedBox(height: 18),
+            const Text('Come vuoi caricare l\'ISEE?',
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800, color: AppColors.textDark)),
+            const SizedBox(height: 16),
+            _sourceTile(ctx, Icons.camera_alt, 'Scatta foto', 'camera'),
+            _sourceTile(ctx, Icons.image, 'Scegli dalla galleria', 'gallery'),
+            _sourceTile(ctx, Icons.picture_as_pdf, 'Carica PDF', 'pdf'),
+          ],
+        ),
+      ),
+    );
+    if (source == null) return;
+
+    File? file;
+    try {
+      if (source == 'pdf') {
+        final res = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
+        final path = res?.files.firstOrNull?.path;
+        if (path != null) file = File(path);
+      } else {
+        final picker = ImagePicker();
+        final x = await picker.pickImage(
+          source: source == 'camera' ? ImageSource.camera : ImageSource.gallery,
+          imageQuality: 92,
+        );
+        if (x != null) file = File(x.path);
+      }
+    } catch (e) {
+      _showError('Errore selezione file: $e');
+      return;
+    }
+    if (file == null) return;
+    await _runParse(file);
+  }
+
+  Widget _sourceTile(BuildContext ctx, IconData icon, String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () => Navigator.pop(ctx, value),
+          borderRadius: BorderRadius.circular(12),
+          child: Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: AppColors.background,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Row(children: [
+              Icon(icon, color: AppColors.primary, size: 22),
+              const SizedBox(width: 12),
+              Text(label, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+              const Spacer(),
+              const Icon(Icons.chevron_right, color: AppColors.textLight),
+            ]),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _runParse(File file) async {
+    setState(() => _parsingIsee = true);
+    final res = await IseeParserService().parse(file);
+    if (!mounted) return;
+    if (!res.ok) {
+      setState(() => _parsingIsee = false);
+      _showError(res.error ?? 'Errore lettura ISEE');
+      return;
+    }
+    final d = res.data!;
+    setState(() {
+      _iseeImported = d;
+      _parsingIsee = false;
+      if (d.isee != null) {
+        _isee = d.isee!;
+        _iseeCtrl.text = d.isee!.toInt().toString();
+      }
+      if (d.etaRichiedente != null && d.etaRichiedente! > 0) {
+        _eta = d.etaRichiedente!;
+        _etaCtrl.text = '${d.etaRichiedente}';
+      }
+      if (d.numeroFigli != null) {
+        _numeriFigli = d.numeroFigli!;
+      }
+      if (d.etaFigli.isNotEmpty) {
+        _etaFigli = List<int>.from(d.etaFigli);
+      }
+      if (d.hasDisabilita) {
+        _disabilita = true;
+      }
+      if (d.statoFamiliare != null && d.statoFamiliare!.isNotEmpty) {
+        _statoFamiliare = d.statoFamiliare!;
+      }
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('ISEE letto. Ho compilato i campi disponibili.'),
+        backgroundColor: AppColors.iconGreen,
+      ),
+    );
+  }
+
+  void _showError(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(msg), backgroundColor: Colors.red),
     );
   }
 
