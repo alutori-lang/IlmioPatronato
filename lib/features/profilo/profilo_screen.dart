@@ -118,9 +118,7 @@ class ProfiloScreen extends StatelessWidget {
       _ToolData(Icons.translate, 'Traduttore', AppColors.iconGreen, false),
       _ToolData(Icons.track_changes, 'Tracker Pratica', AppColors.iconOrange, false),
       _ToolData(Icons.calculate, 'Simulatore ISEE', AppColors.iconPurple, false),
-      _ToolData(Icons.sos, 'SOS Legale', const Color(0xFFE91E63), false),
       _ToolData(Icons.map, 'Mappa Uffici', AppColors.primary, false),
-      _ToolData(Icons.timer, 'Countdown', AppColors.iconGreen, false),
       _ToolData(Icons.notifications_active, 'Notifiche', AppColors.iconOrange, true),
       _ToolData(Icons.people, 'Community', AppColors.iconPurple, false),
     ];
