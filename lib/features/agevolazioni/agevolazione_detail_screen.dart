@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../config/constants.dart';
+import '../../models/pratica.dart';
+import '../profilo/nuova_pratica_screen.dart';
+import '../profilo/pratica_detail_screen.dart';
 import '../sbroglia/sbroglia_chat_screen.dart';
 import 'agevolazioni_data.dart';
 import 'agevolazioni_screen.dart';
@@ -49,6 +52,9 @@ class AgevolazioneDetailScreen extends StatelessWidget {
 
           // ── LINK UFFICIALE ──
           SliverToBoxAdapter(child: _buildLinkButton(context)),
+
+          // ── INIZIA PRATICA (Tracker) ──
+          SliverToBoxAdapter(child: _buildIniziaPraticaButton(context)),
 
           // ── SCOPRI ALTRE AGEVOLAZIONI ──
           SliverToBoxAdapter(child: _buildAltreAgevolazioni(context)),
@@ -415,6 +421,50 @@ class AgevolazioneDetailScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildIniziaPraticaButton(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
+      child: GestureDetector(
+        onTap: () => _iniziaPratica(context),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: const Color(0xFFE65100).withValues(alpha: 0.4), width: 1.5),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.push_pin, color: Color(0xFFE65100), size: 20),
+              const SizedBox(width: 10),
+              Text('INIZIA QUESTA PRATICA',
+                  style: TextStyle(color: const Color(0xFFE65100), fontSize: 13, fontWeight: FontWeight.w800, letterSpacing: 0.4)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _iniziaPratica(BuildContext context) async {
+    final result = await Navigator.push<Pratica>(
+      context,
+      MaterialPageRoute(
+        builder: (_) => NuovaPraticaScreen(fromAgevolazione: agevolazione),
+      ),
+    );
+    if (result != null && context.mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => PraticaDetailScreen(praticaId: result.id),
+        ),
+      );
+    }
   }
 
   UserCategory _mapCategoriaToUser(String categoria) {
