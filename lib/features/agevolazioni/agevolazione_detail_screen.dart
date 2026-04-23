@@ -327,7 +327,7 @@ class AgevolazioneDetailScreen extends StatelessWidget {
 
   Widget _buildLinkButton(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      padding: const EdgeInsets.fromLTRB(16, 18, 16, 0),
       child: GestureDetector(
         onTap: () async {
           final url = Uri.parse(agevolazione.linkUfficiale);
@@ -343,18 +343,29 @@ class AgevolazioneDetailScreen extends StatelessWidget {
         },
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
           decoration: BoxDecoration(
             gradient: LinearGradient(colors: [color, color.withValues(alpha: 0.8)]),
-            borderRadius: BorderRadius.circular(14),
-            boxShadow: [BoxShadow(color: color.withValues(alpha: 0.3), blurRadius: 12, offset: const Offset(0, 4))],
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [BoxShadow(color: color.withValues(alpha: 0.35), blurRadius: 16, offset: const Offset(0, 6))],
           ),
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.open_in_new, color: Colors.white, size: 18),
-              SizedBox(width: 8),
-              Text('VAI AL SITO UFFICIALE', style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w800, letterSpacing: 0.5)),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.launch_rounded, color: Colors.white, size: 20),
+                  SizedBox(width: 10),
+                  Text('PRESENTA LA DOMANDA',
+                      style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w800, letterSpacing: 0.5)),
+                ],
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'Sito ufficiale ${agevolazione.ente}',
+                style: TextStyle(color: Colors.white.withValues(alpha: 0.85), fontSize: 11, fontWeight: FontWeight.w500),
+              ),
             ],
           ),
         ),
@@ -391,7 +402,7 @@ class _InfoBox extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 6),
-          Flexible(child: Text(value, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.textDark), maxLines: 2, overflow: TextOverflow.ellipsis)),
+          Text(value, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.textDark), maxLines: 2, overflow: TextOverflow.ellipsis),
         ],
       ),
     );
