@@ -6,6 +6,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/scanned_document.dart';
+import 'wallet_bridge.dart';
 
 class ScannerService extends ChangeNotifier {
   static const _prefsKey = 'scanned_documents_v1';
@@ -88,6 +89,14 @@ class ScannerService extends ChangeNotifier {
     _documents.add(doc);
     await _persist();
     notifyListeners();
+
+    // Auto-save important document types (CIE, passaporto, permesso di
+    // soggiorno, codice fiscale, tessera sanitaria, patente) into the
+    // Portafoglio Documenti so the user gets scadenza tracking automatically.
+    try {
+      await WalletBridge.autoSaveIfImportant(name: doc.name);
+    } catch (_) {}
+
     return doc;
   }
 

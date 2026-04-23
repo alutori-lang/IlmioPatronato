@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../config/constants.dart';
 import '../../core/services/language_service.dart';
 import 'info_app_screen.dart';
+import '../strumenti/documento_wallet_screen.dart';
 import 'scanner_doc_screen.dart';
 import 'tracker_pratica_screen.dart';
 import 'translator_screen.dart';
@@ -117,6 +118,7 @@ class ProfiloScreen extends StatelessWidget {
       _ToolData(Icons.document_scanner, 'Scanner DOC', AppColors.iconBlue, false),
       _ToolData(Icons.translate, 'Traduttore', AppColors.iconGreen, false),
       _ToolData(Icons.track_changes, 'Tracker Pratica', AppColors.iconOrange, false),
+      _ToolData(Icons.account_balance_wallet, 'Portafoglio', AppColors.iconGreen, false),
       _ToolData(Icons.calculate, 'Simulatore ISEE', AppColors.iconPurple, false),
       _ToolData(Icons.map, 'Mappa Uffici', AppColors.primary, false),
       _ToolData(Icons.notifications_active, 'Notifiche', AppColors.iconOrange, true),
@@ -142,6 +144,10 @@ class ProfiloScreen extends StatelessWidget {
               }
               if (t.label == 'Tracker Pratica') {
                 Navigator.push(context, MaterialPageRoute(builder: (_) => const TrackerPraticaScreen()));
+                return;
+              }
+              if (t.label == 'Portafoglio') {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => const DocumentoWalletScreen()));
                 return;
               }
               ScaffoldMessenger.of(context).showSnackBar(
