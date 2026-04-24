@@ -22,7 +22,7 @@ class BonusRepository {
   static final BonusRepository instance = BonusRepository._();
 
   static const _remoteUrl =
-      'https://raw.githubusercontent.com/alutori-lang/IlmioPatronato/main/assets/bonuses_2026.json';
+      'https://raw.githubusercontent.com/alutori-lang/IlmioPatronato-bonuses/main/bonuses_2026.json';
   static const _assetPath = 'assets/bonuses_2026.json';
   static const _prefsKey = 'bonus_cache_json';
   static const _prefsTs = 'bonus_cache_ts';
