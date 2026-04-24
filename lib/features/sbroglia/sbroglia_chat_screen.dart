@@ -302,24 +302,32 @@ class _CategorySelectorScreen extends StatelessWidget {
                                   height: 1.45,
                                 ),
                               ),
-                              const SizedBox(height: 14),
+                              const SizedBox(height: 16),
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: BorderRadius.circular(14),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withValues(alpha: 0.18),
+                                      blurRadius: 14,
+                                      offset: const Offset(0, 5),
+                                    ),
+                                  ],
                                 ),
                                 child: const Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Icon(Icons.psychology_rounded, color: Color(0xFF6A1B9A), size: 16),
-                                    SizedBox(width: 6),
+                                    Icon(Icons.search_rounded, color: Color(0xFF6A1B9A), size: 26),
+                                    SizedBox(width: 10),
                                     Text(
-                                      'Scrivi la tua domanda →',
+                                      'CHIEDI',
                                       style: TextStyle(
                                         color: Color(0xFF6A1B9A),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w800,
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w900,
+                                        letterSpacing: 1.5,
                                       ),
                                     ),
                                   ],
