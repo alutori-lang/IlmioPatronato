@@ -200,6 +200,28 @@ class DirittiService {
       check: (p) => p.fasciaReddito != '<8k', // con <8k non c'è capienza IRPEF
     ),
 
+    Diritto(
+      titolo: 'ISEE Corrente 2026 (strumento)',
+      descrizione: 'Non è un bonus ma un aggiornamento dell\'ISEE ordinario se la situazione lavorativa/reddituale è peggiorata di almeno il 25% (reddito) o 20% (patrimonio dal 1° aprile 2026). Sblocca bonus con soglie reali aggiornate. Validità 6 mesi (redditi) o fino al 31/12 (patrimonio).',
+      importo: 'GRATUITO (tramite CAF/Patronato)',
+      categoria: 'famiglia',
+      icona: '📋',
+      comeRichiederlo: 'Tramite CAF, Patronato o portale unico ISEE su INPS.it. Necessaria DSU ordinaria già presentata.',
+      documentiNecessari: 'DSU ordinaria 2026, prove della variazione (lettera licenziamento, NASpI, perdita lavoro autonomo, riduzione patrimonio, variazione nucleo)',
+      check: (p) => p.situazioneLavoro == 'disoccupato' || p.fasciaReddito == '<8k' || p.fasciaReddito == '8-15k',
+    ),
+
+    Diritto(
+      titolo: 'Bonus Libri Scolastici Regionale',
+      descrizione: 'Contributo regionale gestito dai Comuni per acquisto libri di testo scuola secondaria (medie e superiori). Importo e soglie ISEE variano per regione. Esempio Emilia-Romagna: €177 (ISEE fino €10.633), €113 (ISEE fino €15.749).',
+      importo: 'Variabile €113–€300 per fascia ISEE (limite nazionale di riferimento €30.000)',
+      categoria: 'famiglia',
+      icona: '📖',
+      comeRichiederlo: 'Bando annuale del Comune di residenza (apertura tra luglio e ottobre). Domanda online sul portale comunale/regionale con SPID.',
+      documentiNecessari: 'ISEE valido, iscrizione scuola secondaria, in alcuni comuni fatture/scontrini libri',
+      check: (p) => p.isee > 0 && p.isee <= 30000 && p.numeriFigli > 0 && p.etaFigli.any((e) => e >= 11 && e <= 19),
+    ),
+
     // ═══════════════════════════════════════════════════════════════════
     // LAVORO
     // ═══════════════════════════════════════════════════════════════════
@@ -415,6 +437,61 @@ class DirittiService {
       comeRichiederlo: 'Asseverazione struttura prima dei lavori; detrazione in dichiarazione.',
       documentiNecessari: 'Modulo Allegato B, asseverazione, bonifici parlanti',
       check: (p) => p.fasciaReddito != '<8k' && !p.inAffitto,
+    ),
+
+    Diritto(
+      titolo: 'Bonus Elettrodomestici 2026 (Rottamazione)',
+      descrizione: 'Sconto immediato del 30% sul prezzo di vendita di elettrodomestici nuovi ad alta classe energetica, con rottamazione obbligatoria del vecchio (RAEE). Prenotazione voucher via app IO.',
+      importo: '€100 standard, €200 se ISEE < €25.000',
+      categoria: 'casa',
+      icona: '🔌',
+      comeRichiederlo: 'Prenotazione voucher su app IO; lo sconto viene applicato in cassa con la rottamazione del vecchio elettrodomestico (stessa categoria).',
+      documentiNecessari: 'ISEE (per fascia maggiorata), elettrodomestico usato da rottamare, certificazione RAEE del rivenditore',
+      check: (p) => true,
+    ),
+
+    Diritto(
+      titolo: 'Conto Termico 3.0 (dal 2026)',
+      descrizione: 'Incentivo a fondo perduto del GSE per sostituzione caldaie con pompe di calore, biomassa, sistemi ibridi, solare termico. Dal 2026 importi maggiorati del 120-200% rispetto al Conto Termico 2.0.',
+      importo: 'Fino al 65% delle spese ammissibili (rata unica se < €15.000, altrimenti 2-5 anni)',
+      categoria: 'casa',
+      icona: '🔥',
+      comeRichiederlo: 'Domanda al GSE (Gestore Servizi Energetici) entro 60 giorni dalla fine lavori. Rimborso in 60-90 giorni.',
+      documentiNecessari: 'Fatture, asseverazione tecnica, attestati efficienza energetica, dati catastali',
+      check: (p) => !p.inAffitto,
+    ),
+
+    Diritto(
+      titolo: 'Bonus Colonnine / Wallbox Domestiche',
+      descrizione: 'Contributo a fondo perduto MIMIT (Invitalia) per acquisto e installazione di wallbox / colonnine di ricarica EV a uso privato o condominiale. NON cumulabile con detrazione 50%.',
+      importo: '80% delle spese: max €1.500 (privati) / €8.000 (condomini)',
+      categoria: 'casa',
+      icona: '⚡',
+      comeRichiederlo: 'Domanda online piattaforma Invitalia (bandi periodici con click-day). Rimborso post-pagamento via bonifico.',
+      documentiNecessari: 'Fattura, certificazione di conformità impianto, dati catastali immobile',
+      check: (p) => !p.inAffitto,
+    ),
+
+    Diritto(
+      titolo: 'Ecobonus Auto Elettriche 2026',
+      descrizione: 'Incentivo statale 2026 per acquisto di auto 100% elettrica nuova M1 con rottamazione di Euro 5 o precedenti. Solo per privati con ISEE ≤ €40.000. Domande entro 30/06/2026 o esaurimento €400 mln.',
+      importo: 'Fino a €11.000 sconto auto. Moto/scooter elettrici: 30% (max €3.000) senza rottamazione, 40% (max €4.000) con rottamazione',
+      categoria: 'casa',
+      icona: '🔋',
+      comeRichiederlo: 'Il concessionario applica lo sconto in fattura tramite piattaforma ecobonus.mimit.gov.it. Click-day per i fondi.',
+      documentiNecessari: 'ISEE ≤ €40.000, libretto veicolo da rottamare (Euro 5 o precedenti), residenza in Italia',
+      check: (p) => p.isee > 0 && p.isee <= 40000,
+    ),
+
+    Diritto(
+      titolo: 'Bonus Tende Solari / Schermature 50%',
+      descrizione: 'Detrazione IRPEF per tende da sole, pergole, zanzariere con specifiche tecniche (GTOT < 0,35, esposizione E-S-O, marcatura CE). Rientra nell\'Ecobonus.',
+      importo: '50% prima casa, 36% altre case. Tetto €60.000 per unità immobiliare (10 quote annuali)',
+      categoria: 'casa',
+      icona: '🌞',
+      comeRichiederlo: 'Pagamento con bonifico parlante; detrazione in 730/Redditi PF. Comunicazione ENEA entro 90 gg dalla fine lavori.',
+      documentiNecessari: 'Fattura, bonifico parlante, certificazione GTOT, marcatura CE, comunicazione ENEA',
+      check: (p) => p.fasciaReddito != '<8k',
     ),
 
     // ═══════════════════════════════════════════════════════════════════
@@ -658,6 +735,149 @@ class DirittiService {
       comeRichiederlo: 'Domanda INPS online ("Welfare Richieste in un click").',
       documentiNecessari: 'Iscrizione Gestione Unitaria INPS, ISEE sociosanitario, verbale non autosufficienza',
       check: (p) => p.disabilita && (p.situazioneLavoro == 'dipendente' || p.situazioneLavoro == 'pensionato'),
+    ),
+
+    Diritto(
+      titolo: 'Carta Europea della Disabilità (Disability Card)',
+      descrizione: 'Carta gratuita emessa dall\'INPS, valida in tutta l\'UE, che attesta lo stato di disabilità. Dà accesso gratuito/agevolato a musei, parchi, trasporti, eventi culturali e sportivi senza esibire ogni volta i verbali medici. Validità fino a 10 anni.',
+      importo: 'GRATUITA (nessun costo)',
+      categoria: 'disabilita',
+      icona: '🪪',
+      comeRichiederlo: 'Domanda online sul portale INPS con SPID/CIE/CNS, oppure tramite associazioni (ANMIC, UICI, ENS, ANFFAS). Procedura conclusa dall\'INPS entro 60 giorni.',
+      documentiNecessari: 'Fototessera digitale (la procedura la adatta), verbale di invalidità o L.104',
+      check: (p) => p.disabilita,
+    ),
+
+    Diritto(
+      titolo: 'CUDE — Contrassegno Unificato Disabili Europeo',
+      descrizione: 'Contrassegno europeo per la sosta gratuita negli stalli blu/rosa, accesso a ZTL, corsie preferenziali. Valido in tutta l\'UE. Dal 2 febbraio 2026 iscrizione obbligatoria al Registro Pubblico CUDE per validità nazionale.',
+      importo: 'Gratuito (€6,16 solo per versione permanente)',
+      categoria: 'disabilita',
+      icona: '🅿️',
+      comeRichiederlo: 'Domanda al Comune di residenza (Polizia Locale/Ufficio Mobilità) con certificato medico-legale ASL o INPS. Validità = certificato + 45 gg; rinnovo con certificato medico curante.',
+      documentiNecessari: 'Certificato medico-legale ASL/INPS (ridotta capacità di deambulazione o cecità), fototessera, documento identità, targa veicolo',
+      check: (p) => p.disabilita,
+    ),
+
+    Diritto(
+      titolo: 'Tessera di Libera Circolazione Mezzi Pubblici',
+      descrizione: 'Tessera regionale che consente di viaggiare gratis su autobus urbani, extraurbani e treni regionali. Esempi: IVOL Lombardia, BIP Piemonte, AMT Liguria, ATAC Roma. In alcune regioni valida anche per l\'accompagnatore.',
+      importo: 'Gratuita',
+      categoria: 'disabilita',
+      icona: '🚌',
+      comeRichiederlo: 'Domanda all\'azienda di trasporto regionale o al Comune con verbale di invalidità. In Lombardia tramite portale IVOL; in Piemonte smart card BIP.',
+      documentiNecessari: 'Verbale invalidità ≥ 67% (o L.104 art.3 c.3), residenza nella regione, fototessera; in alcune regioni ISEE',
+      check: (p) => p.disabilita,
+    ),
+
+    Diritto(
+      titolo: 'Congedo Straordinario Retribuito 2 Anni (art. 42 c.5)',
+      descrizione: 'Congedo per assistenza a familiare con disabilità grave (L.104 art. 3 c. 3). Massimo 2 anni nell\'arco della vita lavorativa, retribuito al 100% e coperto da contribuzione figurativa. Riservato a coniuge, genitori, figli, fratelli/sorelle conviventi.',
+      importo: 'Retribuzione ultimo mese (tetto 2026 ~€43.500 annui tra indennità + contribuzione)',
+      categoria: 'disabilita',
+      icona: '🫂',
+      comeRichiederlo: 'Domanda INPS online (modulo SR64) + comunicazione al datore di lavoro. Pagamento dal datore con conguaglio INPS.',
+      documentiNecessari: 'Verbale L.104 art. 3 c. 3 del familiare, stato famiglia, contratto di lavoro',
+      check: (p) => p.situazioneLavoro == 'dipendente' && (p.disabilita || p.haComponentiFragili),
+    ),
+
+    Diritto(
+      titolo: 'Indennità di Frequenza Minori Invalidi',
+      descrizione: 'Sostegno economico per minori (0-18 anni) con difficoltà persistenti o ipoacusici che frequentano scuole, centri riabilitazione o terapie. Pagata per i mesi di effettiva frequenza (max 12 mensilità/anno). A 18 anni si converte in pensione invalidità.',
+      importo: '€340,71/mese 2026 (limite reddito personale €5.852,21)',
+      categoria: 'disabilita',
+      icona: '👧',
+      comeRichiederlo: 'Domanda online INPS dopo verbale invalidità ASL. Necessaria certificazione di iscrizione/frequenza scuola o centro terapeutico.',
+      documentiNecessari: 'Verbale Commissione Medica ASL, attestato frequenza scuola/centro riabilitativo, ISEE',
+      check: (p) => p.eta < 18 && p.disabilita,
+    ),
+
+    Diritto(
+      titolo: 'Indennità di Comunicazione Sordi Civili',
+      descrizione: 'Indennità mensile NON vincolata a reddito né età per cittadini con sordità civile (pre-linguale o acquisita prima dei 12 anni). Compatibile con qualsiasi attività lavorativa.',
+      importo: '€274,17/mese 2026, per 12 mensilità',
+      categoria: 'disabilita',
+      icona: '🤟',
+      comeRichiederlo: 'Domanda online INPS dopo accertamento Commissione Medica ASL/INPS. Anche tramite Patronato o associazioni ENS, ANMIC, UICI, ANFFAS.',
+      documentiNecessari: 'Certificato medico introduttivo, verbale Commissione Medica con riconoscimento sordità civile, audiogramma',
+      check: (p) => p.disabilita,
+    ),
+
+    Diritto(
+      titolo: 'Pensione per Ciechi Civili (Assoluti / Parziali)',
+      descrizione: 'Pensione mensile per cittadini con cecità totale o parziale (residuo visivo ≤ 1/20 in entrambi gli occhi). I ciechi assoluti hanno anche un\'Indennità di Accompagnamento specifica di €1.064,98/mese.',
+      importo: 'Ciechi assoluti: €368,46/mese (13 mens.) + Accomp. €1.064,98/mese. Parziali: €340,71/mese + indennità speciale €238,14',
+      categoria: 'disabilita',
+      icona: '🦯',
+      comeRichiederlo: 'Domanda INPS online con certificato medico oculistico e accertamento Commissione Medica ASL/INPS.',
+      documentiNecessari: 'Certificato oculistico, verbale invalidità con riconoscimento cecità, ISEE, limite reddito personale €20.029,55',
+      check: (p) => p.disabilita,
+    ),
+
+    Diritto(
+      titolo: 'Pensione di Inabilità Lavorativa INPS (contributiva)',
+      descrizione: 'Pensione per lavoratori (dipendenti, autonomi, parasubordinati) con assoluta e permanente impossibilità di svolgere QUALSIASI attività lavorativa. Diversa dall\'invalidità civile: serve almeno 5 anni di contributi (3 negli ultimi 5).',
+      importo: 'Calcolata sui contributi versati + maggiorazione fino a €407,58/mese (max ~€748/mese 2026)',
+      categoria: 'disabilita',
+      icona: '🏥',
+      comeRichiederlo: 'Domanda INPS online (modello AP67 + certificato medico SS3). Visita medico-legale INPS.',
+      documentiNecessari: 'Certificato medico SS3, almeno 260 contributi settimanali (5 anni), di cui 156 (3 anni) negli ultimi 5, limite reddito €20.029,55',
+      check: (p) => p.disabilita && p.eta >= 18 && p.eta < 67,
+    ),
+
+    Diritto(
+      titolo: 'Detrazione 19% Assistenza Personale Non Autosufficienti',
+      descrizione: 'Detrazione IRPEF 19% per spese sostenute per badanti/addetti all\'assistenza di persone non autosufficienti (anche familiari conviventi o fiscalmente a carico). Non autosufficienza certificata dal medico.',
+      importo: '19% su max €2.100/anno = €399 detrazione',
+      categoria: 'disabilita',
+      icona: '🧑‍⚕️',
+      comeRichiederlo: 'Indicare in dichiarazione 730/Redditi PF. Pagamenti SOLO tracciabili (no contanti).',
+      documentiNecessari: 'Ricevuta firmata dall\'addetto (con CF), bonifico/POS, certificato medico non autosufficienza. Reddito complessivo ≤ €40.000',
+      check: (p) => p.disabilita && p.fasciaReddito != '<8k',
+    ),
+
+    Diritto(
+      titolo: 'Detrazione 19% Sussidi Tecnici e Informatici Disabili',
+      descrizione: 'Detrazione IRPEF 19% sull\'acquisto di computer, modem, tablet, smartphone, software, dispositivi per l\'autonomia di persone con disabilità motoria, sensoriale o del linguaggio. Cumulabile con IVA 4%.',
+      importo: '19% del costo (rientra nel limite generale spese mediche)',
+      categoria: 'disabilita',
+      icona: '💻',
+      comeRichiederlo: 'Inserire in dichiarazione 730/Redditi PF. Dal 2026 non serve più prescrizione specialista ASL se il nesso funzionale risulta dal verbale L.104.',
+      documentiNecessari: 'Fattura, certificazione nesso funzionale (salvo già nel verbale L.104)',
+      check: (p) => p.disabilita && p.fasciaReddito != '<8k',
+    ),
+
+    Diritto(
+      titolo: 'IVA 4% su Ausili e Protesi (carrozzine, montascale, ecc.)',
+      descrizione: 'Aliquota IVA agevolata al 4% (anziché 22%) per acquisto di ausili (carrozzine, montascale, servoscala, deambulatori), protesi (dentarie, ortopediche, oculistiche), sussidi informatici e software per disabili.',
+      importo: 'Risparmio del 18% (22%→4%) sul prezzo dell\'ausilio',
+      categoria: 'disabilita',
+      icona: '🦽',
+      comeRichiederlo: 'Consegnare al venditore copia del certificato di invalidità funzionale permanente (ASL o Commissione Medica) al momento dell\'acquisto.',
+      documentiNecessari: 'Certificato invalidità funzionale permanente ASL/INPS, eventuale prescrizione del medico curante per il nesso funzionale',
+      check: (p) => p.disabilita,
+    ),
+
+    Diritto(
+      titolo: 'Esenzione Bollo Auto Disabili',
+      descrizione: 'Esenzione totale e permanente dalla tassa automobilistica per veicoli intestati a persone disabili (o a familiari di cui sono fiscalmente a carico). Limiti cilindrata: 2.000cc benzina / 2.800cc diesel o ibrido / 150 kW elettrico. Una sola auto per nucleo.',
+      importo: '100% esenzione bollo auto (permanente)',
+      categoria: 'disabilita',
+      icona: '🚗',
+      comeRichiederlo: 'Domanda all\'Ufficio Tributi della Regione (o Agenzia Entrate/ACI nelle regioni non gestite). Domanda iniziale unica, vale per gli anni successivi.',
+      documentiNecessari: 'Verbale L.104 art. 3 c. 3 con ridotte capacità motorie permanenti (o cecità/sordità/handicap psichico con accompagnamento), libretto veicolo',
+      check: (p) => p.disabilita,
+    ),
+
+    Diritto(
+      titolo: 'Trasporto Scolastico Alunni Disabili',
+      descrizione: 'Rimborso comunale/regionale delle spese di trasporto casa-scuola per alunni con disabilità (infanzia, primaria, secondaria). In Lombardia maggiorazione +50% per alunni in carrozzina.',
+      importo: 'Variabile per Comune (tipico €500–€3.000/anno scolastico)',
+      categoria: 'disabilita',
+      icona: '🚐',
+      comeRichiederlo: 'Bando annuale del Comune di residenza, domanda online entro scadenza (gennaio-febbraio).',
+      documentiNecessari: 'Verbale L.104 del figlio/a, iscrizione scolastica, ISEE, ricevute trasporto',
+      check: (p) => p.disabilita && p.numeriFigli > 0 && p.etaFigli.any((e) => e >= 3 && e <= 19),
     ),
 
     // ═══════════════════════════════════════════════════════════════════
