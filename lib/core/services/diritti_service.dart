@@ -300,7 +300,7 @@ class DirittiService {
       icona: '⚕️',
       comeRichiederlo: 'Domanda INPS online + certificato medico SS3 introduttivo.',
       documentiNecessari: 'Certificazione medica, estratto contributivo con almeno 5 anni di contributi',
-      check: (p) => p.disabilita && p.eta >= 18 && p.eta < 67 && p.situazioneLavoro != 'disoccupato',
+      check: (p) => p.disabilita && p.eta >= 18 && p.eta < 67,
     ),
 
     // ═══════════════════════════════════════════════════════════════════
@@ -402,8 +402,8 @@ class DirittiService {
       categoria: 'casa',
       icona: '🦽',
       comeRichiederlo: 'Pagamento con bonifico parlante, conformità DM 236/89.',
-      documentiNecessari: 'Asseverazione tecnica, fatture, certificazione conformità',
-      check: (p) => (p.disabilita || p.eta >= 65) && !p.inAffitto,
+      documentiNecessari: 'Asseverazione tecnica, fatture, certificazione conformità. Se in affitto: consenso scritto del proprietario',
+      check: (p) => p.disabilita || p.eta >= 65,
     ),
 
     Diritto(
