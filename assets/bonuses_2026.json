@@ -1,0 +1,1886 @@
+{
+  "version": "2026-04-25",
+  "lastUpdate": "2026-04-25",
+  "description": "IlmioPatronato — master list of 2026 Italian bonuses. Edit this file and push to GitHub to update all installed apps within 24h.",
+  "bonuses": [
+    {
+      "id": "bonus_nuovi_nati_2026",
+      "titolo": "Bonus Nuovi Nati 2026",
+      "descrizione": "1.000€ una tantum per ogni bambino nato o adottato nel 2025-2026.",
+      "descrizioneCompleta": "Il Bonus Nuovi Nati è un contributo di 1.000 euro una tantum riconosciuto ai genitori di bambini nati, in affido preadottivo o adottati dal 1° gennaio 2025. La misura è confermata anche per il 2026 con un fondo di 360 milioni di euro. Il requisito principale è un ISEE per prestazioni ai minorenni non superiore a 40.000 euro annui. Nel calcolo ISEE non si tiene conto degli importi dell'Assegno Unico Universale (AUU). La domanda va presentata entro 120 giorni dalla nascita o dall'ingresso in famiglia del minore.",
+      "categoria": "Famiglia & Figli",
+      "tags": [
+        "neonati",
+        "nascita",
+        "adozione",
+        "famiglia",
+        "2026",
+        "INPS"
+      ],
+      "requisiti": [
+        "Bambino nato o adottato dal 1° gennaio 2025",
+        "ISEE minorenni non superiore a 40.000€",
+        "Residenza in Italia del genitore richiedente",
+        "Cittadinanza italiana/UE o permesso di soggiorno valido"
+      ],
+      "documenti": [
+        "ISEE in corso di validità (minorenni)",
+        "Documento di identità del richiedente",
+        "Codice fiscale del neonato/adottato",
+        "Certificato di nascita o decreto di adozione"
+      ],
+      "comeRichiederlo": "Domanda online su INPS.it (sezione \"Bonus nuovi nati\"), tramite Contact Center INPS (803 164) o tramite Patronato. Presentare entro 120 giorni dalla nascita/adozione.",
+      "importo": "1.000€ una tantum",
+      "scadenza": "Entro 120 giorni dalla nascita (anno 2026)",
+      "ente": "INPS",
+      "linkUfficiale": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.bonus-nuovi-nati.html",
+      "isNuovo": true,
+      "dataAggiunta": "2026-01-01T00:00:00.000",
+      "validoFino": null,
+      "iconName": "child_friendly"
+    },
+    {
+      "id": "naspi",
+      "titolo": "NASpI - Indennità Disoccupazione",
+      "descrizione": "Sostegno economico per chi perde il lavoro involontariamente.",
+      "descrizioneCompleta": "La NASpI (Nuova Assicurazione Sociale per l'Impiego) è l'indennità mensile di disoccupazione erogata dall'INPS su domanda dell'interessato. Spetta ai lavoratori dipendenti che hanno perso involontariamente il lavoro. L'importo è pari al 75% della retribuzione media mensile degli ultimi 4 anni se questa è inferiore a €1.425,21. Se superiore, si aggiunge il 25% della differenza. Si riduce del 3% al mese dal 6° mese (8° mese per over 55). Durata: metà delle settimane contributive degli ultimi 4 anni.",
+      "categoria": "Lavoro",
+      "tags": [
+        "disoccupazione",
+        "lavoro",
+        "licenziamento",
+        "naspi",
+        "inps",
+        "sussidio"
+      ],
+      "requisiti": [
+        "Stato di disoccupazione involontaria",
+        "Almeno 13 settimane di contribuzione negli ultimi 4 anni",
+        "Almeno 30 giornate di lavoro effettivo negli ultimi 12 mesi",
+        "Dichiarazione di immediata disponibilità (DID) al Centro per l'Impiego"
+      ],
+      "documenti": [
+        "Documento d'identità",
+        "Codice fiscale",
+        "Lettera di licenziamento o cessazione contratto",
+        "Ultima busta paga",
+        "IBAN conto corrente"
+      ],
+      "comeRichiederlo": "1. Presentare la DID al Centro per l'Impiego entro 68 giorni dal licenziamento\n2. Fare domanda all'INPS online tramite SPID/CIE\n3. Accedere a inps.it → Prestazioni → NASpI\n4. Compilare la domanda online\n5. Attendere esito (circa 30 giorni)",
+      "importo": "Fino a €1.550,42/mese (2025)",
+      "scadenza": "Entro 68 giorni dalla cessazione del rapporto",
+      "ente": "INPS",
+      "linkUfficiale": "https://www.inps.it/it/it/inps-comunica/dossier/la-naspi.html",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "work_off"
+    },
+    {
+      "id": "discoll",
+      "titolo": "DIS-COLL - Disoccupazione Collaboratori",
+      "descrizione": "Indennità per collaboratori coordinati e continuativi disoccupati.",
+      "descrizioneCompleta": "La DIS-COLL è l'indennità di disoccupazione per i collaboratori coordinati e continuativi, gli assegnisti e i dottorandi di ricerca con borsa di studio. Spetta a chi perde involontariamente il lavoro. L'importo si calcola come la NASpI, con un massimo di €1.550,42 mensili. Durata massima: metà dei mesi di contribuzione dal 1° gennaio dell'anno precedente.",
+      "categoria": "Lavoro",
+      "tags": [
+        "disoccupazione",
+        "collaboratori",
+        "cococo",
+        "partita iva",
+        "dis-coll"
+      ],
+      "requisiti": [
+        "Collaboratori co.co.co. iscritti alla Gestione Separata INPS",
+        "Almeno 1 mese di contribuzione dal 1° gennaio dell'anno precedente",
+        "Stato di disoccupazione involontaria",
+        "DID al Centro per l'Impiego"
+      ],
+      "documenti": [
+        "Documento d'identità e codice fiscale",
+        "Contratto di collaborazione cessato",
+        "Dichiarazione DID",
+        "IBAN"
+      ],
+      "comeRichiederlo": "1. Presentare la DID al Centro per l'Impiego\n2. Domanda online su inps.it con SPID\n3. Sezione Prestazioni → DIS-COLL\n4. Attendere esito",
+      "importo": "Fino a €1.550,42/mese",
+      "scadenza": "Entro 68 giorni dalla cessazione",
+      "ente": "INPS",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/dis-coll",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "badge"
+    },
+    {
+      "id": "bonus_assunzione_giovani",
+      "titolo": "Bonus Assunzione Giovani Under 36",
+      "descrizione": "Esonero contributivo per aziende che assumono giovani a tempo indeterminato.",
+      "descrizioneCompleta": "Incentivo per i datori di lavoro che assumono giovani under 36 a tempo indeterminato. L'esonero è pari al 100% dei contributi INPS a carico del datore, fino a €6.000 annui per 36 mesi (48 mesi per assunzioni nel Mezzogiorno). L'agevolazione è cumulabile con altri incentivi. Valido per assunzioni a tempo indeterminato e trasformazioni da tempo determinato.",
+      "categoria": "Lavoro",
+      "tags": [
+        "assunzione",
+        "giovani",
+        "under 36",
+        "incentivo",
+        "lavoro",
+        "contributi"
+      ],
+      "requisiti": [
+        "Lavoratore under 36 alla data dell'assunzione",
+        "Mai stato assunto a tempo indeterminato prima",
+        "Assunzione a tempo indeterminato",
+        "Datore di lavoro in regola con DURC"
+      ],
+      "documenti": [
+        "Dati anagrafici del lavoratore",
+        "Comunicazione UniLav",
+        "DURC regolare",
+        "Dichiarazione del lavoratore di non aver avuto rapporti a TI"
+      ],
+      "comeRichiederlo": "1. L'azienda verifica i requisiti del lavoratore\n2. Procede con l'assunzione a tempo indeterminato\n3. Presenta domanda online all'INPS\n4. Applica l'esonero in busta paga tramite flusso UniEmens",
+      "importo": "Esonero fino a €6.000/anno per 36 mesi",
+      "scadenza": "31 dicembre 2026",
+      "ente": "INPS",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/esonero-giovani",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "person_add"
+    },
+    {
+      "id": "bonus_donne",
+      "titolo": "Bonus Assunzione Donne Svantaggiate",
+      "descrizione": "Sgravio contributivo per assunzione di donne in condizioni svantaggiate.",
+      "descrizioneCompleta": "Esonero contributivo del 100% (fino a €6.000/anno) per l'assunzione di donne in determinate condizioni di svantaggio: over 50 disoccupate da 12+ mesi, donne di qualsiasi età disoccupate da 24+ mesi, donne residenti in aree svantaggiate, donne impiegate in settori con forte disparità di genere.",
+      "categoria": "Lavoro",
+      "tags": [
+        "assunzione",
+        "donne",
+        "incentivo",
+        "sgravio",
+        "lavoro",
+        "pari opportunità"
+      ],
+      "requisiti": [
+        "Donna over 50 disoccupata da almeno 12 mesi, OPPURE",
+        "Donna di qualsiasi età disoccupata da almeno 24 mesi, OPPURE",
+        "Donna residente in zone con alto tasso disoccupazione femminile",
+        "Assunzione a tempo indeterminato o determinato (12+ mesi)"
+      ],
+      "documenti": [
+        "Stato di disoccupazione della lavoratrice",
+        "Comunicazione UniLav",
+        "DURC regolare",
+        "Certificato di residenza (per aree svantaggiate)"
+      ],
+      "comeRichiederlo": "1. Verificare requisiti della lavoratrice\n2. Procedere con l'assunzione\n3. Domanda online INPS\n4. Applicare esonero nel flusso UniEmens",
+      "importo": "Esonero fino a €6.000/anno per 18 mesi",
+      "scadenza": "31 dicembre 2026",
+      "ente": "INPS",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/incentivo-donne",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "woman"
+    },
+    {
+      "id": "decontribuzione_sud",
+      "titolo": "Decontribuzione Sud",
+      "descrizione": "Sgravio contributivo per aziende del Mezzogiorno.",
+      "descrizioneCompleta": "Riduzione dei contributi previdenziali a carico dei datori di lavoro privati del Mezzogiorno. Sgravio del 30% sui contributi INPS per lavoratori in Abruzzo, Molise, Campania, Puglia, Basilicata, Calabria, Sicilia, Sardegna. Misura prorogata fino al 2029 con riduzione progressiva.",
+      "categoria": "Lavoro",
+      "tags": [
+        "sud",
+        "mezzogiorno",
+        "contributi",
+        "sgravio",
+        "aziende",
+        "lavoro"
+      ],
+      "requisiti": [
+        "Datore di lavoro privato",
+        "Sede operativa nel Mezzogiorno (8 regioni)",
+        "Lavoratori occupati nelle sedi del Sud",
+        "Regolarità contributiva (DURC)"
+      ],
+      "documenti": [
+        "DURC",
+        "Visura camerale",
+        "Flusso UniEmens"
+      ],
+      "comeRichiederlo": "1. Verifica automatica INPS per sedi nel Mezzogiorno\n2. Applicazione sgravio nel flusso UniEmens\n3. Nessuna domanda specifica richiesta",
+      "importo": "Sgravio 30% contributi INPS",
+      "scadenza": "Fino al 2029",
+      "ente": "INPS",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/decontribuzione-sud",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "south"
+    },
+    {
+      "id": "bonus_lavoro_2025",
+      "titolo": "Bonus Lavoro 2025 - Nuovo Decreto",
+      "descrizione": "Nuovi incentivi per l'occupazione previsti dalla Legge di Bilancio 2025.",
+      "descrizioneCompleta": "La Legge di Bilancio 2025 prevede un pacchetto di incentivi per l'occupazione: maxi-deduzione del 120% del costo del lavoro per nuove assunzioni a tempo indeterminato (130% per categorie svantaggiate), bonus fino a €3.000 annui per neoassunti che trasferiscono la residenza oltre 100 km, e conferma della decontribuzione per giovani e donne.",
+      "categoria": "Lavoro",
+      "tags": [
+        "bonus",
+        "lavoro",
+        "2025",
+        "assunzione",
+        "decreto",
+        "incentivo",
+        "nuovo"
+      ],
+      "requisiti": [
+        "Nuova assunzione a tempo indeterminato nel 2025",
+        "Incremento occupazionale netto rispetto all'anno precedente",
+        "Datore di lavoro in regola",
+        "Per bonus trasferimento: nuova residenza oltre 100 km"
+      ],
+      "documenti": [
+        "Comunicazione UniLav",
+        "Dichiarazione incremento occupazionale",
+        "Cambio residenza (per bonus trasferimento)",
+        "DURC regolare"
+      ],
+      "comeRichiederlo": "1. Effettuare l'assunzione a tempo indeterminato\n2. Verificare incremento occupazionale\n3. Applicare la maxi-deduzione in dichiarazione dei redditi\n4. Per bonus trasferimento: domanda all'INPS",
+      "importo": "Deduzione 120-130% + bonus €3.000",
+      "scadenza": "31 dicembre 2026",
+      "ente": "Agenzia delle Entrate / INPS",
+      "linkUfficiale": "https://www.agenziaentrate.gov.it",
+      "isNuovo": true,
+      "dataAggiunta": "2025-01-15T00:00:00.000",
+      "validoFino": null,
+      "iconName": "rocket_launch"
+    },
+    {
+      "id": "sfl",
+      "titolo": "Supporto Formazione Lavoro (SFL)",
+      "descrizione": "Indennità di €350/mese per partecipazione a corsi di formazione.",
+      "descrizioneCompleta": "Il Supporto per la Formazione e il Lavoro è una misura che prevede un'indennità di €350 mensili per la partecipazione a progetti di formazione, qualificazione e riqualificazione professionale, orientamento e accompagnamento al lavoro. Destinato a soggetti di età 18-59 anni con ISEE fino a €6.000.",
+      "categoria": "Lavoro",
+      "tags": [
+        "formazione",
+        "lavoro",
+        "corso",
+        "sfl",
+        "indennità",
+        "disoccupazione"
+      ],
+      "requisiti": [
+        "Età tra 18 e 59 anni",
+        "ISEE non superiore a €6.000",
+        "Residenza in Italia",
+        "Non beneficiario di ADI",
+        "Iscrizione al programma GOL o corsi di formazione"
+      ],
+      "documenti": [
+        "ISEE in corso di validità",
+        "Documento d'identità e CF",
+        "DID al Centro per l'Impiego",
+        "Iscrizione a piattaforma SIISL"
+      ],
+      "comeRichiederlo": "1. Ottenere ISEE aggiornato\n2. Iscriversi alla piattaforma SIISL (siisl.lavoro.gov.it)\n3. Presentare domanda su inps.it con SPID\n4. Sottoscrivere il patto di servizio al CpI\n5. Iniziare il percorso formativo",
+      "importo": "€350/mese per max 12 mesi",
+      "scadenza": "Sempre aperto",
+      "ente": "INPS / Ministero del Lavoro",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/supporto-formazione-lavoro",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "menu_book"
+    },
+    {
+      "id": "bonus_affitto_giovani",
+      "titolo": "Bonus Affitto Giovani Under 31",
+      "descrizione": "Detrazione fiscale fino a €2.000 per giovani inquilini.",
+      "descrizioneCompleta": "Detrazione IRPEF di €991,60 per i primi 4 anni di contratto per i giovani tra 20 e 31 anni (non compiuti) che stipulano un contratto di locazione per l'abitazione principale. Se il 20% del canone supera €991,60, la detrazione è pari al 20% del canone fino a un massimo di €2.000. L'immobile non deve essere di proprietà dei genitori.",
+      "categoria": "Casa & Affitto",
+      "tags": [
+        "affitto",
+        "giovani",
+        "casa",
+        "under 31",
+        "detrazione",
+        "locazione"
+      ],
+      "requisiti": [
+        "Età tra 20 e 30 anni (non aver compiuto 31)",
+        "Reddito complessivo non superiore a €15.493,71",
+        "Contratto di locazione regolarmente registrato",
+        "Immobile diverso dall'abitazione dei genitori"
+      ],
+      "documenti": [
+        "Contratto di locazione registrato",
+        "Ricevute di pagamento affitto",
+        "Dichiarazione dei redditi (730 o Modello Redditi)",
+        "Documento d'identità"
+      ],
+      "comeRichiederlo": "1. Stipulare contratto di locazione regolare\n2. Registrare il contratto all'Agenzia delle Entrate\n3. Indicare la detrazione nella dichiarazione dei redditi (730)\n4. Conservare ricevute di pagamento",
+      "importo": "Detrazione fino a €2.000/anno",
+      "scadenza": "In dichiarazione dei redditi",
+      "ente": "Agenzia delle Entrate",
+      "linkUfficiale": "https://www.agenziaentrate.gov.it/portale/bonus-affitto-giovani",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "apartment"
+    },
+    {
+      "id": "bonus_prima_casa",
+      "titolo": "Bonus Prima Casa Under 36",
+      "descrizione": "Agevolazioni fiscali per l'acquisto della prima casa per giovani.",
+      "descrizioneCompleta": "Agevolazioni per l'acquisto della prima casa per giovani under 36 con ISEE non superiore a €40.000. Include: esenzione imposta di registro, ipotecaria e catastale; credito d'imposta pari all'IVA pagata per acquisti soggetti a IVA; accesso al Fondo di Garanzia Prima Casa con garanzia statale all'80%.",
+      "categoria": "Casa & Affitto",
+      "tags": [
+        "prima casa",
+        "mutuo",
+        "giovani",
+        "under 36",
+        "acquisto",
+        "immobile"
+      ],
+      "requisiti": [
+        "Età under 36 al rogito",
+        "ISEE non superiore a €40.000",
+        "Non possedere altri immobili (prima casa)",
+        "Acquisto di immobile non di lusso (cat. A1, A8, A9 escluse)"
+      ],
+      "documenti": [
+        "ISEE in corso di validità",
+        "Compromesso/proposta d'acquisto",
+        "Documentazione immobiliare",
+        "Documento d'identità e CF"
+      ],
+      "comeRichiederlo": "1. Ottenere ISEE aggiornato\n2. Richiedere mutuo con Fondo Garanzia Consap\n3. Comunicare al notaio i requisiti under 36\n4. Il notaio applica le esenzioni al rogito",
+      "importo": "Esenzione imposte + garanzia mutuo 80%",
+      "scadenza": "31 dicembre 2026",
+      "ente": "Agenzia delle Entrate / Consap",
+      "linkUfficiale": "https://www.consap.it/fondo-prima-casa/",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "house"
+    },
+    {
+      "id": "superbonus_70",
+      "titolo": "Superbonus 70% (2025)",
+      "descrizione": "Detrazione del 70% per lavori di efficientamento energetico condominiali.",
+      "descrizioneCompleta": "Il Superbonus nel 2025 è sceso al 65% per i condomini che hanno presentato CILAS entro il 2023. Per chi ha avviato lavori nel 2024, la detrazione è al 70%. Copre interventi trainanti (isolamento termico, sostituzione impianti) e trainati (infissi, pannelli solari). Detrazione in 4 quote annuali.",
+      "categoria": "Casa & Affitto",
+      "tags": [
+        "superbonus",
+        "ristrutturazione",
+        "condominio",
+        "energia",
+        "risparmio",
+        "110"
+      ],
+      "requisiti": [
+        "Condominio con CILAS presentata entro le scadenze",
+        "Interventi trainanti: isolamento termico o sostituzione caldaia",
+        "Miglioramento di almeno 2 classi energetiche",
+        "Lavori iniziati nei termini di legge"
+      ],
+      "documenti": [
+        "CILAS (Comunicazione Inizio Lavori Asseverata Superbonus)",
+        "APE pre e post intervento",
+        "Asseverazione tecnico abilitato",
+        "Visto di conformità fiscale",
+        "Fatture e bonifici parlanti"
+      ],
+      "comeRichiederlo": "1. Delibera assembleare condominiale\n2. Presentare CILAS al Comune\n3. Iniziare i lavori con impresa qualificata\n4. Ottenere asseverazione energetica\n5. Indicare in dichiarazione redditi o cessione credito",
+      "importo": "Detrazione 65-70% in 4 anni",
+      "scadenza": "31 dicembre 2026",
+      "ente": "Agenzia delle Entrate / ENEA",
+      "linkUfficiale": "https://www.agenziaentrate.gov.it/portale/superbonus",
+      "isNuovo": true,
+      "dataAggiunta": "2025-01-01T00:00:00.000",
+      "validoFino": null,
+      "iconName": "solar_power"
+    },
+    {
+      "id": "bonus_mobili",
+      "titolo": "Bonus Mobili ed Elettrodomestici",
+      "descrizione": "Detrazione 50% per acquisto mobili in immobile ristrutturato.",
+      "descrizioneCompleta": "Detrazione IRPEF del 50% per l'acquisto di mobili e grandi elettrodomestici di classe energetica elevata, destinati ad arredare un immobile oggetto di ristrutturazione. Tetto massimo di spesa: €5.000 per il 2025. Pagamento con bonifico o carta.",
+      "categoria": "Casa & Affitto",
+      "tags": [
+        "mobili",
+        "elettrodomestici",
+        "ristrutturazione",
+        "arredamento",
+        "detrazione"
+      ],
+      "requisiti": [
+        "Aver effettuato una ristrutturazione edilizia",
+        "Acquisto di mobili nuovi o grandi elettrodomestici classe A+",
+        "Pagamento tracciabile (bonifico/carta)",
+        "Spesa massima €5.000"
+      ],
+      "documenti": [
+        "Fatture di acquisto mobili/elettrodomestici",
+        "Ricevuta bonifico o estratto conto carta",
+        "Pratica edilizia della ristrutturazione",
+        "Dichiarazione dei redditi (730)"
+      ],
+      "comeRichiederlo": "1. Avere in corso o conclusa una ristrutturazione\n2. Acquistare mobili/elettrodomestici con pagamento tracciabile\n3. Conservare fatture e ricevute\n4. Indicare la detrazione nel 730",
+      "importo": "Detrazione 50% fino a €5.000",
+      "scadenza": "31 dicembre 2026",
+      "ente": "Agenzia delle Entrate",
+      "linkUfficiale": "https://www.agenziaentrate.gov.it/portale/bonus-mobili",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "chair"
+    },
+    {
+      "id": "bonus_ristrutturazione",
+      "titolo": "Bonus Ristrutturazione 50%",
+      "descrizione": "Detrazione per lavori di ristrutturazione edilizia fino a €96.000.",
+      "descrizioneCompleta": "Detrazione IRPEF del 50% sulle spese sostenute per lavori di ristrutturazione edilizia, su un importo massimo di €96.000 per unità immobiliare. La detrazione va ripartita in 10 quote annuali. Copre: manutenzione straordinaria, restauro, risanamento conservativo, ristrutturazione edilizia.",
+      "categoria": "Casa & Affitto",
+      "tags": [
+        "ristrutturazione",
+        "casa",
+        "lavori",
+        "edilizia",
+        "detrazione",
+        "manutenzione"
+      ],
+      "requisiti": [
+        "Proprietario, inquilino o comodatario dell'immobile",
+        "Lavori di manutenzione straordinaria o ristrutturazione",
+        "Pagamento con bonifico parlante",
+        "Spesa massima €96.000 per unità immobiliare"
+      ],
+      "documenti": [
+        "Titolo abilitativo edilizio (CILA, SCIA, ecc.)",
+        "Fatture e bonifici parlanti",
+        "Comunicazione ASL (se prevista)",
+        "Dichiarazione dei redditi (730)"
+      ],
+      "comeRichiederlo": "1. Presentare pratica edilizia al Comune\n2. Eseguire lavori con impresa regolare\n3. Pagare con bonifico parlante\n4. Indicare detrazione nel 730",
+      "importo": "Detrazione 50% fino a €96.000",
+      "scadenza": "31 dicembre 2026",
+      "ente": "Agenzia delle Entrate",
+      "linkUfficiale": "https://www.agenziaentrate.gov.it/portale/ristrutturazioni-edilizie",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "construction"
+    },
+    {
+      "id": "bonus_barriere",
+      "titolo": "Bonus Barriere Architettoniche 75%",
+      "descrizione": "Detrazione 75% per eliminazione barriere architettoniche.",
+      "descrizioneCompleta": "Detrazione del 75% per interventi finalizzati al superamento e all'eliminazione di barriere architettoniche. Tetto di spesa variabile: €50.000 per edifici unifamiliari, €40.000 per condomini 2-8 unità, €30.000 per condomini 8+ unità. Detrazione in 5 quote annuali.",
+      "categoria": "Casa & Affitto",
+      "tags": [
+        "barriere architettoniche",
+        "disabilità",
+        "accessibilità",
+        "ascensore",
+        "rampa"
+      ],
+      "requisiti": [
+        "Interventi per eliminazione barriere architettoniche",
+        "Rispetto norme DM 236/1989",
+        "Pagamento con bonifico parlante"
+      ],
+      "documenti": [
+        "Asseverazione tecnico abilitato",
+        "Fatture e bonifici parlanti",
+        "Pratica edilizia",
+        "Dichiarazione dei redditi (730)"
+      ],
+      "comeRichiederlo": "1. Verificare conformità intervento al DM 236/1989\n2. Eseguire lavori con impresa qualificata\n3. Pagare con bonifico parlante\n4. Ottenere asseverazione tecnica\n5. Indicare detrazione nel 730",
+      "importo": "Detrazione 75% (tetto €30.000-€50.000)",
+      "scadenza": "31 dicembre 2026",
+      "ente": "Agenzia delle Entrate",
+      "linkUfficiale": "https://www.agenziaentrate.gov.it/portale/bonus-barriere-architettoniche",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "accessible"
+    },
+    {
+      "id": "contributo_affitto",
+      "titolo": "Contributo Affitto Comunale",
+      "descrizione": "Contributo dal Comune per chi ha difficoltà a pagare l'affitto.",
+      "descrizioneCompleta": "I Comuni erogano contributi economici per il pagamento del canone di locazione a nuclei familiari in difficoltà economica. L'importo e i requisiti variano da Comune a Comune. Generalmente richiesto ISEE basso, contratto registrato e residenza nel Comune. Il bando viene pubblicato annualmente.",
+      "categoria": "Casa & Affitto",
+      "tags": [
+        "affitto",
+        "contributo",
+        "comune",
+        "canone",
+        "locazione",
+        "bando"
+      ],
+      "requisiti": [
+        "Residenza nel Comune che pubblica il bando",
+        "ISEE sotto la soglia comunale (varia, es. €16.000-€26.000)",
+        "Contratto di locazione regolarmente registrato",
+        "Incidenza canone su reddito superiore al 30%"
+      ],
+      "documenti": [
+        "ISEE in corso di validità",
+        "Contratto di locazione registrato",
+        "Ricevute pagamento affitto",
+        "Certificato di residenza",
+        "Documento d'identità e CF"
+      ],
+      "comeRichiederlo": "1. Controllare il sito del proprio Comune per il bando\n2. Verificare i requisiti ISEE\n3. Presentare domanda online o allo sportello\n4. Allegare documentazione richiesta\n5. Attendere graduatoria",
+      "importo": "Variabile (€500-€3.000 a seconda del Comune)",
+      "scadenza": "Varia per Comune (bandi annuali)",
+      "ente": "Comune di residenza",
+      "linkUfficiale": "https://www.comune.milano.it/servizi/contributo-affitto",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "real_estate_agent"
+    },
+    {
+      "id": "morosita_incolpevole",
+      "titolo": "Fondo Morosità Incolpevole",
+      "descrizione": "Aiuto per chi non riesce a pagare l'affitto per cause non dipendenti.",
+      "descrizioneCompleta": "Il Fondo Nazionale per la Morosità Incolpevole è destinato agli inquilini che non riescono a pagare il canone di locazione a causa di eventi imprevisti: perdita del lavoro, cassa integrazione, malattia grave, separazione. Il contributo può coprire fino a €12.000 e serve per sanare la morosità ed evitare lo sfratto.",
+      "categoria": "Casa & Affitto",
+      "tags": [
+        "morosità",
+        "sfratto",
+        "affitto",
+        "emergenza",
+        "casa",
+        "aiuto"
+      ],
+      "requisiti": [
+        "Contratto di locazione regolare",
+        "Morosità dovuta a cause involontarie (licenziamento, malattia, ecc.)",
+        "ISEE non superiore a €26.000",
+        "Reddito annuo lordo non superiore a €35.000"
+      ],
+      "documenti": [
+        "ISEE in corso di validità",
+        "Contratto di locazione",
+        "Documentazione evento che ha causato la morosità",
+        "Atto di intimazione sfratto (se presente)"
+      ],
+      "comeRichiederlo": "1. Verificare bando del proprio Comune\n2. Documentare la causa della morosità\n3. Presentare domanda al Comune\n4. Allegare tutta la documentazione",
+      "importo": "Fino a €12.000",
+      "scadenza": "Bandi comunali periodici",
+      "ente": "Comune / Ministero Infrastrutture",
+      "linkUfficiale": "https://www.mit.gov.it/comunicazione/news/fondo-morosita-incolpevole",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "shield"
+    },
+    {
+      "id": "assegno_unico",
+      "titolo": "Assegno Unico Universale",
+      "descrizione": "Assegno mensile per ogni figlio a carico dal 7° mese di gravidanza ai 21 anni.",
+      "descrizioneCompleta": "L'Assegno Unico e Universale è un sostegno economico per le famiglie con figli a carico, dal 7° mese di gravidanza fino ai 21 anni (senza limiti per figli disabili). L'importo varia da €57 a €199,40 per figlio in base all'ISEE. Maggiorazioni per: figli sotto 1 anno, famiglie numerose (3+ figli), genitori entrambi lavoratori, figli disabili.",
+      "categoria": "Famiglia & Figli",
+      "tags": [
+        "figli",
+        "famiglia",
+        "assegno",
+        "bambini",
+        "neonato",
+        "genitori"
+      ],
+      "requisiti": [
+        "Figli a carico fino a 21 anni (o senza limiti se disabili)",
+        "Residenza o permesso di soggiorno in Italia",
+        "Presentare domanda INPS",
+        "ISEE opzionale (senza ISEE si riceve l'importo minimo)"
+      ],
+      "documenti": [
+        "ISEE in corso di validità (consigliato)",
+        "Codice fiscale dei figli",
+        "Documento identità e CF del richiedente",
+        "Permesso di soggiorno (per cittadini extra-UE)",
+        "IBAN"
+      ],
+      "comeRichiederlo": "1. Ottenere ISEE aggiornato (opzionale ma consigliato)\n2. Accedere a inps.it con SPID/CIE\n3. Cercare \"Assegno Unico\"\n4. Compilare la domanda online\n5. Indicare dati dei figli e IBAN\n6. L'assegno viene pagato dal mese successivo",
+      "importo": "Da €57 a €199,40/figlio/mese",
+      "scadenza": "Sempre aperto (rinnovo annuale)",
+      "ente": "INPS",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/assegno-unico-universale",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "child_care"
+    },
+    {
+      "id": "bonus_nido",
+      "titolo": "Bonus Nido 2025",
+      "descrizione": "Contributo fino a €3.600/anno per rette asilo nido.",
+      "descrizioneCompleta": "Il Bonus Asilo Nido è un contributo per il pagamento delle rette di asili nido pubblici o privati autorizzati, oppure per forme di supporto domiciliare per bambini sotto i 3 anni con gravi patologie. Importi 2025: fino a €3.600 (ISEE fino a €25.000), €2.500 (ISEE €25.001-€40.000), €1.500 (ISEE oltre €40.000). Per famiglie con 2+ figli under 10: soglie più alte.",
+      "categoria": "Famiglia & Figli",
+      "tags": [
+        "nido",
+        "asilo",
+        "bambini",
+        "retta",
+        "bonus",
+        "infanzia",
+        "2025"
+      ],
+      "requisiti": [
+        "Figlio sotto i 3 anni iscritto all'asilo nido",
+        "Genitore che sostiene il pagamento della retta",
+        "Residenza in Italia",
+        "ISEE per determinare l'importo"
+      ],
+      "documenti": [
+        "ISEE minorenni in corso di validità",
+        "Ricevute/fatture di pagamento rette nido",
+        "Iscrizione al nido (pubblico o privato autorizzato)",
+        "Documento identità e CF",
+        "IBAN"
+      ],
+      "comeRichiederlo": "1. Iscrivere il bambino al nido\n2. Ottenere ISEE minorenni\n3. Domanda su inps.it con SPID\n4. Allegare ricevute di pagamento\n5. Rimborso mensile su IBAN",
+      "importo": "Fino a €3.600/anno (€300/mese)",
+      "scadenza": "31 dicembre 2026",
+      "ente": "INPS",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/bonus-asilo-nido",
+      "isNuovo": true,
+      "dataAggiunta": "2025-02-01T00:00:00.000",
+      "validoFino": null,
+      "iconName": "child_friendly"
+    },
+    {
+      "id": "bonus_mamme",
+      "titolo": "Bonus Mamme Lavoratrici (3+ Figli)",
+      "descrizione": "Esonero contributivo per madri lavoratrici con 3 o più figli.",
+      "descrizioneCompleta": "Le madri lavoratrici dipendenti con 3 o più figli (di cui almeno 1 minorenne) hanno diritto a un esonero del 100% dei contributi previdenziali a loro carico, fino a un massimo di €3.000/anno. La misura è strutturale dal 2025 per madri con 3+ figli. Per il 2025 estesa anche a madri con 2 figli (figlio più piccolo under 10).",
+      "categoria": "Famiglia & Figli",
+      "tags": [
+        "mamme",
+        "madri",
+        "lavoratrici",
+        "figli",
+        "contributi",
+        "esonero",
+        "bonus"
+      ],
+      "requisiti": [
+        "3+ figli (almeno 1 minorenne) O 2 figli (più piccolo under 10 nel 2025)",
+        "Contratto di lavoro dipendente (escluso domestico)",
+        "La madre è la beneficiaria diretta"
+      ],
+      "documenti": [
+        "Codici fiscali dei figli",
+        "Comunicazione al datore di lavoro",
+        "Busta paga (l'esonero viene applicato automaticamente)"
+      ],
+      "comeRichiederlo": "1. Comunicare al datore di lavoro i CF dei figli\n2. Il datore applica l'esonero in busta paga\n3. In alternativa, domanda diretta all'INPS\n4. L'esonero è automatico nel flusso UniEmens",
+      "importo": "Esonero contributi fino a €3.000/anno",
+      "scadenza": "Strutturale (rinnovato ogni anno)",
+      "ente": "INPS",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/esonero-lavoratrici-madri",
+      "isNuovo": true,
+      "dataAggiunta": "2025-01-10T00:00:00.000",
+      "validoFino": null,
+      "iconName": "pregnant_woman"
+    },
+    {
+      "id": "congedo_parentale",
+      "titolo": "Congedo Parentale 80%",
+      "descrizione": "Congedo retribuito all'80% per i primi 2 mesi.",
+      "descrizioneCompleta": "Il congedo parentale prevede un'indennità all'80% della retribuzione per i primi 2 mesi (prima era 1 mese), fruibili entro il 6° anno di vita del bambino. I restanti mesi sono al 30%. Spetta a entrambi i genitori lavoratori dipendenti. Durata totale: fino a 10 mesi (11 se il padre ne usa almeno 3).",
+      "categoria": "Famiglia & Figli",
+      "tags": [
+        "congedo",
+        "parentale",
+        "maternità",
+        "paternità",
+        "figli",
+        "lavoro"
+      ],
+      "requisiti": [
+        "Lavoratore/lavoratrice dipendente",
+        "Figlio di età inferiore a 12 anni",
+        "Rapporto di lavoro in essere"
+      ],
+      "documenti": [
+        "Domanda INPS online",
+        "Certificato di nascita del figlio",
+        "Comunicazione al datore di lavoro con preavviso 5 giorni"
+      ],
+      "comeRichiederlo": "1. Comunicare al datore di lavoro con 5 giorni di preavviso\n2. Presentare domanda su inps.it con SPID\n3. Sezione Maternità e Paternità → Congedo Parentale\n4. Indicare periodo e modalità (continuativa o frazionata)",
+      "importo": "80% retribuzione primi 2 mesi, 30% i successivi",
+      "scadenza": "Entro i 12 anni del bambino",
+      "ente": "INPS",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/congedo-parentale",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "family_restroom"
+    },
+    {
+      "id": "carta_dedicata",
+      "titolo": "Carta Dedicata a Te (€500)",
+      "descrizione": "Carta prepagata da €500 per acquisto beni alimentari e carburante.",
+      "descrizioneCompleta": "La Carta \"Dedicata a Te\" è una carta prepagata PostePay da €500 destinata alle famiglie con ISEE fino a €15.000. Utilizzabile per acquisto di beni alimentari di prima necessità, carburante e abbonamenti ai trasporti pubblici. Viene assegnata automaticamente dai Comuni sulla base dei dati INPS, senza necessità di domanda.",
+      "categoria": "Famiglia & Figli",
+      "tags": [
+        "carta",
+        "spesa",
+        "alimentari",
+        "carburante",
+        "prepagata",
+        "famiglia",
+        "dedicata"
+      ],
+      "requisiti": [
+        "ISEE non superiore a €15.000",
+        "Nucleo familiare di almeno 3 componenti",
+        "Iscrizione anagrafe comunale",
+        "Nessun componente con NASpI, DIS-COLL, ADI o altri sussidi"
+      ],
+      "documenti": [
+        "ISEE in corso di validità",
+        "Nessuna domanda da presentare (assegnazione automatica)",
+        "Documento per ritiro carta alle Poste"
+      ],
+      "comeRichiederlo": "1. Avere un ISEE valido entro €15.000\n2. L'assegnazione è AUTOMATICA da parte del Comune\n3. Riceverai comunicazione dal Comune o SMS\n4. Ritirare la carta presso l'ufficio postale\n5. Attivare con primo acquisto entro la scadenza",
+      "importo": "€500 una tantum",
+      "scadenza": "Annuale (assegnazione automatica)",
+      "ente": "Comune / INPS / Poste Italiane",
+      "linkUfficiale": "https://www.mef.gov.it/focus/carta-dedicata-a-te/",
+      "isNuovo": true,
+      "dataAggiunta": "2025-07-01T00:00:00.000",
+      "validoFino": null,
+      "iconName": "credit_card"
+    },
+    {
+      "id": "bonus_nascita",
+      "titolo": "Bonus Nascita / Nuovi Nati (€1.000)",
+      "descrizione": "Bonus una tantum di €1.000 per ogni nuovo nato nel 2025.",
+      "descrizioneCompleta": "La Legge di Bilancio 2025 ha introdotto un bonus di €1.000 (una tantum) per ogni figlio nato o adottato dal 1° gennaio 2025, per famiglie con ISEE fino a €40.000. Il bonus non è tassato e non concorre al reddito. Si richiede all'INPS entro 60 giorni dalla nascita.",
+      "categoria": "Famiglia & Figli",
+      "tags": [
+        "nascita",
+        "neonato",
+        "bonus",
+        "bebè",
+        "adozione",
+        "2025",
+        "nuovi nati"
+      ],
+      "requisiti": [
+        "Figlio nato o adottato dal 1° gennaio 2025",
+        "ISEE del nucleo familiare non superiore a €40.000",
+        "Residenza in Italia",
+        "Cittadinanza italiana/UE o permesso di soggiorno"
+      ],
+      "documenti": [
+        "Certificato di nascita o adozione",
+        "ISEE in corso di validità",
+        "Documento identità e CF del richiedente",
+        "CF del neonato",
+        "IBAN"
+      ],
+      "comeRichiederlo": "1. Registrare la nascita all'anagrafe\n2. Ottenere ISEE aggiornato\n3. Domanda su inps.it con SPID entro 60 giorni dalla nascita\n4. Sezione Prestazioni → Bonus Nuovi Nati\n5. Indicare dati del neonato e IBAN",
+      "importo": "€1.000 una tantum",
+      "scadenza": "Entro 60 giorni dalla nascita",
+      "ente": "INPS",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/bonus-nuovi-nati",
+      "isNuovo": true,
+      "dataAggiunta": "2025-01-01T00:00:00.000",
+      "validoFino": null,
+      "iconName": "cake"
+    },
+    {
+      "id": "assegno_maternita_comune",
+      "titolo": "Assegno di Maternità del Comune",
+      "descrizione": "Contributo comunale per madri non lavoratrici o con basso reddito.",
+      "descrizioneCompleta": "L'Assegno di Maternità del Comune è destinato alle madri che non lavorano o che hanno una situazione contributiva insufficiente per ricevere l'indennità INPS. Importo 2025: circa €1.917,30 per 5 mensilità (€383,46/mese). Requisiti: ISEE non superiore a €20.221,13. Si richiede al Comune entro 6 mesi dalla nascita.",
+      "categoria": "Famiglia & Figli",
+      "tags": [
+        "maternità",
+        "comune",
+        "madre",
+        "nascita",
+        "non lavoratrice",
+        "assegno"
+      ],
+      "requisiti": [
+        "Madre non lavoratrice o con contribuzione insufficiente",
+        "ISEE non superiore a €20.221,13",
+        "Residenza nel Comune",
+        "Domanda entro 6 mesi dalla nascita"
+      ],
+      "documenti": [
+        "ISEE in corso di validità",
+        "Certificato di nascita",
+        "Documento identità e CF",
+        "Attestazione di non percepire indennità INPS di maternità"
+      ],
+      "comeRichiederlo": "1. Ottenere ISEE\n2. Presentare domanda al Comune di residenza\n3. Entro 6 mesi dalla nascita o adozione\n4. Allegare documentazione\n5. Il Comune trasmette all'INPS per il pagamento",
+      "importo": "€1.917,30 (5 rate da €383,46)",
+      "scadenza": "Entro 6 mesi dalla nascita",
+      "ente": "Comune / INPS",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/assegno-di-maternita-dei-comuni",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "woman"
+    },
+    {
+      "id": "esenzione_ticket",
+      "titolo": "Esenzione Ticket Sanitario per Reddito",
+      "descrizione": "Esenzione dal pagamento del ticket su visite ed esami per reddito basso.",
+      "descrizioneCompleta": "L'esenzione dal ticket sanitario per reddito è prevista per: disoccupati con reddito familiare <€8.263,31 (cod. E02), pensionati over 60 con reddito <€8.263,31 (cod. E01), titolari di pensione sociale/assegno sociale (cod. E03), under 6 o over 65 in nucleo con reddito <€36.151,98 (cod. E04).",
+      "categoria": "Salute",
+      "tags": [
+        "ticket",
+        "esenzione",
+        "sanità",
+        "medico",
+        "visite",
+        "esami",
+        "reddito"
+      ],
+      "requisiti": [
+        "Rientrare in una delle categorie reddituali",
+        "Disoccupati con reddito familiare <€8.263,31",
+        "O pensionati over 60 con reddito <€8.263,31",
+        "O under 6 / over 65 con reddito familiare <€36.151,98"
+      ],
+      "documenti": [
+        "Autocertificazione del reddito",
+        "Tessera sanitaria",
+        "Documento identità",
+        "Stato di disoccupazione (per cod. E02)"
+      ],
+      "comeRichiederlo": "1. Verificare la propria fascia di reddito\n2. Presentare autocertificazione all'ASL\n3. Oppure online tramite il portale regionale\n4. L'esenzione viene registrata sulla tessera sanitaria",
+      "importo": "Esenzione totale ticket visite/esami",
+      "scadenza": "Rinnovo annuale con autocertificazione",
+      "ente": "ASL / Regione",
+      "linkUfficiale": "https://www.salute.gov.it/portale/esenzioni",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "local_hospital"
+    },
+    {
+      "id": "bonus_psicologo",
+      "titolo": "Bonus Psicologo",
+      "descrizione": "Contributo fino a €1.500 per sedute di psicoterapia.",
+      "descrizioneCompleta": "Il Bonus Psicologo è un contributo per sostenere le spese di sedute di psicoterapia presso professionisti iscritti all'albo. Importo massimo: €1.500 (ISEE fino a €15.000), €1.000 (ISEE €15.001-€30.000), €500 (ISEE €30.001-€50.000). La domanda si presenta all'INPS, che stila una graduatoria.",
+      "categoria": "Salute",
+      "tags": [
+        "psicologo",
+        "psicoterapia",
+        "salute mentale",
+        "bonus",
+        "benessere"
+      ],
+      "requisiti": [
+        "ISEE non superiore a €50.000",
+        "Residenza in Italia",
+        "Sedute presso psicoterapeuta iscritto all'albo"
+      ],
+      "documenti": [
+        "ISEE in corso di validità",
+        "Documento identità e CF",
+        "SPID o CIE per domanda online"
+      ],
+      "comeRichiederlo": "1. Ottenere ISEE aggiornato\n2. Domanda su inps.it con SPID (finestra temporale annuale)\n3. Attendere graduatoria\n4. Se ammessi, prenotare sedute con codice univoco\n5. Lo psicoterapeuta fattura direttamente all'INPS",
+      "importo": "Fino a €1.500 (in base all'ISEE)",
+      "scadenza": "Bando annuale (marzo-maggio)",
+      "ente": "INPS",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/bonus-psicologo",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "psychology"
+    },
+    {
+      "id": "bonus_vista",
+      "titolo": "Bonus Vista / Occhiali (€50)",
+      "descrizione": "Voucher di €50 per l'acquisto di occhiali da vista o lenti a contatto.",
+      "descrizioneCompleta": "Il Bonus Vista è un voucher una tantum di €50 per l'acquisto di occhiali da vista o lenti a contatto correttive. Destinato a chi ha un ISEE non superiore a €10.000. Si può richiedere come sconto diretto presso gli ottici aderenti o come rimborso per acquisti già effettuati dal 2021.",
+      "categoria": "Salute",
+      "tags": [
+        "occhiali",
+        "vista",
+        "lenti",
+        "ottico",
+        "voucher",
+        "bonus"
+      ],
+      "requisiti": [
+        "ISEE non superiore a €10.000",
+        "Acquisto di occhiali da vista o lenti correttive",
+        "Residenza in Italia"
+      ],
+      "documenti": [
+        "ISEE in corso di validità",
+        "SPID o CIE",
+        "Fattura/scontrino acquisto (per rimborso)"
+      ],
+      "comeRichiederlo": "1. Accedere al portale bonusvista.it con SPID\n2. Verificare requisiti ISEE\n3. Generare voucher per sconto in negozio\n4. Oppure richiedere rimborso per acquisti già fatti",
+      "importo": "€50 una tantum",
+      "scadenza": "Fino a esaurimento fondi",
+      "ente": "Ministero della Salute",
+      "linkUfficiale": "https://www.bonusvista.it",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "visibility"
+    },
+    {
+      "id": "bonus_cultura",
+      "titolo": "Carta della Cultura Giovani (€500)",
+      "descrizione": "Carta elettronica da €500 per i 18enni per acquisti culturali.",
+      "descrizioneCompleta": "La Carta della Cultura Giovani (ex 18App) è un buono di €500 per i residenti in Italia che compiono 18 anni, con ISEE non superiore a €35.000. Utilizzabile per: libri, cinema, teatri, concerti, musei, eventi culturali, corsi di musica, corsi di lingua. Si attiva su cartadellacultura.istruzione.it.",
+      "categoria": "Studio & Formazione",
+      "tags": [
+        "cultura",
+        "18 anni",
+        "giovani",
+        "libri",
+        "cinema",
+        "musica",
+        "bonus"
+      ],
+      "requisiti": [
+        "Compiere 18 anni nell'anno di riferimento",
+        "ISEE del nucleo familiare non superiore a €35.000",
+        "Residenza in Italia"
+      ],
+      "documenti": [
+        "SPID o CIE",
+        "ISEE in corso di validità"
+      ],
+      "comeRichiederlo": "1. Registrarsi su cartadellacultura.istruzione.it con SPID\n2. Verificare automatica dell'ISEE\n3. Generare buoni per acquisti\n4. Utilizzare i buoni presso esercenti convenzionati",
+      "importo": "€500",
+      "scadenza": "Entro l'anno successivo al compimento dei 18 anni",
+      "ente": "Ministero della Cultura",
+      "linkUfficiale": "https://cartadellacultura.istruzione.it",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "auto_stories"
+    },
+    {
+      "id": "borsa_studio",
+      "titolo": "Borsa di Studio Universitaria",
+      "descrizione": "Borsa di studio regionale per studenti universitari meritevoli a basso reddito.",
+      "descrizioneCompleta": "Le borse di studio universitarie sono erogate dagli Enti Regionali per il Diritto allo Studio (ERSU/EDISU). Coprono: tasse universitarie, vitto, alloggio e trasporti. L'importo varia da €2.000 a €6.000+ in base a ISEE, merito e sede. Requisiti: ISEE universitario fino a €24.335,11 e ISPE fino a €52.902,43 (valori 2025).",
+      "categoria": "Studio & Formazione",
+      "tags": [
+        "borsa",
+        "studio",
+        "università",
+        "studenti",
+        "merito",
+        "tasse"
+      ],
+      "requisiti": [
+        "ISEE universitario non superiore a €24.335,11",
+        "ISPE non superiore a €52.902,43",
+        "Requisiti di merito (crediti minimi)",
+        "Iscrizione a università o AFAM"
+      ],
+      "documenti": [
+        "ISEE universitario",
+        "Iscrizione all'università",
+        "Certificato esami sostenuti",
+        "Documento identità e CF"
+      ],
+      "comeRichiederlo": "1. Ottenere ISEE universitario\n2. Verificare i bandi dell'ERSU/EDISU della propria regione\n3. Presentare domanda online nel periodo indicato\n4. Allegare documentazione\n5. Attendere graduatoria",
+      "importo": "Da €2.000 a €6.000+/anno",
+      "scadenza": "Bandi regionali (luglio-settembre)",
+      "ente": "ERSU / EDISU Regionale",
+      "linkUfficiale": "https://www.miur.gov.it/borse-di-studio",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "school"
+    },
+    {
+      "id": "bonus_trasporto",
+      "titolo": "Bonus Trasporti Studenti",
+      "descrizione": "Voucher fino a €60 per abbonamenti trasporto pubblico.",
+      "descrizioneCompleta": "Il Bonus Trasporti è un voucher per l'acquisto di abbonamenti ai servizi di trasporto pubblico locale, regionale e interregionale. Importo: fino a €60, con ISEE non superiore a €20.000. Copre abbonamenti mensili o annuali di treni, bus, metro. Disponibile tramite il portale dedicato.",
+      "categoria": "Studio & Formazione",
+      "tags": [
+        "trasporto",
+        "bus",
+        "treno",
+        "abbonamento",
+        "studenti",
+        "bonus"
+      ],
+      "requisiti": [
+        "ISEE non superiore a €20.000",
+        "Acquisto di abbonamento trasporto pubblico",
+        "Residenza in Italia"
+      ],
+      "documenti": [
+        "ISEE in corso di validità",
+        "SPID o CIE"
+      ],
+      "comeRichiederlo": "1. Accedere al portale bonustrasporti.lavoro.gov.it\n2. Autenticarsi con SPID\n3. Generare il voucher\n4. Presentarlo all'azienda di trasporto per lo sconto",
+      "importo": "Fino a €60",
+      "scadenza": "Bando annuale",
+      "ente": "Ministero del Lavoro",
+      "linkUfficiale": "https://www.bonustrasporti.lavoro.gov.it",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "directions_bus"
+    },
+    {
+      "id": "carta_merito",
+      "titolo": "Carta del Merito",
+      "descrizione": "Carta da €500 per diplomati con 100/100 alla maturità.",
+      "descrizioneCompleta": "La Carta del Merito è un buono di €500 per chi si diploma con il punteggio di 100/100 alla maturità. È cumulabile con la Carta della Cultura Giovani (totale €1.000). Utilizzabile per acquisti culturali: libri, cinema, teatro, concerti, musei, corsi.",
+      "categoria": "Studio & Formazione",
+      "tags": [
+        "merito",
+        "diploma",
+        "maturità",
+        "100",
+        "studenti",
+        "cultura"
+      ],
+      "requisiti": [
+        "Diploma di maturità con 100/100",
+        "Anno scolastico di riferimento",
+        "Residenza in Italia"
+      ],
+      "documenti": [
+        "SPID o CIE",
+        "Diploma (verifica automatica dal MIUR)"
+      ],
+      "comeRichiederlo": "1. Registrarsi su cartadellacultura.istruzione.it\n2. La verifica del punteggio è automatica\n3. Generare buoni di spesa\n4. Utilizzare presso esercenti convenzionati",
+      "importo": "€500",
+      "scadenza": "Entro l'anno successivo al diploma",
+      "ente": "Ministero dell'Istruzione",
+      "linkUfficiale": "https://cartadellacultura.istruzione.it",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "emoji_events"
+    },
+    {
+      "id": "fondo_studio_inps",
+      "titolo": "Fondo Studio INPS (Borse di Studio)",
+      "descrizione": "Borse di studio INPS per figli di lavoratori iscritti alla Gestione Unitaria.",
+      "descrizioneCompleta": "L'INPS eroga borse di studio per i figli e orfani di dipendenti e pensionati della pubblica amministrazione iscritti alla Gestione Unitaria delle prestazioni creditizie e sociali. Include: borse per scuole superiori, università, master, dottorati. Importi variabili in base al tipo di corso.",
+      "categoria": "Studio & Formazione",
+      "tags": [
+        "borsa",
+        "studio",
+        "inps",
+        "figli",
+        "dipendenti pubblici",
+        "università"
+      ],
+      "requisiti": [
+        "Figlio/orfano di iscritto alla Gestione Unitaria INPS",
+        "Iscrizione a scuola superiore, università o post-laurea",
+        "Requisiti di merito e reddito specifici per bando"
+      ],
+      "documenti": [
+        "ISEE",
+        "Certificato iscrizione scolastica/universitaria",
+        "Pagella o libretto universitario",
+        "Documento identità"
+      ],
+      "comeRichiederlo": "1. Verificare il bando annuale su inps.it\n2. Domanda online tramite SPID\n3. Sezione Welfare → Borse di Studio\n4. Attendere graduatoria",
+      "importo": "Da €750 a €10.000 in base al corso",
+      "scadenza": "Bando annuale INPS",
+      "ente": "INPS",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/borse-di-studio",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "military_tech"
+    },
+    {
+      "id": "bonus_integrazione",
+      "titolo": "Bonus Integrazione Rifugiati",
+      "descrizione": "Percorso di integrazione con contributo per titolari di protezione internazionale.",
+      "descrizioneCompleta": "Il Sistema di Accoglienza e Integrazione (SAI) offre ai titolari di protezione internazionale e umanitaria percorsi di integrazione che includono: alloggio temporaneo, corsi di italiano, orientamento al lavoro, supporto legale e contributo economico per l'autonomia. Durata del percorso: da 6 a 12 mesi.",
+      "categoria": "Immigrazione",
+      "tags": [
+        "rifugiati",
+        "integrazione",
+        "protezione",
+        "accoglienza",
+        "sai",
+        "asilo"
+      ],
+      "requisiti": [
+        "Titolarità di protezione internazionale o umanitaria",
+        "Richiesta di asilo in corso",
+        "Presenza sul territorio italiano"
+      ],
+      "documenti": [
+        "Permesso di soggiorno o ricevuta richiesta asilo",
+        "Documento identità (se disponibile)",
+        "Documentazione dello status di rifugiato"
+      ],
+      "comeRichiederlo": "1. Rivolgersi alla Prefettura o alla Questura\n2. Essere inseriti nel sistema SAI\n3. Il percorso viene assegnato dalla Prefettura\n4. Seguire il programma di integrazione",
+      "importo": "Alloggio + €75-€150/mese pocket money",
+      "scadenza": "Sempre aperto",
+      "ente": "Prefettura / Ministero dell'Interno",
+      "linkUfficiale": "https://www.retesai.it",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "flight_land"
+    },
+    {
+      "id": "rimpatrio_volontario",
+      "titolo": "Contributo Rimpatrio Volontario Assistito",
+      "descrizione": "Assistenza e contributo economico per il ritorno volontario nel paese d'origine.",
+      "descrizioneCompleta": "Il programma di Rimpatrio Volontario Assistito (RVA) offre ai cittadini stranieri che desiderano tornare nel proprio paese: biglietto aereo, assistenza al viaggio, contributo per il reinserimento socio-economico (fino a €2.500). Il programma è gestito dall'OIM in collaborazione con il Ministero dell'Interno.",
+      "categoria": "Immigrazione",
+      "tags": [
+        "rimpatrio",
+        "ritorno",
+        "volontario",
+        "paese origine",
+        "oim"
+      ],
+      "requisiti": [
+        "Cittadino straniero presente in Italia",
+        "Volontà di rimpatriare definitivamente",
+        "Non avere provvedimenti di espulsione con accompagnamento"
+      ],
+      "documenti": [
+        "Documento identità o passaporto",
+        "Permesso di soggiorno (se presente)",
+        "Dichiarazione di volontà di rimpatrio"
+      ],
+      "comeRichiederlo": "1. Contattare l'OIM Italia (oimitalia.it)\n2. Colloquio di orientamento\n3. Preparazione del piano di reinserimento\n4. Organizzazione del viaggio\n5. Erogazione contributo alla partenza",
+      "importo": "Biglietto aereo + fino a €2.500",
+      "scadenza": "Sempre aperto",
+      "ente": "OIM / Ministero dell'Interno",
+      "linkUfficiale": "https://italy.iom.int/it/rimpatrio-volontario-assistito",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "flight_takeoff"
+    },
+    {
+      "id": "permesso_lungo",
+      "titolo": "Permesso Soggiorno Lungo Periodo - Vantaggi",
+      "descrizione": "Tutti i vantaggi del permesso di soggiorno CE di lungo periodo.",
+      "descrizioneCompleta": "Il permesso di soggiorno UE di lungo periodo (ex carta di soggiorno) offre numerosi vantaggi: durata illimitata, accesso a tutte le prestazioni sociali come cittadini italiani, possibilità di lavorare in altri paesi UE, esenzione dal test di italiano per la cittadinanza, accesso a bandi e concorsi pubblici.",
+      "categoria": "Immigrazione",
+      "tags": [
+        "permesso",
+        "lungo periodo",
+        "carta soggiorno",
+        "diritti",
+        "vantaggi"
+      ],
+      "requisiti": [
+        "5 anni di soggiorno regolare e continuativo in Italia",
+        "Reddito non inferiore all'assegno sociale (€6.947,33/anno)",
+        "Alloggio idoneo",
+        "Superamento test di lingua italiana A2"
+      ],
+      "documenti": [
+        "Passaporto valido",
+        "Permesso di soggiorno in corso di validità",
+        "Dichiarazione dei redditi o CU degli ultimi 3 anni",
+        "Certificato idoneità alloggiativa",
+        "Certificato lingua italiana A2"
+      ],
+      "comeRichiederlo": "1. Verificare i 5 anni di soggiorno regolare\n2. Superare il test A2 (se non già fatto)\n3. Ottenere certificato idoneità alloggiativa\n4. Compilare il kit postale\n5. Inviare domanda tramite ufficio postale\n6. Appuntamento in Questura per foto e impronte",
+      "importo": "Accesso a tutte le prestazioni sociali",
+      "scadenza": "Sempre aperto (dopo 5 anni di soggiorno)",
+      "ente": "Questura / Ministero dell'Interno",
+      "linkUfficiale": "https://www.portaleimmigrazione.it",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "card_membership"
+    },
+    {
+      "id": "kit_digitale",
+      "titolo": "Kit Digitale per Immigrati",
+      "descrizione": "SPID, PEC e supporto digitale gratuito per stranieri.",
+      "descrizioneCompleta": "Diversi Comuni e associazioni offrono sportelli di assistenza digitale per aiutare i cittadini stranieri ad attivare: SPID (identità digitale), PEC (posta certificata), App IO, accesso ai portali della PA. Alcuni CAF offrono questo servizio gratuitamente. È essenziale per accedere a tutti i servizi online.",
+      "categoria": "Immigrazione",
+      "tags": [
+        "spid",
+        "digitale",
+        "pec",
+        "app io",
+        "identità digitale",
+        "stranieri"
+      ],
+      "requisiti": [
+        "Permesso di soggiorno valido o carta d'identità",
+        "Codice fiscale",
+        "Numero di telefono italiano",
+        "Indirizzo email"
+      ],
+      "documenti": [
+        "Documento d'identità o permesso di soggiorno",
+        "Codice fiscale / tessera sanitaria",
+        "Numero di cellulare",
+        "Email personale"
+      ],
+      "comeRichiederlo": "1. Recarsi al CAF o sportello comunale di assistenza digitale\n2. Portare documenti necessari\n3. Attivare SPID (PosteID, Aruba, ecc.)\n4. Attivare PEC se necessario\n5. Installare App IO sul telefono",
+      "importo": "Gratuito",
+      "scadenza": "Sempre disponibile",
+      "ente": "Comune / CAF / Poste Italiane",
+      "linkUfficiale": "https://www.spid.gov.it",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "phone_android"
+    },
+    {
+      "id": "adi",
+      "titolo": "Assegno di Inclusione (ADI)",
+      "descrizione": "Sostegno economico per famiglie in povertà con minori, disabili o over 60.",
+      "descrizioneCompleta": "L'Assegno di Inclusione (ADI) è la misura che ha sostituito il Reddito di Cittadinanza. Destinato a nuclei con almeno un componente minorenne, disabile, over 60, o in condizione di svantaggio certificata. L'importo è fino a €500/mese (€630 con affitto) + €280 contributo affitto. ISEE massimo €9.360.",
+      "categoria": "Fiscale",
+      "tags": [
+        "adi",
+        "inclusione",
+        "povertà",
+        "reddito",
+        "sussidio",
+        "aiuto",
+        "famiglia"
+      ],
+      "requisiti": [
+        "ISEE non superiore a €9.360",
+        "Reddito familiare sotto €6.000 × scala equivalenza",
+        "Almeno 1 componente: minore, disabile, over 60 o in svantaggio",
+        "Residenza in Italia da almeno 5 anni (ultimi 2 continuativi)",
+        "Patrimonio immobiliare ≤€30.000 (esclusa prima casa ≤€150.000)",
+        "Patrimonio mobiliare ≤€6.000 (+ incrementi per componenti)"
+      ],
+      "documenti": [
+        "ISEE in corso di validità",
+        "Documento identità e CF di tutti i componenti",
+        "Permesso di soggiorno di lungo periodo (per extra-UE)",
+        "Certificazione disabilità (se presente)",
+        "DID al Centro per l'Impiego"
+      ],
+      "comeRichiederlo": "1. Ottenere ISEE aggiornato\n2. Registrarsi su SIISL (piattaforma lavoro)\n3. Domanda online su inps.it con SPID\n4. Sottoscrivere Patto di Attivazione Digitale\n5. Presentarsi al CpI per Patto di Servizio\n6. Pagamento tramite carta ADI entro 30 giorni",
+      "importo": "Fino a €500/mese + €280 contributo affitto",
+      "scadenza": "Sempre aperto",
+      "ente": "INPS",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/assegno-di-inclusione",
+      "isNuovo": true,
+      "dataAggiunta": "2024-01-01T00:00:00.000",
+      "validoFino": null,
+      "iconName": "account_balance_wallet"
+    },
+    {
+      "id": "social_card",
+      "titolo": "Social Card / Carta Acquisti (€80)",
+      "descrizione": "Carta prepagata di €80 bimestrali per anziani e bambini sotto 3 anni.",
+      "descrizioneCompleta": "La Social Card (Carta Acquisti) è una carta di pagamento elettronica ricaricata ogni 2 mesi con €80. Destinata a: cittadini over 65 con ISEE ≤€8.052,75 e bambini sotto 3 anni con ISEE familiare ≤€8.052,75. Utilizzabile per acquisti alimentari e pagamento bollette.",
+      "categoria": "Fiscale",
+      "tags": [
+        "social card",
+        "carta acquisti",
+        "anziani",
+        "bambini",
+        "spesa",
+        "bollette"
+      ],
+      "requisiti": [
+        "Over 65 con ISEE ≤€8.052,75, OPPURE",
+        "Genitore di bambino sotto 3 anni con ISEE ≤€8.052,75",
+        "Cittadinanza italiana o UE",
+        "Non essere ricoverato in struttura"
+      ],
+      "documenti": [
+        "ISEE in corso di validità",
+        "Documento identità e CF",
+        "Certificato di nascita del bambino (per under 3)"
+      ],
+      "comeRichiederlo": "1. Ottenere ISEE\n2. Recarsi all'ufficio postale con documentazione\n3. Compilare il modulo di richiesta\n4. La carta viene consegnata alle Poste\n5. Ricarica automatica ogni 2 mesi",
+      "importo": "€80 ogni 2 mesi (€480/anno)",
+      "scadenza": "Sempre aperto",
+      "ente": "INPS / Poste Italiane",
+      "linkUfficiale": "https://www.mef.gov.it/focus/social-card/",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "credit_card"
+    },
+    {
+      "id": "bonus_bollette",
+      "titolo": "Bonus Bollette Luce, Gas e Acqua",
+      "descrizione": "Sconto automatico in bolletta per famiglie a basso ISEE.",
+      "descrizioneCompleta": "Il Bonus Sociale per disagio economico è uno sconto applicato automaticamente sulle bollette di luce, gas e acqua. Per famiglie con ISEE fino a €9.530 (€20.000 per famiglie 4+ figli). L'applicazione è automatica dopo la presentazione dell'ISEE. Lo sconto varia: luce €150-200/anno, gas €50-300/anno, acqua: fornitura minima gratuita.",
+      "categoria": "Fiscale",
+      "tags": [
+        "bollette",
+        "luce",
+        "gas",
+        "acqua",
+        "bonus",
+        "sconto",
+        "energia"
+      ],
+      "requisiti": [
+        "ISEE non superiore a €9.530 (€20.000 per 4+ figli a carico)",
+        "Essere intestatari di utenza domestica",
+        "Presentare ISEE (il bonus è automatico)"
+      ],
+      "documenti": [
+        "ISEE in corso di validità (è sufficiente)",
+        "Il bonus viene applicato automaticamente in bolletta"
+      ],
+      "comeRichiederlo": "1. Presentare la DSU per ottenere l'ISEE\n2. Se l'ISEE è sotto la soglia, il bonus è AUTOMATICO\n3. Nessuna domanda aggiuntiva da presentare\n4. Lo sconto appare direttamente in bolletta",
+      "importo": "Luce: €150-200/anno, Gas: €50-300/anno",
+      "scadenza": "Automatico con ISEE valido",
+      "ente": "ARERA / INPS",
+      "linkUfficiale": "https://www.arera.it/bonus",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "bolt"
+    },
+    {
+      "id": "bonus_tv",
+      "titolo": "Bonus Decoder e TV",
+      "descrizione": "Contributo per l'acquisto di TV o decoder compatibili con il nuovo digitale.",
+      "descrizioneCompleta": "Il Bonus TV e Decoder è un contributo per l'acquisto di apparecchi TV e decoder compatibili con il nuovo standard DVB-T2. Importo: fino a €30 per decoder (senza limiti ISEE per over 70) o fino a €100 per TV (con rottamazione e ISEE ≤€20.000).",
+      "categoria": "Fiscale",
+      "tags": [
+        "tv",
+        "decoder",
+        "digitale",
+        "terrestre",
+        "bonus",
+        "dvb-t2"
+      ],
+      "requisiti": [
+        "Residenza in Italia",
+        "Per bonus TV: ISEE ≤€20.000 + rottamazione vecchio apparecchio",
+        "Per bonus decoder over 70: nessun limite ISEE"
+      ],
+      "documenti": [
+        "ISEE (per bonus TV)",
+        "Documento identità",
+        "Autocertificazione"
+      ],
+      "comeRichiederlo": "1. Recarsi in un negozio aderente\n2. Presentare documento e autocertificazione\n3. Lo sconto viene applicato direttamente\n4. Per over 70: richiedere consegna a domicilio",
+      "importo": "Fino a €100 (TV) o €30 (decoder)",
+      "scadenza": "Fino a esaurimento fondi",
+      "ente": "Ministero delle Imprese",
+      "linkUfficiale": "https://www.mise.gov.it/bonus-tv",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "tv"
+    },
+    {
+      "id": "reddito_alimentare",
+      "titolo": "Reddito Alimentare",
+      "descrizione": "Pacchi alimentari distribuiti tramite app per famiglie in difficoltà.",
+      "descrizioneCompleta": "Il Reddito Alimentare è una misura sperimentale che prevede la distribuzione di pacchi alimentari realizzati con le eccedenze della distribuzione alimentare e della ristorazione. Attivo in via sperimentale in alcune città metropolitane (Genova, Firenze, Napoli, Palermo). I beneficiari vengono individuati tramite i servizi sociali.",
+      "categoria": "Fiscale",
+      "tags": [
+        "alimentare",
+        "cibo",
+        "pacchi",
+        "povertà",
+        "aiuto",
+        "emergenza"
+      ],
+      "requisiti": [
+        "Residenza in un Comune aderente",
+        "Condizione di povertà certificata dai servizi sociali",
+        "Segnalazione da parte dei servizi sociali comunali"
+      ],
+      "documenti": [
+        "Segnalazione ai servizi sociali",
+        "ISEE (se richiesto dal Comune)",
+        "Documento identità"
+      ],
+      "comeRichiederlo": "1. Rivolgersi ai servizi sociali del Comune\n2. Valutazione della condizione di bisogno\n3. Inserimento nella lista beneficiari\n4. Ritiro pacchi alimentari",
+      "importo": "Pacchi alimentari periodici",
+      "scadenza": "Sperimentale",
+      "ente": "Comune / Ministero del Lavoro",
+      "linkUfficiale": "https://www.lavoro.gov.it/temi-e-priorita/poverta-e-esclusione-sociale",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "fastfood"
+    },
+    {
+      "id": "legge_104",
+      "titolo": "Legge 104 - Permessi Retribuiti",
+      "descrizione": "3 giorni di permesso retribuito al mese per assistere familiari disabili.",
+      "descrizioneCompleta": "La Legge 104/1992 prevede 3 giorni di permesso retribuito al mese (o 2 ore/giorno) per lavoratori dipendenti che assistono familiari con handicap grave (art. 3, comma 3). I permessi sono retribuiti e coperti da contribuzione figurativa. Possono essere frazionati in ore.",
+      "categoria": "Disabilità",
+      "tags": [
+        "104",
+        "disabilità",
+        "permessi",
+        "handicap",
+        "caregiver",
+        "assistenza"
+      ],
+      "requisiti": [
+        "Lavoratore dipendente",
+        "Familiare con riconoscimento handicap grave (art. 3 c. 3 L. 104)",
+        "Referente unico per l'assistenza"
+      ],
+      "documenti": [
+        "Verbale della commissione medica ASL (art. 3 c. 3)",
+        "Domanda al datore di lavoro",
+        "Domanda INPS online",
+        "Certificazione di parentela"
+      ],
+      "comeRichiederlo": "1. Ottenere il riconoscimento L. 104 dalla commissione ASL\n2. Presentare domanda all'INPS online\n3. Comunicare al datore di lavoro\n4. Fruire dei permessi (3 gg/mese o 2 ore/giorno)",
+      "importo": "3 giorni retribuiti/mese",
+      "scadenza": "Valido finché persiste la condizione",
+      "ente": "INPS / ASL",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/permessi-legge-104",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "accessible"
+    },
+    {
+      "id": "invalidita_civile",
+      "titolo": "Assegno Ordinario di Invalidità (AOI)",
+      "descrizione": "Prestazione economica per lavoratori con capacità ridotta di oltre 2/3.",
+      "descrizioneCompleta": "L'Assegno Ordinario di Invalidità spetta ai lavoratori con infermità fisica o mentale che riduca la capacità lavorativa a meno di 1/3. Richiede almeno 5 anni di contribuzione (3 negli ultimi 5 anni). L'importo dipende dai contributi versati. È compatibile con il lavoro.",
+      "categoria": "Disabilità",
+      "tags": [
+        "invalidità",
+        "assegno",
+        "lavoro",
+        "malattia",
+        "inabilità",
+        "disabilità"
+      ],
+      "requisiti": [
+        "Capacità lavorativa ridotta a meno di 1/3",
+        "Almeno 5 anni di contribuzione totale",
+        "Almeno 3 anni di contribuzione negli ultimi 5"
+      ],
+      "documenti": [
+        "Certificato medico telematico",
+        "Documentazione medica completa",
+        "Domanda INPS online"
+      ],
+      "comeRichiederlo": "1. Farsi rilasciare certificato medico telematico dal medico\n2. Domanda online su inps.it con SPID\n3. Visita presso commissione medica ASL/INPS\n4. Attendere esito (90 giorni circa)",
+      "importo": "Variabile (in base ai contributi)",
+      "scadenza": "Sempre aperto",
+      "ente": "INPS",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/assegno-ordinario-di-invalidita",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "medical_services"
+    },
+    {
+      "id": "pensione_invalidita",
+      "titolo": "Pensione di Invalidità Civile",
+      "descrizione": "Pensione per invalidi civili al 100% con reddito basso.",
+      "descrizioneCompleta": "La pensione di invalidità civile spetta ai cittadini con invalidità riconosciuta al 100% e con reddito personale annuo non superiore a €17.920,00 (2025). L'importo è di €333,33/mese (13 mensilità). Per gli over 18 con invalidità 74-99% spetta l'assegno mensile di €333,33 con reddito ≤€5.725,46.",
+      "categoria": "Disabilità",
+      "tags": [
+        "invalidità",
+        "pensione",
+        "civile",
+        "100%",
+        "disabilità",
+        "reddito"
+      ],
+      "requisiti": [
+        "Invalidità civile riconosciuta al 100%",
+        "Reddito personale ≤€17.920,00/anno",
+        "Età tra 18 e 67 anni",
+        "Cittadinanza o permesso di soggiorno"
+      ],
+      "documenti": [
+        "Verbale riconoscimento invalidità civile",
+        "Domanda INPS online",
+        "Documento identità e CF",
+        "Dichiarazione reddituale"
+      ],
+      "comeRichiederlo": "1. Ottenere riconoscimento invalidità dalla commissione medica\n2. Domanda INPS online con SPID\n3. Allegare verbale e dichiarazione redditi\n4. Pagamento mensile su conto corrente",
+      "importo": "€333,33/mese (13 mensilità)",
+      "scadenza": "Sempre aperto",
+      "ente": "INPS",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/pensione-invalidita-civile",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "wheelchair_pickup"
+    },
+    {
+      "id": "bonus_caregiver",
+      "titolo": "Bonus Caregiver Familiare",
+      "descrizione": "Contributo per chi assiste familiari non autosufficienti.",
+      "descrizioneCompleta": "Alcuni Comuni e Regioni prevedono un contributo economico per i caregiver familiari, cioè coloro che assistono gratuitamente un familiare non autosufficiente. L'importo varia da regione a regione (€400-€800/mese). Alcune regioni offrono anche formazione e supporto psicologico gratuito.",
+      "categoria": "Disabilità",
+      "tags": [
+        "caregiver",
+        "assistenza",
+        "familiare",
+        "anziani",
+        "disabili",
+        "contributo"
+      ],
+      "requisiti": [
+        "Assistere un familiare non autosufficiente",
+        "Familiare con riconoscimento invalidità/L. 104",
+        "ISEE variabile per regione",
+        "Residenza nella regione che eroga il contributo"
+      ],
+      "documenti": [
+        "ISEE",
+        "Verbale L. 104 o invalidità del familiare",
+        "Autocertificazione attività di caregiver",
+        "Documento identità e CF"
+      ],
+      "comeRichiederlo": "1. Verificare bando regionale/comunale\n2. Presentare domanda online o allo sportello\n3. Allegare documentazione\n4. Attendere graduatoria",
+      "importo": "€400-€800/mese (varia per regione)",
+      "scadenza": "Bandi regionali periodici",
+      "ente": "Regione / Comune",
+      "linkUfficiale": "https://www.lavoro.gov.it/temi-e-priorita/disabilita-e-non-autosufficienza",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "volunteer_activism"
+    },
+    {
+      "id": "collocamento_mirato",
+      "titolo": "Collocamento Mirato Disabili (L. 68/99)",
+      "descrizione": "Obbligo di assunzione di persone disabili e liste speciali.",
+      "descrizioneCompleta": "La Legge 68/1999 prevede il collocamento mirato delle persone con disabilità. Le aziende con 15+ dipendenti devono riservare una quota di posti (7% per aziende 50+, 2 posti per 36-50, 1 posto per 15-35). I disabili si iscrivono nelle liste speciali del CpI e vengono avviati al lavoro tramite convenzioni.",
+      "categoria": "Disabilità",
+      "tags": [
+        "collocamento",
+        "disabili",
+        "lavoro",
+        "lista",
+        "assunzione",
+        "obbligo"
+      ],
+      "requisiti": [
+        "Invalidità civile ≥46%",
+        "O invalidità del lavoro ≥34%",
+        "O sordità o cecità civile",
+        "Iscrizione al CpI nelle liste speciali"
+      ],
+      "documenti": [
+        "Verbale invalidità",
+        "Relazione conclusiva del Comitato Tecnico",
+        "Iscrizione al Centro per l'Impiego",
+        "Curriculum vitae"
+      ],
+      "comeRichiederlo": "1. Ottenere riconoscimento invalidità\n2. Iscriversi al CpI nelle liste speciali (L. 68/99)\n3. Colloquio con il Comitato Tecnico\n4. Attendere chiamata per avviamento al lavoro",
+      "importo": "Assunzione con tutele specifiche",
+      "scadenza": "Sempre aperto",
+      "ente": "Centro per l'Impiego / Regione",
+      "linkUfficiale": "https://www.lavoro.gov.it/temi-e-priorita/disabilita-e-non-autosufficienza/focus-on/collocamento-mirato",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "work"
+    },
+    {
+      "id": "bonus_mutuo_under36",
+      "titolo": "Fondo Garanzia Mutuo Under 36",
+      "descrizione": "Garanzia statale all'80% per mutuo prima casa giovani.",
+      "descrizioneCompleta": "Il Fondo di Garanzia Prima Casa gestito da Consap offre una garanzia statale fino all'80% del mutuo per giovani under 36 con ISEE fino a €40.000. Consente di ottenere il mutuo anche senza un anticipo del 20%. Le banche convenzionate devono applicare condizioni favorevoli (tasso calmierato).",
+      "categoria": "Giovani",
+      "tags": [
+        "mutuo",
+        "casa",
+        "under 36",
+        "garanzia",
+        "prima casa",
+        "giovani"
+      ],
+      "requisiti": [
+        "Under 36 alla data della domanda",
+        "ISEE non superiore a €40.000",
+        "Acquisto prima casa (non di lusso)",
+        "Mutuo non superiore a €250.000"
+      ],
+      "documenti": [
+        "ISEE in corso di validità",
+        "Compromesso o proposta d'acquisto",
+        "Documento identità e CF",
+        "Documentazione reddituale"
+      ],
+      "comeRichiederlo": "1. Ottenere ISEE aggiornato\n2. Scegliere banca convenzionata Consap\n3. Richiedere mutuo con accesso al Fondo Garanzia\n4. La banca trasmette la domanda a Consap\n5. Esito entro 20 giorni",
+      "importo": "Garanzia statale 80% del mutuo",
+      "scadenza": "31 dicembre 2026",
+      "ente": "Consap / MEF",
+      "linkUfficiale": "https://www.consap.it/fondo-prima-casa/",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "house"
+    },
+    {
+      "id": "servizio_civile",
+      "titolo": "Servizio Civile Universale",
+      "descrizione": "Impegno volontario di 12 mesi con compenso di €507,30/mese.",
+      "descrizioneCompleta": "Il Servizio Civile Universale è un'esperienza di impegno civico di 12 mesi (25 ore/settimana) in enti no-profit, PA o organizzazioni del terzo settore. Compenso: €507,30/mese. Settori: assistenza, ambiente, patrimonio culturale, educazione, protezione civile. Aperto anche a stranieri regolarmente soggiornanti.",
+      "categoria": "Giovani",
+      "tags": [
+        "servizio civile",
+        "volontariato",
+        "giovani",
+        "esperienza",
+        "compenso"
+      ],
+      "requisiti": [
+        "Età tra 18 e 28 anni (non aver compiuto 29)",
+        "Cittadinanza italiana/UE o permesso di soggiorno",
+        "Non aver già svolto il Servizio Civile"
+      ],
+      "documenti": [
+        "Documento identità",
+        "Codice fiscale",
+        "Curriculum vitae",
+        "Domanda online su scelgoilserviziocivile.gov.it"
+      ],
+      "comeRichiederlo": "1. Attendere il bando annuale (dicembre-febbraio)\n2. Consultare i progetti disponibili su scelgoilserviziocivile.gov.it\n3. Presentare domanda online con SPID\n4. Sostenere il colloquio di selezione\n5. Se selezionati, iniziare il servizio",
+      "importo": "€507,30/mese per 12 mesi",
+      "scadenza": "Bando annuale",
+      "ente": "Dipartimento Politiche Giovanili",
+      "linkUfficiale": "https://www.scelgoilserviziocivile.gov.it",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "diversity_3"
+    },
+    {
+      "id": "garanzia_giovani",
+      "titolo": "Garanzia Giovani (Programma GOL)",
+      "descrizione": "Percorsi di formazione e inserimento lavorativo per NEET under 30.",
+      "descrizioneCompleta": "Il Programma Garanzia Giovani (ora integrato nel GOL) offre ai giovani NEET (né studio né lavoro) tra 15 e 29 anni: orientamento professionale, tirocini retribuiti (€300-€500/mese), corsi di formazione gratuiti, accompagnamento al lavoro, incentivi per l'autoimprenditorialità.",
+      "categoria": "Giovani",
+      "tags": [
+        "garanzia giovani",
+        "neet",
+        "tirocinio",
+        "formazione",
+        "lavoro",
+        "stage"
+      ],
+      "requisiti": [
+        "Età tra 15 e 29 anni",
+        "Non essere impegnato in studio, lavoro o formazione (NEET)",
+        "Residenza in Italia",
+        "DID al Centro per l'Impiego"
+      ],
+      "documenti": [
+        "DID (Dichiarazione Immediata Disponibilità)",
+        "Documento identità e CF",
+        "Curriculum vitae",
+        "Titoli di studio"
+      ],
+      "comeRichiederlo": "1. Registrarsi su garanziagiovani.anpal.gov.it\n2. Iscriversi al CpI con DID\n3. Colloquio di orientamento\n4. Assegnazione a un percorso (tirocinio, formazione, ecc.)\n5. Iniziare il percorso",
+      "importo": "Tirocini €300-€500/mese + formazione gratuita",
+      "scadenza": "Sempre aperto",
+      "ente": "ANPAL / Centro per l'Impiego",
+      "linkUfficiale": "https://garanziagiovani.anpal.gov.it",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "trending_up"
+    },
+    {
+      "id": "flat_tax_giovani",
+      "titolo": "Regime Forfettario (Flat Tax 5%)",
+      "descrizione": "Tassazione agevolata al 5% per nuove partite IVA giovani.",
+      "descrizioneCompleta": "I giovani che aprono una nuova attività con partita IVA possono accedere al regime forfettario con aliquota ridotta al 5% per i primi 5 anni (poi 15%). Ricavi/compensi massimi: €85.000/anno. Niente IVA, IRAP, studi di settore. Contributi INPS ridotti del 35% per artigiani e commercianti.",
+      "categoria": "Giovani",
+      "tags": [
+        "partita iva",
+        "flat tax",
+        "forfettario",
+        "autonomo",
+        "giovani",
+        "impresa"
+      ],
+      "requisiti": [
+        "Nuova attività (non aver avuto P. IVA negli ultimi 3 anni nella stessa attività)",
+        "Ricavi/compensi fino a €85.000/anno",
+        "Spese per dipendenti ≤€20.000",
+        "Redditi da lavoro dipendente ≤€30.000 (anno precedente)"
+      ],
+      "documenti": [
+        "Modello AA9/12 per apertura P. IVA",
+        "Documento identità e CF",
+        "Dichiarazione di non aver svolto la stessa attività"
+      ],
+      "comeRichiederlo": "1. Recarsi all'Agenzia delle Entrate o dal commercialista\n2. Aprire P. IVA con regime forfettario\n3. Indicare l'aliquota 5% (start-up)\n4. Per i primi 5 anni tassazione al 5%",
+      "importo": "Tassazione al 5% per 5 anni (poi 15%)",
+      "scadenza": "Sempre aperto",
+      "ente": "Agenzia delle Entrate",
+      "linkUfficiale": "https://www.agenziaentrate.gov.it/portale/regime-forfetario",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "store"
+    },
+    {
+      "id": "quattordicesima",
+      "titolo": "Quattordicesima Pensionati",
+      "descrizione": "Somma aggiuntiva a luglio per pensionati con reddito basso.",
+      "descrizioneCompleta": "La Quattordicesima è una somma aggiuntiva pagata a luglio ai pensionati over 64 con reddito personale fino a 2 volte il trattamento minimo INPS (circa €15.500/anno). L'importo varia da €336 a €655 in base ai contributi e al reddito. Viene pagata automaticamente dall'INPS.",
+      "categoria": "Pensione & Anziani",
+      "tags": [
+        "quattordicesima",
+        "pensione",
+        "pensionati",
+        "anziani",
+        "luglio",
+        "bonus"
+      ],
+      "requisiti": [
+        "Età almeno 64 anni",
+        "Pensionato INPS",
+        "Reddito personale fino a circa €15.500/anno"
+      ],
+      "documenti": [
+        "Nessuna domanda (pagamento automatico)",
+        "Modello RED se richiesto dall'INPS"
+      ],
+      "comeRichiederlo": "1. Pagamento AUTOMATICO a luglio\n2. L'INPS verifica in automatico il diritto\n3. Se non ricevuta, presentare domanda all'INPS\n4. Compilare modello RED se richiesto",
+      "importo": "Da €336 a €655",
+      "scadenza": "Pagamento automatico a luglio",
+      "ente": "INPS",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/quattordicesima",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "payments"
+    },
+    {
+      "id": "integrazione_minimo",
+      "titolo": "Integrazione al Trattamento Minimo",
+      "descrizione": "Integrazione della pensione fino al minimo garantito.",
+      "descrizioneCompleta": "Chi percepisce una pensione inferiore al trattamento minimo (€603,40/mese nel 2025) ha diritto all'integrazione fino a raggiungere tale importo, se il reddito personale non supera 2 volte il minimo e quello coniugale non supera 4 volte. L'integrazione è automatica per le pensioni INPS.",
+      "categoria": "Pensione & Anziani",
+      "tags": [
+        "pensione",
+        "minimo",
+        "integrazione",
+        "anziani",
+        "reddito"
+      ],
+      "requisiti": [
+        "Pensione inferiore al trattamento minimo (€603,40/mese)",
+        "Reddito personale ≤2 volte il minimo",
+        "Reddito coniugale ≤4 volte il minimo"
+      ],
+      "documenti": [
+        "Modello RED (dichiarazione reddituale INPS)",
+        "Automatico per pensioni INPS"
+      ],
+      "comeRichiederlo": "1. Verifica automatica INPS\n2. Se non ricevuta, presentare domanda INPS\n3. Compilare modello RED annuale",
+      "importo": "Fino a €603,40/mese",
+      "scadenza": "Sempre attivo",
+      "ente": "INPS",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/integrazione-al-trattamento-minimo",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "elderly"
+    },
+    {
+      "id": "bonus_anziani_2025",
+      "titolo": "Bonus Anziani Non Autosufficienti 2025",
+      "descrizione": "Nuovo contributo di €850/mese per anziani over 80 non autosufficienti.",
+      "descrizioneCompleta": "La Legge di Bilancio 2025 ha introdotto una prestazione universale di €850/mese per gli anziani non autosufficienti over 80 con ISEE socio-sanitario fino a €6.000. Si somma all'indennità di accompagnamento (€531,76). Totale: circa €1.381/mese. Vincolato a servizi di cura (badante regolare, servizi domiciliari).",
+      "categoria": "Pensione & Anziani",
+      "tags": [
+        "anziani",
+        "non autosufficiente",
+        "over 80",
+        "bonus",
+        "2025",
+        "badante",
+        "accompagnamento"
+      ],
+      "requisiti": [
+        "Età almeno 80 anni",
+        "Non autosufficienza certificata",
+        "ISEE socio-sanitario non superiore a €6.000",
+        "Titolarità dell'indennità di accompagnamento",
+        "Utilizzo per servizi di cura regolari"
+      ],
+      "documenti": [
+        "ISEE socio-sanitario",
+        "Verbale di non autosufficienza",
+        "Titolarità indennità di accompagnamento",
+        "Contratto badante o fattura servizi domiciliari"
+      ],
+      "comeRichiederlo": "1. Ottenere ISEE socio-sanitario\n2. Verificare titolarità accompagnamento\n3. Domanda su inps.it con SPID\n4. Indicare il servizio di cura utilizzato\n5. Erogazione mensile",
+      "importo": "€850/mese (+ €531,76 accompagnamento)",
+      "scadenza": "Dal 1° gennaio 2025",
+      "ente": "INPS",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/prestazione-universale-anziani",
+      "isNuovo": true,
+      "dataAggiunta": "2025-01-01T00:00:00.000",
+      "validoFino": null,
+      "iconName": "elderly_woman"
+    },
+    {
+      "id": "assegno_sociale",
+      "titolo": "Assegno Sociale",
+      "descrizione": "Prestazione economica per over 67 con reddito molto basso.",
+      "descrizioneCompleta": "L'Assegno Sociale è una prestazione economica per cittadini over 67 in condizione di bisogno economico. Importo 2025: €538,69/mese (13 mensilità) = circa €7.003/anno. Spetta a chi ha reddito zero (intero) o reddito fino a €7.003 (coniugato: €14.006). Per stranieri: permesso di soggiorno di lungo periodo e 10 anni di residenza.",
+      "categoria": "Pensione & Anziani",
+      "tags": [
+        "assegno sociale",
+        "over 67",
+        "anziani",
+        "reddito",
+        "pensione",
+        "minimo"
+      ],
+      "requisiti": [
+        "Almeno 67 anni di età",
+        "Reddito personale ≤€7.003/anno (coniugale ≤€14.006)",
+        "Residenza stabile e continuativa in Italia da almeno 10 anni",
+        "Cittadinanza italiana/UE o permesso lungo periodo"
+      ],
+      "documenti": [
+        "Documento identità e CF",
+        "Permesso di soggiorno lungo periodo (per extra-UE)",
+        "Dichiarazione dei redditi",
+        "Certificato di residenza storico",
+        "IBAN"
+      ],
+      "comeRichiederlo": "1. Verificare 10 anni di residenza continuativa\n2. Domanda INPS online con SPID\n3. Sezione Prestazioni → Assegno Sociale\n4. Allegare documentazione reddituale\n5. Pagamento mensile su conto corrente",
+      "importo": "€538,69/mese (13 mensilità)",
+      "scadenza": "Sempre aperto",
+      "ente": "INPS",
+      "linkUfficiale": "https://www.inps.it/prestazioni-servizi/assegno-sociale",
+      "isNuovo": false,
+      "dataAggiunta": null,
+      "validoFino": null,
+      "iconName": "account_balance"
+    }
+  ]
+}

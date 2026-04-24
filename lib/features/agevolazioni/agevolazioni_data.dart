@@ -14,6 +14,7 @@ class Agevolazione {
   final String linkUfficiale;
   final bool isNuovo;
   final DateTime? dataAggiunta;
+  final DateTime? validoFino; // se nel passato → bonus scaduto, si nasconde automaticamente
   final String iconName;
 
   const Agevolazione({
@@ -32,8 +33,52 @@ class Agevolazione {
     required this.linkUfficiale,
     this.isNuovo = false,
     this.dataAggiunta,
+    this.validoFino,
     required this.iconName,
   });
+
+  bool get isScaduto =>
+      validoFino != null && validoFino!.isBefore(DateTime.now());
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'titolo': titolo,
+        'descrizione': descrizione,
+        'descrizioneCompleta': descrizioneCompleta,
+        'categoria': categoria,
+        'tags': tags,
+        'requisiti': requisiti,
+        'documenti': documenti,
+        'comeRichiederlo': comeRichiederlo,
+        'importo': importo,
+        'scadenza': scadenza,
+        'ente': ente,
+        'linkUfficiale': linkUfficiale,
+        'isNuovo': isNuovo,
+        'dataAggiunta': dataAggiunta?.toIso8601String(),
+        'validoFino': validoFino?.toIso8601String(),
+        'iconName': iconName,
+      };
+
+  factory Agevolazione.fromJson(Map<String, dynamic> j) => Agevolazione(
+        id: j['id'] as String,
+        titolo: j['titolo'] as String,
+        descrizione: j['descrizione'] as String? ?? '',
+        descrizioneCompleta: j['descrizioneCompleta'] as String? ?? '',
+        categoria: j['categoria'] as String? ?? '',
+        tags: (j['tags'] as List?)?.cast<String>() ?? const [],
+        requisiti: (j['requisiti'] as List?)?.cast<String>() ?? const [],
+        documenti: (j['documenti'] as List?)?.cast<String>() ?? const [],
+        comeRichiederlo: j['comeRichiederlo'] as String? ?? '',
+        importo: j['importo'] as String? ?? '',
+        scadenza: j['scadenza'] as String? ?? '',
+        ente: j['ente'] as String? ?? '',
+        linkUfficiale: j['linkUfficiale'] as String? ?? '',
+        isNuovo: j['isNuovo'] as bool? ?? false,
+        dataAggiunta: j['dataAggiunta'] != null ? DateTime.tryParse(j['dataAggiunta'] as String) : null,
+        validoFino: j['validoFino'] != null ? DateTime.tryParse(j['validoFino'] as String) : null,
+        iconName: j['iconName'] as String? ?? 'star',
+      );
 }
 
 // ── CATEGORIE ──
@@ -51,7 +96,12 @@ final List<Map<String, dynamic>> categorie = [
 ];
 
 // ── DATABASE AGEVOLAZIONI REALI ──
-final List<Agevolazione> allAgevolazioni = [
+// ATTENZIONE: questa lista è il fallback locale. Al runtime viene rimpiazzata
+// dal JSON remoto scaricato da BonusRepository (GitHub raw). Ogni modifica
+// qui richiede ricompilazione; modifiche al JSON remoto sono immediate.
+List<Agevolazione> allAgevolazioni = _seedAgevolazioni;
+
+final List<Agevolazione> _seedAgevolazioni = [
 
   // ═══════════════ NOVITÀ 2026 ═══════════════
   Agevolazione(
