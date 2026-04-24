@@ -104,6 +104,8 @@ class _DirittoCardState extends State<_DirittoCard> {
       case 'salute': return const Color(0xFF00897B);
       case 'giovani': return const Color(0xFF6A1B9A);
       case 'disabilita': return const Color(0xFF0277BD);
+      case 'anziani': return const Color(0xFF546E7A);
+      case 'immigrazione': return const Color(0xFF00838F);
       default: return AppColors.primary;
     }
   }
