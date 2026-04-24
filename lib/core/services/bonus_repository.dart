@@ -6,6 +6,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../features/agevolazioni/agevolazioni_data.dart' as ag;
+import 'notification_service.dart';
 
 // ---------------------------------------------------------------------------
 // BonusRepository — fonte unica, aggiornabile da remoto.
@@ -59,8 +60,8 @@ class BonusRepository {
           _source = 'cache-fresh';
           _applyToGlobalList();
           debugPrint('[BonusRepository] loaded ${parsed.length} from fresh cache');
-          // Refresh in background
-          unawaited(_refreshFromRemote(prefs));
+          // Refresh in background (with notification check)
+          unawaited(_refreshFromRemote(prefs).then(_notifyIfNewBonuses));
           return;
         }
       }
@@ -71,6 +72,7 @@ class BonusRepository {
         _memory = remote;
         _source = 'remote';
         _applyToGlobalList();
+        await _notifyIfNewBonuses(remote);
         return;
       }
 
@@ -159,5 +161,12 @@ class BonusRepository {
   void _applyToGlobalList() {
     if (_memory.isEmpty) return;
     ag.allAgevolazioni = _memory.where((a) => !a.isScaduto).toList(growable: false);
+  }
+
+  Future<void> _notifyIfNewBonuses(List<ag.Agevolazione>? list) async {
+    if (list == null || list.isEmpty) return;
+    await NotificationService.instance.checkForNewBonuses(
+      list.where((a) => !a.isScaduto).toList(),
+    );
   }
 }

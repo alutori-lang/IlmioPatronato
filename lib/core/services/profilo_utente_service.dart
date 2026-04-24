@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'notification_service.dart';
 
 // ---------------------------------------------------------------------------
 // Profilo Utente — salva/legge da SharedPreferences
@@ -146,6 +147,37 @@ class ProfiloUtenteService extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_key, jsonEncode(profilo.toJson()));
     notifyListeners();
+    // Schedula/aggiorna le notifiche di scadenza documenti in base al profilo
+    await _scheduleDocumentReminders(profilo);
+  }
+
+  Future<void> _scheduleDocumentReminders(ProfiloUtente p) async {
+    // Permesso di soggiorno (formato atteso: gg/mm/aaaa)
+    if (p.scadenzaPermesso.isNotEmpty) {
+      final parsed = _parseItalianDate(p.scadenzaPermesso);
+      if (parsed != null) {
+        await NotificationService.instance.scheduleDocumentExpiry(
+          id: 'permesso_soggiorno',
+          titolo: 'Permesso di soggiorno',
+          scadenza: parsed,
+        );
+      }
+    } else {
+      await NotificationService.instance.cancelDocumentExpiry('permesso_soggiorno');
+    }
+  }
+
+  DateTime? _parseItalianDate(String s) {
+    try {
+      final parts = s.split('/');
+      if (parts.length != 3) return null;
+      final d = int.parse(parts[0]);
+      final m = int.parse(parts[1]);
+      final y = int.parse(parts[2]);
+      return DateTime(y, m, d);
+    } catch (_) {
+      return null;
+    }
   }
 
   Future<void> clear() async {

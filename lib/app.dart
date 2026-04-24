@@ -6,6 +6,7 @@ import 'core/services/language_service.dart';
 import 'core/services/profilo_utente_service.dart';
 import 'core/services/scanner_service.dart';
 import 'core/services/pratica_service.dart';
+import 'core/services/notification_service.dart';
 import 'features/home/home_screen.dart';
 import 'features/agevolazioni/agevolazioni_screen.dart';
 import 'features/sbroglia/sbroglia_chat_screen.dart';
@@ -55,6 +56,15 @@ class MainShell extends StatefulWidget {
 class _MainShellState extends State<MainShell> {
   int _currentIndex = 0;
   DateTime? _lastBackPress;
+
+  @override
+  void initState() {
+    super.initState();
+    // Richiedi permesso notifiche dopo il primo frame (non bloccante).
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await NotificationService.instance.requestPermission();
+    });
+  }
 
   void _navigateTo(int index) {
     setState(() => _currentIndex = index);

@@ -5,11 +5,15 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'app.dart';
 import 'core/services/ad_service.dart';
 import 'core/services/bonus_repository.dart';
+import 'core/services/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('it_IT', null);
-  // Carica bonus da remoto/cache/asset PRIMA di runApp (fallback: lista hardcodata)
+  // Inizializza notifiche locali + timezone (non chiede permesso: lo fa dopo l'onboarding)
+  await NotificationService.instance.initialize();
+  // Carica bonus da remoto/cache/asset PRIMA di runApp (fallback: lista hardcodata).
+  // Include rilevamento nuovi bonus + notifica locale.
   await BonusRepository.instance.load();
   if (!kIsWeb) {
     await AdService().initialize();
