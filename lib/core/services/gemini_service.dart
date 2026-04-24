@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'web_search_service.dart';
 
@@ -140,10 +141,24 @@ class GeminiService {
     required String prompt,
     String? systemPrompt,
   }) async {
+    if (_apiKey.isEmpty) {
+      debugPrint('[Gemini] analyzeDocument: GEMINI_API_KEY is empty at compile time');
+      return AiResponse.error('API Key mancante (build senza --dart-define=GEMINI_API_KEY).');
+    }
+
     final ext = imageFile.path.split('.').last.toLowerCase();
 
     try {
       final bytes = await imageFile.readAsBytes();
+      final sizeMb = bytes.lengthInBytes / (1024 * 1024);
+      debugPrint('[Gemini] analyzeDocument: file=${imageFile.path} ext=$ext size=${sizeMb.toStringAsFixed(2)}MB');
+
+      // Gemini inline_data limit ≈ 20 MB (after base64). Reject early to avoid a 400.
+      if (bytes.lengthInBytes > 18 * 1024 * 1024) {
+        return AiResponse.error(
+            'File troppo grande (${sizeMb.toStringAsFixed(1)} MB). Max 18 MB. Prova una foto più piccola o un PDF ridotto.');
+      }
+
       final base64Data = base64Encode(bytes);
       final mimeType = ext == 'pdf' ? 'application/pdf'
           : ext == 'png' ? 'image/png'
@@ -179,18 +194,26 @@ class GeminiService {
         };
       }
 
+      debugPrint('[Gemini] POST $_model (mime=$mimeType, base64Len=${base64Data.length})');
       final response = await http.post(
         _endpoint(_model),
         headers: _headers,
         body: jsonEncode(body),
-      ).timeout(const Duration(seconds: 60));
+      ).timeout(const Duration(seconds: 90));
 
+      debugPrint('[Gemini] status=${response.statusCode} bodyLen=${response.body.length}');
+      if (response.statusCode != 200) {
+        debugPrint('[Gemini] body: ${response.body.substring(0, response.body.length.clamp(0, 1500))}');
+      }
       return _parseResponse(response);
     } on TimeoutException {
-      return AiResponse.error('Timeout analisi documento. Riprova.');
-    } on SocketException {
+      debugPrint('[Gemini] TimeoutException');
+      return AiResponse.error('Timeout analisi documento (90s). Riprova con file più piccolo o rete migliore.');
+    } on SocketException catch (e) {
+      debugPrint('[Gemini] SocketException: $e');
       return AiResponse.error('Nessuna connessione internet.');
-    } catch (e) {
+    } catch (e, st) {
+      debugPrint('[Gemini] Exception: $e\n$st');
       return AiResponse.error('Errore analisi documento: $e');
     }
   }
@@ -214,28 +237,42 @@ class GeminiService {
       final json = jsonDecode(response.body);
       // Gemini format: { candidates: [ { content: { parts: [ { text: "..." } ] } } ] }
       final candidates = json['candidates'] as List?;
-      if (candidates != null && candidates.isNotEmpty) {
-        final content = candidates.first['content'];
-        final parts = content?['parts'] as List?;
-        if (parts != null && parts.isNotEmpty) {
-          final text = parts
-              .whereType<Map>()
-              .map((p) => p['text'] as String? ?? '')
-              .where((t) => t.isNotEmpty)
-              .join('\n');
-          if (text.isNotEmpty) return AiResponse.success(text);
+      if (candidates == null || candidates.isEmpty) {
+        final promptFeedback = json['promptFeedback'];
+        final blockReason = promptFeedback?['blockReason'];
+        if (blockReason != null) {
+          return AiResponse.error('Contenuto bloccato dal filtro AI: $blockReason');
         }
+        return AiResponse.error('Risposta vuota dal server (nessun candidate).');
       }
-      return AiResponse.error('Risposta vuota dal server.');
+      final first = candidates.first as Map<String, dynamic>;
+      final finishReason = first['finishReason'];
+      final content = first['content'];
+      final parts = content?['parts'] as List?;
+      if (parts != null && parts.isNotEmpty) {
+        final text = parts
+            .whereType<Map>()
+            .map((p) => p['text'] as String? ?? '')
+            .where((t) => t.isNotEmpty)
+            .join('\n');
+        if (text.isNotEmpty) return AiResponse.success(text);
+      }
+      if (finishReason == 'SAFETY') {
+        return AiResponse.error('Contenuto bloccato per motivi di sicurezza AI.');
+      }
+      if (finishReason == 'MAX_TOKENS') {
+        return AiResponse.error('Risposta troncata (MAX_TOKENS). Prova con meno testo.');
+      }
+      return AiResponse.error('Risposta vuota (finishReason=$finishReason).');
     } else if (response.statusCode == 429) {
       return AiResponse.error('Troppe richieste. Riprova tra qualche secondo.');
     } else if (response.statusCode == 401 || response.statusCode == 403) {
-      return AiResponse.error('API Key non valida.');
+      return AiResponse.error('API Key non valida o senza permessi.');
     } else {
       try {
         final json = jsonDecode(response.body);
         final msg = json['error']?['message'] ?? 'Errore sconosciuto';
-        return AiResponse.error('Errore API: $msg');
+        return AiResponse.error('Errore API (${response.statusCode}): $msg');
       } catch (_) {
         return AiResponse.error('Errore API (${response.statusCode})');
       }
