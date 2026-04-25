@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import '../../config/constants.dart';
 import '../../core/services/gemini_service.dart';
+import '../../core/services/language_service.dart';
 import '../../core/widgets/rich_message_widget.dart';
 
 // ─────────────────────────────────────────────
@@ -669,10 +671,16 @@ class _ChatScreenState extends State<_ChatScreen> {
 
     _apiMessages.add({'role': 'user', 'content': text});
 
+    final userLang = context.read<LanguageService>().current;
+    final langInstruction = userLang.code == 'it'
+        ? ''
+        : '\n\nIMPORTANTE: L\'utente parla ${userLang.nameEn} (${userLang.name}). '
+          'RISPONDI SEMPRE E SOLO in ${userLang.nameEn}, mai in italiano, anche se la domanda è in italiano. '
+          'Mantieni i termini tecnici italiani tra virgolette (es. "Assegno Unico"), ma spiega tutto nella lingua dell\'utente.';
     final response = await GeminiService().chatWithSearch(
       messages: _apiMessages,
       userMessage: text,
-      systemPrompt: widget.category.systemPrompt,
+      systemPrompt: widget.category.systemPrompt + langInstruction,
     );
 
     if (!mounted) return;
@@ -733,9 +741,13 @@ class _ChatScreenState extends State<_ChatScreen> {
     });
     _scrollToBottom();
 
+    final userLang = context.read<LanguageService>().current;
+    final langInstruction = userLang.code == 'it'
+        ? ''
+        : '\n\nIMPORTANTE: L\'utente parla ${userLang.nameEn}. RISPONDI SOLO in ${userLang.nameEn}.';
     final response = await GeminiService().analyzeDocument(
       imageFile: imageFile,
-      prompt: '${widget.category.systemPrompt}\n\nL\'utente ha inviato un\'immagine di un documento. $userText',
+      prompt: '${widget.category.systemPrompt}$langInstruction\n\nL\'utente ha inviato un\'immagine di un documento. $userText',
     );
 
     if (!mounted) return;

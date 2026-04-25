@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../config/constants.dart';
+import '../localization/app_strings.dart';
 
 class AppNavBar extends StatelessWidget {
   final int currentIndex;
@@ -13,6 +14,7 @@ class AppNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = AppStrings.of(context);
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -32,10 +34,10 @@ class AppNavBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _NavItem(icon: Icons.home_rounded, label: 'Home', index: 0, current: currentIndex, onTap: onTap),
-          _NavItem(icon: Icons.card_giftcard, label: 'Bonus', index: 1, current: currentIndex, onTap: onTap),
+          _NavItem(icon: Icons.home_rounded, label: s.navHome, index: 0, current: currentIndex, onTap: onTap),
+          _NavItem(icon: Icons.card_giftcard, label: s.navBonuses, index: 1, current: currentIndex, onTap: onTap),
           _NavItemSbroglia(index: 2, current: currentIndex, onTap: onTap),
-          _NavItem(icon: Icons.person_rounded, label: 'Profilo', index: 3, current: currentIndex, onTap: onTap),
+          _NavItem(icon: Icons.person_rounded, label: s.navProfile, index: 3, current: currentIndex, onTap: onTap),
         ],
       ),
     );

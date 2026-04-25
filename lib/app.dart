@@ -7,10 +7,12 @@ import 'core/services/profilo_utente_service.dart';
 import 'core/services/scanner_service.dart';
 import 'core/services/pratica_service.dart';
 import 'core/services/notification_service.dart';
+import 'core/localization/app_strings.dart';
 import 'features/home/home_screen.dart';
 import 'features/agevolazioni/agevolazioni_screen.dart';
 import 'features/sbroglia/sbroglia_chat_screen.dart';
 import 'features/profilo/profilo_screen.dart';
+import 'features/onboarding/language_picker_screen.dart';
 import 'core/widgets/app_nav_bar.dart';
 import 'config/constants.dart';
 
@@ -26,23 +28,86 @@ class MioPatronatoApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ScannerService()..load()),
         ChangeNotifierProvider(create: (_) => PraticaService()..load()),
       ],
-      child: MaterialApp(
-        title: 'Il Mio Patronato',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.theme,
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('it', 'IT'),
-          Locale('en', 'US'),
-        ],
-        locale: const Locale('it', 'IT'),
-        home: const MainShell(),
+      child: Consumer<LanguageService>(
+        builder: (context, lang, _) {
+          final code = lang.currentCode;
+          final isRtl = code == 'ar' || code == 'ur';
+          return MaterialApp(
+            title: 'Il Mio Patronato',
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.theme,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('it', 'IT'),
+              Locale('en', 'US'),
+              Locale('ar'),
+              Locale('ur'),
+              Locale('hi'),
+              Locale('ro'),
+              Locale('fr'),
+              Locale('es'),
+              Locale('sq'),
+              Locale('zh'),
+              Locale('bn'),
+              Locale('uk'),
+              Locale('ru'),
+              Locale('pa'),
+            ],
+            locale: Locale(code),
+            builder: (context, child) {
+              return Directionality(
+                textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
+                child: child ?? const SizedBox.shrink(),
+              );
+            },
+            home: const _LanguageGate(),
+          );
+        },
       ),
     );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// _LanguageGate — mostra LanguagePickerScreen al primo avvio, poi MainShell.
+// ---------------------------------------------------------------------------
+class _LanguageGate extends StatefulWidget {
+  const _LanguageGate();
+
+  @override
+  State<_LanguageGate> createState() => _LanguageGateState();
+}
+
+class _LanguageGateState extends State<_LanguageGate> {
+  bool? _languageChosen;
+
+  @override
+  void initState() {
+    super.initState();
+    _check();
+  }
+
+  Future<void> _check() async {
+    final done = await LanguagePickerScreen.alreadyChosen();
+    if (!mounted) return;
+    setState(() => _languageChosen = done);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_languageChosen == null) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+    if (_languageChosen == false) {
+      return LanguagePickerScreen(
+        onComplete: () => setState(() => _languageChosen = true),
+      );
+    }
+    return const MainShell();
   }
 }
 
@@ -72,6 +137,7 @@ class _MainShellState extends State<MainShell> {
 
   @override
   Widget build(BuildContext context) {
+    final s = AppStrings.of(context);
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
@@ -82,9 +148,11 @@ class _MainShellState extends State<MainShell> {
         } else {
           _lastBackPress = now;
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Premi di nuovo per uscire'),
-              duration: Duration(seconds: 2),
+            SnackBar(
+              content: Text(s.languageCode == 'it'
+                  ? 'Premi di nuovo per uscire'
+                  : 'Press back again to exit'),
+              duration: const Duration(seconds: 2),
               behavior: SnackBarBehavior.floating,
             ),
           );

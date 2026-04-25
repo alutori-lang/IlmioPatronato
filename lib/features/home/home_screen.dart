@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../config/constants.dart';
 import '../../core/widgets/banner_ad_widget.dart';
+import '../../core/widgets/language_switch_button.dart';
 import '../../core/services/agevolazioni_service.dart';
 import '../../core/services/profilo_utente_service.dart';
+import '../../core/localization/app_strings.dart';
 import '../simulatore/simulatore_screen.dart';
 import '../compilatore/compilatore_screen.dart';
 import '../strumenti/strumenti_screen.dart';
@@ -206,6 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // ─── HEADER ──────────────────────────────────────────────────────────────
   Widget _buildHeader(BuildContext context) {
+    final s = AppStrings.of(context);
     return Container(
       padding: EdgeInsets.only(
         top: MediaQuery.of(context).padding.top + 10,
@@ -224,17 +227,20 @@ class _HomeScreenState extends State<HomeScreen> {
             child: const Icon(Icons.shield, color: Colors.white, size: 20),
           ),
           const SizedBox(width: 12),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('IL MIO PATRONATO', style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w800, letterSpacing: 0.5)),
-                SizedBox(height: 1),
-                Text('Assistenza Immigrazione', style: TextStyle(color: AppColors.textSubtitle, fontSize: 11)),
+                Text(s.appName.toUpperCase(), style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w800, letterSpacing: 0.5), overflow: TextOverflow.ellipsis),
+                const SizedBox(height: 1),
+                Text(s.appTagline, style: const TextStyle(color: AppColors.textSubtitle, fontSize: 11), overflow: TextOverflow.ellipsis),
               ],
             ),
           ),
           const SizedBox(width: 8),
+          // ── Language switch ──
+          const LanguageSwitchButton(),
+          const SizedBox(width: 6),
           // ── Icona Assistente AI ──
           GestureDetector(
             onTap: widget.onNavigateToSbroglia,
