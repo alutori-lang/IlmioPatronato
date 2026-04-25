@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../config/constants.dart';
 import 'guida_dettaglio_screen.dart';
 import 'guide_documenti_data.dart';
+import 'guide_documenti_i18n.dart';
 
 class GuidaCategoriaScreen extends StatelessWidget {
   final String categoriaId;
@@ -65,7 +66,7 @@ class GuidaCategoriaScreen extends StatelessWidget {
             Text(cat.emoji, style: const TextStyle(fontSize: 26)),
             const SizedBox(width: 10),
             Expanded(
-              child: Text(cat.titolo,
+              child: Text(GuideI18n.catTitle(context, cat.id),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800)),
@@ -118,12 +119,12 @@ class _SchedaCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(scheda.titolo,
+                    Text(GuideI18n.schedaTitle(context, scheda.id),
                         style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: AppColors.textDark),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis),
                     const SizedBox(height: 4),
-                    Text(scheda.descrizione,
+                    Text(GuideI18n.schedaDesc(context, scheda.id),
                         style: const TextStyle(fontSize: 12, color: AppColors.textMedium, height: 1.3),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../config/constants.dart';
+import '../../core/localization/app_strings.dart';
 import '../../models/domanda.dart';
 
 class DomandaDetailScreen extends StatefulWidget {
@@ -96,7 +97,7 @@ class _DomandaDetailScreenState extends State<DomandaDetailScreen> {
                 Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14)),
-                  child: const Center(child: Text('Nessuna risposta ancora. Sii il primo!', style: TextStyle(fontSize: 14, color: AppColors.textLight))),
+                  child: Center(child: Text(AppStrings.of(context).noAnswerYet, style: const TextStyle(fontSize: 14, color: AppColors.textLight))),
                 )
               else
                 ...d.risposte.map((r) => Container(

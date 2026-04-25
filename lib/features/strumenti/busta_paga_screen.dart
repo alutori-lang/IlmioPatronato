@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../config/constants.dart';
+import '../../core/localization/app_strings.dart';
 import '../../core/services/language_service.dart';
 import '../../core/services/gemini_service.dart';
 import '../../core/widgets/document_upload_widget.dart';
@@ -303,11 +304,12 @@ Se un campo non è leggibile, metti null.''',
   // AI UPLOAD SECTION
   // ─────────────────────────────────────────────
   Widget _buildAiUploadSection() {
+    final s = AppStrings.of(context);
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: DocumentUploadWidget(
         label: 'Carica la tua Busta Paga',
-        subtitle: 'Scatta una foto o scegli dalla galleria.\nL\'AI analizzerà tutti i dati.',
+        subtitle: s.payslipPickerHint,
         icon: Icons.receipt_long_rounded,
         selectedFile: _selectedFile,
         isLoading: _isAnalyzing,

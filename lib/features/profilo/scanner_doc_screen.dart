@@ -5,6 +5,7 @@ import 'package:open_filex/open_filex.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../config/constants.dart';
+import '../../core/localization/app_strings.dart';
 import '../../core/services/scanner_service.dart';
 import '../../models/scanned_document.dart';
 
@@ -27,6 +28,7 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final s = AppStrings.of(context);
     final svc = context.watch<ScannerService>();
     final docs = svc.documents;
 
@@ -34,9 +36,9 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
       backgroundColor: AppColors.background,
       body: Column(
         children: [
-          _buildHeader(context, docs.length),
+          _buildHeader(context, s, docs.length),
           Expanded(
-            child: docs.isEmpty ? _buildEmpty() : _buildList(docs),
+            child: docs.isEmpty ? _buildEmpty(s) : _buildList(docs),
           ),
         ],
       ),
@@ -45,12 +47,12 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         icon: const Icon(Icons.document_scanner_rounded),
-        label: const Text('Scansiona', style: TextStyle(fontWeight: FontWeight.w700)),
+        label: Text(s.scanLabel, style: const TextStyle(fontWeight: FontWeight.w700)),
       ),
     );
   }
 
-  Widget _buildHeader(BuildContext context, int count) {
+  Widget _buildHeader(BuildContext context, AppStrings s, int count) {
     return Container(
       padding: EdgeInsets.only(
         top: MediaQuery.of(context).padding.top + 10,
@@ -66,8 +68,8 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
         ),
         const Icon(Icons.document_scanner_rounded, color: Colors.white, size: 22),
         const SizedBox(width: 10),
-        const Text('Scanner DOC',
-            style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800)),
+        Text(s.scannerTitle,
+            style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800)),
         const Spacer(),
         if (count > 0)
           Container(
@@ -83,7 +85,7 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
     );
   }
 
-  Widget _buildEmpty() {
+  Widget _buildEmpty(AppStrings s) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -101,16 +103,16 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
                   color: AppColors.primary, size: 56),
             ),
             const SizedBox(height: 22),
-            const Text('Nessun documento',
-                style: TextStyle(
+            Text(s.noDocs,
+                style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w800,
                     color: AppColors.textDark)),
             const SizedBox(height: 8),
-            const Text(
-              'Scansiona documenti d\'identità, ricevute, moduli — li trovi tutti qui, sempre con te.',
+            Text(
+              s.noDocsHint,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14, color: AppColors.textLight, height: 1.4),
+              style: const TextStyle(fontSize: 14, color: AppColors.textLight, height: 1.4),
             ),
             const SizedBox(height: 24),
             ElevatedButton.icon(
@@ -122,8 +124,8 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
               ),
               icon: const Icon(Icons.add_a_photo_rounded),
-              label: const Text('Scansiona il primo documento',
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
+              label: Text(s.scanFirstDoc,
+                  style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
             ),
             const SizedBox(height: 90),
           ],
@@ -164,9 +166,10 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
         ),
       );
     } catch (e) {
+      final s = AppStrings.of(context);
       messenger.showSnackBar(
         SnackBar(
-          content: Text('Errore durante la scansione: $e'),
+          content: Text('${s.scanError}: $e'),
           backgroundColor: Colors.red,
         ),
       );
@@ -174,16 +177,17 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
   }
 
   Future<String?> _promptName(BuildContext context) async {
+    final s = AppStrings.of(context);
     final controller = TextEditingController();
-    const suggestions = [
-      'Carta Identità',
-      'Passaporto',
-      'Permesso Soggiorno',
-      'Codice Fiscale',
-      'ISEE',
-      'Busta Paga',
+    final suggestions = [
+      s.docTypeId,
+      s.docTypePassport,
+      s.docTypePermit,
+      s.docTypeFiscal,
+      s.docTypeIsee,
+      s.docTypePayslip,
       '730',
-      'Contratto',
+      s.docTypeContract,
     ];
 
     return showModalBottomSheet<String>(
@@ -216,8 +220,8 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Text('Nome documento',
-                      style: TextStyle(
+                  Text(s.docName,
+                      style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w800,
                           color: AppColors.textDark)),
@@ -227,7 +231,7 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
                     autofocus: true,
                     textCapitalization: TextCapitalization.sentences,
                     decoration: InputDecoration(
-                      hintText: 'es. Carta Identità',
+                      hintText: s.docNameHint,
                       filled: true,
                       fillColor: AppColors.background,
                       border: OutlineInputBorder(
@@ -238,17 +242,17 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
                     onChanged: (v) => setSheetState(() => selected = v),
                   ),
                   const SizedBox(height: 14),
-                  const Text('Suggerimenti',
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.textLight)),
+                  Text(s.tips,
+                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.textLight)),
                   const SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,
-                    children: suggestions.map((s) {
+                    children: suggestions.map((sugg) {
                       return GestureDetector(
                         onTap: () {
-                          controller.text = s;
-                          setSheetState(() => selected = s);
+                          controller.text = sugg;
+                          setSheetState(() => selected = sugg);
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -259,7 +263,7 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
                               color: AppColors.primary.withValues(alpha: 0.3),
                             ),
                           ),
-                          child: Text(s,
+                          child: Text(sugg,
                               style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
@@ -272,7 +276,7 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton.icon(
-                      onPressed: () => Navigator.pop(ctx, controller.text.trim().isEmpty ? 'Documento' : controller.text.trim()),
+                      onPressed: () => Navigator.pop(ctx, controller.text.trim().isEmpty ? s.docName : controller.text.trim()),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         foregroundColor: Colors.white,
@@ -280,8 +284,8 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       ),
                       icon: const Icon(Icons.document_scanner_rounded),
-                      label: const Text('Avvia scansione',
-                          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
+                      label: Text(s.startScan,
+                          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -303,23 +307,24 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
   }
 
   Future<void> _promptRename(ScannedDocument doc) async {
+    final s = AppStrings.of(context);
     final controller = TextEditingController(text: doc.name);
     final svc = context.read<ScannerService>();
     final newName = await showDialog<String>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Rinomina'),
+        title: Text(s.rename),
         content: TextField(
           controller: controller,
           autofocus: true,
           textCapitalization: TextCapitalization.sentences,
-          decoration: const InputDecoration(hintText: 'Nome documento'),
+          decoration: InputDecoration(hintText: s.docName),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Annulla')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(s.cancel)),
           TextButton(
             onPressed: () => Navigator.pop(ctx, controller.text.trim()),
-            child: const Text('Salva'),
+            child: Text(s.save),
           ),
         ],
       ),
@@ -330,17 +335,18 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
   }
 
   Future<void> _confirmDelete(ScannedDocument doc) async {
+    final s = AppStrings.of(context);
     final svc = context.read<ScannerService>();
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Elimina documento?'),
-        content: Text('"${doc.name}" sarà rimosso definitivamente.'),
+        title: Text(s.deleteDoc),
+        content: Text('"${doc.name}" ${s.willBeRemoved}'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Annulla')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(s.cancel)),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Elimina', style: TextStyle(color: Colors.red)),
+            child: Text(s.deleteBtn, style: const TextStyle(color: Colors.red)),
           ),
         ],
       ),
@@ -366,6 +372,7 @@ class _DocCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = AppStrings.of(context);
     final df = DateFormat('d MMM yyyy • HH:mm', 'it_IT');
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -445,11 +452,11 @@ class _DocCard extends StatelessWidget {
                         break;
                     }
                   },
-                  itemBuilder: (_) => const [
-                    PopupMenuItem(value: 'open', child: Row(children: [Icon(Icons.visibility, size: 18), SizedBox(width: 10), Text('Apri')])),
-                    PopupMenuItem(value: 'rename', child: Row(children: [Icon(Icons.edit, size: 18), SizedBox(width: 10), Text('Rinomina')])),
-                    PopupMenuItem(value: 'share', child: Row(children: [Icon(Icons.share, size: 18), SizedBox(width: 10), Text('Condividi')])),
-                    PopupMenuItem(value: 'delete', child: Row(children: [Icon(Icons.delete, size: 18, color: Colors.red), SizedBox(width: 10), Text('Elimina', style: TextStyle(color: Colors.red))])),
+                  itemBuilder: (_) => [
+                    PopupMenuItem(value: 'open', child: Row(children: [const Icon(Icons.visibility, size: 18), const SizedBox(width: 10), Text(s.open)])),
+                    PopupMenuItem(value: 'rename', child: Row(children: [const Icon(Icons.edit, size: 18), const SizedBox(width: 10), Text(s.rename)])),
+                    PopupMenuItem(value: 'share', child: Row(children: [const Icon(Icons.share, size: 18), const SizedBox(width: 10), Text(s.share)])),
+                    PopupMenuItem(value: 'delete', child: Row(children: [const Icon(Icons.delete, size: 18, color: Colors.red), const SizedBox(width: 10), Text(s.deleteBtn, style: const TextStyle(color: Colors.red))])),
                   ],
                 ),
               ],

@@ -149,9 +149,7 @@ class _MainShellState extends State<MainShell> {
           _lastBackPress = now;
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(s.languageCode == 'it'
-                  ? 'Premi di nuovo per uscire'
-                  : 'Press back again to exit'),
+              content: Text(s.pressBackAgain),
               duration: const Duration(seconds: 2),
               behavior: SnackBarBehavior.floating,
             ),

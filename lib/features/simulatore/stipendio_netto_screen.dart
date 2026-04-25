@@ -7,6 +7,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import '../../config/constants.dart';
+import '../../core/localization/app_strings.dart';
 import '../../core/services/gemini_service.dart';
 import '../../core/widgets/document_upload_widget.dart';
 
@@ -207,9 +208,9 @@ IMPORTANTE:
         if (lordo <= 0 && netto <= 0) {
           setState(() => _isAnalyzingDoc = false);
           if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text('Importi non trovati. Riprova con foto più chiara.'),
-              backgroundColor: Color(0xFFF44336),
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(AppStrings.of(context).amountsNotFound),
+              backgroundColor: const Color(0xFFF44336),
             ));
           }
           return;

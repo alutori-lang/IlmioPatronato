@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../config/constants.dart';
+import '../../core/localization/app_strings.dart';
 import 'documento_wallet_screen.dart';
 import 'quiz_cittadinanza_screen.dart';
 import 'cv_europass_screen.dart';
@@ -106,15 +107,18 @@ class StrumentiScreen extends StatelessWidget {
             child: const Icon(Icons.build_circle, color: Colors.white, size: 22),
           ),
           const SizedBox(width: 12),
-          const Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('STRUMENTI', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800)),
-                SizedBox(height: 1),
-                Text('Tools e utilità avanzate', style: TextStyle(color: AppColors.textSubtitle, fontSize: 11)),
-              ],
-            ),
+          Expanded(
+            child: Builder(builder: (ctx) {
+              final s = AppStrings.of(ctx);
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(s.toolsTitleAlt.toUpperCase(), style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800)),
+                  const SizedBox(height: 1),
+                  Text(s.toolsAdvanced, style: const TextStyle(color: AppColors.textSubtitle, fontSize: 11)),
+                ],
+              );
+            }),
           ),
         ],
       ),

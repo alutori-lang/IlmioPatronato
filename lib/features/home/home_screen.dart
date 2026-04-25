@@ -86,6 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // ─── GUIDA DOCUMENTI CARD ────────────────────────────────────────────────
   Widget _buildGuideDocumentiCard(BuildContext context) {
+    final s = AppStrings.of(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
       child: GestureDetector(
@@ -111,25 +112,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.white.withValues(alpha: 0.22),
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: const Center(child: Text('🇮🇹', style: TextStyle(fontSize: 28))),
+              child: const Center(child: Text('🌍', style: TextStyle(fontSize: 28))),
             ),
             const SizedBox(width: 14),
-            const Expanded(
+            Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(children: [
-                    Icon(Icons.verified, color: Colors.white, size: 14),
-                    SizedBox(width: 5),
-                    Text('GUIDA COMPLETA',
-                        style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w800, letterSpacing: 0.6)),
+                    const Icon(Icons.verified, color: Colors.white, size: 14),
+                    const SizedBox(width: 5),
+                    Text(s.homeGuideBadge,
+                        style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w800, letterSpacing: 0.6)),
                   ]),
-                  SizedBox(height: 6),
-                  Text('Documenti per stranieri',
-                      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800, height: 1.2)),
-                  SizedBox(height: 4),
-                  Text('Dal visto alla cittadinanza • 14 lingue',
-                      style: TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.w500)),
+                  const SizedBox(height: 6),
+                  Text(s.homeGuideMainTitle,
+                      style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800, height: 1.2)),
+                  const SizedBox(height: 4),
+                  Text(s.homeGuideMainSub,
+                      style: const TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.w500)),
                 ],
               ),
             ),
@@ -142,6 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // ─── IL MIO CASO BANNER ──────────────────────────────────────────────────
   Widget _buildIlMioCasoBanner(BuildContext context) {
+    final s = AppStrings.of(context);
     final profiloService = context.watch<ProfiloUtenteService>();
     final hasProfile = profiloService.hasProfile;
 
@@ -185,14 +187,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    hasProfile ? 'VEDI I TUOI DIRITTI' : 'SCOPRI I TUOI DIRITTI',
+                    hasProfile ? s.homeRightsBadge : s.discoverMyRights,
                     style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w900, letterSpacing: 0.5),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    hasProfile
-                        ? 'Clicca per vedere i bonus a cui hai diritto'
-                        : 'Compila il profilo e scopri tutti i bonus e agevolazioni che puoi ottenere!',
+                    hasProfile ? s.homeRightsMainTitle : s.homeRightsMainSub,
                     style: const TextStyle(color: Colors.white70, fontSize: 12, height: 1.3),
                   ),
                 ],
@@ -260,6 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // ─── BANNER ──────────────────────────────────────────────────────────────
   Widget _buildBanner(BuildContext context) {
+    final s = AppStrings.of(context);
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 14, 16, 0),
       height: 150,
@@ -281,16 +282,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Il Mio Patronato', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800, height: 1.2)),
-                  SizedBox(height: 4),
-                  Text('Pratiche, Bonus e Servizi per Immigrati', style: TextStyle(color: AppColors.bannerText, fontSize: 12)),
+                  Text(s.appName, style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800, height: 1.2)),
+                  const SizedBox(height: 4),
+                  Text(s.homeAppSubtitle, style: const TextStyle(color: AppColors.bannerText, fontSize: 12)),
                 ],
               ),
             ),
@@ -302,6 +303,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // ─── ULTIMO BONUS — LIVE PULSE (news-style professionale) ────────────────
   Widget _buildAgevolazioneDelGiorno(BuildContext context) {
+    final s = AppStrings.of(context);
     if (_loading) {
       return Container(
         margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
@@ -318,7 +320,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(width: 12),
             const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFF1E4A8A))),
             const SizedBox(width: 12),
-            const Expanded(child: Text('Cerco ultime novità...', style: TextStyle(color: Color(0xFF475569), fontSize: 13, fontWeight: FontWeight.w500))),
+            Expanded(child: Text(s.searchingNews, style: const TextStyle(color: Color(0xFF475569), fontSize: 13, fontWeight: FontWeight.w500))),
           ],
         ),
       );
@@ -358,7 +360,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           _LivePulseDot(animated: _isRecent48h),
                           const SizedBox(width: 7),
                           Text(
-                            _isRecent48h ? 'ULTIME 48H · INFO LIVE' : 'ULTIMO BONUS ATTIVO',
+                            _isRecent48h ? s.newsLast48hLive : s.newsLast48hLive,
                             style: const TextStyle(color: Color(0xFF1E4A8A), fontSize: 10, fontWeight: FontWeight.w700, letterSpacing: 0.6),
                           ),
                         ]),
@@ -380,10 +382,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             const SizedBox(width: 8),
-                            const Row(mainAxisSize: MainAxisSize.min, children: [
-                              Text('Leggi', style: TextStyle(color: Color(0xFF1E4A8A), fontSize: 12, fontWeight: FontWeight.w600)),
-                              SizedBox(width: 3),
-                              Icon(Icons.arrow_forward, color: Color(0xFF1E4A8A), size: 14),
+                            Row(mainAxisSize: MainAxisSize.min, children: [
+                              Text(s.readBtn, style: const TextStyle(color: Color(0xFF1E4A8A), fontSize: 12, fontWeight: FontWeight.w600)),
+                              const SizedBox(width: 3),
+                              const Icon(Icons.arrow_forward, color: Color(0xFF1E4A8A), size: 14),
                             ]),
                           ],
                         ),
@@ -401,6 +403,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // ─── MAIN CARDS SECTION ──────────────────────────────────────────────────
   Widget _buildCardsSection(BuildContext context) {
+    final s = AppStrings.of(context);
     final bonusCount = 53 + _nuoveAgevolazioni.length;
 
     return Padding(
@@ -408,9 +411,9 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('I Tuoi Servizi', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: AppColors.textDark)),
+          Text(s.yourServices, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: AppColors.textDark)),
           const SizedBox(height: 4),
-          Text('Tutto quello che ti serve, in un posto', style: TextStyle(fontSize: 12, color: Colors.grey.shade500)),
+          Text(s.yourServicesSub, style: TextStyle(fontSize: 12, color: Colors.grey.shade500)),
           const SizedBox(height: 14),
 
           // ── ROW 1 ──
@@ -424,10 +427,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icons.card_giftcard,
                   badge: 'HOT',
                   badgeColor: const Color(0xFFE65100),
-                  title: 'Agevolazioni',
-                  subtitle: '$bonusCount bonus disponibili',
+                  title: s.navBonuses,
+                  subtitle: '$bonusCount bonus',
                   items: _loading
-                    ? ['Caricamento...']
+                    ? [s.loadingShort]
                     : [
                         'Assegno Unico',
                         'NASpI & ADI',
@@ -446,8 +449,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icons.calculate_rounded,
                   badge: '14',
                   badgeColor: const Color(0xFF5E35B1),
-                  title: 'Calcolatori',
-                  subtitle: 'Simula & calcola tutto',
+                  title: s.calculators,
+                  subtitle: s.calculatorsSub,
                   items: const [
                     'ISEE & 730',
                     'Stipendio Netto',
@@ -472,8 +475,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icons.build_circle_rounded,
                   badge: 'TOOL',
                   badgeColor: const Color(0xFF2E7D32),
-                  title: 'Strumenti',
-                  subtitle: '6 tools professionali',
+                  title: s.toolsTitleAlt,
+                  subtitle: s.toolsCount,
                   items: const [
                     'Wallet Documenti',
                     'Quiz Cittadinanza',
@@ -492,8 +495,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icons.question_answer_rounded,
                   badge: 'AI',
                   badgeColor: const Color(0xFF1565C0),
-                  title: 'Chiedi del Patronato?',
-                  subtitle: 'Chiedi qualsiasi cosa',
+                  title: s.askPatronatoQ,
+                  subtitle: s.askAnything,
                   items: const [
                     'Immigrazione',
                     'Documenti & Pratiche',
@@ -654,20 +657,23 @@ class _WowCard extends StatelessWidget {
             const SizedBox(height: 4),
 
             // Bottom action — solo testo + freccia
-            Row(
-              children: [
-                Text(
-                  'Scopri',
-                  style: TextStyle(
-                    color: accent,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w800,
+            Builder(builder: (context) {
+              final s = AppStrings.of(context);
+              return Row(
+                children: [
+                  Text(
+                    s.discover,
+                    style: TextStyle(
+                      color: accent,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 4),
-                Icon(Icons.arrow_forward_rounded, color: accent, size: 14),
-              ],
-            ),
+                  const SizedBox(width: 4),
+                  Icon(Icons.arrow_forward_rounded, color: accent, size: 14),
+                ],
+              );
+            }),
           ],
         ),
       ),
@@ -751,6 +757,7 @@ class _DisclaimerBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = AppStrings.of(context);
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 8, 16, 12),
       padding: const EdgeInsets.all(12),
@@ -759,18 +766,15 @@ class _DisclaimerBox extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.grey.shade300),
       ),
-      child: const Row(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.info_outline, size: 15, color: Colors.grey),
-          SizedBox(width: 8),
+          const Icon(Icons.info_outline, size: 15, color: Colors.grey),
+          const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'Questa app non è un ente governativo né è affiliata ad esso. '
-              'Le informazioni fornite sono a scopo orientativo e si basano su fonti ufficiali '
-              '(INPS, Agenzia delle Entrate, Ministeri). '
-              'Verifica sempre i dettagli sui siti ufficiali (.gov.it) prima di presentare domanda.',
-              style: TextStyle(fontSize: 10, color: Colors.grey, height: 1.5),
+              s.disclaimer,
+              style: const TextStyle(fontSize: 10, color: Colors.grey, height: 1.5),
             ),
           ),
         ],

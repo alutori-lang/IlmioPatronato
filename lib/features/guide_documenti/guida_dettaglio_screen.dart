@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../config/constants.dart';
+import '../../core/localization/app_strings.dart';
 import '../../core/services/guide_ai_service.dart';
 import '../../core/services/language_service.dart';
 import '../sbroglia/sbroglia_chat_screen.dart';
 import 'guide_documenti_data.dart';
+import 'guide_documenti_i18n.dart';
 
 class GuidaDettaglioScreen extends StatefulWidget {
   final String schedaId;
@@ -173,10 +175,10 @@ class _GuidaDettaglioScreenState extends State<GuidaDettaglioScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(_categoria.titolo.toUpperCase(),
+                      Text(GuideI18n.catTitle(context, _categoria.id).toUpperCase(),
                           style: const TextStyle(color: Colors.white70, fontSize: 11, fontWeight: FontWeight.w700, letterSpacing: 0.8)),
                       const SizedBox(height: 4),
-                      Text(_scheda.titolo,
+                      Text(GuideI18n.schedaTitle(context, _scheda.id),
                           style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800, height: 1.2)),
                       const SizedBox(height: 8),
                       Container(
@@ -239,8 +241,8 @@ class _GuidaDettaglioScreenState extends State<GuidaDettaglioScreen> {
           Text('Carico la scheda in ${_currentLang.name}…',
               style: const TextStyle(fontSize: 14, color: AppColors.textMedium, fontWeight: FontWeight.w600)),
           const SizedBox(height: 4),
-          const Text('Prima volta: qualche secondo. Dopo è immediato.',
-              style: TextStyle(fontSize: 12, color: AppColors.textLight)),
+          Text(AppStrings.of(context).firstTimeNote,
+              style: const TextStyle(fontSize: 12, color: AppColors.textLight)),
         ],
       ),
     );

@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import '../../config/constants.dart';
+import '../../core/localization/app_strings.dart';
 import '../../core/services/language_service.dart';
 import '../../core/services/translator_service.dart';
 
@@ -717,8 +718,8 @@ class _TranslatorScreenState extends State<TranslatorScreen> {
         ConstrainedBox(
           constraints: BoxConstraints(minHeight: minHeight),
           child: text.isEmpty
-              ? const Text('La traduzione apparirà qui.',
-                  style: TextStyle(fontSize: 15, color: AppColors.textLight))
+              ? Text(AppStrings.of(context).translationWillAppear,
+                  style: const TextStyle(fontSize: 15, color: AppColors.textLight))
               : Text(text,
                   style: const TextStyle(fontSize: 16, color: AppColors.textDark, height: 1.4)),
         ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../config/constants.dart';
+import '../../core/localization/app_strings.dart';
 import '../../core/services/gemini_service.dart';
 import '../../core/widgets/document_upload_widget.dart';
 
@@ -145,9 +146,9 @@ Importi come numeri senza simbolo €. Se un campo non è leggibile, metti null.
       } else {
         setState(() => _isAnalyzingDoc = false);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Impossibile leggere i dati. Riprova con una foto più nitida.'),
-            backgroundColor: Color(0xFFF44336),
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(AppStrings.of(context).payslipReadError),
+            backgroundColor: const Color(0xFFF44336),
           ));
         }
       }

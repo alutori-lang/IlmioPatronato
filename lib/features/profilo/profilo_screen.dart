@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../config/constants.dart';
 import '../../core/services/language_service.dart';
+import '../../core/localization/app_strings.dart';
 import 'info_app_screen.dart';
 import '../strumenti/documento_wallet_screen.dart';
 import 'scanner_doc_screen.dart';
@@ -13,34 +14,35 @@ class ProfiloScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = AppStrings.of(context);
     return CustomScrollView(
       slivers: [
-        SliverToBoxAdapter(child: _buildHeader(context)),
-        SliverToBoxAdapter(child: _buildProfileCard()),
-        SliverToBoxAdapter(child: _buildStatsRow()),
-        SliverToBoxAdapter(child: _buildUpgradeBanner()),
-        SliverToBoxAdapter(child: _sectionTitle('Strumenti')),
-        SliverToBoxAdapter(child: _buildTools(context)),
-        SliverToBoxAdapter(child: _sectionTitle('Impostazioni')),
-        SliverToBoxAdapter(child: _buildSettings(context)),
+        SliverToBoxAdapter(child: _buildHeader(context, s)),
+        SliverToBoxAdapter(child: _buildProfileCard(s)),
+        SliverToBoxAdapter(child: _buildStatsRow(s)),
+        SliverToBoxAdapter(child: _buildUpgradeBanner(s)),
+        SliverToBoxAdapter(child: _sectionTitle(s.toolsTitleAlt)),
+        SliverToBoxAdapter(child: _buildTools(context, s)),
+        SliverToBoxAdapter(child: _sectionTitle(s.settingsSectionTitle)),
+        SliverToBoxAdapter(child: _buildSettings(context, s)),
         const SliverToBoxAdapter(child: SizedBox(height: 40)),
       ],
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
+  Widget _buildHeader(BuildContext context, AppStrings s) {
     return Container(
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 10, left: 20, right: 20, bottom: 14),
       decoration: const BoxDecoration(gradient: AppColors.headerGradient),
-      child: const Row(children: [
-        Icon(Icons.person_rounded, color: Colors.white, size: 24),
-        SizedBox(width: 12),
-        Text('Profilo', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800)),
+      child: Row(children: [
+        const Icon(Icons.person_rounded, color: Colors.white, size: 24),
+        const SizedBox(width: 12),
+        Text(s.profileTitle, style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800)),
       ]),
     );
   }
 
-  Widget _buildProfileCard() {
+  Widget _buildProfileCard(AppStrings s) {
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(16),
@@ -57,34 +59,34 @@ class ProfiloScreen extends StatelessWidget {
           child: const Icon(Icons.person, color: Colors.white, size: 32),
         ),
         const SizedBox(width: 14),
-        const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('Utente', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800)),
-          Text('utente@email.com', style: TextStyle(color: Colors.white70, fontSize: 13)),
-          SizedBox(height: 6),
+        Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(s.userDefaultName, style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800)),
+          const Text('utente@email.com', style: TextStyle(color: Colors.white70, fontSize: 13)),
+          const SizedBox(height: 6),
           Row(children: [
-            _Badge(text: 'FREE', color: Colors.white, textColor: AppColors.primary),
-            SizedBox(width: 8),
-            _Badge(text: 'LV.1', color: AppColors.badge, textColor: Colors.white),
+            _Badge(text: s.planFree, color: Colors.white, textColor: AppColors.primary),
+            const SizedBox(width: 8),
+            _Badge(text: s.userLevel1, color: AppColors.badge, textColor: Colors.white),
           ]),
         ])),
       ]),
     );
   }
 
-  Widget _buildStatsRow() {
+  Widget _buildStatsRow(AppStrings s) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Row(children: const [
-        Expanded(child: _StatCard(icon: Icons.menu_book, label: 'Guide lette', value: '3', color: AppColors.iconBlue)),
-        SizedBox(width: 10),
-        Expanded(child: _StatCard(icon: Icons.check_circle, label: 'Documenti', value: '7', color: AppColors.iconGreen)),
-        SizedBox(width: 10),
-        Expanded(child: _StatCard(icon: Icons.forum, label: 'Domande', value: '2', color: AppColors.iconOrange)),
+      child: Row(children: [
+        Expanded(child: _StatCard(icon: Icons.menu_book, label: s.statsGuidesRead, value: '3', color: AppColors.iconBlue)),
+        const SizedBox(width: 10),
+        Expanded(child: _StatCard(icon: Icons.check_circle, label: s.statsDocs, value: '7', color: AppColors.iconGreen)),
+        const SizedBox(width: 10),
+        Expanded(child: _StatCard(icon: Icons.forum, label: s.statsQuestions, value: '2', color: AppColors.iconOrange)),
       ]),
     );
   }
 
-  Widget _buildUpgradeBanner() {
+  Widget _buildUpgradeBanner(AppStrings s) {
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(16),
@@ -94,10 +96,10 @@ class ProfiloScreen extends StatelessWidget {
         boxShadow: [BoxShadow(color: const Color(0xFFFF6B35).withValues(alpha: 0.3), blurRadius: 12, offset: const Offset(0, 4))],
       ),
       child: Row(children: [
-        const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('Diventa PRO!', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800)),
-          SizedBox(height: 4),
-          Text('AI Illimitato • Scanner DOC • Zero ADS', style: TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.w500)),
+        Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(s.becomePro, style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800)),
+          const SizedBox(height: 4),
+          Text(s.proFeatures, style: const TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.w500)),
         ])),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
@@ -113,16 +115,16 @@ class ProfiloScreen extends StatelessWidget {
     child: Text(t, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.textDark)),
   );
 
-  Widget _buildTools(BuildContext context) {
+  Widget _buildTools(BuildContext context, AppStrings s) {
     final tools = [
-      _ToolData(Icons.document_scanner, 'Scanner DOC', AppColors.iconBlue, false),
-      _ToolData(Icons.translate, 'Traduttore', AppColors.iconGreen, false),
-      _ToolData(Icons.track_changes, 'Tracker Pratica', AppColors.iconOrange, false),
-      _ToolData(Icons.account_balance_wallet, 'Portafoglio', AppColors.iconGreen, false),
-      _ToolData(Icons.calculate, 'Simulatore ISEE', AppColors.iconPurple, false),
-      _ToolData(Icons.map, 'Mappa Uffici', AppColors.primary, false),
-      _ToolData(Icons.notifications_active, 'Notifiche', AppColors.iconOrange, true),
-      _ToolData(Icons.people, 'Community', AppColors.iconPurple, false),
+      _ToolData(Icons.document_scanner, s.toolScanner, AppColors.iconBlue, false, 'scanner'),
+      _ToolData(Icons.translate, s.toolTranslator, AppColors.iconGreen, false, 'translator'),
+      _ToolData(Icons.track_changes, s.toolTracker, AppColors.iconOrange, false, 'tracker'),
+      _ToolData(Icons.account_balance_wallet, s.toolWallet, AppColors.iconGreen, false, 'wallet'),
+      _ToolData(Icons.calculate, s.toolIseeSimulator, AppColors.iconPurple, false, 'isee'),
+      _ToolData(Icons.map, s.toolMap, AppColors.primary, false, 'map'),
+      _ToolData(Icons.notifications_active, s.toolNotifications, AppColors.iconOrange, true, 'notif'),
+      _ToolData(Icons.people, s.toolCommunity, AppColors.iconPurple, false, 'community'),
     ];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -134,24 +136,24 @@ class ProfiloScreen extends StatelessWidget {
           final t = tools[i];
           return GestureDetector(
             onTap: () {
-              if (t.label == 'Scanner DOC') {
+              if (t.id == 'scanner') {
                 Navigator.push(context, MaterialPageRoute(builder: (_) => const ScannerDocScreen()));
                 return;
               }
-              if (t.label == 'Traduttore') {
+              if (t.id == 'translator') {
                 Navigator.push(context, MaterialPageRoute(builder: (_) => const TranslatorScreen()));
                 return;
               }
-              if (t.label == 'Tracker Pratica') {
+              if (t.id == 'tracker') {
                 Navigator.push(context, MaterialPageRoute(builder: (_) => const TrackerPraticaScreen()));
                 return;
               }
-              if (t.label == 'Portafoglio') {
+              if (t.id == 'wallet') {
                 Navigator.push(context, MaterialPageRoute(builder: (_) => const DocumentoWalletScreen()));
                 return;
               }
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(t.isPro ? 'Funzione PRO - Coming Soon!' : 'Coming Soon!'), backgroundColor: t.color),
+                SnackBar(content: Text(s.comingSoon), backgroundColor: t.color),
               );
             },
             child: Container(
@@ -182,6 +184,7 @@ class ProfiloScreen extends StatelessWidget {
 
   void _showLanguagePicker(BuildContext context) {
     final langService = context.read<LanguageService>();
+    final s = AppStrings.forCode(langService.currentCode);
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -198,9 +201,9 @@ class ProfiloScreen extends StatelessWidget {
             const SizedBox(height: 12),
             Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(2))),
             const SizedBox(height: 16),
-            const Text('Scegli Lingua / Choose Language', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+            Text(s.chooseLanguageBilingual, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.textDark)),
             const SizedBox(height: 4),
-            const Text('Per contenuti educativi', style: TextStyle(fontSize: 12, color: AppColors.textLight)),
+            Text(s.forEducationalContent, style: const TextStyle(fontSize: 12, color: AppColors.textLight)),
             const SizedBox(height: 12),
             Flexible(
               child: ListView.builder(
@@ -229,21 +232,21 @@ class ProfiloScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSettings(BuildContext context) {
+  Widget _buildSettings(BuildContext context, AppStrings s) {
     final langService = context.watch<LanguageService>();
     final items = [
-      _SettData(Icons.language, 'Lingua', '${langService.current.flag} ${langService.current.name}', AppColors.iconBlue),
-      _SettData(Icons.dark_mode, 'Tema', 'Chiaro', AppColors.textDark),
-      _SettData(Icons.notifications, 'Notifiche', 'Attive', AppColors.iconOrange),
-      _SettData(Icons.info, 'Info App', 'v1.0.0', AppColors.iconGreen),
-      _SettData(Icons.star, 'Valuta App', '', const Color(0xFFFFC107)),
-      _SettData(Icons.share, 'Condividi', '', AppColors.iconPurple),
+      _SettData(Icons.language, s.settingsLang, '${langService.current.flag} ${langService.current.name}', AppColors.iconBlue),
+      _SettData(Icons.dark_mode, s.settingsTheme, s.themeLight, AppColors.textDark),
+      _SettData(Icons.notifications, s.settingsNotifs, s.notifsActive, AppColors.iconOrange),
+      _SettData(Icons.info, s.settingsAbout, 'v1.0.0', AppColors.iconGreen),
+      _SettData(Icons.star, s.settingsRate, '', const Color(0xFFFFC107)),
+      _SettData(Icons.share, s.settingsShare, '', AppColors.iconPurple),
     ];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(children: items.asMap().entries.map((entry) {
         final i = entry.key;
-        final s = entry.value;
+        final item = entry.value;
         return GestureDetector(
           onTap: i == 0
               ? () => _showLanguagePicker(context)
@@ -258,13 +261,13 @@ class ProfiloScreen extends StatelessWidget {
             child: Row(children: [
               Container(
                 width: 34, height: 34,
-                decoration: BoxDecoration(color: s.color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(10)),
-                child: Icon(s.icon, color: s.color, size: 18),
+                decoration: BoxDecoration(color: item.color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(10)),
+                child: Icon(item.icon, color: item.color, size: 18),
               ),
               const SizedBox(width: 12),
-              Text(s.label, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textDark)),
+              Text(item.label, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textDark)),
               const Spacer(),
-              if (s.value.isNotEmpty) Text(s.value, style: const TextStyle(fontSize: 13, color: AppColors.textLight)),
+              if (item.value.isNotEmpty) Text(item.value, style: const TextStyle(fontSize: 13, color: AppColors.textLight)),
               const SizedBox(width: 6),
               const Icon(Icons.chevron_right, color: AppColors.navInactive, size: 20),
             ]),
@@ -317,7 +320,8 @@ class _ToolData {
   final String label;
   final Color color;
   final bool isPro;
-  const _ToolData(this.icon, this.label, this.color, this.isPro);
+  final String id;
+  const _ToolData(this.icon, this.label, this.color, this.isPro, this.id);
 }
 
 class _SettData {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../config/constants.dart';
 import 'guide_documenti_data.dart';
+import 'guide_documenti_i18n.dart';
 import 'guida_categoria_screen.dart';
 
 class GuideDocumentiScreen extends StatelessWidget {
@@ -13,7 +14,7 @@ class GuideDocumentiScreen extends StatelessWidget {
       body: Column(
         children: [
           _buildHeader(context),
-          _buildIntro(),
+          _buildIntro(context),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 10, 16, 24),
@@ -59,15 +60,15 @@ class GuideDocumentiScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
-        const Text('🇮🇹', style: TextStyle(fontSize: 22)),
+        const Text('🌍', style: TextStyle(fontSize: 22)),
         const SizedBox(width: 10),
-        const Text('Guida Documenti',
-            style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800)),
+        Text(GuideI18n.header(context),
+            style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800)),
       ]),
     );
   }
 
-  Widget _buildIntro() {
+  Widget _buildIntro(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
       child: Container(
@@ -77,13 +78,13 @@ class GuideDocumentiScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(14),
           border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
         ),
-        child: const Row(children: [
-          Icon(Icons.info_outline, color: AppColors.primary, size: 22),
-          SizedBox(width: 10),
+        child: Row(children: [
+          const Icon(Icons.info_outline, color: AppColors.primary, size: 22),
+          const SizedBox(width: 10),
           Expanded(
             child: Text(
-              'Dalla richiesta di asilo alla cittadinanza. Ogni scheda ti spiega requisiti, documenti, procedura e costi. Disponibile in 14 lingue.',
-              style: TextStyle(fontSize: 13, color: AppColors.textDark, height: 1.4, fontWeight: FontWeight.w500),
+              GuideI18n.intro(context),
+              style: const TextStyle(fontSize: 13, color: AppColors.textDark, height: 1.4, fontWeight: FontWeight.w500),
             ),
           ),
         ]),
@@ -133,7 +134,7 @@ class _CategoriaCard extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                categoria.titolo,
+                GuideI18n.catTitle(context, categoria.id),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -145,7 +146,7 @@ class _CategoriaCard extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                '$schedeCount sched${schedeCount == 1 ? 'a' : 'e'}',
+                GuideI18n.schedeLabel(context, schedeCount),
                 style: TextStyle(fontSize: 11, color: color, fontWeight: FontWeight.w700),
               ),
             ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../config/constants.dart';
+import '../../core/localization/app_strings.dart';
 import '../../core/widgets/banner_ad_widget.dart';
 import '../../core/services/ad_service.dart';
 import '../../core/services/agevolazioni_service.dart' as ai;
@@ -259,10 +260,10 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
             border: Border.all(color: const Color(0xFFE4E8EF)),
             borderRadius: BorderRadius.circular(14),
           ),
-          child: const Row(children: [
-            SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFF1E4A8A))),
-            SizedBox(width: 12),
-            Expanded(child: Text('Cerco ultime novità...', style: TextStyle(color: Color(0xFF475569), fontSize: 13, fontWeight: FontWeight.w500))),
+          child: Row(children: [
+            const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFF1E4A8A))),
+            const SizedBox(width: 12),
+            Expanded(child: Text(AppStrings.of(context).searchingNews, style: const TextStyle(color: Color(0xFF475569), fontSize: 13, fontWeight: FontWeight.w500))),
           ]),
         ),
       );
