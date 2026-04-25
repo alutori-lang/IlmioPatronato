@@ -88,7 +88,7 @@ class _LanguagePickerScreenState extends State<LanguagePickerScreen> {
                   padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    childAspectRatio: 2.6,
+                    childAspectRatio: 2.2,
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 12,
                   ),
