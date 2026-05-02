@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg7" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06D6A0"/>
+      <stop offset="100%" stop-color="#118AB2"/>
+    </linearGradient>
+    <radialGradient id="face7" cx="40%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#FFE082"/>
+      <stop offset="60%" stop-color="#FFC93C"/>
+      <stop offset="100%" stop-color="#F9A826"/>
+    </radialGradient>
+    <linearGradient id="cheek7" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF6B9D"/>
+      <stop offset="100%" stop-color="#FF1744"/>
+    </linearGradient>
+    <radialGradient id="eyeShine7" cx="30%" cy="30%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow7" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="20"/>
+      <feOffset dx="0" dy="20" result="offsetblur"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.5"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#bg7)"/>
+  <g filter="url(#shadow7)">
+    <circle cx="512" cy="512" r="340" fill="url(#face7)" stroke="#E07F00" stroke-width="6"/>
+    <ellipse cx="380" cy="450" rx="90" ry="50" fill="#FFFFFF" opacity="0.5"/>
+  </g>
+  <g>
+    <circle cx="400" cy="450" r="52" fill="#1A1A1A"/>
+    <circle cx="624" cy="450" r="52" fill="#1A1A1A"/>
+    <circle cx="385" cy="435" r="22" fill="#FFFFFF"/>
+    <circle cx="609" cy="435" r="22" fill="#FFFFFF"/>
+    <circle cx="395" cy="445" r="8" fill="#FFFFFF"/>
+    <circle cx="619" cy="445" r="8" fill="#FFFFFF"/>
+  </g>
+  <ellipse cx="290" cy="600" rx="70" ry="40" fill="#FF6B9D" opacity="0.6"/>
+  <ellipse cx="734" cy="600" rx="70" ry="40" fill="#FF6B9D" opacity="0.6"/>
+  <path d="M 380 620 Q 512 740 644 620"
+        stroke="#1A1A1A" stroke-width="22"
+        stroke-linecap="round" fill="none"/>
+  <path d="M 400 660 Q 512 720 624 660 Q 580 700 512 700 Q 444 700 400 660 Z"
+        fill="#FF1744"/>
+  <g transform="translate(512 220)" filter="url(#shadow7)">
+    <rect x="-200" y="-50" width="130" height="100" fill="#009246" rx="14"/>
+    <rect x="-65" y="-50" width="130" height="100" fill="#FFFFFF" rx="14"/>
+    <rect x="70" y="-50" width="130" height="100" fill="#CE2B37" rx="14"/>
+  </g>
+</svg>

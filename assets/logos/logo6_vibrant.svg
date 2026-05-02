@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF006E"/>
+      <stop offset="50%" stop-color="#8338EC"/>
+      <stop offset="100%" stop-color="#3A86FF"/>
+    </linearGradient>
+    <linearGradient id="white6" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F0F0F0"/>
+    </linearGradient>
+    <radialGradient id="glow6" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="bigShadow6" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="25"/>
+      <feOffset dx="0" dy="20" result="offsetblur"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.4"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="innerGlow6">
+      <feGaussianBlur stdDeviation="6"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#bg6)"/>
+  <circle cx="512" cy="380" r="500" fill="url(#glow6)"/>
+  <g filter="url(#bigShadow6)">
+    <text x="512" y="700" text-anchor="middle"
+          font-family="Impact, Arial Black, sans-serif"
+          font-size="780" font-weight="900" fill="url(#white6)">B</text>
+  </g>
+  <g transform="translate(720 720)">
+    <circle r="80" fill="#FFFFFF" filter="url(#bigShadow6)"/>
+    <circle cx="-25" cy="0" r="18" fill="#009246"/>
+    <circle cx="0" cy="0" r="18" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="2"/>
+    <circle cx="25" cy="0" r="18" fill="#CE2B37"/>
+  </g>
+</svg>

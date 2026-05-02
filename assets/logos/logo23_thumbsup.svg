@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg23" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFB800"/>
+      <stop offset="100%" stop-color="#F57C00"/>
+    </linearGradient>
+    <radialGradient id="skin23" cx="40%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#FFE0B2"/>
+      <stop offset="60%" stop-color="#FFCC80"/>
+      <stop offset="100%" stop-color="#E8A857"/>
+    </radialGradient>
+    <linearGradient id="shirt23" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#22C55E"/>
+      <stop offset="100%" stop-color="#15803D"/>
+    </linearGradient>
+    <linearGradient id="hair23" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1F1B18"/>
+      <stop offset="100%" stop-color="#0D0A08"/>
+    </linearGradient>
+    <linearGradient id="card23" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#FF8F00"/>
+    </linearGradient>
+    <filter id="shadow23" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="14"/>
+      <feOffset dx="0" dy="14" result="offsetblur"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.4"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#bg23)"/>
+  <ellipse cx="512" cy="940" rx="280" ry="20" fill="#000000" opacity="0.2"/>
+  <g filter="url(#shadow23)">
+    <rect x="280" y="620" width="464" height="280" rx="40" fill="url(#shirt23)"/>
+    <ellipse cx="512" cy="620" rx="232" ry="30" fill="url(#shirt23)"/>
+    <text x="512" y="780" text-anchor="middle"
+          font-family="Arial Black, sans-serif"
+          font-size="80" font-weight="900" fill="#FFFFFF">OK</text>
+  </g>
+  <g filter="url(#shadow23)">
+    <ellipse cx="512" cy="380" rx="180" ry="200" fill="url(#skin23)" stroke="#C8945A" stroke-width="4"/>
+    <path d="M 332 320
+             Q 332 200 432 180
+             Q 512 160 592 180
+             Q 692 200 692 320
+             Q 692 340 680 350
+             L 670 300
+             Q 660 260 600 250
+             Q 540 240 480 250
+             Q 420 260 380 300
+             L 360 350
+             Q 340 340 332 320 Z"
+          fill="url(#hair23)"/>
+    <ellipse cx="450" cy="380" rx="22" ry="28" fill="#1A1A1A"/>
+    <ellipse cx="574" cy="380" rx="22" ry="28" fill="#1A1A1A"/>
+    <circle cx="445" cy="370" r="8" fill="#FFFFFF"/>
+    <circle cx="569" cy="370" r="8" fill="#FFFFFF"/>
+    <ellipse cx="380" cy="460" rx="35" ry="22" fill="#FF8A95" opacity="0.5"/>
+    <ellipse cx="644" cy="460" rx="35" ry="22" fill="#FF8A95" opacity="0.5"/>
+    <path d="M 420 470 Q 512 560 604 470" stroke="#1A1A1A" stroke-width="12"
+          fill="none" stroke-linecap="round"/>
+    <path d="M 440 480 Q 512 540 584 480 Q 552 520 512 520 Q 472 520 440 480 Z"
+          fill="#D32F2F"/>
+  </g>
+  <g filter="url(#shadow23)" transform="translate(180 580) rotate(-15)">
+    <ellipse cx="50" cy="50" rx="60" ry="80" fill="url(#skin23)" stroke="#C8945A" stroke-width="5"/>
+    <rect x="-20" y="-50" width="40" height="100" rx="20" fill="url(#skin23)"
+          stroke="#C8945A" stroke-width="5"/>
+    <ellipse cx="50" cy="0" rx="50" ry="40" fill="url(#skin23)" stroke="#C8945A" stroke-width="5"/>
+    <line x1="40" y1="-30" x2="40" y2="-50" stroke="#C8945A" stroke-width="3"/>
+    <line x1="60" y1="-25" x2="60" y2="-45" stroke="#C8945A" stroke-width="3"/>
+  </g>
+  <g filter="url(#shadow23)" transform="translate(680 600) rotate(15)">
+    <rect x="0" y="0" width="180" height="120" rx="14" fill="url(#card23)"
+          stroke="#5D3A00" stroke-width="5"/>
+    <rect x="0" y="0" width="180" height="40" fill="#FF6F00"/>
+    <text x="90" y="80" text-anchor="middle"
+          font-family="Arial Black, sans-serif"
+          font-size="44" font-weight="900" fill="#5D3A00">€</text>
+    <text x="90" y="110" text-anchor="middle"
+          font-family="Arial, sans-serif"
+          font-size="20" font-weight="700" fill="#5D3A00">BONUS</text>
+  </g>
+  <g transform="translate(512 220)">
+    <rect x="-90" y="0" width="60" height="22" fill="#009246" rx="4"/>
+    <rect x="-30" y="0" width="60" height="22" fill="#FFFFFF" rx="4"/>
+    <rect x="30" y="0" width="60" height="22" fill="#CE2B37" rx="4"/>
+  </g>
+</svg>

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <radialGradient id="bg2" cx="50%" cy="40%" r="80%">
+      <stop offset="0%" stop-color="#1E3A8A"/>
+      <stop offset="100%" stop-color="#050B1E"/>
+    </radialGradient>
+    <radialGradient id="coinGold" cx="35%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#FFFACD"/>
+      <stop offset="40%" stop-color="#FFD700"/>
+      <stop offset="80%" stop-color="#DAA520"/>
+      <stop offset="100%" stop-color="#8B6914"/>
+    </radialGradient>
+    <radialGradient id="coinInner" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFE55C"/>
+      <stop offset="100%" stop-color="#FFB300"/>
+    </radialGradient>
+    <linearGradient id="green2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00C853"/>
+      <stop offset="100%" stop-color="#006B33"/>
+    </linearGradient>
+    <linearGradient id="red2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FF1744"/>
+      <stop offset="100%" stop-color="#9B1F28"/>
+    </linearGradient>
+    <filter id="shadow2" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="20"/>
+      <feOffset dx="0" dy="20" result="offsetblur"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.6"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="shine2" cx="30%" cy="25%" r="40%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#bg2)"/>
+  <g transform="translate(512 512)" filter="url(#shadow2)">
+    <circle r="340" fill="url(#coinGold)" stroke="#8B6914" stroke-width="8"/>
+    <circle r="295" fill="url(#coinInner)"/>
+    <circle r="295" fill="none" stroke="#B8860B" stroke-width="4" stroke-dasharray="2 6"/>
+    <g>
+      <rect x="-200" y="-50" width="130" height="100" fill="url(#green2)" rx="6"/>
+      <rect x="-65" y="-50" width="130" height="100" fill="#FFFFFF" rx="6"/>
+      <rect x="70" y="-50" width="130" height="100" fill="url(#red2)" rx="6"/>
+    </g>
+    <text x="0" y="60" text-anchor="middle" font-family="Arial Black, sans-serif"
+          font-size="180" font-weight="900" fill="#5D3A00"
+          dominant-baseline="hanging">€</text>
+    <ellipse cx="-100" cy="-180" rx="180" ry="80" fill="url(#shine2)"/>
+  </g>
+</svg>

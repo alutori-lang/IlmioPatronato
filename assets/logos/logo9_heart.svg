@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg9" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFB6C1"/>
+      <stop offset="50%" stop-color="#FF69B4"/>
+      <stop offset="100%" stop-color="#C71585"/>
+    </linearGradient>
+    <linearGradient id="heartGreen9" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00E676"/>
+      <stop offset="100%" stop-color="#009246"/>
+    </linearGradient>
+    <linearGradient id="heartWhite9" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F0F0F0"/>
+    </linearGradient>
+    <linearGradient id="heartRed9" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FF3D00"/>
+      <stop offset="100%" stop-color="#CE2B37"/>
+    </linearGradient>
+    <radialGradient id="heartShine9" cx="35%" cy="25%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="bigShadow9" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="20"/>
+      <feOffset dx="0" dy="20" result="offsetblur"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.5"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="heartClip9">
+      <path d="M 512 820
+               C 250 620, 130 460, 130 320
+               C 130 220, 220 140, 330 140
+               C 410 140, 480 180, 512 240
+               C 544 180, 614 140, 694 140
+               C 804 140, 894 220, 894 320
+               C 894 460, 774 620, 512 820 Z"/>
+    </clipPath>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#bg9)"/>
+  <g filter="url(#bigShadow9)">
+    <path d="M 512 820
+             C 250 620, 130 460, 130 320
+             C 130 220, 220 140, 330 140
+             C 410 140, 480 180, 512 240
+             C 544 180, 614 140, 694 140
+             C 804 140, 894 220, 894 320
+             C 894 460, 774 620, 512 820 Z"
+          fill="#FFFFFF" stroke="#9B1F28" stroke-width="6"/>
+    <g clip-path="url(#heartClip9)">
+      <rect x="130" y="100" width="255" height="800" fill="url(#heartGreen9)"/>
+      <rect x="385" y="100" width="254" height="800" fill="url(#heartWhite9)"/>
+      <rect x="639" y="100" width="255" height="800" fill="url(#heartRed9)"/>
+    </g>
+    <path d="M 512 820
+             C 250 620, 130 460, 130 320
+             C 130 220, 220 140, 330 140
+             C 410 140, 480 180, 512 240
+             C 544 180, 614 140, 694 140
+             C 804 140, 894 220, 894 320
+             C 894 460, 774 620, 512 820 Z"
+          fill="url(#heartShine9)"/>
+  </g>
+  <path d="M 100 870 L 250 870 L 320 820 L 400 920 L 480 750 L 560 920 L 640 820 L 720 870 L 924 870"
+        stroke="#FFFFFF" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round"
+        opacity="0.85"/>
+</svg>

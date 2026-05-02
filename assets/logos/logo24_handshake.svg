@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg24" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#1E40AF"/>
+    </linearGradient>
+    <radialGradient id="skin24a" cx="40%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#FFE0B2"/>
+      <stop offset="100%" stop-color="#E8A857"/>
+    </radialGradient>
+    <radialGradient id="skin24b" cx="40%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#D7A87C"/>
+      <stop offset="100%" stop-color="#8D5524"/>
+    </radialGradient>
+    <linearGradient id="suitA24" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1976D2"/>
+      <stop offset="100%" stop-color="#0D47A1"/>
+    </linearGradient>
+    <linearGradient id="suitB24" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#4C1D95"/>
+    </linearGradient>
+    <linearGradient id="folder24" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#E0E0E0"/>
+    </linearGradient>
+    <radialGradient id="bigGlow24" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow24" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="14"/>
+      <feOffset dx="0" dy="14" result="offsetblur"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.4"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#bg24)"/>
+  <circle cx="512" cy="500" r="400" fill="url(#bigGlow24)"/>
+  <g filter="url(#shadow24)">
+    <ellipse cx="320" cy="300" rx="120" ry="135" fill="url(#skin24a)" stroke="#C8945A" stroke-width="4"/>
+    <path d="M 200 270 Q 200 180 280 165 Q 320 158 360 165 Q 440 180 440 270 L 432 230 Q 420 200 380 195 Q 340 190 300 195 Q 260 200 240 220 L 220 250 Q 210 260 200 270 Z"
+          fill="#3E2723"/>
+    <ellipse cx="285" cy="295" rx="14" ry="18" fill="#1A1A1A"/>
+    <ellipse cx="355" cy="295" rx="14" ry="18" fill="#1A1A1A"/>
+    <circle cx="282" cy="290" r="5" fill="#FFFFFF"/>
+    <circle cx="352" cy="290" r="5" fill="#FFFFFF"/>
+    <ellipse cx="245" cy="345" rx="22" ry="14" fill="#FF8A95" opacity="0.5"/>
+    <ellipse cx="395" cy="345" rx="22" ry="14" fill="#FF8A95" opacity="0.5"/>
+    <path d="M 270 360 Q 320 400 370 360" stroke="#1A1A1A" stroke-width="6"
+          fill="none" stroke-linecap="round"/>
+  </g>
+  <g filter="url(#shadow24)">
+    <path d="M 200 420 L 200 700 L 440 700 L 440 420 Q 440 380 400 380 L 240 380 Q 200 380 200 420 Z"
+          fill="url(#suitA24)"/>
+    <line x1="320" y1="400" x2="320" y2="700" stroke="#FFFFFF" stroke-width="6"/>
+  </g>
+  <g filter="url(#shadow24)">
+    <ellipse cx="704" cy="300" rx="120" ry="135" fill="url(#skin24b)" stroke="#5D3A00" stroke-width="4"/>
+    <path d="M 584 270 Q 584 180 664 165 Q 704 158 744 165 Q 824 180 824 270 L 816 230 Q 804 200 764 195 Q 724 190 684 195 Q 644 200 624 220 L 604 250 Q 594 260 584 270 Z"
+          fill="#1F1611"/>
+    <ellipse cx="669" cy="295" rx="14" ry="18" fill="#1A1A1A"/>
+    <ellipse cx="739" cy="295" rx="14" ry="18" fill="#1A1A1A"/>
+    <circle cx="666" cy="290" r="5" fill="#FFFFFF"/>
+    <circle cx="736" cy="290" r="5" fill="#FFFFFF"/>
+    <ellipse cx="629" cy="345" rx="22" ry="14" fill="#D32F2F" opacity="0.4"/>
+    <ellipse cx="779" cy="345" rx="22" ry="14" fill="#D32F2F" opacity="0.4"/>
+    <path d="M 654 360 Q 704 400 754 360" stroke="#1A1A1A" stroke-width="6"
+          fill="none" stroke-linecap="round"/>
+  </g>
+  <g filter="url(#shadow24)">
+    <path d="M 584 420 L 584 700 L 824 700 L 824 420 Q 824 380 784 380 L 624 380 Q 584 380 584 420 Z"
+          fill="url(#suitB24)"/>
+    <line x1="704" y1="400" x2="704" y2="700" stroke="#FFFFFF" stroke-width="6"/>
+  </g>
+  <g filter="url(#shadow24)">
+    <ellipse cx="380" cy="600" rx="80" ry="50" fill="url(#skin24a)" stroke="#C8945A" stroke-width="5"
+             transform="rotate(20 380 600)"/>
+    <ellipse cx="644" cy="600" rx="80" ry="50" fill="url(#skin24b)" stroke="#5D3A00" stroke-width="5"
+             transform="rotate(-20 644 600)"/>
+    <ellipse cx="512" cy="600" rx="100" ry="50" fill="url(#skin24a)" stroke="#C8945A" stroke-width="5"/>
+  </g>
+  <g filter="url(#shadow24)" transform="translate(380 750)">
+    <rect x="0" y="0" width="264" height="180" rx="14" fill="url(#folder24)"
+          stroke="#1A1A1A" stroke-width="5"/>
+    <rect x="0" y="0" width="264" height="36" fill="#009246"/>
+    <rect x="0" y="36" width="264" height="36" fill="#FFFFFF"/>
+    <rect x="0" y="72" width="264" height="36" fill="#CE2B37"/>
+    <text x="132" y="155" text-anchor="middle"
+          font-family="Arial Black, sans-serif"
+          font-size="36" font-weight="900" fill="#1A1A1A">CONTRATTO</text>
+  </g>
+</svg>

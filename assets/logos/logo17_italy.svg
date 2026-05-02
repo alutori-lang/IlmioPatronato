@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg17" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBBF24"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+    <linearGradient id="italyGreen17" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00E676"/>
+      <stop offset="100%" stop-color="#009246"/>
+    </linearGradient>
+    <linearGradient id="italyWhite17" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#E8E8E8"/>
+    </linearGradient>
+    <linearGradient id="italyRed17" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FF1744"/>
+      <stop offset="100%" stop-color="#CE2B37"/>
+    </linearGradient>
+    <linearGradient id="italyShine17" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="bgGlow17" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="italyShadow17" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="20"/>
+      <feOffset dx="6" dy="20" result="offsetblur"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.5"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="italyClip17">
+      <path d="M 460 200
+               Q 510 180 540 220
+               Q 560 260 540 300
+               Q 530 340 540 380
+               L 555 440
+               Q 565 480 555 520
+               Q 540 580 555 620
+               L 595 720
+               Q 615 760 605 800
+               Q 590 840 555 850
+               L 470 855
+               Q 440 850 425 825
+               L 405 770
+               Q 395 740 410 715
+               L 425 690
+               Q 440 670 425 650
+               L 410 620
+               Q 395 590 405 560
+               L 425 510
+               Q 440 470 430 430
+               L 415 380
+               Q 405 340 425 300
+               Q 440 260 445 230
+               Z"/>
+    </clipPath>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#bg17)"/>
+  <circle cx="512" cy="512" r="450" fill="url(#bgGlow17)"/>
+  <g filter="url(#italyShadow17)">
+    <path d="M 460 200
+             Q 510 180 540 220
+             Q 560 260 540 300
+             Q 530 340 540 380
+             L 555 440
+             Q 565 480 555 520
+             Q 540 580 555 620
+             L 595 720
+             Q 615 760 605 800
+             Q 590 840 555 850
+             L 470 855
+             Q 440 850 425 825
+             L 405 770
+             Q 395 740 410 715
+             L 425 690
+             Q 440 670 425 650
+             L 410 620
+             Q 395 590 405 560
+             L 425 510
+             Q 440 470 430 430
+             L 415 380
+             Q 405 340 425 300
+             Q 440 260 445 230
+             Z"
+          fill="#FFFFFF" stroke="#1A1A1A" stroke-width="6"/>
+    <g clip-path="url(#italyClip17)">
+      <rect x="380" y="180" width="70" height="700" fill="url(#italyGreen17)"/>
+      <rect x="450" y="180" width="70" height="700" fill="url(#italyWhite17)"/>
+      <rect x="520" y="180" width="80" height="700" fill="url(#italyRed17)"/>
+    </g>
+    <path d="M 460 200
+             Q 510 180 540 220
+             Q 560 260 540 300
+             Q 530 340 540 380
+             L 555 440
+             Q 565 480 555 520
+             Q 540 580 555 620
+             L 595 720
+             Q 615 760 605 800
+             Q 590 840 555 850
+             L 470 855
+             Q 440 850 425 825
+             L 405 770
+             Q 395 740 410 715
+             L 425 690
+             Q 440 670 425 650
+             L 410 620
+             Q 395 590 405 560
+             L 425 510
+             Q 440 470 430 430
+             L 415 380
+             Q 405 340 425 300
+             Q 440 260 445 230
+             Z"
+          fill="url(#italyShine17)"/>
+  </g>
+  <g filter="url(#italyShadow17)">
+    <ellipse cx="320" cy="780" rx="40" ry="20" fill="url(#italyGreen17)" stroke="#1A1A1A" stroke-width="4"/>
+    <circle cx="380" cy="820" r="14" fill="url(#italyGreen17)" stroke="#1A1A1A" stroke-width="3"/>
+  </g>
+  <g filter="url(#italyShadow17)">
+    <circle cx="700" cy="350" r="40" fill="#FFFFFF" stroke="#FFD700" stroke-width="6"/>
+    <text x="700" y="350" text-anchor="middle" font-family="Arial Black, sans-serif"
+          font-size="50" font-weight="900" fill="#D97706"
+          dominant-baseline="middle">€</text>
+  </g>
+</svg>

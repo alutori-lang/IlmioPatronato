@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg11" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F0F0F"/>
+      <stop offset="100%" stop-color="#1F1F1F"/>
+    </linearGradient>
+    <linearGradient id="goldText11" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF8DC"/>
+      <stop offset="40%" stop-color="#FFD700"/>
+      <stop offset="70%" stop-color="#DAA520"/>
+      <stop offset="100%" stop-color="#B8860B"/>
+    </linearGradient>
+    <linearGradient id="goldHighlight11" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="spotlight11" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#FFD700" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="goldGlow11">
+      <feGaussianBlur stdDeviation="2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#bg11)"/>
+  <circle cx="512" cy="512" r="450" fill="url(#spotlight11)"/>
+  <g transform="translate(512 480)">
+    <text x="0" y="0" text-anchor="middle"
+          font-family="Georgia, 'Times New Roman', serif"
+          font-size="200" font-weight="900" letter-spacing="2"
+          fill="url(#goldText11)" dominant-baseline="middle">BONUS</text>
+    <text x="0" y="0" text-anchor="middle"
+          font-family="Georgia, 'Times New Roman', serif"
+          font-size="200" font-weight="900" letter-spacing="2"
+          fill="url(#goldHighlight11)" dominant-baseline="middle">BONUS</text>
+  </g>
+  <g transform="translate(512 620)">
+    <rect x="-200" y="0" width="130" height="14" fill="#009246" rx="2"/>
+    <rect x="-65" y="0" width="130" height="14" fill="#FFFFFF" rx="2"/>
+    <rect x="70" y="0" width="130" height="14" fill="#CE2B37" rx="2"/>
+  </g>
+  <g transform="translate(512 700)" opacity="0.7">
+    <text x="0" y="0" text-anchor="middle"
+          font-family="Georgia, serif"
+          font-size="44" font-weight="300" letter-spacing="14"
+          fill="#FFD700" dominant-baseline="middle">PREMIUM</text>
+  </g>
+  <line x1="280" y1="320" x2="744" y2="320" stroke="#FFD700" stroke-width="2" opacity="0.5"/>
+  <line x1="280" y1="800" x2="744" y2="800" stroke="#FFD700" stroke-width="2" opacity="0.5"/>
+</svg>

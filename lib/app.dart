@@ -33,7 +33,7 @@ class MioPatronatoApp extends StatelessWidget {
           final code = lang.currentCode;
           final isRtl = code == 'ar' || code == 'ur';
           return MaterialApp(
-            title: 'Il Mio Patronato',
+            title: 'Bonus & Patronato — ISEE CAF',
             debugShowCheckedModeBanner: false,
             theme: AppTheme.theme,
             localizationsDelegates: const [

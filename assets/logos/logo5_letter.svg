@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E40AF"/>
+      <stop offset="50%" stop-color="#1E3A8A"/>
+      <stop offset="100%" stop-color="#0A1628"/>
+    </linearGradient>
+    <linearGradient id="letterGold5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFACD"/>
+      <stop offset="30%" stop-color="#FFD700"/>
+      <stop offset="60%" stop-color="#FFA500"/>
+      <stop offset="100%" stop-color="#B8860B"/>
+    </linearGradient>
+    <linearGradient id="letterGloss5" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="green5" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00C853"/>
+      <stop offset="100%" stop-color="#006B33"/>
+    </linearGradient>
+    <linearGradient id="red5" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FF1744"/>
+      <stop offset="100%" stop-color="#9B1F28"/>
+    </linearGradient>
+    <radialGradient id="glow5" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#FFD700" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow5" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="20"/>
+      <feOffset dx="0" dy="20" result="offsetblur"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.7"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#bg5)"/>
+  <circle cx="512" cy="512" r="400" fill="url(#glow5)"/>
+  <rect x="160" y="160" width="704" height="40" rx="20" fill="url(#green5)" opacity="0.7"/>
+  <rect x="160" y="824" width="704" height="40" rx="20" fill="url(#red5)" opacity="0.7"/>
+  <g filter="url(#shadow5)" transform="translate(512 540)">
+    <text x="0" y="0" text-anchor="middle" font-family="Impact, Arial Black, sans-serif"
+          font-size="640" font-weight="900" fill="url(#letterGold5)"
+          stroke="#5D3A00" stroke-width="8"
+          dominant-baseline="middle">B</text>
+    <text x="0" y="0" text-anchor="middle" font-family="Impact, Arial Black, sans-serif"
+          font-size="640" font-weight="900" fill="url(#letterGloss5)"
+          dominant-baseline="middle">B</text>
+  </g>
+  <g transform="translate(720 720)" filter="url(#shadow5)">
+    <circle r="100" fill="#FFFFFF" stroke="#FFD700" stroke-width="6"/>
+    <text x="0" y="0" text-anchor="middle" font-family="Arial Black, sans-serif"
+          font-size="120" font-weight="900" fill="url(#letterGold5)"
+          dominant-baseline="middle">€</text>
+  </g>
+</svg>

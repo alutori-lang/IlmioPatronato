@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg20" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06B6D4"/>
+      <stop offset="50%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <radialGradient id="bubble20" cx="35%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="40%" stop-color="#FFE082"/>
+      <stop offset="80%" stop-color="#FF6B35"/>
+      <stop offset="100%" stop-color="#C2410C"/>
+    </radialGradient>
+    <radialGradient id="bubbleShine20" cx="30%" cy="25%" r="40%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="60%" stop-color="#FFFFFF" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bottomShine20" cx="50%" cy="80%" r="60%">
+      <stop offset="0%" stop-color="#FF1744" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#FF1744" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="bigShadow20" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="24"/>
+      <feOffset dx="0" dy="20" result="offsetblur"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.6"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#bg20)"/>
+  <g opacity="0.5">
+    <circle cx="170" cy="180" r="50" fill="#FFFFFF" opacity="0.3"/>
+    <circle cx="850" cy="200" r="35" fill="#FFFFFF" opacity="0.3"/>
+    <circle cx="160" cy="850" r="40" fill="#FFFFFF" opacity="0.2"/>
+    <circle cx="870" cy="830" r="60" fill="#FFFFFF" opacity="0.2"/>
+  </g>
+  <g filter="url(#bigShadow20)" transform="translate(512 540)">
+    <circle r="320" fill="url(#bubble20)" stroke="#9B1F28" stroke-width="6"/>
+    <circle r="320" fill="url(#bottomShine20)"/>
+    <ellipse cx="-90" cy="-180" rx="180" ry="100" fill="url(#bubbleShine20)"/>
+  </g>
+  <g transform="translate(512 540)" filter="url(#bigShadow20)">
+    <text x="0" y="0" text-anchor="middle"
+          font-family="Impact, Arial Black, sans-serif"
+          font-size="380" font-weight="900" fill="#FFFFFF"
+          stroke="#9B1F28" stroke-width="8"
+          dominant-baseline="middle">B</text>
+    <text x="0" y="0" text-anchor="middle"
+          font-family="Impact, Arial Black, sans-serif"
+          font-size="380" font-weight="900" fill="url(#bubbleShine20)"
+          dominant-baseline="middle">B</text>
+  </g>
+  <g transform="translate(512 220)" filter="url(#bigShadow20)">
+    <rect x="-130" y="-30" width="84" height="60" fill="#009246" rx="10" stroke="#FFFFFF" stroke-width="4"/>
+    <rect x="-42" y="-30" width="84" height="60" fill="#FFFFFF" rx="10" stroke="#E0E0E0" stroke-width="4"/>
+    <rect x="46" y="-30" width="84" height="60" fill="#CE2B37" rx="10" stroke="#FFFFFF" stroke-width="4"/>
+  </g>
+  <g transform="translate(720 720)" filter="url(#bigShadow20)">
+    <circle r="70" fill="#FFD700" stroke="#FFFFFF" stroke-width="6"/>
+    <text x="0" y="0" text-anchor="middle"
+          font-family="Arial Black, sans-serif"
+          font-size="80" font-weight="900" fill="#5D3A00"
+          dominant-baseline="middle">€</text>
+  </g>
+</svg>

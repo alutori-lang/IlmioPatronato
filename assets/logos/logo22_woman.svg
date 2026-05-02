@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg22" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF6B9D"/>
+      <stop offset="100%" stop-color="#C2185B"/>
+    </linearGradient>
+    <radialGradient id="skin22" cx="40%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#FFE0B2"/>
+      <stop offset="60%" stop-color="#FFCC80"/>
+      <stop offset="100%" stop-color="#E8A857"/>
+    </radialGradient>
+    <linearGradient id="blazer22" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7B1FA2"/>
+      <stop offset="100%" stop-color="#4A148C"/>
+    </linearGradient>
+    <linearGradient id="folder22" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#E0E0E0"/>
+    </linearGradient>
+    <linearGradient id="hair22" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5D2906"/>
+      <stop offset="100%" stop-color="#2D1503"/>
+    </linearGradient>
+    <filter id="shadow22" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="14"/>
+      <feOffset dx="0" dy="14" result="offsetblur"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.4"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#bg22)"/>
+  <ellipse cx="512" cy="940" rx="280" ry="20" fill="#000000" opacity="0.2"/>
+  <g filter="url(#shadow22)">
+    <path d="M 280 640
+             Q 280 600 340 600
+             L 460 600
+             L 512 720
+             L 564 600
+             L 684 600
+             Q 744 600 744 640
+             L 744 900
+             L 280 900 Z"
+          fill="url(#blazer22)"/>
+    <path d="M 460 600 L 512 720 L 564 600 L 540 880 L 484 880 Z"
+          fill="#FFFFFF"/>
+  </g>
+  <g filter="url(#shadow22)">
+    <ellipse cx="512" cy="380" rx="180" ry="200" fill="url(#skin22)" stroke="#C8945A" stroke-width="4"/>
+    <path d="M 332 320
+             Q 320 200 420 180
+             Q 512 160 604 180
+             Q 704 200 692 320
+             L 720 460
+             Q 720 520 700 560
+             Q 680 540 670 480
+             Q 660 380 600 360
+             Q 540 350 480 360
+             Q 420 380 354 480
+             Q 344 540 324 560
+             Q 304 520 304 460 Z"
+          fill="url(#hair22)"/>
+    <ellipse cx="450" cy="380" rx="22" ry="28" fill="#1A1A1A"/>
+    <ellipse cx="574" cy="380" rx="22" ry="28" fill="#1A1A1A"/>
+    <circle cx="445" cy="370" r="8" fill="#FFFFFF"/>
+    <circle cx="569" cy="370" r="8" fill="#FFFFFF"/>
+    <ellipse cx="380" cy="450" rx="35" ry="22" fill="#FF1744" opacity="0.4"/>
+    <ellipse cx="644" cy="450" rx="35" ry="22" fill="#FF1744" opacity="0.4"/>
+    <path d="M 440 470 Q 512 540 584 470" stroke="#1A1A1A" stroke-width="10"
+          fill="none" stroke-linecap="round"/>
+    <path d="M 460 480 Q 512 530 564 480 Q 540 510 512 510 Q 484 510 460 480 Z"
+          fill="#D81B60"/>
+    <ellipse cx="350" cy="370" rx="14" ry="20" fill="url(#hair22)"/>
+  </g>
+  <g filter="url(#shadow22)" transform="translate(620 720) rotate(8)">
+    <rect x="0" y="0" width="260" height="180" rx="12" fill="url(#folder22)"
+          stroke="#1A1A1A" stroke-width="5"/>
+    <rect x="0" y="0" width="260" height="36" fill="#009246"/>
+    <rect x="0" y="36" width="260" height="36" fill="#FFFFFF"/>
+    <rect x="0" y="72" width="260" height="36" fill="#CE2B37"/>
+    <line x1="30" y1="130" x2="220" y2="130" stroke="#9CA3AF" stroke-width="3"/>
+    <line x1="30" y1="155" x2="180" y2="155" stroke="#9CA3AF" stroke-width="3"/>
+  </g>
+  <ellipse cx="640" cy="700" rx="40" ry="30" fill="url(#skin22)" stroke="#C8945A" stroke-width="4"
+           transform="rotate(20 640 700)"/>
+  <ellipse cx="380" cy="780" rx="40" ry="30" fill="url(#skin22)" stroke="#C8945A" stroke-width="4"
+           transform="rotate(-15 380 780)"/>
+</svg>

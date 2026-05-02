@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <radialGradient id="bg25" cx="50%" cy="40%" r="80%">
+      <stop offset="0%" stop-color="#FF6B9D"/>
+      <stop offset="60%" stop-color="#8338EC"/>
+      <stop offset="100%" stop-color="#3A86FF"/>
+    </radialGradient>
+    <radialGradient id="skin25" cx="40%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#FFEDC9"/>
+      <stop offset="60%" stop-color="#FFD89B"/>
+      <stop offset="100%" stop-color="#E8A857"/>
+    </radialGradient>
+    <linearGradient id="hoodie25" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FF1744"/>
+      <stop offset="100%" stop-color="#9B1F28"/>
+    </linearGradient>
+    <linearGradient id="hair25" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#FF8F00"/>
+    </linearGradient>
+    <linearGradient id="folder25" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#E8E8E8"/>
+    </linearGradient>
+    <filter id="shadow25" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="14"/>
+      <feOffset dx="0" dy="14" result="offsetblur"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.4"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#bg25)"/>
+  <ellipse cx="512" cy="940" rx="280" ry="20" fill="#000000" opacity="0.2"/>
+  <g opacity="0.6">
+    <circle cx="180" cy="200" r="8" fill="#FFFFFF"/>
+    <circle cx="844" cy="220" r="6" fill="#FFFFFF"/>
+    <circle cx="160" cy="800" r="7" fill="#FFFFFF"/>
+    <circle cx="864" cy="780" r="5" fill="#FFFFFF"/>
+    <path d="M 250 150 L 254 162 L 266 166 L 254 170 L 250 182 L 246 170 L 234 166 L 246 162 Z" fill="#FFD700"/>
+    <path d="M 800 880 L 804 892 L 816 896 L 804 900 L 800 912 L 796 900 L 784 896 L 796 892 Z" fill="#FFD700"/>
+  </g>
+  <g filter="url(#shadow25)">
+    <path d="M 240 700
+             Q 240 580 380 580
+             L 644 580
+             Q 784 580 784 700
+             L 784 880
+             Q 784 920 744 920
+             L 280 920
+             Q 240 920 240 880 Z"
+          fill="url(#hoodie25)"/>
+    <path d="M 240 700 Q 240 580 380 580 L 460 580 L 480 760 L 460 920 L 280 920 Q 240 920 240 880 Z"
+          fill="#FF1744" opacity="0.6"/>
+  </g>
+  <g filter="url(#shadow25)">
+    <circle cx="512" cy="380" r="240" fill="url(#skin25)" stroke="#C8945A" stroke-width="5"/>
+    <path d="M 272 320
+             Q 272 180 392 160
+             Q 512 140 632 160
+             Q 752 180 752 320
+             Q 752 360 720 380
+             L 700 320
+             Q 680 260 600 250
+             Q 540 240 480 250
+             Q 400 260 380 310
+             L 360 380
+             Q 320 360 272 320 Z"
+          fill="url(#hair25)"/>
+    <path d="M 380 220 Q 420 180 460 200 L 440 240 Z" fill="url(#hair25)"/>
+    <path d="M 564 200 Q 600 180 644 220 L 600 250 Z" fill="url(#hair25)"/>
+    <ellipse cx="430" cy="400" rx="30" ry="40" fill="#1A1A1A"/>
+    <ellipse cx="594" cy="400" rx="30" ry="40" fill="#1A1A1A"/>
+    <circle cx="423" cy="385" r="14" fill="#FFFFFF"/>
+    <circle cx="587" cy="385" r="14" fill="#FFFFFF"/>
+    <circle cx="437" cy="410" r="6" fill="#FFFFFF"/>
+    <circle cx="601" cy="410" r="6" fill="#FFFFFF"/>
+    <ellipse cx="340" cy="490" rx="40" ry="24" fill="#FF6B9D" opacity="0.7"/>
+    <ellipse cx="684" cy="490" rx="40" ry="24" fill="#FF6B9D" opacity="0.7"/>
+    <path d="M 420 510 Q 512 590 604 510" stroke="#1A1A1A" stroke-width="12"
+          fill="none" stroke-linecap="round"/>
+    <path d="M 440 520 Q 512 580 584 520 Q 552 560 512 560 Q 472 560 440 520 Z"
+          fill="#D32F2F"/>
+    <path d="M 480 555 Q 512 575 544 555 Q 540 565 512 565 Q 484 565 480 555 Z" fill="#FFFFFF"/>
+  </g>
+  <g filter="url(#shadow25)" transform="translate(180 720) rotate(-10)">
+    <rect x="0" y="0" width="240" height="170" rx="14" fill="url(#folder25)"
+          stroke="#1A1A1A" stroke-width="5"/>
+    <rect x="0" y="0" width="80" height="36" fill="#009246" rx="6"/>
+    <rect x="80" y="0" width="80" height="36" fill="#FFFFFF"/>
+    <rect x="160" y="0" width="80" height="36" fill="#CE2B37" rx="6"/>
+    <line x1="20" y1="70" x2="220" y2="70" stroke="#9CA3AF" stroke-width="3"/>
+    <line x1="20" y1="100" x2="180" y2="100" stroke="#9CA3AF" stroke-width="3"/>
+    <line x1="20" y1="130" x2="200" y2="130" stroke="#9CA3AF" stroke-width="3"/>
+  </g>
+  <g filter="url(#shadow25)" transform="translate(720 700) rotate(10)">
+    <ellipse cx="0" cy="0" rx="60" ry="50" fill="url(#skin25)" stroke="#C8945A" stroke-width="5"/>
+    <line x1="-30" y1="-40" x2="-30" y2="-65" stroke="#C8945A" stroke-width="3" stroke-linecap="round"/>
+    <line x1="-10" y1="-45" x2="-10" y2="-70" stroke="#C8945A" stroke-width="3" stroke-linecap="round"/>
+    <line x1="10" y1="-45" x2="10" y2="-70" stroke="#C8945A" stroke-width="3" stroke-linecap="round"/>
+    <line x1="30" y1="-40" x2="30" y2="-65" stroke="#C8945A" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <radialGradient id="bg15" cx="50%" cy="50%" r="80%">
+      <stop offset="0%" stop-color="#0EA5E9"/>
+      <stop offset="100%" stop-color="#082F49"/>
+    </radialGradient>
+    <linearGradient id="cubeTop15" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22D3EE"/>
+      <stop offset="100%" stop-color="#0891B2"/>
+    </linearGradient>
+    <linearGradient id="cubeLeft15" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF006E"/>
+      <stop offset="100%" stop-color="#A1004A"/>
+    </linearGradient>
+    <linearGradient id="cubeRight15" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8338EC"/>
+      <stop offset="100%" stop-color="#5B26A8"/>
+    </linearGradient>
+    <linearGradient id="cubeShine15" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="bigGlow15" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="cubeShadow15" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="24"/>
+      <feOffset dx="0" dy="24" result="offsetblur"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.7"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#bg15)"/>
+  <circle cx="512" cy="500" r="380" fill="url(#bigGlow15)"/>
+  <g filter="url(#cubeShadow15)" transform="translate(512 540)">
+    <polygon points="-260,-180 0,-300 260,-180 0,-60"
+             fill="url(#cubeTop15)" stroke="#FFFFFF" stroke-width="6"/>
+    <polygon points="-260,-180 -260,160 0,280 0,-60"
+             fill="url(#cubeLeft15)" stroke="#FFFFFF" stroke-width="6"/>
+    <polygon points="0,-60 0,280 260,160 260,-180"
+             fill="url(#cubeRight15)" stroke="#FFFFFF" stroke-width="6"/>
+    <polygon points="-260,-180 0,-300 260,-180 0,-60"
+             fill="url(#cubeShine15)"/>
+  </g>
+  <g transform="translate(512 540)">
+    <text x="-130" y="80" text-anchor="middle"
+          font-family="Arial Black, sans-serif"
+          font-size="140" font-weight="900" fill="#FFFFFF"
+          stroke="#A1004A" stroke-width="3"
+          dominant-baseline="middle">B</text>
+    <text x="130" y="80" text-anchor="middle"
+          font-family="Arial Black, sans-serif"
+          font-size="140" font-weight="900" fill="#FFFFFF"
+          stroke="#5B26A8" stroke-width="3"
+          dominant-baseline="middle">€</text>
+  </g>
+  <g transform="translate(512 240)" opacity="0.9">
+    <rect x="-180" y="0" width="115" height="22" fill="#009246" rx="4"/>
+    <rect x="-65" y="0" width="115" height="22" fill="#FFFFFF" rx="4"/>
+    <rect x="50" y="0" width="115" height="22" fill="#CE2B37" rx="4"/>
+  </g>
+</svg>

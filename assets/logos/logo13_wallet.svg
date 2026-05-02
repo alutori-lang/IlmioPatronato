@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg13" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#3B0764"/>
+    </linearGradient>
+    <linearGradient id="walletBody13" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3D2914"/>
+      <stop offset="100%" stop-color="#1A0F08"/>
+    </linearGradient>
+    <linearGradient id="walletFront13" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5C3D1F"/>
+      <stop offset="100%" stop-color="#2A1A0C"/>
+    </linearGradient>
+    <linearGradient id="cash13" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#A8F5C8"/>
+      <stop offset="100%" stop-color="#4ADE80"/>
+    </linearGradient>
+    <linearGradient id="goldCard13" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF8DC"/>
+      <stop offset="50%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#DAA520"/>
+    </linearGradient>
+    <radialGradient id="glowMoney13" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#FFD700" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="walletShadow13" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="20"/>
+      <feOffset dx="0" dy="20" result="offsetblur"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.6"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#bg13)"/>
+  <circle cx="512" cy="500" r="380" fill="url(#glowMoney13)"/>
+  <g filter="url(#walletShadow13)">
+    <rect x="200" y="380" width="624" height="440" rx="40" fill="url(#walletBody13)"/>
+    <rect x="200" y="380" width="624" height="80" rx="40" fill="#4A2F18"/>
+  </g>
+  <g filter="url(#walletShadow13)" transform="translate(512 320)">
+    <rect x="-260" y="0" width="520" height="180" rx="20" fill="url(#cash13)"
+          stroke="#15803D" stroke-width="6"/>
+    <rect x="-260" y="0" width="520" height="180" rx="20" fill="none"
+          stroke="#FFFFFF" stroke-width="3" opacity="0.4"/>
+    <text x="0" y="115" text-anchor="middle" font-family="Arial Black, sans-serif"
+          font-size="120" font-weight="900" fill="#15803D">€500</text>
+    <circle cx="-180" cy="60" r="20" fill="none" stroke="#15803D" stroke-width="4"/>
+    <circle cx="180" cy="60" r="20" fill="none" stroke="#15803D" stroke-width="4"/>
+  </g>
+  <g filter="url(#walletShadow13)" transform="translate(512 280) rotate(-8)">
+    <rect x="-240" y="0" width="480" height="160" rx="20" fill="url(#cash13)"
+          stroke="#15803D" stroke-width="5" opacity="0.85"/>
+    <text x="0" y="105" text-anchor="middle" font-family="Arial Black, sans-serif"
+          font-size="100" font-weight="900" fill="#15803D" opacity="0.85">€100</text>
+  </g>
+  <g filter="url(#walletShadow13)" transform="translate(512 240) rotate(6)">
+    <rect x="-220" y="0" width="440" height="140" rx="20" fill="url(#goldCard13)"
+          stroke="#8B6914" stroke-width="5" opacity="0.9"/>
+    <text x="0" y="92" text-anchor="middle" font-family="Arial Black, sans-serif"
+          font-size="90" font-weight="900" fill="#5D3A00" opacity="0.9">BONUS</text>
+  </g>
+  <g filter="url(#walletShadow13)">
+    <rect x="240" y="500" width="544" height="80" rx="14" fill="url(#walletFront13)"/>
+    <circle cx="720" cy="540" r="32" fill="url(#goldCard13)" stroke="#5D3A00" stroke-width="4"/>
+  </g>
+  <g transform="translate(512 700)">
+    <rect x="-90" y="0" width="60" height="50" fill="#009246" rx="6"/>
+    <rect x="-30" y="0" width="60" height="50" fill="#FFFFFF" rx="6"/>
+    <rect x="30" y="0" width="60" height="50" fill="#CE2B37" rx="6"/>
+  </g>
+</svg>

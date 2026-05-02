@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A8A"/>
+      <stop offset="100%" stop-color="#050B1E"/>
+    </linearGradient>
+    <linearGradient id="boot4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00C853"/>
+      <stop offset="33%" stop-color="#00C853"/>
+      <stop offset="34%" stop-color="#FFFFFF"/>
+      <stop offset="66%" stop-color="#FFFFFF"/>
+      <stop offset="67%" stop-color="#FF1744"/>
+      <stop offset="100%" stop-color="#FF1744"/>
+    </linearGradient>
+    <linearGradient id="bootGloss4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.5"/>
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glow4" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFD700" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow4" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="20"/>
+      <feOffset dx="0" dy="16" result="offsetblur"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.7"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#bg4)"/>
+  <circle cx="512" cy="512" r="380" fill="url(#glow4)"/>
+  <g filter="url(#shadow4)" transform="translate(380 180) scale(1.4)">
+    <path d="M 80 0
+             L 120 0
+             Q 130 0 130 15
+             L 130 240
+             Q 130 270 145 285
+             L 175 320
+             Q 195 340 195 365
+             L 195 425
+             Q 195 450 170 450
+             L 50 450
+             Q 25 450 25 425
+             L 25 280
+             Q 25 250 35 230
+             L 70 170
+             Q 80 150 80 130
+             Z" fill="url(#boot4)" stroke="#FFFFFF" stroke-width="4"/>
+    <path d="M 80 0
+             L 120 0
+             Q 130 0 130 15
+             L 130 240
+             Q 130 270 145 285
+             L 175 320
+             Q 195 340 195 365
+             L 195 425
+             Q 195 450 170 450
+             L 50 450
+             Q 25 450 25 425
+             L 25 280
+             Q 25 250 35 230
+             L 70 170
+             Q 80 150 80 130
+             Z" fill="url(#bootGloss4)"/>
+    <circle cx="220" cy="380" r="14" fill="#00C853" stroke="#FFFFFF" stroke-width="3"/>
+    <circle cx="245" cy="410" r="10" fill="#FFFFFF" stroke="#00C853" stroke-width="3"/>
+  </g>
+</svg>
