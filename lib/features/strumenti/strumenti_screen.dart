@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../config/constants.dart';
 import '../../core/localization/app_strings.dart';
+import '../../core/widgets/disclaimer_strip.dart';
 import 'documento_wallet_screen.dart';
 import 'quiz_cittadinanza_screen.dart';
 import 'cv_europass_screen.dart';
@@ -18,6 +19,7 @@ class StrumentiScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(child: _buildHeader(context)),
+          const SliverToBoxAdapter(child: DisclaimerStrip()),
           SliverToBoxAdapter(child: _buildSubtitle()),
           SliverPadding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 30),

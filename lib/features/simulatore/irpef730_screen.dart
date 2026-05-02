@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 import '../../core/localization/app_strings.dart';
 import '../../core/services/gemini_service.dart';
 import '../../core/widgets/document_upload_widget.dart';
@@ -383,6 +384,8 @@ Importi come numeri senza simbolo €. Se un campo non è leggibile, metti null.
               SliverToBoxAdapter(child: _buildDettaglioCard()),
               SliverToBoxAdapter(child: _buildNettoCard()),
             ],
+            SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: 'DPR 917/1986 (TUIR) e tabelle Agenzia delle Entrate')),
+
             const SliverToBoxAdapter(child: SizedBox(height: 40)),
           ],
         ),

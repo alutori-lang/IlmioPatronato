@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 
 class CittadinanzaScreen extends StatefulWidget {
   const CittadinanzaScreen({super.key});
@@ -183,6 +184,7 @@ class _CittadinanzaScreenState extends State<CittadinanzaScreen>
             SliverToBoxAdapter(child: _buildResultCard()),
             SliverToBoxAdapter(child: _buildInfoCard()),
           ],
+          SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: 'L. 91/1992 e norme attuative')),
           const SliverToBoxAdapter(child: SizedBox(height: 30)),
         ],
       ),

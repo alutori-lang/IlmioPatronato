@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_strip.dart';
 import 'adi_screen.dart';
 import 'isee_screen.dart';
 import 'irpef730_screen.dart';
@@ -22,6 +23,7 @@ class SimulatoreScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(child: _buildHeader(context)),
+          const SliverToBoxAdapter(child: DisclaimerStrip()),
           SliverToBoxAdapter(child: _buildSubtitle()),
           SliverPadding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),

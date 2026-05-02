@@ -13,6 +13,7 @@ import 'features/agevolazioni/agevolazioni_screen.dart';
 import 'features/sbroglia/sbroglia_chat_screen.dart';
 import 'features/profilo/profilo_screen.dart';
 import 'features/onboarding/language_picker_screen.dart';
+import 'features/onboarding/disclaimer_acceptance_screen.dart';
 import 'core/widgets/app_nav_bar.dart';
 import 'config/constants.dart';
 
@@ -33,7 +34,7 @@ class MioPatronatoApp extends StatelessWidget {
           final code = lang.currentCode;
           final isRtl = code == 'ar' || code == 'ur';
           return MaterialApp(
-            title: 'Bonus & Patronato — ISEE CAF',
+            title: 'Bonus Italia — ISEE NASpI 730',
             debugShowCheckedModeBanner: false,
             theme: AppTheme.theme,
             localizationsDelegates: const [
@@ -84,6 +85,7 @@ class _LanguageGate extends StatefulWidget {
 
 class _LanguageGateState extends State<_LanguageGate> {
   bool? _languageChosen;
+  bool? _disclaimerAccepted;
 
   @override
   void initState() {
@@ -92,19 +94,28 @@ class _LanguageGateState extends State<_LanguageGate> {
   }
 
   Future<void> _check() async {
-    final done = await LanguagePickerScreen.alreadyChosen();
+    final lang = await LanguagePickerScreen.alreadyChosen();
+    final disc = await DisclaimerAcceptanceScreen.alreadyAccepted();
     if (!mounted) return;
-    setState(() => _languageChosen = done);
+    setState(() {
+      _languageChosen = lang;
+      _disclaimerAccepted = disc;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_languageChosen == null) {
+    if (_languageChosen == null || _disclaimerAccepted == null) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
     if (_languageChosen == false) {
       return LanguagePickerScreen(
         onComplete: () => setState(() => _languageChosen = true),
+      );
+    }
+    if (_disclaimerAccepted == false) {
+      return DisclaimerAcceptanceScreen(
+        onAccepted: () => setState(() => _disclaimerAccepted = true),
       );
     }
     return const MainShell();

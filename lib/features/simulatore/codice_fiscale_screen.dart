@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 
 // ═══════════════════════════════════════════════════════════════════
 // CODICE FISCALE GENERATOR  –  Algoritmo ufficiale italiano
@@ -344,6 +345,8 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
               SliverToBoxAdapter(child: _buildResultCard()),
             if (_showResult)
               SliverToBoxAdapter(child: _buildBreakdownCard()),
+            SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: 'D.M. 23/12/1976 (algoritmo ufficiale Agenzia Entrate)')),
+
             const SliverToBoxAdapter(child: SizedBox(height: 40)),
           ],
         ),

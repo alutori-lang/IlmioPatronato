@@ -5,6 +5,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 import '../../core/services/gemini_service.dart';
 import '../../core/widgets/document_upload_widget.dart';
 
@@ -408,6 +409,7 @@ Se un campo non e leggibile, metti null.''',
             SliverToBoxAdapter(child: _buildDovePagareCard()),
             SliverToBoxAdapter(child: _buildActionButtons()),
           ],
+          SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: 'Tabelle ACI ufficiali')),
           const SliverToBoxAdapter(child: SizedBox(height: 40)),
         ],
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../config/constants.dart';
 import '../../core/widgets/banner_ad_widget.dart';
+import '../../core/widgets/disclaimer_strip.dart';
 import '../../core/services/ad_service.dart';
 import '../../models/guida.dart';
 import 'guide_data.dart';
@@ -39,6 +40,7 @@ class _GuideListScreenState extends State<GuideListScreen> {
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(child: _buildHeader(context)),
+        const SliverToBoxAdapter(child: DisclaimerStrip()),
         SliverToBoxAdapter(child: _buildSearchBar()),
         SliverToBoxAdapter(child: _buildCategories()),
         SliverToBoxAdapter(

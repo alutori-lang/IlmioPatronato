@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_strip.dart';
 import 'guide_documenti_data.dart';
 import 'guide_documenti_i18n.dart';
 import 'guida_categoria_screen.dart';
@@ -14,6 +15,7 @@ class GuideDocumentiScreen extends StatelessWidget {
       body: Column(
         children: [
           _buildHeader(context),
+          const DisclaimerStrip(),
           _buildIntro(context),
           Expanded(
             child: Padding(

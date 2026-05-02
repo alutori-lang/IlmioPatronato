@@ -7,6 +7,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 import '../../core/localization/app_strings.dart';
 import '../../core/services/gemini_service.dart';
 import '../../core/widgets/document_upload_widget.dart';
@@ -468,6 +469,7 @@ IMPORTANTE:
             SliverToBoxAdapter(child: _buildSimpleResult()),
             SliverToBoxAdapter(child: _buildActionButtons()),
           ],
+          SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: 'Tabelle INPS, IRPEF e contratti CCNL pubblici')),
           const SliverToBoxAdapter(child: SizedBox(height: 40)),
         ],
       ),

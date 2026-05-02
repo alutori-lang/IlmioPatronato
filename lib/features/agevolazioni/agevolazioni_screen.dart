@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../config/constants.dart';
 import '../../core/localization/app_strings.dart';
 import '../../core/widgets/banner_ad_widget.dart';
+import '../../core/widgets/disclaimer_strip.dart';
 import '../../core/services/ad_service.dart';
 import '../../core/services/agevolazioni_service.dart' as ai;
 import 'agevolazioni_data.dart';
@@ -162,6 +163,9 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
         slivers: [
           // ── HEADER ──
           SliverToBoxAdapter(child: _buildHeader(context)),
+
+          // ── DISCLAIMER STRIP ──
+          const SliverToBoxAdapter(child: DisclaimerStrip()),
 
           // ── SEARCH BAR ──
           SliverToBoxAdapter(child: _buildSearchBar()),

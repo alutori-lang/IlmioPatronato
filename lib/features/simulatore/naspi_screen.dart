@@ -4,6 +4,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 import '../../core/services/gemini_service.dart';
 import '../../core/widgets/document_upload_widget.dart';
 
@@ -370,6 +371,7 @@ FORMATO NUMERI (IMPORTANTISSIMO):
             SliverToBoxAdapter(child: _buildInfoCard()),
             SliverToBoxAdapter(child: _buildActionButtons()),
           ],
+          SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: 'D.Lgs. 22/2015 e D.Lgs. 150/2015 (NASpI INPS)')),
           const SliverToBoxAdapter(child: SizedBox(height: 40)),
         ],
       ),

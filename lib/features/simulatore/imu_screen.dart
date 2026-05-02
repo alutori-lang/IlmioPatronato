@@ -5,6 +5,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import '../../config/constants.dart';
+import '../../core/widgets/disclaimer_widget.dart';
 import '../../core/services/gemini_service.dart';
 import '../../core/widgets/document_upload_widget.dart';
 
@@ -382,6 +383,7 @@ Importi come numeri senza simbolo €. Se un campo non è leggibile, metti null.
             SliverToBoxAdapter(child: _buildScadenzeCard()),
             SliverToBoxAdapter(child: _buildActionButtons()),
           ],
+          SliverToBoxAdapter(child: CalculatorDisclaimer(specificSource: 'D.Lgs. 504/1992 e Legge 160/2019')),
           const SliverToBoxAdapter(child: SizedBox(height: 40)),
         ],
       ),
