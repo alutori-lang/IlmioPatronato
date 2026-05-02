@@ -1,7 +1,7 @@
 name: docflow_immigrati
 description: "MioPatronato - Il Patronato in Tasca"
 publish_to: 'none'
-version: 1.0.3+5
+version: 1.0.4+6
 
 environment:
   sdk: ^3.10.8
