@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import '../../config/constants.dart';
 import '../../core/widgets/banner_ad_widget.dart';
 import '../../core/widgets/language_switch_button.dart';
-import '../../core/widgets/wallet_expiring_alert.dart';
 import '../../core/services/agevolazioni_service.dart';
 import '../../core/services/profilo_utente_service.dart';
 import '../../core/localization/app_strings.dart';
@@ -67,7 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(child: _buildHeader(context)),
-        const SliverToBoxAdapter(child: WalletExpiringAlert()),
         SliverToBoxAdapter(child: _buildIlMioCasoBanner(context)),
         SliverToBoxAdapter(child: _buildGuideDocumentiCard(context)),
         SliverToBoxAdapter(child: _buildAgevolazioneDelGiorno(context)),
