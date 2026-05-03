@@ -8,6 +8,7 @@ import '../../config/constants.dart';
 import '../../core/localization/app_strings.dart';
 import '../../core/services/scanner_service.dart';
 import '../../models/scanned_document.dart';
+import 'scanner_preview_screen.dart';
 
 class ScannerDocScreen extends StatefulWidget {
   const ScannerDocScreen({super.key});
@@ -149,153 +150,40 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
   }
 
   Future<void> _startScan(BuildContext context) async {
-    final name = await _promptName(context);
-    if (name == null) return;
-    if (!context.mounted) return;
-
     final svc = context.read<ScannerService>();
     final messenger = ScaffoldMessenger.of(context);
+    final s = AppStrings.of(context);
 
+    List<String> pages;
     try {
-      final doc = await svc.scanAndSave(name: name);
-      if (doc == null) return;
-      messenger.showSnackBar(
-        SnackBar(
-          content: Text('"${doc.name}" salvato (${doc.pageCount} pagin${doc.pageCount == 1 ? 'a' : 'e'})'),
-          backgroundColor: AppColors.iconGreen,
-        ),
-      );
+      pages = await svc.scanPages();
     } catch (e) {
-      final s = AppStrings.of(context);
       messenger.showSnackBar(
         SnackBar(
           content: Text('${s.scanError}: $e'),
           backgroundColor: Colors.red,
+          duration: const Duration(seconds: 6),
+        ),
+      );
+      return;
+    }
+    if (pages.isEmpty) return;
+    if (!context.mounted) return;
+
+    final result = await Navigator.push<ScannedDocument?>(
+      context,
+      MaterialPageRoute(
+        builder: (_) => ScannerPreviewScreen(pagePaths: pages),
+      ),
+    );
+    if (result != null) {
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text('"${result.name}" salvato (${result.pageCount} pagin${result.pageCount == 1 ? 'a' : 'e'})'),
+          backgroundColor: AppColors.iconGreen,
         ),
       );
     }
-  }
-
-  Future<String?> _promptName(BuildContext context) async {
-    final s = AppStrings.of(context);
-    final controller = TextEditingController();
-    final suggestions = [
-      s.docTypeId,
-      s.docTypePassport,
-      s.docTypePermit,
-      s.docTypeFiscal,
-      s.docTypeIsee,
-      s.docTypePayslip,
-      '730',
-      s.docTypeContract,
-    ];
-
-    return showModalBottomSheet<String>(
-      context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      builder: (ctx) {
-        String selected = '';
-        return StatefulBuilder(builder: (ctx, setSheetState) {
-          return Padding(
-            padding: EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
-              ),
-              padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Container(
-                      width: 40,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(s.docName,
-                      style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w800,
-                          color: AppColors.textDark)),
-                  const SizedBox(height: 12),
-                  TextField(
-                    controller: controller,
-                    autofocus: true,
-                    textCapitalization: TextCapitalization.sentences,
-                    decoration: InputDecoration(
-                      hintText: s.docNameHint,
-                      filled: true,
-                      fillColor: AppColors.background,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                    onChanged: (v) => setSheetState(() => selected = v),
-                  ),
-                  const SizedBox(height: 14),
-                  Text(s.tips,
-                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.textLight)),
-                  const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: suggestions.map((sugg) {
-                      return GestureDetector(
-                        onTap: () {
-                          controller.text = sugg;
-                          setSheetState(() => selected = sugg);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary.withValues(alpha: 0.08),
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color: AppColors.primary.withValues(alpha: 0.3),
-                            ),
-                          ),
-                          child: Text(sugg,
-                              style: const TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.primary)),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                  const SizedBox(height: 20),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: () => Navigator.pop(ctx, controller.text.trim().isEmpty ? s.docName : controller.text.trim()),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                      ),
-                      icon: const Icon(Icons.document_scanner_rounded),
-                      label: Text(s.startScan,
-                          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                ],
-              ),
-            ),
-          );
-        });
-      },
-    );
   }
 
   Future<void> _openDoc(ScannedDocument doc) async {

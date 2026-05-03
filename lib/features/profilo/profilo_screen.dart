@@ -121,10 +121,7 @@ class ProfiloScreen extends StatelessWidget {
       _ToolData(Icons.translate, s.toolTranslator, AppColors.iconGreen, false, 'translator'),
       _ToolData(Icons.track_changes, s.toolTracker, AppColors.iconOrange, false, 'tracker'),
       _ToolData(Icons.account_balance_wallet, s.toolWallet, AppColors.iconGreen, false, 'wallet'),
-      _ToolData(Icons.calculate, s.toolIseeSimulator, AppColors.iconPurple, false, 'isee'),
-      _ToolData(Icons.map, s.toolMap, AppColors.primary, false, 'map'),
       _ToolData(Icons.notifications_active, s.toolNotifications, AppColors.iconOrange, true, 'notif'),
-      _ToolData(Icons.people, s.toolCommunity, AppColors.iconPurple, false, 'community'),
     ];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
