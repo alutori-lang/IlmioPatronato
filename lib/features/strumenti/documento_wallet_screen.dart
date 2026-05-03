@@ -1054,7 +1054,7 @@ class _DocumentoFormSheetState extends State<_DocumentoFormSheet> {
                         controller: _nomeCtrl,
                         autofocus: widget.isNew,
                         textCapitalization: TextCapitalization.sentences,
-                        decoration: _inputDecoration("es. Passaporto Adnan"),
+                        decoration: _inputDecoration("es. Passaporto, Carta d'Identità..."),
                         validator: (v) =>
                             v == null || v.trim().isEmpty ? 'Inserisci un nome' : null,
                       ),
