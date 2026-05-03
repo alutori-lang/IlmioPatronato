@@ -1,6 +1,7 @@
 package com.docflow.docflow_immigrati
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
@@ -22,6 +23,7 @@ import java.io.File
  */
 class MainActivity : FlutterActivity() {
     private val channelName = "com.docflow.docflow_immigrati/camera_capture"
+    private val shareChannelName = "com.docflow.docflow_immigrati/share"
     private val requestCode = 4242
 
     private var pendingResult: MethodChannel.Result? = null
@@ -37,6 +39,85 @@ class MainActivity : FlutterActivity() {
                     else -> result.notImplemented()
                 }
             }
+
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, shareChannelName)
+            .setMethodCallHandler { call: MethodCall, result: MethodChannel.Result ->
+                when (call.method) {
+                    "shareToWhatsApp" -> shareToWhatsApp(call, result)
+                    "shareToEmail" -> shareToEmail(call, result)
+                    else -> result.notImplemented()
+                }
+            }
+    }
+
+    private fun fileUri(file: File): Uri {
+        val authority = "$packageName.fileprovider"
+        return FileProvider.getUriForFile(this, authority, file)
+    }
+
+    private fun mimeFor(path: String): String =
+        if (path.lowercase().endsWith(".pdf")) "application/pdf" else "image/*"
+
+    private fun shareToWhatsApp(call: MethodCall, result: MethodChannel.Result) {
+        val path = call.argument<String>("filePath")
+        val text = call.argument<String>("text") ?: ""
+        if (path.isNullOrEmpty()) {
+            result.error("MISSING_ARG", "filePath required", null); return
+        }
+        val file = File(path)
+        if (!file.exists()) {
+            result.error("FILE_NOT_FOUND", "File not found: $path", null); return
+        }
+        val uri = fileUri(file)
+        val candidates = listOf("com.whatsapp", "com.whatsapp.w4b")
+        for (pkg in candidates) {
+            val intent = Intent(Intent.ACTION_SEND).apply {
+                type = mimeFor(path)
+                putExtra(Intent.EXTRA_STREAM, uri)
+                if (text.isNotEmpty()) putExtra(Intent.EXTRA_TEXT, text)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                setPackage(pkg)
+            }
+            try {
+                startActivity(intent)
+                result.success(true); return
+            } catch (_: ActivityNotFoundException) {
+                continue
+            } catch (e: Exception) {
+                result.error("SHARE_ERROR", e.message ?: "Unknown error", null); return
+            }
+        }
+        result.error("NOT_INSTALLED", "WhatsApp non è installato su questo dispositivo", null)
+    }
+
+    private fun shareToEmail(call: MethodCall, result: MethodChannel.Result) {
+        val path = call.argument<String>("filePath")
+        val subject = call.argument<String>("subject") ?: ""
+        val body = call.argument<String>("body") ?: ""
+        if (path.isNullOrEmpty()) {
+            result.error("MISSING_ARG", "filePath required", null); return
+        }
+        val file = File(path)
+        if (!file.exists()) {
+            result.error("FILE_NOT_FOUND", "File not found: $path", null); return
+        }
+        val uri = fileUri(file)
+        val send = Intent(Intent.ACTION_SEND).apply {
+            type = mimeFor(path)
+            putExtra(Intent.EXTRA_STREAM, uri)
+            if (subject.isNotEmpty()) putExtra(Intent.EXTRA_SUBJECT, subject)
+            if (body.isNotEmpty()) putExtra(Intent.EXTRA_TEXT, body)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            selector = Intent(Intent.ACTION_SENDTO).apply { data = Uri.parse("mailto:") }
+        }
+        try {
+            startActivity(Intent.createChooser(send, "Invia via Email"))
+            result.success(true)
+        } catch (e: ActivityNotFoundException) {
+            result.error("NO_EMAIL_APP", "Nessuna app email installata", null)
+        } catch (e: Exception) {
+            result.error("SHARE_ERROR", e.message ?: "Unknown error", null)
+        }
     }
 
     private fun startCameraCapture(result: MethodChannel.Result) {

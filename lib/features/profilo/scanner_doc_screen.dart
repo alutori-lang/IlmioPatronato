@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:provider/provider.dart';
@@ -144,6 +145,8 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
         onOpen: () => _openDoc(docs[i]),
         onRename: () => _promptRename(docs[i]),
         onShare: () => _shareDoc(docs[i]),
+        onWhatsApp: () => _shareWhatsApp(docs[i]),
+        onEmail: () => _shareEmail(docs[i]),
         onDelete: () => _confirmDelete(docs[i]),
       ),
     );
@@ -192,6 +195,44 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
 
   Future<void> _shareDoc(ScannedDocument doc) async {
     await Share.shareXFiles([XFile(doc.pdfPath)], subject: doc.name);
+  }
+
+  Future<void> _shareWhatsApp(ScannedDocument doc) async {
+    final svc = context.read<ScannerService>();
+    final messenger = ScaffoldMessenger.of(context);
+    try {
+      await svc.shareToWhatsApp(filePath: doc.pdfPath, text: doc.name);
+    } on PlatformException catch (e) {
+      messenger.showSnackBar(SnackBar(
+        content: Text(e.code == 'NOT_INSTALLED'
+            ? 'WhatsApp non è installato su questo dispositivo'
+            : 'Errore condivisione WhatsApp: ${e.message ?? e.code}'),
+        backgroundColor: Colors.red,
+      ));
+    } catch (e) {
+      messenger.showSnackBar(SnackBar(content: Text('Errore: $e'), backgroundColor: Colors.red));
+    }
+  }
+
+  Future<void> _shareEmail(ScannedDocument doc) async {
+    final svc = context.read<ScannerService>();
+    final messenger = ScaffoldMessenger.of(context);
+    try {
+      await svc.shareToEmail(
+        filePath: doc.pdfPath,
+        subject: doc.name,
+        body: 'Documento allegato: ${doc.name}',
+      );
+    } on PlatformException catch (e) {
+      messenger.showSnackBar(SnackBar(
+        content: Text(e.code == 'NO_EMAIL_APP'
+            ? 'Nessuna app email installata'
+            : 'Errore email: ${e.message ?? e.code}'),
+        backgroundColor: Colors.red,
+      ));
+    } catch (e) {
+      messenger.showSnackBar(SnackBar(content: Text('Errore: $e'), backgroundColor: Colors.red));
+    }
   }
 
   Future<void> _promptRename(ScannedDocument doc) async {
@@ -248,6 +289,8 @@ class _DocCard extends StatelessWidget {
   final VoidCallback onOpen;
   final VoidCallback onRename;
   final VoidCallback onShare;
+  final VoidCallback onWhatsApp;
+  final VoidCallback onEmail;
   final VoidCallback onDelete;
 
   const _DocCard({
@@ -255,6 +298,8 @@ class _DocCard extends StatelessWidget {
     required this.onOpen,
     required this.onRename,
     required this.onShare,
+    required this.onWhatsApp,
+    required this.onEmail,
     required this.onDelete,
   });
 
@@ -332,6 +377,12 @@ class _DocCard extends StatelessWidget {
                       case 'rename':
                         onRename();
                         break;
+                      case 'whatsapp':
+                        onWhatsApp();
+                        break;
+                      case 'email':
+                        onEmail();
+                        break;
                       case 'share':
                         onShare();
                         break;
@@ -343,6 +394,8 @@ class _DocCard extends StatelessWidget {
                   itemBuilder: (_) => [
                     PopupMenuItem(value: 'open', child: Row(children: [const Icon(Icons.visibility, size: 18), const SizedBox(width: 10), Text(s.open)])),
                     PopupMenuItem(value: 'rename', child: Row(children: [const Icon(Icons.edit, size: 18), const SizedBox(width: 10), Text(s.rename)])),
+                    const PopupMenuItem(value: 'whatsapp', child: Row(children: [Icon(Icons.chat_bubble, size: 18, color: Color(0xFF25D366)), SizedBox(width: 10), Text('Invia su WhatsApp')])),
+                    const PopupMenuItem(value: 'email', child: Row(children: [Icon(Icons.email_outlined, size: 18, color: Color(0xFF1976D2)), SizedBox(width: 10), Text('Invia via Email')])),
                     PopupMenuItem(value: 'share', child: Row(children: [const Icon(Icons.share, size: 18), const SizedBox(width: 10), Text(s.share)])),
                     PopupMenuItem(value: 'delete', child: Row(children: [const Icon(Icons.delete, size: 18, color: Colors.red), const SizedBox(width: 10), Text(s.deleteBtn, style: const TextStyle(color: Colors.red))])),
                   ],

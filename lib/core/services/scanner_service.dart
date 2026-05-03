@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cunning_document_scanner/cunning_document_scanner.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -50,6 +51,31 @@ class ScannerService extends ChangeNotifier {
 
   static const _cameraChannel =
       MethodChannel('com.docflow.docflow_immigrati/camera_capture');
+  static const _shareChannel =
+      MethodChannel('com.docflow.docflow_immigrati/share');
+
+  /// Sends a PDF directly to WhatsApp. Throws PlatformException
+  /// with code "NOT_INSTALLED" if WhatsApp isn't on the device.
+  Future<void> shareToWhatsApp({required String filePath, String text = ''}) {
+    return _shareChannel.invokeMethod<void>('shareToWhatsApp', {
+      'filePath': filePath,
+      'text': text,
+    });
+  }
+
+  /// Opens an email composer with the PDF attached. Throws PlatformException
+  /// with code "NO_EMAIL_APP" if no email app is installed.
+  Future<void> shareToEmail({
+    required String filePath,
+    String subject = '',
+    String body = '',
+  }) {
+    return _shareChannel.invokeMethod<void>('shareToEmail', {
+      'filePath': filePath,
+      'subject': subject,
+      'body': body,
+    });
+  }
 
   /// Ensures the camera permission is granted before opening the camera.
   Future<bool> _ensureCameraPermission() async {
@@ -73,7 +99,9 @@ class ScannerService extends ChangeNotifier {
     }
   }
 
-  /// Opens the system camera and returns the photo path.
+  /// Opens the CamScanner-style document scanner (Google ML Kit).
+  /// Provides edge detection, auto-crop and multi-page capture in a native UI.
+  /// Falls back to the system camera intent if ML Kit is unavailable.
   Future<List<String>> scanPages({int maxPages = 100}) async {
     debugPrint('[Scanner] scanPages() called');
     final granted = await _ensureCameraPermission();
@@ -82,6 +110,21 @@ class ScannerService extends ChangeNotifier {
         'Permesso fotocamera negato. Vai in Impostazioni > App > Bonus Italia > Autorizzazioni e attiva Fotocamera.',
       );
     }
+
+    try {
+      final mlKitPages = await CunningDocumentScanner.getPictures(
+        noOfPages: maxPages,
+        isGalleryImportAllowed: false,
+      );
+      if (mlKitPages != null && mlKitPages.isNotEmpty) {
+        debugPrint('[Scanner] ML Kit returned ${mlKitPages.length} page(s)');
+        return mlKitPages;
+      }
+      debugPrint('[Scanner] ML Kit returned no pages — user cancelled or empty');
+    } catch (e) {
+      debugPrint('[Scanner] ML Kit failed: $e — falling back to native camera intent');
+    }
+
     final path = await _nativeCapture();
     if (path == null) return [];
     return [path];

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' as img;
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../config/constants.dart';
 import '../../core/localization/app_strings.dart';
 import '../../core/services/scanner_service.dart';
@@ -140,7 +141,7 @@ class _ScannerPreviewScreenState extends State<ScannerPreviewScreen> {
   }
 
   Future<void> _save() async {
-    final s = AppStrings.of(context);
+    final s = AppStrings.read(context);
     final name = _nameCtrl.text.trim();
     if (name.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -156,6 +157,8 @@ class _ScannerPreviewScreenState extends State<ScannerPreviewScreen> {
       final svc = context.read<ScannerService>();
       final doc = await svc.savePages(name: name, pagePaths: processedPaths);
       if (!mounted) return;
+      await _showShareSheet(doc);
+      if (!mounted) return;
       Navigator.of(context).pop(doc);
     } catch (e) {
       if (!mounted) return;
@@ -164,6 +167,145 @@ class _ScannerPreviewScreenState extends State<ScannerPreviewScreen> {
         SnackBar(content: Text('${s.scanError}: $e'), backgroundColor: Colors.red),
       );
     }
+  }
+
+  Future<void> _showShareSheet(ScannedDocument doc) async {
+    final svc = context.read<ScannerService>();
+    final messenger = ScaffoldMessenger.of(context);
+    await showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                width: 40, height: 4,
+                margin: const EdgeInsets.only(bottom: 16),
+                decoration: BoxDecoration(
+                  color: Colors.black12,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+              Row(children: [
+                const Icon(Icons.check_circle, color: Color(0xFF22C55E), size: 26),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    'Documento salvato',
+                    style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800, color: AppColors.textDark),
+                  ),
+                ),
+              ]),
+              const SizedBox(height: 4),
+              Text(
+                '"${doc.name}" — ${doc.pageCount} pagin${doc.pageCount == 1 ? 'a' : 'e'}',
+                style: const TextStyle(fontSize: 13, color: AppColors.textLight),
+              ),
+              const SizedBox(height: 18),
+              Row(children: [
+                Expanded(
+                  child: _shareTile(
+                    icon: Icons.chat_bubble,
+                    label: 'WhatsApp',
+                    color: const Color(0xFF25D366),
+                    onTap: () async {
+                      Navigator.pop(ctx);
+                      try {
+                        await svc.shareToWhatsApp(filePath: doc.pdfPath, text: doc.name);
+                      } on PlatformException catch (e) {
+                        messenger.showSnackBar(SnackBar(
+                          content: Text(e.code == 'NOT_INSTALLED'
+                              ? 'WhatsApp non è installato'
+                              : 'Errore: ${e.message ?? e.code}'),
+                          backgroundColor: Colors.red,
+                        ));
+                      }
+                    },
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: _shareTile(
+                    icon: Icons.email_outlined,
+                    label: 'Email',
+                    color: const Color(0xFF1976D2),
+                    onTap: () async {
+                      Navigator.pop(ctx);
+                      try {
+                        await svc.shareToEmail(
+                          filePath: doc.pdfPath,
+                          subject: doc.name,
+                          body: 'Documento allegato: ${doc.name}',
+                        );
+                      } on PlatformException catch (e) {
+                        messenger.showSnackBar(SnackBar(
+                          content: Text(e.code == 'NO_EMAIL_APP'
+                              ? 'Nessuna app email installata'
+                              : 'Errore: ${e.message ?? e.code}'),
+                          backgroundColor: Colors.red,
+                        ));
+                      }
+                    },
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: _shareTile(
+                    icon: Icons.share,
+                    label: 'Altro',
+                    color: const Color(0xFF64748B),
+                    onTap: () async {
+                      Navigator.pop(ctx);
+                      await Share.shareXFiles([XFile(doc.pdfPath)], subject: doc.name);
+                    },
+                  ),
+                ),
+              ]),
+              const SizedBox(height: 8),
+              TextButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: const Text('Chiudi', style: TextStyle(fontWeight: FontWeight.w700)),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _shareTile({
+    required IconData icon,
+    required String label,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        decoration: BoxDecoration(
+          color: color.withValues(alpha: 0.08),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, color: color, size: 26),
+            const SizedBox(height: 6),
+            Text(label,
+                style: TextStyle(color: color, fontSize: 13, fontWeight: FontWeight.w700)),
+          ],
+        ),
+      ),
+    );
   }
 
   Future<List<String>> _applyRotations() async {
