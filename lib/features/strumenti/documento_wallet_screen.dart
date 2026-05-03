@@ -1,150 +1,108 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../config/constants.dart';
+import '../../core/services/scanner_service.dart';
 
 // ---------------------------------------------------------------------------
-// Data model
+// Data model — wallet documents are now photo-first.
+// nome (required) + dataScadenza (optional) + imagePath.
+// Legacy fields (tipoKey/numero/dataRilascio/note) are kept in JSON so old
+// entries created before this rewrite still load.
 // ---------------------------------------------------------------------------
-class _DocumentoInfo {
-  static const List<_DocumentoTipo> tipi = [
-    _DocumentoTipo(
-      key: 'passaporto',
-      label: 'Passaporto',
-      icon: Icons.menu_book_rounded,
-      color: Color(0xFF1565C0),
-    ),
-    _DocumentoTipo(
-      key: 'permesso_soggiorno',
-      label: 'Permesso di Soggiorno',
-      icon: Icons.card_membership_rounded,
-      color: Color(0xFF2E7D32),
-    ),
-    _DocumentoTipo(
-      key: 'cie',
-      label: "Carta d'Identita (CIE)",
-      icon: Icons.badge_rounded,
-      color: Color(0xFF6A1B9A),
-    ),
-    _DocumentoTipo(
-      key: 'codice_fiscale',
-      label: 'Codice Fiscale',
-      icon: Icons.pin_rounded,
-      color: Color(0xFFE65100),
-    ),
-    _DocumentoTipo(
-      key: 'tessera_sanitaria',
-      label: 'Tessera Sanitaria',
-      icon: Icons.local_hospital_rounded,
-      color: Color(0xFFC62828),
-    ),
-    _DocumentoTipo(
-      key: 'patente',
-      label: 'Patente di Guida',
-      icon: Icons.directions_car_rounded,
-      color: Color(0xFF00838F),
-    ),
-  ];
-
-  static _DocumentoTipo tipoByKey(String key) {
-    return tipi.firstWhere(
-      (t) => t.key == key,
-      orElse: () => tipi.first,
-    );
-  }
-}
-
-class _DocumentoTipo {
-  final String key;
-  final String label;
-  final IconData icon;
-  final Color color;
-
-  const _DocumentoTipo({
-    required this.key,
-    required this.label,
-    required this.icon,
-    required this.color,
-  });
-}
-
 class _Documento {
   final String id;
-  final String tipoKey;
   final String nome;
+  final String imagePath; // empty for legacy entries without a photo
+  final DateTime? dataScadenza;
+  // Legacy / pass-through:
+  final String tipoKey;
   final String numero;
   final DateTime? dataRilascio;
-  final DateTime? dataScadenza;
   final String note;
 
   _Documento({
     required this.id,
-    required this.tipoKey,
     required this.nome,
-    required this.numero,
-    this.dataRilascio,
+    this.imagePath = '',
     this.dataScadenza,
+    this.tipoKey = '',
+    this.numero = '',
+    this.dataRilascio,
     this.note = '',
   });
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'tipoKey': tipoKey,
         'nome': nome,
+        'imagePath': imagePath,
+        'dataScadenza': dataScadenza?.toIso8601String(),
+        'tipoKey': tipoKey,
         'numero': numero,
         'dataRilascio': dataRilascio?.toIso8601String(),
-        'dataScadenza': dataScadenza?.toIso8601String(),
         'note': note,
       };
 
-  factory _Documento.fromJson(Map<String, dynamic> json) => _Documento(
-        id: json['id'] as String,
-        tipoKey: json['tipoKey'] as String,
-        nome: json['nome'] as String? ?? '',
-        numero: json['numero'] as String? ?? '',
-        dataRilascio: json['dataRilascio'] != null
-            ? DateTime.tryParse(json['dataRilascio'] as String)
+  factory _Documento.fromJson(Map<String, dynamic> j) => _Documento(
+        id: j['id'] as String,
+        nome: (j['nome'] as String?) ?? '',
+        imagePath: (j['imagePath'] as String?) ?? '',
+        dataScadenza: j['dataScadenza'] != null
+            ? DateTime.tryParse(j['dataScadenza'] as String)
             : null,
-        dataScadenza: json['dataScadenza'] != null
-            ? DateTime.tryParse(json['dataScadenza'] as String)
+        tipoKey: (j['tipoKey'] as String?) ?? '',
+        numero: (j['numero'] as String?) ?? '',
+        dataRilascio: j['dataRilascio'] != null
+            ? DateTime.tryParse(j['dataRilascio'] as String)
             : null,
-        note: json['note'] as String? ?? '',
+        note: (j['note'] as String?) ?? '',
       );
 
   int? get giorniRimanenti {
     if (dataScadenza == null) return null;
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
-    final scad = DateTime(
-        dataScadenza!.year, dataScadenza!.month, dataScadenza!.day);
+    final scad = DateTime(dataScadenza!.year, dataScadenza!.month, dataScadenza!.day);
     return scad.difference(today).inDays;
   }
 
   Color get coloreScadenza {
-    final giorni = giorniRimanenti;
-    if (giorni == null) return AppColors.textMedium;
-    if (giorni < 0) return const Color(0xFF212121); // expired - black
-    if (giorni < 30) return const Color(0xFFC62828); // red
-    if (giorni < 90) return const Color(0xFFE65100); // orange
-    return const Color(0xFF2E7D32); // green
+    final g = giorniRimanenti;
+    if (g == null) return AppColors.textMedium;
+    if (g < 0) return const Color(0xFF212121);
+    if (g < 30) return const Color(0xFFC62828);
+    if (g < 90) return const Color(0xFFE65100);
+    return const Color(0xFF2E7D32);
   }
 
-  String get numeroMascherato {
-    if (numero.isEmpty) return '---';
-    if (numero.length <= 4) return numero;
-    final visible = numero.substring(numero.length - 4);
-    final masked = '*' * (numero.length - 4);
-    return '$masked$visible';
+  _Documento copyWith({
+    String? nome,
+    String? imagePath,
+    DateTime? dataScadenza,
+    bool clearScadenza = false,
+  }) {
+    return _Documento(
+      id: id,
+      nome: nome ?? this.nome,
+      imagePath: imagePath ?? this.imagePath,
+      dataScadenza: clearScadenza ? null : (dataScadenza ?? this.dataScadenza),
+      tipoKey: tipoKey,
+      numero: numero,
+      dataRilascio: dataRilascio,
+      note: note,
+    );
   }
 }
 
-// ---------------------------------------------------------------------------
-// Persistence key
-// ---------------------------------------------------------------------------
 const _kStorageKey = 'documento_wallet_items';
+const _kImagesSubdir = 'wallet_documents';
 
 // ---------------------------------------------------------------------------
 // Screen
@@ -156,28 +114,35 @@ class DocumentoWalletScreen extends StatefulWidget {
   State<DocumentoWalletScreen> createState() => _DocumentoWalletScreenState();
 }
 
-class _DocumentoWalletScreenState extends State<DocumentoWalletScreen>
-    with TickerProviderStateMixin {
+class _DocumentoWalletScreenState extends State<DocumentoWalletScreen> {
   List<_Documento> _documenti = [];
   bool _loading = true;
+  bool _gridView = true; // default = preview grid
+  String _query = '';
+  final TextEditingController _searchCtrl = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _loadDocumenti();
+    _load();
   }
 
-  // -------------------------------------------------------------------------
-  // Persistence
-  // -------------------------------------------------------------------------
-  Future<void> _loadDocumenti() async {
+  @override
+  void dispose() {
+    _searchCtrl.dispose();
+    super.dispose();
+  }
+
+  // ── persistence ──────────────────────────────────────────────────────────
+  Future<void> _load() async {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getString(_kStorageKey);
     if (raw != null && raw.isNotEmpty) {
       try {
         final list = jsonDecode(raw) as List;
-        _documenti =
-            list.map((e) => _Documento.fromJson(e as Map<String, dynamic>)).toList();
+        _documenti = list
+            .map((e) => _Documento.fromJson(e as Map<String, dynamic>))
+            .toList();
       } catch (_) {
         _documenti = [];
       }
@@ -185,32 +150,46 @@ class _DocumentoWalletScreenState extends State<DocumentoWalletScreen>
     if (mounted) setState(() => _loading = false);
   }
 
-  Future<void> _saveDocumenti() async {
+  Future<void> _save() async {
     final prefs = await SharedPreferences.getInstance();
-    final json = jsonEncode(_documenti.map((d) => d.toJson()).toList());
-    await prefs.setString(_kStorageKey, json);
+    await prefs.setString(
+      _kStorageKey,
+      jsonEncode(_documenti.map((d) => d.toJson()).toList()),
+    );
   }
 
-  void _addOrUpdateDocumento(_Documento doc) {
+  void _upsert(_Documento d) {
     setState(() {
-      final idx = _documenti.indexWhere((d) => d.id == doc.id);
-      if (idx >= 0) {
-        _documenti[idx] = doc;
+      final i = _documenti.indexWhere((x) => x.id == d.id);
+      if (i >= 0) {
+        _documenti[i] = d;
       } else {
-        _documenti.add(doc);
+        _documenti.add(d);
       }
     });
-    _saveDocumenti();
+    _save();
   }
 
-  void _deleteDocumento(String id) {
-    setState(() => _documenti.removeWhere((d) => d.id == id));
-    _saveDocumenti();
+  Future<void> _delete(_Documento d) async {
+    setState(() => _documenti.removeWhere((x) => x.id == d.id));
+    await _save();
+    if (d.imagePath.isNotEmpty) {
+      final f = File(d.imagePath);
+      if (f.existsSync()) {
+        try {
+          f.deleteSync();
+        } catch (_) {}
+      }
+    }
   }
 
-  // -------------------------------------------------------------------------
-  // Alert documents (expiring within 60 days)
-  // -------------------------------------------------------------------------
+  // ── filtering ────────────────────────────────────────────────────────────
+  List<_Documento> get _filtered {
+    if (_query.isEmpty) return _documenti;
+    final q = _query.toLowerCase();
+    return _documenti.where((d) => d.nome.toLowerCase().contains(q)).toList();
+  }
+
   List<_Documento> get _alertDocumenti {
     return _documenti.where((d) {
       final g = d.giorniRimanenti;
@@ -219,9 +198,178 @@ class _DocumentoWalletScreenState extends State<DocumentoWalletScreen>
       ..sort((a, b) => a.giorniRimanenti!.compareTo(b.giorniRimanenti!));
   }
 
-  // -------------------------------------------------------------------------
-  // Build
-  // -------------------------------------------------------------------------
+  // ── add / edit flow ──────────────────────────────────────────────────────
+  Future<String?> _captureImage(_AddSource source) async {
+    final svc = context.read<ScannerService>();
+    if (source == _AddSource.camera) {
+      final pages = await svc.scanPages(maxPages: 1);
+      if (pages.isEmpty) return null;
+      return pages.first;
+    } else {
+      final picker = ImagePicker();
+      final shot = await picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 92,
+      );
+      return shot?.path;
+    }
+  }
+
+  Future<String> _persistImage(String sourcePath, String id) async {
+    final root = await getApplicationDocumentsDirectory();
+    final dir = Directory('${root.path}/$_kImagesSubdir');
+    if (!dir.existsSync()) dir.createSync(recursive: true);
+    final ext = sourcePath.toLowerCase().endsWith('.png') ? 'png' : 'jpg';
+    final dest = File('${dir.path}/$id.$ext');
+    await File(sourcePath).copy(dest.path);
+    return dest.path;
+  }
+
+  Future<void> _onAddPressed() async {
+    final source = await _pickSource();
+    if (source == null || !mounted) return;
+
+    final messenger = ScaffoldMessenger.of(context);
+    String? imgPath;
+    try {
+      imgPath = await _captureImage(source);
+    } catch (e) {
+      messenger.showSnackBar(SnackBar(content: Text('Errore acquisizione: $e'), backgroundColor: Colors.red));
+      return;
+    }
+    if (imgPath == null || !mounted) return;
+
+    final id = DateTime.now().millisecondsSinceEpoch.toString();
+    final stored = await _persistImage(imgPath, id);
+    if (!mounted) return;
+
+    final draft = _Documento(id: id, nome: '', imagePath: stored);
+    final saved = await _showFormSheet(draft, isNew: true);
+    if (saved == null) {
+      // user cancelled — clean up the image
+      final f = File(stored);
+      if (f.existsSync()) {
+        try {
+          f.deleteSync();
+        } catch (_) {}
+      }
+      return;
+    }
+    _upsert(saved);
+  }
+
+  Future<_AddSource?> _pickSource() async {
+    return showModalBottomSheet<_AddSource>(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40, height: 4,
+                margin: const EdgeInsets.only(bottom: 18),
+                decoration: BoxDecoration(
+                  color: Colors.black12,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+              const Text('Aggiungi documento',
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800, color: AppColors.textDark)),
+              const SizedBox(height: 16),
+              Row(children: [
+                Expanded(
+                  child: _sourceTile(
+                    icon: Icons.photo_camera_rounded,
+                    label: 'Scatta foto',
+                    color: const Color(0xFF1976D2),
+                    onTap: () => Navigator.pop(ctx, _AddSource.camera),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _sourceTile(
+                    icon: Icons.photo_library_rounded,
+                    label: 'Da galleria',
+                    color: const Color(0xFF2E7D32),
+                    onTap: () => Navigator.pop(ctx, _AddSource.gallery),
+                  ),
+                ),
+              ]),
+              const SizedBox(height: 8),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _sourceTile({
+    required IconData icon,
+    required String label,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(14),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 18),
+        decoration: BoxDecoration(
+          color: color.withValues(alpha: 0.08),
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Column(
+          children: [
+            Icon(icon, color: color, size: 30),
+            const SizedBox(height: 8),
+            Text(label,
+                style: TextStyle(color: color, fontSize: 13, fontWeight: FontWeight.w800)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<_Documento?> _showFormSheet(_Documento draft, {required bool isNew}) {
+    return showModalBottomSheet<_Documento>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => _DocumentoFormSheet(initial: draft, isNew: isNew),
+    );
+  }
+
+  Future<void> _editDocumento(_Documento d) async {
+    final saved = await _showFormSheet(d, isNew: false);
+    if (saved != null) _upsert(saved);
+  }
+
+  Future<void> _confirmDelete(_Documento d) async {
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text('Elimina documento'),
+        content: Text('Vuoi eliminare "${d.nome}" dal tuo wallet?'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Annulla')),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Elimina', style: TextStyle(color: Color(0xFFC62828))),
+          ),
+        ],
+      ),
+    );
+    if (ok == true) await _delete(d);
+  }
+
+  // ── build ────────────────────────────────────────────────────────────────
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -229,187 +377,160 @@ class _DocumentoWalletScreenState extends State<DocumentoWalletScreen>
       floatingActionButton: _buildFab(),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
-          : CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(child: _buildHeader(context)),
-                if (_alertDocumenti.isNotEmpty)
-                  SliverToBoxAdapter(child: _buildAlertBanner()),
-                if (_documenti.isEmpty)
-                  SliverFillRemaining(child: _buildEmptyState())
-                else ...[
-                  SliverToBoxAdapter(child: _buildSectionTitle()),
-                  SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 100),
-                    sliver: SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final doc = _documenti[index];
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 12),
-                            child: _DocumentoCard(
-                              documento: doc,
-                              onTap: () => _showDocumentoSheet(
-                                  context, existingDoc: doc),
-                              onDelete: () => _confirmDelete(context, doc),
-                            ),
-                          );
-                        },
-                        childCount: _documenti.length,
-                      ),
-                    ),
-                  ),
-                ],
+          : Column(
+              children: [
+                _buildHeader(),
+                if (_alertDocumenti.isNotEmpty) _buildAlertBanner(),
+                _buildToolbar(),
+                Expanded(
+                  child: _documenti.isEmpty
+                      ? _buildEmptyState()
+                      : _filtered.isEmpty
+                          ? _buildNoResults()
+                          : _gridView
+                              ? _buildGrid()
+                              : _buildList(),
+                ),
               ],
             ),
     );
   }
 
-  // -------------------------------------------------------------------------
-  // Header
-  // -------------------------------------------------------------------------
-  Widget _buildHeader(BuildContext context) {
+  // header
+  Widget _buildHeader() {
     return Container(
       padding: EdgeInsets.only(
         top: MediaQuery.of(context).padding.top + 10,
-        left: 20,
-        right: 20,
-        bottom: 14,
+        left: 20, right: 20, bottom: 14,
       ),
       decoration: const BoxDecoration(gradient: AppColors.headerGradient),
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: () => Navigator.of(context).pop(),
-            child: Container(
-              width: 36,
-              height: 36,
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child:
-                  const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 16),
-            ),
-          ),
-          const SizedBox(width: 12),
-          Container(
-            width: 42,
-            height: 42,
+      child: Row(children: [
+        GestureDetector(
+          onTap: () => Navigator.of(context).pop(),
+          child: Container(
+            width: 36, height: 36,
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFF1976D2), Color(0xFF42A5F5)],
-              ),
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFF1976D2).withValues(alpha: 0.4),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
-                ),
-              ],
+              color: Colors.white.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(Icons.account_balance_wallet_rounded,
-                color: Colors.white, size: 22),
+            child: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 16),
           ),
-          const SizedBox(width: 12),
-          const Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'DOCUMENTO WALLET',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-                SizedBox(height: 1),
-                Text(
-                  'I tuoi documenti sempre a portata di mano',
-                  style: TextStyle(
-                    color: AppColors.textSubtitle,
-                    fontSize: 11,
-                  ),
-                ),
-              ],
-            ),
+        ),
+        const SizedBox(width: 12),
+        Container(
+          width: 42, height: 42,
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(colors: [Color(0xFF1976D2), Color(0xFF42A5F5)]),
+            borderRadius: BorderRadius.circular(12),
           ),
-        ],
-      ),
+          child: const Icon(Icons.account_balance_wallet_rounded, color: Colors.white, size: 22),
+        ),
+        const SizedBox(width: 12),
+        const Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('PORTAFOGLIO',
+                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800, letterSpacing: 0.5)),
+              SizedBox(height: 1),
+              Text('Foto dei tuoi documenti',
+                  style: TextStyle(color: AppColors.textSubtitle, fontSize: 11)),
+            ],
+          ),
+        ),
+      ]),
     );
   }
 
-  // -------------------------------------------------------------------------
-  // Alert banner
-  // -------------------------------------------------------------------------
+  // alert banner (urgent expirations)
   Widget _buildAlertBanner() {
-    final alerts = _alertDocumenti;
-    final first = alerts.first;
-    final tipo = _DocumentoInfo.tipoByKey(first.tipoKey);
-    final giorni = first.giorniRimanenti!;
-
-    String message;
-    if (giorni == 0) {
-      message = 'ATTENZIONE! Il tuo ${tipo.label} scade oggi!';
-    } else {
-      message =
-          'ATTENZIONE! Il tuo ${tipo.label} scade tra $giorni giorn${giorni == 1 ? 'o' : 'i'}!';
-    }
-
+    final first = _alertDocumenti.first;
+    final g = first.giorniRimanenti!;
+    final msg = g == 0
+        ? 'ATTENZIONE! "${first.nome}" scade oggi!'
+        : 'ATTENZIONE! "${first.nome}" scade tra $g giorn${g == 1 ? 'o' : 'i'}!';
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFFFFF3E0), Color(0xFFFFE0B2)],
-        ),
+        gradient: const LinearGradient(colors: [Color(0xFFFFF3E0), Color(0xFFFFE0B2)]),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFFFB74D), width: 1),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFFFF9800).withValues(alpha: 0.15),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        border: Border.all(color: const Color(0xFFFFB74D)),
       ),
+      child: Row(children: [
+        Container(
+          width: 40, height: 40,
+          decoration: BoxDecoration(
+            color: const Color(0xFFE65100).withValues(alpha: 0.12),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: const Icon(Icons.warning_amber_rounded, color: Color(0xFFE65100), size: 22),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Text(msg,
+              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Color(0xFFE65100))),
+        ),
+      ]),
+    );
+  }
+
+  // toolbar (search + view toggle + count)
+  Widget _buildToolbar() {
+    if (_documenti.isEmpty) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
       child: Row(
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: const Color(0xFFE65100).withValues(alpha: 0.12),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: const Icon(Icons.warning_amber_rounded,
-                color: Color(0xFFE65100), size: 22),
-          ),
-          const SizedBox(width: 12),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  message,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFFE65100),
-                  ),
-                ),
-                if (alerts.length > 1) ...[
-                  const SizedBox(height: 2),
-                  Text(
-                    'e ${alerts.length - 1} altr${alerts.length - 1 == 1 ? 'o documento' : 'i documenti'} in scadenza',
-                    style: const TextStyle(
-                      fontSize: 11,
-                      color: Color(0xFFBF360C),
-                    ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.04),
+                    blurRadius: 8,
                   ),
                 ],
+              ),
+              child: TextField(
+                controller: _searchCtrl,
+                onChanged: (v) => setState(() => _query = v),
+                textInputAction: TextInputAction.search,
+                decoration: InputDecoration(
+                  hintText: 'Cerca documento...',
+                  hintStyle: const TextStyle(color: AppColors.textLight, fontSize: 14),
+                  prefixIcon: const Icon(Icons.search_rounded, color: AppColors.textLight, size: 22),
+                  suffixIcon: _query.isEmpty
+                      ? null
+                      : IconButton(
+                          icon: const Icon(Icons.close_rounded, size: 18, color: AppColors.textMedium),
+                          onPressed: () {
+                            _searchCtrl.clear();
+                            setState(() => _query = '');
+                          },
+                        ),
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8),
+              ],
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _viewBtn(Icons.grid_view_rounded, true),
+                _viewBtn(Icons.view_list_rounded, false),
               ],
             ),
           ),
@@ -418,46 +539,79 @@ class _DocumentoWalletScreenState extends State<DocumentoWalletScreen>
     );
   }
 
-  // -------------------------------------------------------------------------
-  // Section title
-  // -------------------------------------------------------------------------
-  Widget _buildSectionTitle() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
-      child: Row(
-        children: [
-          const Text(
-            'I tuoi documenti',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: AppColors.textDark,
-            ),
-          ),
-          const Spacer(),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Text(
-              '${_documenti.length}',
-              style: const TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w700,
-                color: AppColors.primary,
-              ),
-            ),
-          ),
-        ],
+  Widget _viewBtn(IconData icon, bool grid) {
+    final selected = _gridView == grid;
+    return InkWell(
+      onTap: () => setState(() => _gridView = grid),
+      borderRadius: BorderRadius.circular(10),
+      child: Container(
+        margin: const EdgeInsets.all(4),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        decoration: BoxDecoration(
+          color: selected ? AppColors.primary.withValues(alpha: 0.12) : Colors.transparent,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Icon(icon, size: 20,
+            color: selected ? AppColors.primary : AppColors.textMedium),
       ),
     );
   }
 
-  // -------------------------------------------------------------------------
-  // Empty state
-  // -------------------------------------------------------------------------
+  // grid view (default — preview-first)
+  Widget _buildGrid() {
+    final docs = _filtered;
+    return GridView.builder(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 110),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 12,
+        crossAxisSpacing: 12,
+        childAspectRatio: 0.78,
+      ),
+      itemCount: docs.length,
+      itemBuilder: (_, i) => _DocCardGrid(
+        documento: docs[i],
+        onTap: () => _editDocumento(docs[i]),
+        onDelete: () => _confirmDelete(docs[i]),
+      ),
+    );
+  }
+
+  // list view
+  Widget _buildList() {
+    final docs = _filtered;
+    return ListView.builder(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 110),
+      itemCount: docs.length,
+      itemBuilder: (_, i) => Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: _DocCardList(
+          documento: docs[i],
+          onTap: () => _editDocumento(docs[i]),
+          onDelete: () => _confirmDelete(docs[i]),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNoResults() {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.search_off_rounded, size: 60, color: AppColors.textLight.withValues(alpha: 0.6)),
+            const SizedBox(height: 14),
+            Text('Nessun documento trovato per "$_query"',
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 15, color: AppColors.textMedium, fontWeight: FontWeight.w600)),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildEmptyState() {
     return Center(
       child: Padding(
@@ -466,52 +620,32 @@ class _DocumentoWalletScreenState extends State<DocumentoWalletScreen>
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 100,
-              height: 100,
+              width: 100, height: 100,
               decoration: BoxDecoration(
                 color: AppColors.primary.withValues(alpha: 0.08),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
-                Icons.folder_open_rounded,
-                size: 48,
-                color: AppColors.primary.withValues(alpha: 0.4),
-              ),
+              child: Icon(Icons.folder_open_rounded, size: 48, color: AppColors.primary.withValues(alpha: 0.4)),
             ),
             const SizedBox(height: 24),
-            const Text(
-              'Il tuo wallet e vuoto',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                color: AppColors.textDark,
-              ),
-            ),
+            const Text('Il tuo wallet è vuoto',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: AppColors.textDark)),
             const SizedBox(height: 10),
             const Text(
-              'Aggiungi il tuo primo documento per\naverlo sempre a portata di mano e\nricevere avvisi prima della scadenza.',
+              'Scatta una foto al tuo documento o\ncaricalo dalla galleria.',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 14,
-                color: AppColors.textMedium,
-                height: 1.5,
-              ),
+              style: TextStyle(fontSize: 14, color: AppColors.textMedium, height: 1.5),
             ),
             const SizedBox(height: 28),
             GestureDetector(
-              onTap: () => _showDocumentoSheet(context),
+              onTap: _onAddPressed,
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
+                padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
                 decoration: BoxDecoration(
                   gradient: AppColors.buttonGradient,
                   borderRadius: BorderRadius.circular(14),
                   boxShadow: [
-                    BoxShadow(
-                      color: AppColors.primary.withValues(alpha: 0.3),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
+                    BoxShadow(color: AppColors.primary.withValues(alpha: 0.3), blurRadius: 12, offset: const Offset(0, 4)),
                   ],
                 ),
                 child: const Row(
@@ -519,14 +653,8 @@ class _DocumentoWalletScreenState extends State<DocumentoWalletScreen>
                   children: [
                     Icon(Icons.add_rounded, color: Colors.white, size: 20),
                     SizedBox(width: 8),
-                    Text(
-                      'Aggiungi documento',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
+                    Text('Aggiungi documento',
+                        style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w700)),
                   ],
                 ),
               ),
@@ -537,24 +665,17 @@ class _DocumentoWalletScreenState extends State<DocumentoWalletScreen>
     );
   }
 
-  // -------------------------------------------------------------------------
-  // FAB
-  // -------------------------------------------------------------------------
   Widget _buildFab() {
     if (_documenti.isEmpty) return const SizedBox.shrink();
     return GestureDetector(
-      onTap: () => _showDocumentoSheet(context),
+      onTap: _onAddPressed,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         decoration: BoxDecoration(
           gradient: AppColors.buttonGradient,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
-            BoxShadow(
-              color: AppColors.primary.withValues(alpha: 0.35),
-              blurRadius: 16,
-              offset: const Offset(0, 6),
-            ),
+            BoxShadow(color: AppColors.primary.withValues(alpha: 0.35), blurRadius: 16, offset: const Offset(0, 6)),
           ],
         ),
         child: const Row(
@@ -562,13 +683,75 @@ class _DocumentoWalletScreenState extends State<DocumentoWalletScreen>
           children: [
             Icon(Icons.add_rounded, color: Colors.white, size: 20),
             SizedBox(width: 8),
-            Text(
-              'AGGIUNGI DOCUMENTO',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 13,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 0.5,
+            Text('AGGIUNGI',
+                style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w800, letterSpacing: 0.5)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+enum _AddSource { camera, gallery }
+
+// ===========================================================================
+// Grid card — preview-first
+// ===========================================================================
+class _DocCardGrid extends StatelessWidget {
+  final _Documento documento;
+  final VoidCallback onTap;
+  final VoidCallback onDelete;
+
+  const _DocCardGrid({
+    required this.documento,
+    required this.onTap,
+    required this.onDelete,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final g = documento.giorniRimanenti;
+    return GestureDetector(
+      onTap: onTap,
+      onLongPress: onDelete,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(14),
+          boxShadow: [
+            BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 12, offset: const Offset(0, 4)),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: ClipRRect(
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    _buildPreview(),
+                    if (g != null)
+                      Positioned(
+                        top: 8, right: 8,
+                        child: _CountdownBadge(days: g, color: documento.coloreScadenza),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
+              child: Text(
+                documento.nome.isEmpty ? 'Senza nome' : documento.nome,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textDark,
+                ),
               ),
             ),
           ],
@@ -577,268 +760,158 @@ class _DocumentoWalletScreenState extends State<DocumentoWalletScreen>
     );
   }
 
-  // -------------------------------------------------------------------------
-  // Delete confirmation
-  // -------------------------------------------------------------------------
-  void _confirmDelete(BuildContext context, _Documento doc) {
-    final tipo = _DocumentoInfo.tipoByKey(doc.tipoKey);
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Elimina documento'),
-        content: Text('Vuoi eliminare "${tipo.label}" dal tuo wallet?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('Annulla'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(ctx).pop();
-              _deleteDocumento(doc.id);
-            },
-            child: const Text(
-              'Elimina',
-              style: TextStyle(color: Color(0xFFC62828)),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // -------------------------------------------------------------------------
-  // Bottom sheet - Add / Edit
-  // -------------------------------------------------------------------------
-  void _showDocumentoSheet(BuildContext context, {_Documento? existingDoc}) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (ctx) => _DocumentoFormSheet(
-        existingDoc: existingDoc,
-        onSave: _addOrUpdateDocumento,
-        onDelete: existingDoc != null
-            ? () {
-                Navigator.of(ctx).pop();
-                _confirmDelete(context, existingDoc);
-              }
-            : null,
+  Widget _buildPreview() {
+    if (documento.imagePath.isEmpty || !File(documento.imagePath).existsSync()) {
+      return Container(
+        color: AppColors.background,
+        child: const Center(
+          child: Icon(Icons.image_not_supported_rounded, color: AppColors.textLight, size: 42),
+        ),
+      );
+    }
+    return Image.file(
+      File(documento.imagePath),
+      fit: BoxFit.cover,
+      errorBuilder: (_, __, ___) => Container(
+        color: AppColors.background,
+        child: const Center(
+          child: Icon(Icons.broken_image_rounded, color: AppColors.textLight, size: 42),
+        ),
       ),
     );
   }
 }
 
 // ===========================================================================
-// Document card widget
+// List card
 // ===========================================================================
-class _DocumentoCard extends StatefulWidget {
+class _DocCardList extends StatelessWidget {
   final _Documento documento;
   final VoidCallback onTap;
   final VoidCallback onDelete;
 
-  const _DocumentoCard({
+  const _DocCardList({
     required this.documento,
     required this.onTap,
     required this.onDelete,
   });
 
   @override
-  State<_DocumentoCard> createState() => _DocumentoCardState();
-}
-
-class _DocumentoCardState extends State<_DocumentoCard>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _pulseController;
-  late Animation<double> _pulseAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    final giorni = widget.documento.giorniRimanenti;
-    final shouldPulse = giorni != null && giorni >= 0 && giorni <= 30;
-
-    _pulseController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1200),
-    );
-    _pulseAnimation = Tween<double>(begin: 1.0, end: 1.08).animate(
-      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
-    );
-
-    if (shouldPulse) {
-      _pulseController.repeat(reverse: true);
-    }
-  }
-
-  @override
-  void dispose() {
-    _pulseController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final doc = widget.documento;
-    final tipo = _DocumentoInfo.tipoByKey(doc.tipoKey);
-    final giorni = doc.giorniRimanenti;
-    final dateFormatter = DateFormat('dd/MM/yyyy');
-
+    final g = documento.giorniRimanenti;
+    final df = DateFormat('dd/MM/yyyy');
     return Dismissible(
-      key: ValueKey(doc.id),
+      key: ValueKey(documento.id),
       direction: DismissDirection.endToStart,
       background: Container(
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 24),
         decoration: BoxDecoration(
           color: const Color(0xFFC62828),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(14),
         ),
-        child: const Icon(Icons.delete_outline_rounded,
-            color: Colors.white, size: 28),
+        child: const Icon(Icons.delete_outline_rounded, color: Colors.white, size: 26),
       ),
       confirmDismiss: (_) async {
-        widget.onDelete();
+        onDelete();
         return false;
       },
       child: GestureDetector(
-        onTap: widget.onTap,
-        onLongPress: widget.onDelete,
+        onTap: onTap,
+        onLongPress: onDelete,
         child: Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(14),
             boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.06),
-                blurRadius: 20,
-                offset: const Offset(0, 4),
-              ),
+              BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10),
             ],
-            border: Border.all(
-              color: giorni != null && giorni <= 30
-                  ? doc.coloreScadenza.withValues(alpha: 0.25)
-                  : Colors.black.withValues(alpha: 0.03),
-            ),
           ),
           child: Row(
             children: [
-              // Icon
-              Container(
-                width: 52,
-                height: 52,
-                decoration: BoxDecoration(
-                  color: tipo.color.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(14),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: SizedBox(
+                  width: 56, height: 70,
+                  child: documento.imagePath.isNotEmpty &&
+                          File(documento.imagePath).existsSync()
+                      ? Image.file(File(documento.imagePath), fit: BoxFit.cover)
+                      : Container(
+                          color: AppColors.background,
+                          child: const Icon(Icons.image_not_supported_rounded,
+                              color: AppColors.textLight, size: 22),
+                        ),
                 ),
-                child: Icon(tipo.icon, color: tipo.color, size: 26),
               ),
-              const SizedBox(width: 14),
-              // Info
+              const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      tipo.label,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textDark,
-                      ),
-                    ),
-                    const SizedBox(height: 3),
-                    Text(
-                      'N. ${doc.numeroMascherato}',
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: AppColors.textMedium,
-                        fontFamily: 'monospace',
-                      ),
-                    ),
-                    if (doc.dataScadenza != null) ...[
-                      const SizedBox(height: 3),
-                      Text(
-                        'Scade: ${dateFormatter.format(doc.dataScadenza!)}',
-                        style: TextStyle(
-                          fontSize: 11,
-                          color: doc.coloreScadenza,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                    Text(documento.nome.isEmpty ? 'Senza nome' : documento.nome,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textDark,
+                        )),
+                    if (documento.dataScadenza != null) ...[
+                      const SizedBox(height: 4),
+                      Text('Scade: ${df.format(documento.dataScadenza!)}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: documento.coloreScadenza,
+                            fontWeight: FontWeight.w600,
+                          )),
                     ],
                   ],
                 ),
               ),
-              // Countdown badge
-              if (giorni != null) _buildCountdownBadge(giorni, doc.coloreScadenza),
+              if (g != null) _CountdownBadge(days: g, color: documento.coloreScadenza),
             ],
           ),
         ),
       ),
     );
   }
+}
 
-  Widget _buildCountdownBadge(int giorni, Color color) {
-    final String label;
-    if (giorni < 0) {
-      label = 'SCADUTO';
-    } else if (giorni == 0) {
-      label = 'OGGI';
-    } else {
-      label = '$giorni gg';
-    }
+// ===========================================================================
+// Countdown badge
+// ===========================================================================
+class _CountdownBadge extends StatelessWidget {
+  final int days;
+  final Color color;
+  const _CountdownBadge({required this.days, required this.color});
 
-    final badge = Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+  @override
+  Widget build(BuildContext context) {
+    final label = days < 0
+        ? 'SCADUTO'
+        : days == 0
+            ? 'OGGI'
+            : '$days gg';
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: color.withValues(alpha: 0.25)),
+        color: color.withValues(alpha: 0.95),
+        borderRadius: BorderRadius.circular(8),
       ),
-      child: Text(
-        label,
-        style: TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w800,
-          color: color,
-        ),
-      ),
+      child: Text(label,
+          style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w800)),
     );
-
-    // Animate only if urgent
-    if (giorni >= 0 && giorni <= 30) {
-      return AnimatedBuilder(
-        animation: _pulseAnimation,
-        builder: (context, child) {
-          return Transform.scale(
-            scale: _pulseAnimation.value,
-            child: child,
-          );
-        },
-        child: badge,
-      );
-    }
-
-    return badge;
   }
 }
 
 // ===========================================================================
-// Bottom sheet form
+// Form bottom sheet — minimal: name (required) + expiry (optional) + photo
 // ===========================================================================
 class _DocumentoFormSheet extends StatefulWidget {
-  final _Documento? existingDoc;
-  final void Function(_Documento doc) onSave;
-  final VoidCallback? onDelete;
-
-  const _DocumentoFormSheet({
-    this.existingDoc,
-    required this.onSave,
-    this.onDelete,
-  });
+  final _Documento initial;
+  final bool isNew;
+  const _DocumentoFormSheet({required this.initial, required this.isNew});
 
   @override
   State<_DocumentoFormSheet> createState() => _DocumentoFormSheetState();
@@ -846,43 +919,30 @@ class _DocumentoFormSheet extends StatefulWidget {
 
 class _DocumentoFormSheetState extends State<_DocumentoFormSheet> {
   final _formKey = GlobalKey<FormState>();
-
-  late String _selectedTipoKey;
   late TextEditingController _nomeCtrl;
-  late TextEditingController _numeroCtrl;
-  late TextEditingController _noteCtrl;
-  DateTime? _dataRilascio;
   DateTime? _dataScadenza;
-
-  bool get _isEditing => widget.existingDoc != null;
+  late String _imagePath;
 
   @override
   void initState() {
     super.initState();
-    final doc = widget.existingDoc;
-    _selectedTipoKey = doc?.tipoKey ?? _DocumentoInfo.tipi.first.key;
-    _nomeCtrl = TextEditingController(text: doc?.nome ?? '');
-    _numeroCtrl = TextEditingController(text: doc?.numero ?? '');
-    _noteCtrl = TextEditingController(text: doc?.note ?? '');
-    _dataRilascio = doc?.dataRilascio;
-    _dataScadenza = doc?.dataScadenza;
+    _nomeCtrl = TextEditingController(text: widget.initial.nome);
+    _dataScadenza = widget.initial.dataScadenza;
+    _imagePath = widget.initial.imagePath;
   }
 
   @override
   void dispose() {
     _nomeCtrl.dispose();
-    _numeroCtrl.dispose();
-    _noteCtrl.dispose();
     super.dispose();
   }
 
-  Future<void> _pickDate(bool isRilascio) async {
-    final initial =
-        (isRilascio ? _dataRilascio : _dataScadenza) ?? DateTime.now();
+  Future<void> _pickDate() async {
+    final initial = _dataScadenza ?? DateTime.now();
     final picked = await showDatePicker(
       context: context,
       initialDate: initial,
-      firstDate: DateTime(1950),
+      firstDate: DateTime(2000),
       lastDate: DateTime(2100),
       locale: const Locale('it', 'IT'),
       builder: (context, child) {
@@ -891,51 +951,34 @@ class _DocumentoFormSheetState extends State<_DocumentoFormSheet> {
             colorScheme: const ColorScheme.light(
               primary: AppColors.primary,
               onPrimary: Colors.white,
-              surface: Colors.white,
-              onSurface: AppColors.textDark,
             ),
           ),
           child: child!,
         );
       },
     );
-    if (picked != null) {
-      setState(() {
-        if (isRilascio) {
-          _dataRilascio = picked;
-        } else {
-          _dataScadenza = picked;
-        }
-      });
-    }
+    if (picked != null) setState(() => _dataScadenza = picked);
   }
 
   void _save() {
     if (!_formKey.currentState!.validate()) return;
-
-    final doc = _Documento(
-      id: widget.existingDoc?.id ??
-          DateTime.now().millisecondsSinceEpoch.toString(),
-      tipoKey: _selectedTipoKey,
+    final saved = widget.initial.copyWith(
       nome: _nomeCtrl.text.trim(),
-      numero: _numeroCtrl.text.trim(),
-      dataRilascio: _dataRilascio,
+      imagePath: _imagePath,
       dataScadenza: _dataScadenza,
-      note: _noteCtrl.text.trim(),
+      clearScadenza: _dataScadenza == null,
     );
-
-    widget.onSave(doc);
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(saved);
   }
 
   @override
   Widget build(BuildContext context) {
     final bottomPad = MediaQuery.of(context).viewInsets.bottom;
-    final dateFormatter = DateFormat('dd/MM/yyyy');
+    final df = DateFormat('dd/MM/yyyy');
 
     return Container(
       constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height * 0.88,
+        maxHeight: MediaQuery.of(context).size.height * 0.92,
       ),
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -946,48 +989,27 @@ class _DocumentoFormSheetState extends State<_DocumentoFormSheet> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Handle bar
             Container(
               margin: const EdgeInsets.only(top: 12),
-              width: 40,
-              height: 4,
+              width: 40, height: 4,
               decoration: BoxDecoration(
                 color: Colors.grey.shade300,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
-            // Title row
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
               child: Row(
                 children: [
                   Text(
-                    _isEditing ? 'Modifica documento' : 'Nuovo documento',
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w800,
-                      color: AppColors.textDark,
-                    ),
+                    widget.isNew ? 'Nuovo documento' : 'Modifica documento',
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: AppColors.textDark),
                   ),
                   const Spacer(),
-                  if (widget.onDelete != null)
-                    GestureDetector(
-                      onTap: widget.onDelete,
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFC62828).withValues(alpha: 0.08),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Icon(Icons.delete_outline_rounded,
-                            color: Color(0xFFC62828), size: 20),
-                      ),
-                    ),
                 ],
               ),
             ),
-            const SizedBox(height: 16),
-            // Form
+            const SizedBox(height: 14),
             Flexible(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
@@ -996,103 +1018,99 @@ class _DocumentoFormSheetState extends State<_DocumentoFormSheet> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      // Tipo documento
-                      _buildLabel('Tipo di documento'),
-                      const SizedBox(height: 6),
-                      DropdownButtonFormField<String>(
-                        initialValue: _selectedTipoKey,
-                        decoration: _inputDecoration('Seleziona tipo'),
-                        items: _DocumentoInfo.tipi.map((t) {
-                          return DropdownMenuItem<String>(
-                            value: t.key,
-                            child: Row(
-                              children: [
-                                Icon(t.icon, size: 18, color: t.color),
-                                const SizedBox(width: 10),
-                                Text(t.label),
-                              ],
+                      // Photo preview
+                      if (_imagePath.isNotEmpty && File(_imagePath).existsSync())
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.file(
+                            File(_imagePath),
+                            height: 180,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => Container(
+                              height: 180,
+                              color: AppColors.background,
+                              child: const Center(child: Icon(Icons.broken_image_rounded, size: 48, color: AppColors.textLight)),
                             ),
-                          );
-                        }).toList(),
-                        onChanged: (val) {
-                          if (val != null) {
-                            setState(() => _selectedTipoKey = val);
-                          }
-                        },
-                      ),
-                      const SizedBox(height: 16),
+                          ),
+                        )
+                      else
+                        Container(
+                          height: 180,
+                          decoration: BoxDecoration(
+                            color: AppColors.background,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Center(
+                            child: Icon(Icons.image_outlined, size: 48, color: AppColors.textLight),
+                          ),
+                        ),
+                      const SizedBox(height: 18),
 
-                      // Nome documento
-                      _buildLabel('Nome / Descrizione'),
+                      // Nome (REQUIRED)
+                      const Text('Nome documento',
+                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.textDark)),
                       const SizedBox(height: 6),
                       TextFormField(
                         controller: _nomeCtrl,
-                        decoration: _inputDecoration('es. Passaporto italiano'),
-                        textCapitalization: TextCapitalization.words,
+                        autofocus: widget.isNew,
+                        textCapitalization: TextCapitalization.sentences,
+                        decoration: _inputDecoration("es. Passaporto Adnan"),
+                        validator: (v) =>
+                            v == null || v.trim().isEmpty ? 'Inserisci un nome' : null,
                       ),
                       const SizedBox(height: 16),
 
-                      // Numero
-                      _buildLabel('Numero documento'),
+                      // Scadenza (OPTIONAL)
+                      Row(
+                        children: const [
+                          Text('Scadenza',
+                              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                          SizedBox(width: 6),
+                          Text('(opzionale)',
+                              style: TextStyle(fontSize: 11, color: AppColors.textLight, fontWeight: FontWeight.w500)),
+                        ],
+                      ),
                       const SizedBox(height: 6),
-                      TextFormField(
-                        controller: _numeroCtrl,
-                        decoration: _inputDecoration('es. YA1234567'),
-                        validator: (val) {
-                          if (val == null || val.trim().isEmpty) {
-                            return 'Inserisci il numero del documento';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 16),
-
-                      // Date row
                       Row(
                         children: [
                           Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                _buildLabel('Data rilascio'),
-                                const SizedBox(height: 6),
-                                _buildDateField(
-                                  value: _dataRilascio,
-                                  hint: 'GG/MM/AAAA',
-                                  formatter: dateFormatter,
-                                  onTap: () => _pickDate(true),
+                            child: GestureDetector(
+                              onTap: _pickDate,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                                decoration: BoxDecoration(
+                                  color: AppColors.background,
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
-                              ],
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        _dataScadenza != null
+                                            ? df.format(_dataScadenza!)
+                                            : 'Tocca per scegliere',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: _dataScadenza != null ? AppColors.textDark : AppColors.textLight,
+                                        ),
+                                      ),
+                                    ),
+                                    Icon(Icons.calendar_today_rounded,
+                                        size: 16,
+                                        color: _dataScadenza != null ? AppColors.primary : AppColors.textLight),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                _buildLabel('Data scadenza'),
-                                const SizedBox(height: 6),
-                                _buildDateField(
-                                  value: _dataScadenza,
-                                  hint: 'GG/MM/AAAA',
-                                  formatter: dateFormatter,
-                                  onTap: () => _pickDate(false),
-                                ),
-                              ],
+                          if (_dataScadenza != null) ...[
+                            const SizedBox(width: 8),
+                            IconButton(
+                              icon: const Icon(Icons.clear_rounded, color: AppColors.textMedium),
+                              onPressed: () => setState(() => _dataScadenza = null),
                             ),
-                          ),
+                          ],
                         ],
-                      ),
-                      const SizedBox(height: 16),
-
-                      // Note
-                      _buildLabel('Note (opzionale)'),
-                      const SizedBox(height: 6),
-                      TextFormField(
-                        controller: _noteCtrl,
-                        decoration: _inputDecoration('Aggiungi note...'),
-                        maxLines: 3,
-                        textCapitalization: TextCapitalization.sentences,
                       ),
                       const SizedBox(height: 24),
 
@@ -1105,22 +1123,13 @@ class _DocumentoFormSheetState extends State<_DocumentoFormSheet> {
                             gradient: AppColors.buttonGradient,
                             borderRadius: BorderRadius.circular(14),
                             boxShadow: [
-                              BoxShadow(
-                                color: AppColors.primary.withValues(alpha: 0.3),
-                                blurRadius: 12,
-                                offset: const Offset(0, 4),
-                              ),
+                              BoxShadow(color: AppColors.primary.withValues(alpha: 0.3), blurRadius: 12, offset: const Offset(0, 4)),
                             ],
                           ),
                           child: Center(
                             child: Text(
-                              _isEditing ? 'SALVA MODIFICHE' : 'SALVA DOCUMENTO',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w800,
-                                letterSpacing: 0.5,
-                              ),
+                              widget.isNew ? 'SALVA DOCUMENTO' : 'SALVA MODIFICHE',
+                              style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w800, letterSpacing: 0.5),
                             ),
                           ),
                         ),
@@ -1132,17 +1141,6 @@ class _DocumentoFormSheetState extends State<_DocumentoFormSheet> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildLabel(String text) {
-    return Text(
-      text,
-      style: const TextStyle(
-        fontSize: 13,
-        fontWeight: FontWeight.w600,
-        color: AppColors.textDark,
       ),
     );
   }
@@ -1158,59 +1156,13 @@ class _DocumentoFormSheetState extends State<_DocumentoFormSheet> {
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide.none,
       ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
-      ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: Color(0xFFC62828), width: 1),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: Color(0xFFC62828), width: 1.5),
-      ),
-    );
-  }
-
-  Widget _buildDateField({
-    required DateTime? value,
-    required String hint,
-    required DateFormat formatter,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        decoration: BoxDecoration(
-          color: AppColors.background,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                value != null ? formatter.format(value) : hint,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: value != null ? AppColors.textDark : AppColors.textLight,
-                ),
-              ),
-            ),
-            Icon(
-              Icons.calendar_today_rounded,
-              size: 16,
-              color: value != null
-                  ? AppColors.primary
-                  : AppColors.textLight,
-            ),
-          ],
-        ),
+        borderSide: const BorderSide(color: Color(0xFFC62828)),
       ),
     );
   }
