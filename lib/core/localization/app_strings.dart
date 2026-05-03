@@ -250,8 +250,8 @@ class AppStrings {
   // ITALIANO (base)
   // ═══════════════════════════════════════════════════════════════════
   static const Map<String, String> _it = {
-    'appName': 'Il Mio Patronato',
-    'appTagline': 'Il Patronato in Tasca',
+    'appName': 'Bonus Italia',
+    'appTagline': 'Bonus, ISEE, NASpI, 730 in tasca',
     'chooseLanguage': 'Scegli la tua lingua',
     'chooseLanguageSubtitle': 'Potrai cambiarla in qualsiasi momento dalle impostazioni',
     'continueBtn': 'Continua',
@@ -261,8 +261,8 @@ class AppStrings {
     'navBonuses': 'Bonus',
     'navAsk': 'Chiedi',
     'navProfile': 'Profilo',
-    'homeHeaderTitle': 'Il Mio Patronato',
-    'homeHeaderSubtitle': 'Il Patronato in Tasca',
+    'homeHeaderTitle': 'Bonus Italia',
+    'homeHeaderSubtitle': 'Bonus, ISEE, NASpI, 730 in tasca',
     'homeDiscoverRights': 'Scopri i tuoi diritti',
     'homeDiscoverRightsSub': 'Carica l\'ISEE e scopri a quali bonus hai diritto',
     'homeGuideTitle': 'Guide e Documenti',
@@ -429,8 +429,8 @@ class AppStrings {
   // ENGLISH
   // ═══════════════════════════════════════════════════════════════════
   static const Map<String, String> _en = {
-    'appName': 'My Patronato',
-    'appTagline': 'Italian Bureaucracy in Your Pocket',
+    'appName': 'Bonus Italia',
+    'appTagline': 'Italian bonuses, ISEE, NASpI, 730',
     'chooseLanguage': 'Choose your language',
     'chooseLanguageSubtitle': 'You can change it anytime in settings',
     'continueBtn': 'Continue',
@@ -440,8 +440,8 @@ class AppStrings {
     'navBonuses': 'Bonuses',
     'navAsk': 'Ask',
     'navProfile': 'Profile',
-    'homeHeaderTitle': 'My Patronato',
-    'homeHeaderSubtitle': 'Italian Bureaucracy in Your Pocket',
+    'homeHeaderTitle': 'Bonus Italia',
+    'homeHeaderSubtitle': 'Italian bonuses, ISEE, NASpI, 730',
     'homeDiscoverRights': 'Discover your rights',
     'homeDiscoverRightsSub': 'Upload your ISEE and find out which bonuses you can claim',
     'homeGuideTitle': 'Guides & Documents',
@@ -608,8 +608,8 @@ class AppStrings {
   // ARABIC (RTL)
   // ═══════════════════════════════════════════════════════════════════
   static const Map<String, String> _ar = {
-    'appName': 'باتروناتو الخاص بي',
-    'appTagline': 'البيروقراطية الإيطالية في جيبك',
+    'appName': 'Bonus Italia',
+    'appTagline': 'البونص الإيطالي، ISEE، NASpI، 730',
     'chooseLanguage': 'اختر لغتك',
     'chooseLanguageSubtitle': 'يمكنك تغييرها في أي وقت من الإعدادات',
     'continueBtn': 'متابعة',
@@ -619,8 +619,8 @@ class AppStrings {
     'navBonuses': 'المكافآت',
     'navAsk': 'اسأل',
     'navProfile': 'الملف',
-    'homeHeaderTitle': 'باتروناتو الخاص بي',
-    'homeHeaderSubtitle': 'البيروقراطية الإيطالية في جيبك',
+    'homeHeaderTitle': 'Bonus Italia',
+    'homeHeaderSubtitle': 'البونص الإيطالي، ISEE، NASpI، 730',
     'homeDiscoverRights': 'اكتشف حقوقك',
     'homeDiscoverRightsSub': 'حمّل ISEE واكتشف المكافآت التي يحق لك الحصول عليها',
     'homeGuideTitle': 'الأدلة والوثائق',
@@ -787,8 +787,8 @@ class AppStrings {
   // URDU (RTL) — Pakistani immigrants
   // ═══════════════════════════════════════════════════════════════════
   static const Map<String, String> _ur = {
-    'appName': 'میرا پیٹروناتو',
-    'appTagline': 'اطالوی بیوروکریسی آپ کی جیب میں',
+    'appName': 'Bonus Italia',
+    'appTagline': 'اطالوی بونس، ISEE، NASpI، 730',
     'chooseLanguage': 'اپنی زبان منتخب کریں',
     'chooseLanguageSubtitle': 'آپ اسے سیٹنگز سے کسی بھی وقت تبدیل کر سکتے ہیں',
     'continueBtn': 'جاری رکھیں',
@@ -798,8 +798,8 @@ class AppStrings {
     'navBonuses': 'بونس',
     'navAsk': 'پوچھیں',
     'navProfile': 'پروفائل',
-    'homeHeaderTitle': 'میرا پیٹروناتو',
-    'homeHeaderSubtitle': 'اطالوی بیوروکریسی آپ کی جیب میں',
+    'homeHeaderTitle': 'Bonus Italia',
+    'homeHeaderSubtitle': 'اطالوی بونس، ISEE، NASpI، 730',
     'homeDiscoverRights': 'اپنے حقوق جانیں',
     'homeDiscoverRightsSub': 'ISEE اپلوڈ کریں اور جانیں کون سے بونس ملیں گے',
     'homeGuideTitle': 'گائیڈ اور دستاویزات',
@@ -966,8 +966,8 @@ class AppStrings {
   // HINDI — Indian immigrants
   // ═══════════════════════════════════════════════════════════════════
   static const Map<String, String> _hi = {
-    'appName': 'मेरा पैट्रोनाटो',
-    'appTagline': 'इतालवी नौकरशाही आपकी जेब में',
+    'appName': 'Bonus Italia',
+    'appTagline': 'इतालवी बोनस, ISEE, NASpI, 730',
     'chooseLanguage': 'अपनी भाषा चुनें',
     'chooseLanguageSubtitle': 'आप इसे सेटिंग्स से कभी भी बदल सकते हैं',
     'continueBtn': 'जारी रखें',
@@ -977,8 +977,8 @@ class AppStrings {
     'navBonuses': 'बोनस',
     'navAsk': 'पूछें',
     'navProfile': 'प्रोफ़ाइल',
-    'homeHeaderTitle': 'मेरा पैट्रोनाटो',
-    'homeHeaderSubtitle': 'इतालवी नौकरशाही आपकी जेब में',
+    'homeHeaderTitle': 'Bonus Italia',
+    'homeHeaderSubtitle': 'इतालवी बोनस, ISEE, NASpI, 730',
     'homeDiscoverRights': 'अपने अधिकार जानें',
     'homeDiscoverRightsSub': 'ISEE अपलोड करें और जानें कौन से बोनस मिल सकते हैं',
     'homeGuideTitle': 'गाइड और दस्तावेज़',
@@ -1145,8 +1145,8 @@ class AppStrings {
   // ROMANIAN
   // ═══════════════════════════════════════════════════════════════════
   static const Map<String, String> _ro = {
-    'appName': 'Patronatul Meu',
-    'appTagline': 'Birocrația italiană în buzunar',
+    'appName': 'Bonus Italia',
+    'appTagline': 'Bonusuri italiene, ISEE, NASpI, 730',
     'chooseLanguage': 'Alege limba ta',
     'chooseLanguageSubtitle': 'O poți schimba oricând din setări',
     'continueBtn': 'Continuă',
@@ -1156,8 +1156,8 @@ class AppStrings {
     'navBonuses': 'Bonusuri',
     'navAsk': 'Întreabă',
     'navProfile': 'Profil',
-    'homeHeaderTitle': 'Patronatul Meu',
-    'homeHeaderSubtitle': 'Birocrația italiană în buzunar',
+    'homeHeaderTitle': 'Bonus Italia',
+    'homeHeaderSubtitle': 'Bonusuri italiene, ISEE, NASpI, 730',
     'homeDiscoverRights': 'Descoperă-ți drepturile',
     'homeDiscoverRightsSub': 'Încarcă ISEE și află la ce bonusuri ai dreptul',
     'homeGuideTitle': 'Ghiduri și documente',
@@ -1324,8 +1324,8 @@ class AppStrings {
   // FRENCH
   // ═══════════════════════════════════════════════════════════════════
   static const Map<String, String> _fr = {
-    'appName': 'Mon Patronato',
-    'appTagline': 'La bureaucratie italienne dans votre poche',
+    'appName': 'Bonus Italia',
+    'appTagline': 'Bonus italiens, ISEE, NASpI, 730',
     'chooseLanguage': 'Choisissez votre langue',
     'chooseLanguageSubtitle': 'Vous pouvez la changer à tout moment dans les paramètres',
     'continueBtn': 'Continuer',
@@ -1335,8 +1335,8 @@ class AppStrings {
     'navBonuses': 'Aides',
     'navAsk': 'Demander',
     'navProfile': 'Profil',
-    'homeHeaderTitle': 'Mon Patronato',
-    'homeHeaderSubtitle': 'La bureaucratie italienne dans votre poche',
+    'homeHeaderTitle': 'Bonus Italia',
+    'homeHeaderSubtitle': 'Bonus italiens, ISEE, NASpI, 730',
     'homeDiscoverRights': 'Découvrez vos droits',
     'homeDiscoverRightsSub': 'Téléversez ISEE et découvrez les aides auxquelles vous avez droit',
     'homeGuideTitle': 'Guides et documents',
@@ -1503,8 +1503,8 @@ class AppStrings {
   // SPANISH
   // ═══════════════════════════════════════════════════════════════════
   static const Map<String, String> _es = {
-    'appName': 'Mi Patronato',
-    'appTagline': 'La burocracia italiana en tu bolsillo',
+    'appName': 'Bonus Italia',
+    'appTagline': 'Bonos italianos, ISEE, NASpI, 730',
     'chooseLanguage': 'Elige tu idioma',
     'chooseLanguageSubtitle': 'Podrás cambiarlo en cualquier momento en ajustes',
     'continueBtn': 'Continuar',
@@ -1514,8 +1514,8 @@ class AppStrings {
     'navBonuses': 'Ayudas',
     'navAsk': 'Preguntar',
     'navProfile': 'Perfil',
-    'homeHeaderTitle': 'Mi Patronato',
-    'homeHeaderSubtitle': 'La burocracia italiana en tu bolsillo',
+    'homeHeaderTitle': 'Bonus Italia',
+    'homeHeaderSubtitle': 'Bonos italianos, ISEE, NASpI, 730',
     'homeDiscoverRights': 'Descubre tus derechos',
     'homeDiscoverRightsSub': 'Sube ISEE y descubre a qué ayudas tienes derecho',
     'homeGuideTitle': 'Guías y documentos',
@@ -1682,8 +1682,8 @@ class AppStrings {
   // ALBANIAN
   // ═══════════════════════════════════════════════════════════════════
   static const Map<String, String> _sq = {
-    'appName': 'Patronatoja Ime',
-    'appTagline': 'Burokracia italiane në xhepin tënd',
+    'appName': 'Bonus Italia',
+    'appTagline': 'Bonuset italiane, ISEE, NASpI, 730',
     'chooseLanguage': 'Zgjidh gjuhën tënde',
     'chooseLanguageSubtitle': 'Mund ta ndryshosh në çdo kohë nga cilësimet',
     'continueBtn': 'Vazhdo',
@@ -1693,8 +1693,8 @@ class AppStrings {
     'navBonuses': 'Bonuset',
     'navAsk': 'Pyet',
     'navProfile': 'Profili',
-    'homeHeaderTitle': 'Patronatoja Ime',
-    'homeHeaderSubtitle': 'Burokracia italiane në xhepin tënd',
+    'homeHeaderTitle': 'Bonus Italia',
+    'homeHeaderSubtitle': 'Bonuset italiane, ISEE, NASpI, 730',
     'homeDiscoverRights': 'Zbulo të drejtat tua',
     'homeDiscoverRightsSub': 'Ngarko ISEE dhe zbulo bonuset që të takojnë',
     'homeGuideTitle': 'Udhëzues dhe dokumente',
@@ -1861,8 +1861,8 @@ class AppStrings {
   // CHINESE (simplified)
   // ═══════════════════════════════════════════════════════════════════
   static const Map<String, String> _zh = {
-    'appName': '我的帮助中心',
-    'appTagline': '意大利官僚体系尽在掌握',
+    'appName': 'Bonus Italia',
+    'appTagline': '意大利福利金, ISEE, NASpI, 730',
     'chooseLanguage': '选择您的语言',
     'chooseLanguageSubtitle': '您可以随时在设置中更改',
     'continueBtn': '继续',
@@ -1872,8 +1872,8 @@ class AppStrings {
     'navBonuses': '福利',
     'navAsk': '询问',
     'navProfile': '个人资料',
-    'homeHeaderTitle': '我的帮助中心',
-    'homeHeaderSubtitle': '意大利官僚体系尽在掌握',
+    'homeHeaderTitle': 'Bonus Italia',
+    'homeHeaderSubtitle': '意大利福利金, ISEE, NASpI, 730',
     'homeDiscoverRights': '了解您的权利',
     'homeDiscoverRightsSub': '上传 ISEE,发现您可以申请的福利',
     'homeGuideTitle': '指南和文档',
@@ -2040,8 +2040,8 @@ class AppStrings {
   // BENGALI
   // ═══════════════════════════════════════════════════════════════════
   static const Map<String, String> _bn = {
-    'appName': 'আমার প্যাট্রোনাটো',
-    'appTagline': 'ইতালীয় আমলাতন্ত্র আপনার পকেটে',
+    'appName': 'Bonus Italia',
+    'appTagline': 'ইতালীয় বোনাস, ISEE, NASpI, 730',
     'chooseLanguage': 'আপনার ভাষা নির্বাচন করুন',
     'chooseLanguageSubtitle': 'আপনি সেটিংস থেকে যেকোনো সময় পরিবর্তন করতে পারেন',
     'continueBtn': 'চালিয়ে যান',
@@ -2051,8 +2051,8 @@ class AppStrings {
     'navBonuses': 'বোনাস',
     'navAsk': 'জিজ্ঞাসা',
     'navProfile': 'প্রোফাইল',
-    'homeHeaderTitle': 'আমার প্যাট্রোনাটো',
-    'homeHeaderSubtitle': 'ইতালীয় আমলাতন্ত্র আপনার পকেটে',
+    'homeHeaderTitle': 'Bonus Italia',
+    'homeHeaderSubtitle': 'ইতালীয় বোনাস, ISEE, NASpI, 730',
     'homeDiscoverRights': 'আপনার অধিকার জানুন',
     'homeDiscoverRightsSub': 'ISEE আপলোড করে জানুন আপনি কোন বোনাস পাবেন',
     'homeGuideTitle': 'গাইড এবং নথি',
@@ -2219,8 +2219,8 @@ class AppStrings {
   // UKRAINIAN
   // ═══════════════════════════════════════════════════════════════════
   static const Map<String, String> _uk = {
-    'appName': 'Мій Патронат',
-    'appTagline': 'Італійська бюрократія у вашій кишені',
+    'appName': 'Bonus Italia',
+    'appTagline': 'Італійські бонуси, ISEE, NASpI, 730',
     'chooseLanguage': 'Виберіть вашу мову',
     'chooseLanguageSubtitle': 'Ви можете змінити її будь-коли в налаштуваннях',
     'continueBtn': 'Продовжити',
@@ -2230,8 +2230,8 @@ class AppStrings {
     'navBonuses': 'Бонуси',
     'navAsk': 'Запитати',
     'navProfile': 'Профіль',
-    'homeHeaderTitle': 'Мій Патронат',
-    'homeHeaderSubtitle': 'Італійська бюрократія у вашій кишені',
+    'homeHeaderTitle': 'Bonus Italia',
+    'homeHeaderSubtitle': 'Італійські бонуси, ISEE, NASpI, 730',
     'homeDiscoverRights': 'Дізнайтеся свої права',
     'homeDiscoverRightsSub': 'Завантажте ISEE і дізнайтеся, які бонуси вам належать',
     'homeGuideTitle': 'Гіди та документи',
@@ -2398,8 +2398,8 @@ class AppStrings {
   // RUSSIAN
   // ═══════════════════════════════════════════════════════════════════
   static const Map<String, String> _ru = {
-    'appName': 'Мой Патронат',
-    'appTagline': 'Итальянская бюрократия в вашем кармане',
+    'appName': 'Bonus Italia',
+    'appTagline': 'Итальянские бонусы, ISEE, NASpI, 730',
     'chooseLanguage': 'Выберите ваш язык',
     'chooseLanguageSubtitle': 'Вы можете изменить его в любое время в настройках',
     'continueBtn': 'Продолжить',
@@ -2409,8 +2409,8 @@ class AppStrings {
     'navBonuses': 'Бонусы',
     'navAsk': 'Спросить',
     'navProfile': 'Профиль',
-    'homeHeaderTitle': 'Мой Патронат',
-    'homeHeaderSubtitle': 'Итальянская бюрократия в вашем кармане',
+    'homeHeaderTitle': 'Bonus Italia',
+    'homeHeaderSubtitle': 'Итальянские бонусы, ISEE, NASpI, 730',
     'homeDiscoverRights': 'Узнайте свои права',
     'homeDiscoverRightsSub': 'Загрузите ISEE и узнайте, на какие бонусы вы имеете право',
     'homeGuideTitle': 'Руководства и документы',
@@ -2577,8 +2577,8 @@ class AppStrings {
   // PUNJABI (Gurmukhi script) — Indian Punjabi immigrants
   // ═══════════════════════════════════════════════════════════════════
   static const Map<String, String> _pa = {
-    'appName': 'ਮੇਰਾ ਪੈਟਰੋਨਾਟੋ',
-    'appTagline': 'ਇਤਾਲਵੀ ਬਿਊਰੋਕ੍ਰੇਸੀ ਤੁਹਾਡੀ ਜੇਬ ਵਿੱਚ',
+    'appName': 'Bonus Italia',
+    'appTagline': 'ਇਤਾਲਵੀ ਬੋਨਸ, ISEE, NASpI, 730',
     'chooseLanguage': 'ਆਪਣੀ ਭਾਸ਼ਾ ਚੁਣੋ',
     'chooseLanguageSubtitle': 'ਤੁਸੀਂ ਇਸਨੂੰ ਸੈਟਿੰਗਾਂ ਤੋਂ ਕਿਸੇ ਵੀ ਸਮੇਂ ਬਦਲ ਸਕਦੇ ਹੋ',
     'continueBtn': 'ਜਾਰੀ ਰੱਖੋ',
@@ -2588,8 +2588,8 @@ class AppStrings {
     'navBonuses': 'ਬੋਨਸ',
     'navAsk': 'ਪੁੱਛੋ',
     'navProfile': 'ਪ੍ਰੋਫਾਈਲ',
-    'homeHeaderTitle': 'ਮੇਰਾ ਪੈਟਰੋਨਾਟੋ',
-    'homeHeaderSubtitle': 'ਇਤਾਲਵੀ ਬਿਊਰੋਕ੍ਰੇਸੀ ਤੁਹਾਡੀ ਜੇਬ ਵਿੱਚ',
+    'homeHeaderTitle': 'Bonus Italia',
+    'homeHeaderSubtitle': 'ਇਤਾਲਵੀ ਬੋਨਸ, ISEE, NASpI, 730',
     'homeDiscoverRights': 'ਆਪਣੇ ਹੱਕ ਜਾਣੋ',
     'homeDiscoverRightsSub': 'ISEE ਅਪਲੋਡ ਕਰੋ ਅਤੇ ਜਾਣੋ ਤੁਸੀਂ ਕਿਹੜੇ ਬੋਨਸ ਲੈ ਸਕਦੇ ਹੋ',
     'homeGuideTitle': 'ਗਾਈਡ ਅਤੇ ਦਸਤਾਵੇਜ਼',

@@ -238,7 +238,7 @@ class ProfiloScreen extends StatelessWidget {
       _SettData(Icons.language, s.settingsLang, '${langService.current.flag} ${langService.current.name}', AppColors.iconBlue),
       _SettData(Icons.dark_mode, s.settingsTheme, s.themeLight, AppColors.textDark),
       _SettData(Icons.notifications, s.settingsNotifs, s.notifsActive, AppColors.iconOrange),
-      _SettData(Icons.info, s.settingsAbout, 'v1.0.0', AppColors.iconGreen),
+      _SettData(Icons.info, s.settingsAbout, 'v1.0.7', AppColors.iconGreen),
       _SettData(Icons.star, s.settingsRate, '', const Color(0xFFFFC107)),
       _SettData(Icons.share, s.settingsShare, '', AppColors.iconPurple),
     ];
