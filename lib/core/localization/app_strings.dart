@@ -18,6 +18,12 @@ class AppStrings {
     return AppStrings.forCode(code);
   }
 
+  /// Use inside event handlers / async callbacks where `context.watch` is forbidden.
+  static AppStrings read(BuildContext context) {
+    final code = Provider.of<LanguageService>(context, listen: false).currentCode;
+    return AppStrings.forCode(code);
+  }
+
   static AppStrings forCode(String code) {
     final map = _allTranslations[code] ?? _allTranslations['it']!;
     return AppStrings._(code, map);

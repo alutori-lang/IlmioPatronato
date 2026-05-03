@@ -152,7 +152,7 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
   Future<void> _startScan(BuildContext context) async {
     final svc = context.read<ScannerService>();
     final messenger = ScaffoldMessenger.of(context);
-    final s = AppStrings.of(context);
+    final s = AppStrings.read(context);
 
     List<String> pages;
     try {
@@ -195,7 +195,7 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
   }
 
   Future<void> _promptRename(ScannedDocument doc) async {
-    final s = AppStrings.of(context);
+    final s = AppStrings.read(context);
     final controller = TextEditingController(text: doc.name);
     final svc = context.read<ScannerService>();
     final newName = await showDialog<String>(
@@ -223,7 +223,7 @@ class _ScannerDocScreenState extends State<ScannerDocScreen> {
   }
 
   Future<void> _confirmDelete(ScannedDocument doc) async {
-    final s = AppStrings.of(context);
+    final s = AppStrings.read(context);
     final svc = context.read<ScannerService>();
     final confirmed = await showDialog<bool>(
       context: context,
