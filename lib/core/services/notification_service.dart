@@ -72,6 +72,27 @@ class NotificationService {
     ));
   }
 
+  /// Whether the OS-level notifications permission is currently granted.
+  Future<bool> isPermissionGranted() async {
+    try {
+      final android = _plugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+      if (android == null) return false;
+      return await android.areNotificationsEnabled() ?? false;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// Returns the list of currently scheduled notifications (e.g. document
+  /// expiry reminders) so the UI can show what's queued.
+  Future<List<PendingNotificationRequest>> getPending() async {
+    try {
+      return await _plugin.pendingNotificationRequests();
+    } catch (_) {
+      return [];
+    }
+  }
+
   Future<bool> requestPermission() async {
     try {
       final android = _plugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();

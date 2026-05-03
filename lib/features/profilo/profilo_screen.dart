@@ -5,6 +5,7 @@ import '../../core/services/language_service.dart';
 import '../../core/localization/app_strings.dart';
 import 'info_app_screen.dart';
 import '../strumenti/documento_wallet_screen.dart';
+import 'notifiche_screen.dart';
 import 'scanner_doc_screen.dart';
 import 'tracker_pratica_screen.dart';
 import 'translator_screen.dart';
@@ -121,7 +122,7 @@ class ProfiloScreen extends StatelessWidget {
       _ToolData(Icons.translate, s.toolTranslator, AppColors.iconGreen, false, 'translator'),
       _ToolData(Icons.track_changes, s.toolTracker, AppColors.iconOrange, false, 'tracker'),
       _ToolData(Icons.account_balance_wallet, s.toolWallet, AppColors.iconGreen, false, 'wallet'),
-      _ToolData(Icons.notifications_active, s.toolNotifications, AppColors.iconOrange, true, 'notif'),
+      _ToolData(Icons.notifications_active, s.toolNotifications, AppColors.iconOrange, false, 'notif'),
     ];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -147,6 +148,10 @@ class ProfiloScreen extends StatelessWidget {
               }
               if (t.id == 'wallet') {
                 Navigator.push(context, MaterialPageRoute(builder: (_) => const DocumentoWalletScreen()));
+                return;
+              }
+              if (t.id == 'notif') {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => const NotificheScreen()));
                 return;
               }
               ScaffoldMessenger.of(context).showSnackBar(
