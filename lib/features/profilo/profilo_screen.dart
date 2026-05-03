@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import '../../config/constants.dart';
 import '../../core/services/language_service.dart';
 import '../../core/localization/app_strings.dart';
+import '../../core/widgets/wallet_summary_card.dart';
 import 'info_app_screen.dart';
-import '../strumenti/documento_wallet_screen.dart';
 import 'scanner_doc_screen.dart';
 import 'tracker_pratica_screen.dart';
 import 'translator_screen.dart';
@@ -21,6 +21,7 @@ class ProfiloScreen extends StatelessWidget {
         SliverToBoxAdapter(child: _buildProfileCard(s)),
         SliverToBoxAdapter(child: _buildStatsRow(s)),
         SliverToBoxAdapter(child: _buildUpgradeBanner(s)),
+        const SliverToBoxAdapter(child: WalletSummaryCard()),
         SliverToBoxAdapter(child: _sectionTitle(s.toolsTitleAlt)),
         SliverToBoxAdapter(child: _buildTools(context, s)),
         SliverToBoxAdapter(child: _sectionTitle(s.settingsSectionTitle)),
@@ -116,11 +117,11 @@ class ProfiloScreen extends StatelessWidget {
   );
 
   Widget _buildTools(BuildContext context, AppStrings s) {
+    // Wallet promosso a card prominente sopra (WalletSummaryCard).
     final tools = [
       _ToolData(Icons.document_scanner, s.toolScanner, AppColors.iconBlue, false, 'scanner'),
       _ToolData(Icons.translate, s.toolTranslator, AppColors.iconGreen, false, 'translator'),
       _ToolData(Icons.track_changes, s.toolTracker, AppColors.iconOrange, false, 'tracker'),
-      _ToolData(Icons.account_balance_wallet, s.toolWallet, AppColors.iconGreen, false, 'wallet'),
       _ToolData(Icons.notifications_active, s.toolNotifications, AppColors.iconOrange, true, 'notif'),
     ];
     return Padding(
@@ -143,10 +144,6 @@ class ProfiloScreen extends StatelessWidget {
               }
               if (t.id == 'tracker') {
                 Navigator.push(context, MaterialPageRoute(builder: (_) => const TrackerPraticaScreen()));
-                return;
-              }
-              if (t.id == 'wallet') {
-                Navigator.push(context, MaterialPageRoute(builder: (_) => const DocumentoWalletScreen()));
                 return;
               }
               ScaffoldMessenger.of(context).showSnackBar(

@@ -90,4 +90,85 @@ class WalletBridge {
     await prefs.setString(_kStorageKey, jsonEncode(items));
     return true;
   }
+
+  /// Human-readable label for a tipoKey (mirrors documento_wallet_screen.dart).
+  static const _typeLabels = {
+    'passaporto': 'Passaporto',
+    'permesso_soggiorno': 'Permesso di Soggiorno',
+    'cie': "Carta d'Identità",
+    'codice_fiscale': 'Codice Fiscale',
+    'tessera_sanitaria': 'Tessera Sanitaria',
+    'patente': 'Patente di Guida',
+  };
+
+  static String labelFor(String tipoKey) =>
+      _typeLabels[tipoKey] ?? tipoKey;
+
+  /// Reads all wallet items and computes a summary used by the Profilo
+  /// card and the Home alert banner.
+  static Future<WalletSummary> getSummary() async {
+    final prefs = await SharedPreferences.getInstance();
+    final raw = prefs.getString(_kStorageKey);
+    if (raw == null || raw.isEmpty) return const WalletSummary.empty();
+
+    List<dynamic> items;
+    try {
+      items = jsonDecode(raw) as List;
+    } catch (_) {
+      return const WalletSummary.empty();
+    }
+
+    final today = DateTime.now();
+    final t0 = DateTime(today.year, today.month, today.day);
+
+    int count = 0;
+    String? nextLabel;
+    int? nextDays;
+
+    for (final raw in items) {
+      if (raw is! Map) continue;
+      count++;
+
+      final scadStr = raw['dataScadenza'] as String?;
+      if (scadStr == null) continue;
+      final scad = DateTime.tryParse(scadStr);
+      if (scad == null) continue;
+
+      final scadDay = DateTime(scad.year, scad.month, scad.day);
+      final days = scadDay.difference(t0).inDays;
+
+      // Track the most-urgent upcoming or recently-expired
+      if (nextDays == null || days < nextDays) {
+        nextDays = days;
+        nextLabel = labelFor((raw['tipoKey'] as String?) ?? '');
+      }
+    }
+
+    return WalletSummary(
+      count: count,
+      nextLabel: nextLabel,
+      nextDays: nextDays,
+    );
+  }
+}
+
+/// Snapshot of the wallet shown in the Profilo card / Home alert.
+class WalletSummary {
+  final int count;
+  final String? nextLabel;
+  final int? nextDays;
+
+  const WalletSummary({
+    required this.count,
+    required this.nextLabel,
+    required this.nextDays,
+  });
+
+  const WalletSummary.empty()
+      : count = 0,
+        nextLabel = null,
+        nextDays = null;
+
+  bool get isEmpty => count == 0;
+  bool get hasUrgent => nextDays != null && nextDays! <= 60;
 }
