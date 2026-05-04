@@ -7,9 +7,13 @@ Versione precedente rifiutata: 1.0.10+12. Versione corretta: **1.0.11+13**.
 
 ## 1) Note di rilascio (max 500 caratteri) — da incollare in "Note di questa versione"
 
+VERSIONE SCELTA (orientata all'utente + revisore):
 ```
-Aggiornata descrizione Play Store per piena conformità alle Norme sulle dichiarazioni ingannevoli. Ogni funzionalità (53 bonus, 18 guide, 14 calcolatori, 6 moduli PDF, strumenti) è ora mappata 1-a-1 alla fonte ufficiale specifica (INPS, Agenzia Entrate, Ministero Interno, Ministero Lavoro, ARERA, MIUR, Ministero Salute, AgID, ACI). Strumenti non governativi etichettati come tali. Disclaimer "NON app governativa, NON Patronato, NON affiliata" rinforzato.
+Migliorata la descrizione dell'app per maggiore chiarezza: ogni funzionalità ora indica la fonte ufficiale di riferimento (INPS, Agenzia Entrate, Ministeri, ARERA, ecc.). Ribadito che Bonus Italia è un'app informativa indipendente e NON è un servizio governativo, Patronato o CAF. Tutti i calcolatori restano stime senza valore legale.
 ```
+
+(Alternativa più tecnica, non scelta:
+"Aggiornata descrizione Play Store per piena conformità alle Norme sulle dichiarazioni ingannevoli. Ogni funzionalità (53 bonus, 18 guide, 14 calcolatori, 6 moduli PDF, strumenti) è ora mappata 1-a-1 alla fonte ufficiale specifica (INPS, Agenzia Entrate, Ministero Interno, Ministero Lavoro, ARERA, MIUR, Ministero Salute, AgID, ACI). Strumenti non governativi etichettati come tali. Disclaimer 'NON app governativa, NON Patronato, NON affiliata' rinforzato.")
 
 ---
 
