@@ -88,6 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
   // ─── GUIDA DOCUMENTI CARD ────────────────────────────────────────────────
   Widget _buildGuideDocumentiCard(BuildContext context) {
     final s = AppStrings.of(context);
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
       child: GestureDetector(
@@ -98,8 +100,8 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Container(
           padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: const Color(0xFFE4E8EF)),
+            color: theme.cardColor,
+            border: Border.all(color: isDark ? Colors.white12 : const Color(0xFFE4E8EF)),
             borderRadius: BorderRadius.circular(20),
             boxShadow: [BoxShadow(color: const Color(0xFF0D2A4A).withValues(alpha: 0.06), blurRadius: 12, offset: const Offset(0, 4))],
           ),
@@ -125,14 +127,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(height: 6),
                   Text(s.homeGuideMainTitle,
-                      style: const TextStyle(color: Color(0xFF0D2A4A), fontSize: 18, fontWeight: FontWeight.w800, height: 1.2)),
+                      style: TextStyle(color: theme.colorScheme.onSurface, fontSize: 18, fontWeight: FontWeight.w800, height: 1.2)),
                   const SizedBox(height: 4),
                   Text(s.homeGuideMainSub,
-                      style: const TextStyle(color: Color(0xFF64748B), fontSize: 12, fontWeight: FontWeight.w500)),
+                      style: TextStyle(color: theme.colorScheme.onSurface.withValues(alpha: 0.65), fontSize: 12, fontWeight: FontWeight.w500)),
                 ],
               ),
             ),
-            const Icon(Icons.chevron_right, color: Color(0xFF1E4A8A), size: 26),
+            Icon(Icons.chevron_right, color: isDark ? Colors.white70 : const Color(0xFF1E4A8A), size: 26),
           ]),
         ),
       ),
@@ -297,23 +299,30 @@ class _HomeScreenState extends State<HomeScreen> {
   // ─── ULTIMO BONUS — LIVE PULSE (news-style professionale) ────────────────
   Widget _buildAgevolazioneDelGiorno(BuildContext context) {
     final s = AppStrings.of(context);
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final cardBg = theme.cardColor;
+    final borderC = isDark ? Colors.white12 : const Color(0xFFE4E8EF);
+    final titleC = theme.colorScheme.onSurface;
+    final subC = theme.colorScheme.onSurface.withValues(alpha: 0.65);
+    final accentC = isDark ? const Color(0xFF60A5FA) : const Color(0xFF1E4A8A);
     if (_loading) {
       return Container(
         margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: const Color(0xFFE4E8EF)),
+          color: cardBg,
+          border: Border.all(color: borderC),
           borderRadius: BorderRadius.circular(14),
           boxShadow: [BoxShadow(color: const Color(0xFF0D2A4A).withValues(alpha: 0.04), blurRadius: 3, offset: const Offset(0, 1))],
         ),
         child: Row(
           children: [
-            Container(width: 3, height: 36, decoration: BoxDecoration(gradient: const LinearGradient(colors: [Color(0xFF1E4A8A), Color(0xFF3B82F6)], begin: Alignment.topCenter, end: Alignment.bottomCenter), borderRadius: BorderRadius.circular(2))),
+            Container(width: 3, height: 36, decoration: BoxDecoration(gradient: LinearGradient(colors: [accentC, const Color(0xFF3B82F6)], begin: Alignment.topCenter, end: Alignment.bottomCenter), borderRadius: BorderRadius.circular(2))),
             const SizedBox(width: 12),
-            const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFF1E4A8A))),
+            SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: accentC)),
             const SizedBox(width: 12),
-            Expanded(child: Text(s.searchingNews, style: const TextStyle(color: Color(0xFF475569), fontSize: 13, fontWeight: FontWeight.w500))),
+            Expanded(child: Text(s.searchingNews, style: TextStyle(color: subC, fontSize: 13, fontWeight: FontWeight.w500))),
           ],
         ),
       );
@@ -335,14 +344,14 @@ class _HomeScreenState extends State<HomeScreen> {
             borderRadius: BorderRadius.circular(14),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: const Color(0xFFE4E8EF)),
+                color: cardBg,
+                border: Border.all(color: borderC),
                 borderRadius: BorderRadius.circular(14),
                 boxShadow: [BoxShadow(color: const Color(0xFF0D2A4A).withValues(alpha: 0.04), blurRadius: 3, offset: const Offset(0, 1))],
               ),
               child: Stack(
                 children: [
-                  Positioned(left: 0, top: 0, bottom: 0, width: 3, child: Container(color: const Color(0xFF1E4A8A))),
+                  Positioned(left: 0, top: 0, bottom: 0, width: 3, child: Container(color: accentC)),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(17, 13, 14, 12),
                     child: Column(
@@ -354,15 +363,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(width: 7),
                           Text(
                             _isRecent48h ? s.newsLast48hLive : s.newsLast48hLive,
-                            style: const TextStyle(color: Color(0xFF1E4A8A), fontSize: 10, fontWeight: FontWeight.w700, letterSpacing: 0.6),
+                            style: TextStyle(color: accentC, fontSize: 10, fontWeight: FontWeight.w700, letterSpacing: 0.6),
                           ),
                         ]),
                         const SizedBox(height: 9),
-                        Text(a.titolo, style: const TextStyle(color: Color(0xFF0D2A4A), fontSize: 15, fontWeight: FontWeight.w700, height: 1.25), maxLines: 2, overflow: TextOverflow.ellipsis),
+                        Text(a.titolo, style: TextStyle(color: titleC, fontSize: 15, fontWeight: FontWeight.w700, height: 1.25), maxLines: 2, overflow: TextOverflow.ellipsis),
                         const SizedBox(height: 3),
-                        Text(a.importo.isNotEmpty ? a.importo : a.tempoRelativo, style: const TextStyle(color: Color(0xFF475569), fontSize: 12, fontWeight: FontWeight.w500)),
+                        Text(a.importo.isNotEmpty ? a.importo : a.tempoRelativo, style: TextStyle(color: subC, fontSize: 12, fontWeight: FontWeight.w500)),
                         const SizedBox(height: 10),
-                        Container(height: 1, color: const Color(0xFFF1F3F7)),
+                        Container(height: 1, color: borderC),
                         const SizedBox(height: 9),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -370,15 +379,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             Expanded(
                               child: Text(
                                 a.fonte.isNotEmpty ? 'Fonte: ${a.fonte}' : 'Fonte ufficiale',
-                                style: const TextStyle(color: Color(0xFF64748B), fontSize: 11, fontWeight: FontWeight.w500),
+                                style: TextStyle(color: subC, fontSize: 11, fontWeight: FontWeight.w500),
                                 maxLines: 1, overflow: TextOverflow.ellipsis,
                               ),
                             ),
                             const SizedBox(width: 8),
                             Row(mainAxisSize: MainAxisSize.min, children: [
-                              Text(s.readBtn, style: const TextStyle(color: Color(0xFF1E4A8A), fontSize: 12, fontWeight: FontWeight.w600)),
+                              Text(s.readBtn, style: TextStyle(color: accentC, fontSize: 12, fontWeight: FontWeight.w600)),
                               const SizedBox(width: 3),
-                              const Icon(Icons.arrow_forward, color: Color(0xFF1E4A8A), size: 14),
+                              Icon(Icons.arrow_forward, color: accentC, size: 14),
                             ]),
                           ],
                         ),
@@ -413,7 +422,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Text(s.yourServices, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Color(0xFF0D2A4A))),
           ),
           const SizedBox(height: 4),
-          Text(s.yourServicesSub, style: TextStyle(fontSize: 12, color: Colors.grey.shade500)),
+          Text(s.yourServicesSub, style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.55))),
           const SizedBox(height: 14),
 
           // ── ROW 1 ──
@@ -544,16 +553,23 @@ class _WowCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accent = glowColor;
-    final accentSoft = Color.alphaBlend(accent.withValues(alpha: 0.10), Colors.white);
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final accentSoft = Color.alphaBlend(accent.withValues(alpha: 0.10), theme.cardColor);
+    final titleC = theme.colorScheme.onSurface;
+    final subC = theme.colorScheme.onSurface.withValues(alpha: 0.55);
+    final itemC = theme.colorScheme.onSurface.withValues(alpha: 0.85);
+    final dividerC = isDark ? Colors.white12 : const Color(0xFFF1F3F5);
+    final borderC = isDark ? Colors.white12 : const Color(0xFFECEFF3);
 
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: theme.cardColor,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: const Color(0xFFECEFF3), width: 1),
+          border: Border.all(color: borderC, width: 1),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.04),
@@ -602,8 +618,8 @@ class _WowCard extends StatelessWidget {
             // Title
             Text(
               title,
-              style: const TextStyle(
-                color: Color(0xFF1A1A1A),
+              style: TextStyle(
+                color: titleC,
                 fontSize: 15,
                 fontWeight: FontWeight.w800,
                 height: 1.15,
@@ -617,8 +633,8 @@ class _WowCard extends StatelessWidget {
             // Subtitle
             Text(
               subtitle,
-              style: const TextStyle(
-                color: Color(0xFF8A92A3),
+              style: TextStyle(
+                color: subC,
                 fontSize: 10.5,
                 fontWeight: FontWeight.w500,
               ),
@@ -628,7 +644,7 @@ class _WowCard extends StatelessWidget {
             const SizedBox(height: 12),
 
             // Divider
-            Container(height: 1, color: const Color(0xFFF1F3F5)),
+            Container(height: 1, color: dividerC),
             const SizedBox(height: 10),
 
             // Items with check icons
@@ -641,8 +657,8 @@ class _WowCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       item,
-                      style: const TextStyle(
-                        color: Color(0xFF2C3340),
+                      style: TextStyle(
+                        color: itemC,
                         fontSize: 11,
                         fontWeight: FontWeight.w500,
                       ),
@@ -758,23 +774,28 @@ class _DisclaimerBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final s = AppStrings.of(context);
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final bg = isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey.shade100;
+    final border = isDark ? Colors.white24 : Colors.grey.shade300;
+    final textC = theme.colorScheme.onSurface.withValues(alpha: 0.6);
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 8, 16, 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
+        color: bg,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(color: border),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.info_outline, size: 15, color: Colors.grey),
+          Icon(Icons.info_outline, size: 15, color: textC),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               s.disclaimer,
-              style: const TextStyle(fontSize: 10, color: Colors.grey, height: 1.5),
+              style: TextStyle(fontSize: 10, color: textC, height: 1.5),
             ),
           ),
         ],

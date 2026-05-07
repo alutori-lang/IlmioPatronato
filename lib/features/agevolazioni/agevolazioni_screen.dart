@@ -155,7 +155,6 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
       bottomNavigationBar: const BannerAdWidget(),
       body: SafeArea(
         top: false,
@@ -198,7 +197,7 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
                           : _selectedCategoria.isNotEmpty
                               ? _selectedCategoria
                               : 'Tutte le Agevolazioni (${_risultati.length})',
-                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textDark),
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -254,20 +253,27 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
   Widget _buildAiNuoveSection() {
     final label = _aiIsRecent ? 'ULTIME 48H · INFO LIVE' : 'ULTIMO BONUS ATTIVO';
 
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final cardBg = theme.cardColor;
+    final borderC = isDark ? Colors.white12 : const Color(0xFFE4E8EF);
+    final titleC = theme.colorScheme.onSurface;
+    final subC = theme.colorScheme.onSurface.withValues(alpha: 0.65);
+    final accentC = isDark ? const Color(0xFF60A5FA) : const Color(0xFF1E4A8A);
     if (_aiLoading) {
       return Padding(
         padding: const EdgeInsets.fromLTRB(16, 14, 16, 4),
         child: Container(
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: const Color(0xFFE4E8EF)),
+            color: cardBg,
+            border: Border.all(color: borderC),
             borderRadius: BorderRadius.circular(14),
           ),
           child: Row(children: [
-            const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFF1E4A8A))),
+            SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: accentC)),
             const SizedBox(width: 12),
-            Expanded(child: Text(AppStrings.of(context).searchingNews, style: const TextStyle(color: Color(0xFF475569), fontSize: 13, fontWeight: FontWeight.w500))),
+            Expanded(child: Text(AppStrings.of(context).searchingNews, style: TextStyle(color: subC, fontSize: 13, fontWeight: FontWeight.w500))),
           ]),
         ),
       );
@@ -292,14 +298,14 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
                 borderRadius: BorderRadius.circular(14),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: const Color(0xFFE4E8EF)),
+                    color: cardBg,
+                    border: Border.all(color: borderC),
                     borderRadius: BorderRadius.circular(14),
                     boxShadow: [BoxShadow(color: const Color(0xFF0D2A4A).withValues(alpha: 0.04), blurRadius: 3, offset: const Offset(0, 1))],
                   ),
                   child: Stack(
                     children: [
-                      Positioned(left: 0, top: 0, bottom: 0, width: 3, child: Container(color: const Color(0xFF1E4A8A))),
+                      Positioned(left: 0, top: 0, bottom: 0, width: 3, child: Container(color: accentC)),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(17, 13, 14, 12),
                         child: Column(
@@ -309,12 +315,12 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
                             Row(children: [
                               _LivePulseBadge(animated: _aiIsRecent),
                               const SizedBox(width: 7),
-                              Text(label, style: const TextStyle(color: Color(0xFF1E4A8A), fontSize: 10, fontWeight: FontWeight.w700, letterSpacing: 0.6)),
+                              Text(label, style: TextStyle(color: accentC, fontSize: 10, fontWeight: FontWeight.w700, letterSpacing: 0.6)),
                             ]),
                             const SizedBox(height: 9),
-                            Text(a.titolo, style: const TextStyle(color: Color(0xFF0D2A4A), fontSize: 15, fontWeight: FontWeight.w700, height: 1.25), maxLines: 2, overflow: TextOverflow.ellipsis),
+                            Text(a.titolo, style: TextStyle(color: titleC, fontSize: 15, fontWeight: FontWeight.w700, height: 1.25), maxLines: 2, overflow: TextOverflow.ellipsis),
                             const SizedBox(height: 4),
-                            Text(a.descrizione, style: const TextStyle(color: Color(0xFF475569), fontSize: 12, height: 1.35), maxLines: 2, overflow: TextOverflow.ellipsis),
+                            Text(a.descrizione, style: TextStyle(color: subC, fontSize: 12, height: 1.35), maxLines: 2, overflow: TextOverflow.ellipsis),
                             if (a.importo.isNotEmpty) ...[
                               const SizedBox(height: 7),
                               Container(
@@ -324,7 +330,7 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
                               ),
                             ],
                             const SizedBox(height: 10),
-                            Container(height: 1, color: const Color(0xFFF1F3F7)),
+                            Container(height: 1, color: borderC),
                             const SizedBox(height: 9),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -332,15 +338,15 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
                                 Expanded(
                                   child: Text(
                                     a.fonte.isNotEmpty ? 'Fonte: ${a.fonte}' : 'Fonte ufficiale',
-                                    style: const TextStyle(color: Color(0xFF64748B), fontSize: 11, fontWeight: FontWeight.w500),
+                                    style: TextStyle(color: subC, fontSize: 11, fontWeight: FontWeight.w500),
                                     maxLines: 1, overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                                 const SizedBox(width: 8),
-                                const Row(mainAxisSize: MainAxisSize.min, children: [
-                                  Text('Leggi', style: TextStyle(color: Color(0xFF1E4A8A), fontSize: 12, fontWeight: FontWeight.w600)),
-                                  SizedBox(width: 3),
-                                  Icon(Icons.arrow_forward, color: Color(0xFF1E4A8A), size: 14),
+                                Row(mainAxisSize: MainAxisSize.min, children: [
+                                  Text('Leggi', style: TextStyle(color: accentC, fontSize: 12, fontWeight: FontWeight.w600)),
+                                  const SizedBox(width: 3),
+                                  Icon(Icons.arrow_forward, color: accentC, size: 14),
                                 ]),
                               ],
                             ),
@@ -419,10 +425,11 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
   }
 
   Widget _buildSearchBar() {
+    final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 14, 16, 0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.08), blurRadius: 20, offset: const Offset(0, 4))],
         border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
@@ -430,13 +437,14 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
       child: TextField(
         controller: _searchController,
         onChanged: _onSearch,
+        style: TextStyle(color: theme.colorScheme.onSurface),
         decoration: InputDecoration(
           hintText: 'Cerca agevolazione... (es. affitto, figli, lavoro)',
-          hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
+          hintStyle: TextStyle(color: theme.colorScheme.onSurface.withValues(alpha: 0.4), fontSize: 14),
           prefixIcon: const Icon(Icons.search, color: AppColors.primary),
           suffixIcon: _searchController.text.isNotEmpty
               ? IconButton(
-                  icon: const Icon(Icons.close, size: 20),
+                  icon: Icon(Icons.close, size: 20, color: theme.colorScheme.onSurface),
                   onPressed: () {
                     _searchController.clear();
                     _onSearch('');
@@ -512,6 +520,8 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
   }
 
   Widget _buildCategorie() {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     return SizedBox(
       height: 56,
       child: ListView.builder(
@@ -531,9 +541,9 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
                 duration: const Duration(milliseconds: 200),
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                 decoration: BoxDecoration(
-                  color: isSelected ? color : Colors.white,
+                  color: isSelected ? color : theme.cardColor,
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: isSelected ? color : Colors.grey.shade300),
+                  border: Border.all(color: isSelected ? color : (isDark ? Colors.white24 : Colors.grey.shade300)),
                   boxShadow: isSelected
                       ? [BoxShadow(color: color.withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 2))]
                       : null,
@@ -548,7 +558,7 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
-                        color: isSelected ? Colors.white : AppColors.textDark,
+                        color: isSelected ? Colors.white : theme.colorScheme.onSurface,
                       ),
                     ),
                   ],
@@ -562,21 +572,24 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
   }
 
   Widget _buildEmptyState() {
+    final theme = Theme.of(context);
+    final mute = theme.colorScheme.onSurface.withValues(alpha: 0.3);
+    final sub = theme.colorScheme.onSurface.withValues(alpha: 0.6);
     return Container(
       margin: const EdgeInsets.all(40),
       child: Column(
         children: [
-          Icon(Icons.search_off, size: 64, color: Colors.grey.shade300),
+          Icon(Icons.search_off, size: 64, color: mute),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             'Nessuna agevolazione trovata',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.textDark),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: theme.colorScheme.onSurface),
           ),
           const SizedBox(height: 8),
           Text(
             'Al momento non esistono agevolazioni per questa ricerca.\nProva con parole diverse.',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 13, color: Colors.grey.shade500),
+            style: TextStyle(fontSize: 13, color: sub),
           ),
         ],
       ),
@@ -602,12 +615,13 @@ class _AgevolazioneCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: theme.cardColor,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 16, offset: const Offset(0, 3))],
           border: isNew
@@ -634,7 +648,7 @@ class _AgevolazioneCard extends StatelessWidget {
                       Flexible(
                         child: Text(
                           agevolazione.titolo,
-                          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark),
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: theme.colorScheme.onSurface),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -657,7 +671,7 @@ class _AgevolazioneCard extends StatelessWidget {
                     width: double.infinity,
                     child: Text(
                       agevolazione.descrizione,
-                      style: const TextStyle(fontSize: 11, color: AppColors.textMedium),
+                      style: TextStyle(fontSize: 11, color: theme.colorScheme.onSurface.withValues(alpha: 0.6)),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),

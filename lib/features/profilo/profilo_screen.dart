@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../config/constants.dart';
 import '../../core/services/language_service.dart';
+import '../../core/services/theme_service.dart';
 import '../../core/localization/app_strings.dart';
 import 'info_app_screen.dart';
 import '../strumenti/documento_wallet_screen.dart';
@@ -22,9 +25,9 @@ class ProfiloScreen extends StatelessWidget {
         SliverToBoxAdapter(child: _buildProfileCard(s)),
         SliverToBoxAdapter(child: _buildStatsRow(s)),
         SliverToBoxAdapter(child: _buildUpgradeBanner(s)),
-        SliverToBoxAdapter(child: _sectionTitle(s.toolsTitleAlt)),
+        SliverToBoxAdapter(child: _sectionTitle(context, s.toolsTitleAlt)),
         SliverToBoxAdapter(child: _buildTools(context, s)),
-        SliverToBoxAdapter(child: _sectionTitle(s.settingsSectionTitle)),
+        SliverToBoxAdapter(child: _sectionTitle(context, s.settingsSectionTitle)),
         SliverToBoxAdapter(child: _buildSettings(context, s)),
         const SliverToBoxAdapter(child: SizedBox(height: 40)),
       ],
@@ -111,9 +114,9 @@ class ProfiloScreen extends StatelessWidget {
     );
   }
 
-  Widget _sectionTitle(String t) => Padding(
+  Widget _sectionTitle(BuildContext context, String t) => Padding(
     padding: const EdgeInsets.fromLTRB(20, 4, 20, 12),
-    child: Text(t, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+    child: Text(t, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface)),
   );
 
   Widget _buildTools(BuildContext context, AppStrings s) {
@@ -159,7 +162,7 @@ class ProfiloScreen extends StatelessWidget {
               );
             },
             child: Container(
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14),
+              decoration: BoxDecoration(color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(14),
                 boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 10)]),
               child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Stack(clipBehavior: Clip.none, children: [
@@ -175,7 +178,7 @@ class ProfiloScreen extends StatelessWidget {
                   )),
                 ]),
                 const SizedBox(height: 8),
-                Text(t.label, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.textDark), textAlign: TextAlign.center),
+                Text(t.label, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface), textAlign: TextAlign.center),
               ]),
             ),
           );
@@ -234,13 +237,86 @@ class ProfiloScreen extends StatelessWidget {
     );
   }
 
+  void _showThemePicker(BuildContext context) {
+    final themeSvc = context.read<ThemeService>();
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      builder: (ctx) {
+        final txt = Theme.of(ctx).textTheme.bodyMedium?.color ?? AppColors.textDark;
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 12),
+              Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.shade400, borderRadius: BorderRadius.circular(2))),
+              const SizedBox(height: 16),
+              Text('Tema / Theme', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: txt)),
+              const SizedBox(height: 12),
+              ListTile(
+                leading: const Icon(Icons.light_mode, color: Color(0xFFFFC107)),
+                title: Text('Chiaro / Light', style: TextStyle(color: txt, fontWeight: themeSvc.mode == ThemeMode.light ? FontWeight.w800 : FontWeight.w500)),
+                trailing: themeSvc.mode == ThemeMode.light ? const Icon(Icons.check_circle, color: AppColors.primary) : null,
+                onTap: () {
+                  themeSvc.setMode(ThemeMode.light);
+                  Navigator.pop(ctx);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.dark_mode, color: Color(0xFF455A64)),
+                title: Text('Scuro / Dark', style: TextStyle(color: txt, fontWeight: themeSvc.mode == ThemeMode.dark ? FontWeight.w800 : FontWeight.w500)),
+                trailing: themeSvc.mode == ThemeMode.dark ? const Icon(Icons.check_circle, color: AppColors.primary) : null,
+                onTap: () {
+                  themeSvc.setMode(ThemeMode.dark);
+                  Navigator.pop(ctx);
+                },
+              ),
+              const SizedBox(height: 8),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _rateApp(BuildContext context) async {
+    const pkg = 'com.docflow.docflow_immigrati';
+    final marketUri = Uri.parse('market://details?id=$pkg');
+    final webUri = Uri.parse('https://play.google.com/store/apps/details?id=$pkg');
+    try {
+      if (await canLaunchUrl(marketUri)) {
+        await launchUrl(marketUri, mode: LaunchMode.externalApplication);
+      } else {
+        await launchUrl(webUri, mode: LaunchMode.externalApplication);
+      }
+    } catch (_) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Impossibile aprire Play Store')),
+        );
+      }
+    }
+  }
+
+  Future<void> _shareApp(BuildContext context) async {
+    const pkg = 'com.docflow.docflow_immigrati';
+    final url = 'https://play.google.com/store/apps/details?id=$pkg';
+    final text = 'Scarica IlmioPatronato — Bonus, ISEE, NASpI, permessi e guide per immigrati.\n\n$url';
+    final box = context.findRenderObject() as RenderBox?;
+    await Share.share(
+      text,
+      sharePositionOrigin: box != null ? box.localToGlobal(Offset.zero) & box.size : null,
+    );
+  }
+
   Widget _buildSettings(BuildContext context, AppStrings s) {
     final langService = context.watch<LanguageService>();
+    final themeService = context.watch<ThemeService>();
     final items = [
       _SettData(Icons.language, s.settingsLang, '${langService.current.flag} ${langService.current.name}', AppColors.iconBlue),
-      _SettData(Icons.dark_mode, s.settingsTheme, s.themeLight, AppColors.textDark),
+      _SettData(themeService.isDark ? Icons.dark_mode : Icons.light_mode, s.settingsTheme, themeService.isDark ? 'Dark' : 'Light', AppColors.textDark),
       _SettData(Icons.notifications, s.settingsNotifs, s.notifsActive, AppColors.iconOrange),
-      _SettData(Icons.info, s.settingsAbout, 'v1.0.7', AppColors.iconGreen),
+      _SettData(Icons.info, s.settingsAbout, 'v1.0.11', AppColors.iconGreen),
       _SettData(Icons.star, s.settingsRate, '', const Color(0xFFFFC107)),
       _SettData(Icons.share, s.settingsShare, '', AppColors.iconPurple),
     ];
@@ -250,15 +326,29 @@ class ProfiloScreen extends StatelessWidget {
         final i = entry.key;
         final item = entry.value;
         return GestureDetector(
-          onTap: i == 0
-              ? () => _showLanguagePicker(context)
-              : i == 3
-                  ? () => Navigator.push(context, MaterialPageRoute(builder: (_) => const InfoAppScreen()))
-                  : null,
+          onTap: () {
+            switch (i) {
+              case 0:
+                _showLanguagePicker(context);
+                break;
+              case 1:
+                _showThemePicker(context);
+                break;
+              case 3:
+                Navigator.push(context, MaterialPageRoute(builder: (_) => const InfoAppScreen()));
+                break;
+              case 4:
+                _rateApp(context);
+                break;
+              case 5:
+                _shareApp(context);
+                break;
+            }
+          },
           child: Container(
             margin: const EdgeInsets.only(bottom: 8),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14),
+            decoration: BoxDecoration(color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(14),
               boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 10)]),
             child: Row(children: [
               Container(
@@ -267,11 +357,11 @@ class ProfiloScreen extends StatelessWidget {
                 child: Icon(item.icon, color: item.color, size: 18),
               ),
               const SizedBox(width: 12),
-              Text(item.label, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textDark)),
+              Text(item.label, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface)),
               const Spacer(),
-              if (item.value.isNotEmpty) Text(item.value, style: const TextStyle(fontSize: 13, color: AppColors.textLight)),
+              if (item.value.isNotEmpty) Text(item.value, style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6))),
               const SizedBox(width: 6),
-              const Icon(Icons.chevron_right, color: AppColors.navInactive, size: 20),
+              Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4), size: 20),
             ]),
           ),
         );
@@ -303,15 +393,16 @@ class _StatCard extends StatelessWidget {
   const _StatCard({required this.icon, required this.label, required this.value, required this.color});
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14),
+      decoration: BoxDecoration(color: theme.cardColor, borderRadius: BorderRadius.circular(14),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10)]),
       child: Column(children: [
         Icon(icon, color: color, size: 22),
         const SizedBox(height: 4),
         Text(value, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: color)),
-        Text(label, style: const TextStyle(fontSize: 9, color: AppColors.textLight), textAlign: TextAlign.center),
+        Text(label, style: TextStyle(fontSize: 9, color: theme.colorScheme.onSurface.withValues(alpha: 0.6)), textAlign: TextAlign.center),
       ]),
     );
   }

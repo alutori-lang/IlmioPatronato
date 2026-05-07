@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'core/theme/app_theme.dart';
 import 'core/services/language_service.dart';
+import 'core/services/theme_service.dart';
 import 'core/services/profilo_utente_service.dart';
 import 'core/services/scanner_service.dart';
 import 'core/services/pratica_service.dart';
@@ -25,18 +26,21 @@ class MioPatronatoApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => LanguageService()),
+        ChangeNotifierProvider(create: (_) => ThemeService()),
         ChangeNotifierProvider(create: (_) => ProfiloUtenteService()..load()),
         ChangeNotifierProvider(create: (_) => ScannerService()..load()),
         ChangeNotifierProvider(create: (_) => PraticaService()..load()),
       ],
-      child: Consumer<LanguageService>(
-        builder: (context, lang, _) {
+      child: Consumer2<LanguageService, ThemeService>(
+        builder: (context, lang, themeSvc, _) {
           final code = lang.currentCode;
           final isRtl = code == 'ar' || code == 'ur';
           return MaterialApp(
             title: 'Bonus Italia — ISEE NASpI 730',
             debugShowCheckedModeBanner: false,
-            theme: AppTheme.theme,
+            theme: AppTheme.light,
+            darkTheme: AppTheme.dark,
+            themeMode: themeSvc.mode,
             localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
@@ -168,7 +172,6 @@ class _MainShellState extends State<MainShell> {
         }
       },
       child: Scaffold(
-      backgroundColor: AppColors.background,
       body: IndexedStack(
         index: _currentIndex,
         children: [
