@@ -63,7 +63,7 @@ class GuidaCategoriaScreen extends StatelessWidget {
               icon: const Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () => Navigator.pop(context),
             ),
-            Text(cat.emoji, style: const TextStyle(fontSize: 26)),
+            Icon(cat.icon, color: Colors.white, size: 26),
             const SizedBox(width: 10),
             Expanded(
               child: Text(GuideI18n.catTitle(context, cat.id),
@@ -112,7 +112,7 @@ class _SchedaCard extends StatelessWidget {
                   color: color.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Center(child: Text(scheda.emoji, style: const TextStyle(fontSize: 22))),
+                child: Center(child: Icon(scheda.icon, color: color, size: 24)),
               ),
               const SizedBox(width: 12),
               Expanded(

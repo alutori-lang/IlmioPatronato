@@ -1,18 +1,22 @@
 // Catalogo schede "Guida Documenti" per immigrati in Italia.
-// Solo metadati statici (titolo, categoria, ente, link, emoji).
+// Solo metadati statici (titolo, categoria, ente, link, icona).
 // Il contenuto dettagliato (cos'è, requisiti, documenti, procedura, costi,
 // tempi, avvertenze, FAQ) viene generato on-demand da Gemini e cachato per
 // lingua (vedi GuideAiService).
+
+import 'package:flutter/material.dart';
 
 class GuidaCategoria {
   final String id;
   final String titolo;
   final String emoji;
+  final IconData icon;
   final int color;
   const GuidaCategoria({
     required this.id,
     required this.titolo,
     required this.emoji,
+    required this.icon,
     required this.color,
   });
 }
@@ -25,6 +29,7 @@ class GuidaScheda {
   final String ente;
   final String linkUfficiale;
   final String emoji;
+  final IconData icon;
   const GuidaScheda({
     required this.id,
     required this.categoriaId,
@@ -33,21 +38,22 @@ class GuidaScheda {
     required this.ente,
     required this.linkUfficiale,
     required this.emoji,
+    required this.icon,
   });
 }
 
 const guideCategorie = <GuidaCategoria>[
-  GuidaCategoria(id: 'arrivo',       titolo: 'Appena arrivato',        emoji: '🛬', color: 0xFF1565C0),
-  GuidaCategoria(id: 'permesso',     titolo: 'Permesso di soggiorno',  emoji: '🪪', color: 0xFF2E7D32),
-  GuidaCategoria(id: 'asilo',        titolo: 'Asilo e protezione',     emoji: '🏛️', color: 0xFF6A1B9A),
-  GuidaCategoria(id: 'residenza',    titolo: 'Residenza & Anagrafe',   emoji: '🏠', color: 0xFFE65100),
-  GuidaCategoria(id: 'fiscale',      titolo: 'Codice fiscale & TS',    emoji: '🔢', color: 0xFFC62828),
-  GuidaCategoria(id: 'lavoro',       titolo: 'Lavoro',                 emoji: '💼', color: 0xFF0D47A1),
-  GuidaCategoria(id: 'famiglia',     titolo: 'Famiglia',               emoji: '👨‍👩‍👦', color: 0xFFD81B60),
-  GuidaCategoria(id: 'studio',       titolo: 'Studio',                 emoji: '📚', color: 0xFF4527A0),
-  GuidaCategoria(id: 'patente',      titolo: 'Patente',                emoji: '🚗', color: 0xFF00838F),
-  GuidaCategoria(id: 'cittadinanza', titolo: 'Cittadinanza',           emoji: '🇮🇹', color: 0xFF2E7D32),
-  GuidaCategoria(id: 'diritti',      titolo: 'Diritti & ricorsi',      emoji: '🛡️', color: 0xFF37474F),
+  GuidaCategoria(id: 'arrivo',       titolo: 'Appena arrivato',        emoji: '🛬', icon: Icons.flight_land,          color: 0xFF1565C0),
+  GuidaCategoria(id: 'permesso',     titolo: 'Permesso di soggiorno',  emoji: '🪪', icon: Icons.contact_page,         color: 0xFF2E7D32),
+  GuidaCategoria(id: 'asilo',        titolo: 'Asilo e protezione',     emoji: '🏛️', icon: Icons.account_balance,      color: 0xFF6A1B9A),
+  GuidaCategoria(id: 'residenza',    titolo: 'Residenza & Anagrafe',   emoji: '🏠', icon: Icons.home_work,            color: 0xFFE65100),
+  GuidaCategoria(id: 'fiscale',      titolo: 'Codice fiscale & TS',    emoji: '🔢', icon: Icons.credit_card,          color: 0xFFC62828),
+  GuidaCategoria(id: 'lavoro',       titolo: 'Lavoro',                 emoji: '💼', icon: Icons.work,                 color: 0xFF0D47A1),
+  GuidaCategoria(id: 'famiglia',     titolo: 'Famiglia',               emoji: '👨‍👩‍👦', icon: Icons.family_restroom,      color: 0xFFD81B60),
+  GuidaCategoria(id: 'studio',       titolo: 'Studio',                 emoji: '📚', icon: Icons.school,               color: 0xFF4527A0),
+  GuidaCategoria(id: 'patente',      titolo: 'Patente',                emoji: '🚗', icon: Icons.directions_car_filled, color: 0xFF00838F),
+  GuidaCategoria(id: 'cittadinanza', titolo: 'Cittadinanza',           emoji: '🇮🇹', icon: Icons.flag,                 color: 0xFF2E7D32),
+  GuidaCategoria(id: 'diritti',      titolo: 'Diritti & ricorsi',      emoji: '🛡️', icon: Icons.gavel,                color: 0xFF37474F),
 ];
 
 const guideSchede = <GuidaScheda>[
@@ -60,6 +66,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Consolato italiano',
     linkUfficiale: 'https://vistoperitalia.esteri.it/',
     emoji: '🛂',
+    icon: Icons.airplane_ticket,
   ),
   GuidaScheda(
     id: 'dichiarazione_presenza',
@@ -69,6 +76,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Questura / Polizia di frontiera',
     linkUfficiale: 'https://www.poliziadistato.it/articolo/1088',
     emoji: '⏱️',
+    icon: Icons.timer_outlined,
   ),
   GuidaScheda(
     id: 'primi_passi',
@@ -78,6 +86,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Vari',
     linkUfficiale: 'https://www.integrazionemigranti.gov.it/',
     emoji: '✅',
+    icon: Icons.checklist_rounded,
   ),
 
   // ─── Permesso di soggiorno ───
@@ -89,6 +98,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Questura',
     linkUfficiale: 'https://www.portaleimmigrazione.it/',
     emoji: '📝',
+    icon: Icons.edit_document,
   ),
   GuidaScheda(
     id: 'permesso_rinnovo',
@@ -98,6 +108,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Questura',
     linkUfficiale: 'https://www.poliziadistato.it/articolo/213',
     emoji: '🔄',
+    icon: Icons.autorenew,
   ),
   GuidaScheda(
     id: 'permesso_conversione',
@@ -107,6 +118,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Questura / SUI',
     linkUfficiale: 'https://nullaostalavoro.dlci.interno.it/',
     emoji: '🔀',
+    icon: Icons.swap_horiz,
   ),
   GuidaScheda(
     id: 'permesso_ue',
@@ -116,6 +128,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Questura',
     linkUfficiale: 'https://www.poliziadistato.it/articolo/1051',
     emoji: '🇪🇺',
+    icon: Icons.public,
   ),
 
   // ─── Asilo e protezione ───
@@ -127,6 +140,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Questura / Commissione Territoriale',
     linkUfficiale: 'https://www.interno.gov.it/it/temi/immigrazione-e-asilo/protezione-internazionale',
     emoji: '🕊️',
+    icon: Icons.support,
   ),
   GuidaScheda(
     id: 'rifugiato',
@@ -136,6 +150,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Commissione Territoriale',
     linkUfficiale: 'https://www.unhcr.org/it/',
     emoji: '🛡️',
+    icon: Icons.shield_outlined,
   ),
   GuidaScheda(
     id: 'protezione_sussidiaria',
@@ -145,6 +160,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Commissione Territoriale',
     linkUfficiale: 'https://www.interno.gov.it/it/temi/immigrazione-e-asilo/protezione-internazionale',
     emoji: '🛟',
+    icon: Icons.health_and_safety,
   ),
   GuidaScheda(
     id: 'protezione_speciale',
@@ -154,6 +170,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Questura',
     linkUfficiale: 'https://www.poliziadistato.it/articolo/2371',
     emoji: '❤️‍🩹',
+    icon: Icons.healing,
   ),
 
   // ─── Residenza & Anagrafe ───
@@ -165,6 +182,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Comune',
     linkUfficiale: 'https://www.anagrafenazionale.interno.gov.it/',
     emoji: '🏠',
+    icon: Icons.home,
   ),
   GuidaScheda(
     id: 'cambio_residenza',
@@ -174,6 +192,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Comune',
     linkUfficiale: 'https://www.anagrafenazionale.interno.gov.it/',
     emoji: '🚚',
+    icon: Icons.local_shipping,
   ),
   GuidaScheda(
     id: 'cie_straniero',
@@ -183,6 +202,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Comune',
     linkUfficiale: 'https://www.cartaidentita.interno.gov.it/',
     emoji: '🪪',
+    icon: Icons.badge,
   ),
   GuidaScheda(
     id: 'stato_famiglia',
@@ -192,6 +212,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Comune',
     linkUfficiale: 'https://www.anagrafenazionale.interno.gov.it/',
     emoji: '👪',
+    icon: Icons.people_alt,
   ),
 
   // ─── Codice fiscale & Tessera sanitaria ───
@@ -203,6 +224,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Agenzia delle Entrate',
     linkUfficiale: 'https://www.agenziaentrate.gov.it/portale/schede/istanze/richiesta-ts_cf/richiesta-tessera-sanitaria-e-codice-fiscale',
     emoji: '🔢',
+    icon: Icons.numbers,
   ),
   GuidaScheda(
     id: 'ssn_iscrizione',
@@ -212,6 +234,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'ASL',
     linkUfficiale: 'https://www.salute.gov.it/portale/temi/p2_6.jsp?lingua=italiano&id=906&area=Assistenza%20sanitaria',
     emoji: '🏥',
+    icon: Icons.local_hospital,
   ),
   GuidaScheda(
     id: 'medico_base',
@@ -221,6 +244,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'ASL',
     linkUfficiale: 'https://www.salute.gov.it/',
     emoji: '👨‍⚕️',
+    icon: Icons.medical_services,
   ),
   GuidaScheda(
     id: 'tessera_sanitaria',
@@ -230,6 +254,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Agenzia delle Entrate',
     linkUfficiale: 'https://sistemats1.sanita.finanze.it/portale/',
     emoji: '💳',
+    icon: Icons.medical_information,
   ),
 
   // ─── Lavoro ───
@@ -241,6 +266,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'SUI - Sportello Unico Immigrazione',
     linkUfficiale: 'https://nullaostalavoro.dlci.interno.it/',
     emoji: '📃',
+    icon: Icons.description,
   ),
   GuidaScheda(
     id: 'cpi_iscrizione',
@@ -250,6 +276,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Centro per l\'Impiego',
     linkUfficiale: 'https://www.anpal.gov.it/',
     emoji: '🔎',
+    icon: Icons.business_center,
   ),
   GuidaScheda(
     id: 'did',
@@ -259,6 +286,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'ANPAL / CPI',
     linkUfficiale: 'https://myanpal.anpal.gov.it/',
     emoji: '✅',
+    icon: Icons.task_alt,
   ),
   GuidaScheda(
     id: 'naspi',
@@ -268,6 +296,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'INPS',
     linkUfficiale: 'https://www.inps.it/it/it/inps-comunica/dossier/la-naspi.html',
     emoji: '💰',
+    icon: Icons.payments,
   ),
 
   // ─── Famiglia ───
@@ -279,6 +308,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'SUI - Sportello Unico',
     linkUfficiale: 'https://nullaostalavoro.dlci.interno.it/',
     emoji: '👨‍👩‍👧',
+    icon: Icons.groups,
   ),
   GuidaScheda(
     id: 'permesso_familiari',
@@ -288,6 +318,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Questura',
     linkUfficiale: 'https://www.poliziadistato.it/articolo/213',
     emoji: '❤️',
+    icon: Icons.favorite,
   ),
   GuidaScheda(
     id: 'matrimonio_italia',
@@ -297,6 +328,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Comune / Consolato',
     linkUfficiale: 'https://www.servizidemografici.interno.it/',
     emoji: '💒',
+    icon: Icons.celebration,
   ),
 
   // ─── Studio ───
@@ -308,6 +340,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Consolato / Università',
     linkUfficiale: 'https://www.studiare-in-italia.it/',
     emoji: '🎓',
+    icon: Icons.school,
   ),
   GuidaScheda(
     id: 'riconoscimento_titoli',
@@ -317,6 +350,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'MIM / Cimea',
     linkUfficiale: 'https://www.cimea.it/',
     emoji: '🏅',
+    icon: Icons.workspace_premium,
   ),
   GuidaScheda(
     id: 'scuola_figli',
@@ -326,6 +360,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'MIM / Scuola',
     linkUfficiale: 'https://www.istruzione.it/iscrizionionline/',
     emoji: '🏫',
+    icon: Icons.menu_book,
   ),
 
   // ─── Patente ───
@@ -337,6 +372,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Motorizzazione',
     linkUfficiale: 'https://www.ilportaledellautomobilista.it/',
     emoji: '🔁',
+    icon: Icons.swap_horizontal_circle_outlined,
   ),
   GuidaScheda(
     id: 'patente_rinnovo',
@@ -346,6 +382,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Motorizzazione / ASL',
     linkUfficiale: 'https://www.ilportaledellautomobilista.it/',
     emoji: '🔄',
+    icon: Icons.refresh,
   ),
 
   // ─── Cittadinanza ───
@@ -357,6 +394,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Ministero Interno',
     linkUfficiale: 'https://cittadinanza.dlci.interno.it/',
     emoji: '⏳',
+    icon: Icons.hourglass_bottom,
   ),
   GuidaScheda(
     id: 'cittadinanza_matrimonio',
@@ -366,6 +404,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Ministero Interno',
     linkUfficiale: 'https://cittadinanza.dlci.interno.it/',
     emoji: '💍',
+    icon: Icons.diamond_outlined,
   ),
   GuidaScheda(
     id: 'test_b1',
@@ -375,6 +414,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'CILS / CELI / PLIDA',
     linkUfficiale: 'https://cittadinanza.dlci.interno.it/',
     emoji: '📖',
+    icon: Icons.menu_book,
   ),
   GuidaScheda(
     id: 'ius_sanguinis',
@@ -384,6 +424,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Consolato italiano',
     linkUfficiale: 'https://www.esteri.it/it/servizi-consolari-e-visti/italiani-all-estero/cittadinanza/',
     emoji: '🌳',
+    icon: Icons.account_tree,
   ),
 
   // ─── Diritti & ricorsi ───
@@ -395,6 +436,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Giudice di Pace / TAR',
     linkUfficiale: 'https://www.asgi.it/',
     emoji: '⚖️',
+    icon: Icons.gavel,
   ),
   GuidaScheda(
     id: 'gratuito_patrocinio',
@@ -404,6 +446,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'Consiglio dell\'Ordine Avvocati',
     linkUfficiale: 'https://www.giustizia.it/giustizia/it/mg_2_4_3.page',
     emoji: '⚖️',
+    icon: Icons.balance,
   ),
   GuidaScheda(
     id: 'discriminazione_lavoro',
@@ -413,6 +456,7 @@ const guideSchede = <GuidaScheda>[
     ente: 'UNAR / Ispettorato',
     linkUfficiale: 'https://unar.it/',
     emoji: '🛡️',
+    icon: Icons.security,
   ),
 ];
 

@@ -62,7 +62,7 @@ class GuideDocumentiScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
-        const Text('🌍', style: TextStyle(fontSize: 22)),
+        const Icon(Icons.public, color: Colors.white, size: 24),
         const SizedBox(width: 10),
         Text(GuideI18n.header(context),
             style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800)),
@@ -132,7 +132,7 @@ class _CategoriaCard extends StatelessWidget {
                   color: color.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(14),
                 ),
-                child: Center(child: Text(categoria.emoji, style: const TextStyle(fontSize: 26))),
+                child: Center(child: Icon(categoria.icon, color: color, size: 28)),
               ),
               const SizedBox(height: 10),
               Text(

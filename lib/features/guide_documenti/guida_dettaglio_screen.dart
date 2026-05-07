@@ -169,7 +169,7 @@ class _GuidaDettaglioScreenState extends State<GuidaDettaglioScreen> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(_scheda.emoji, style: const TextStyle(fontSize: 40)),
+                Icon(_scheda.icon, color: Colors.white, size: 40),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(

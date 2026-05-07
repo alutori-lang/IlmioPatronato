@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../config/constants.dart';
@@ -97,44 +98,41 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Container(
           padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFF00838F), Color(0xFF00ACC1)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+            color: Colors.white,
+            border: Border.all(color: const Color(0xFFE4E8EF)),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [BoxShadow(color: const Color(0xFF00838F).withValues(alpha: 0.35), blurRadius: 20, offset: const Offset(0, 8))],
+            boxShadow: [BoxShadow(color: const Color(0xFF0D2A4A).withValues(alpha: 0.06), blurRadius: 12, offset: const Offset(0, 4))],
           ),
           child: Row(children: [
-            Container(
-              width: 54, height: 54,
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.22),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: const Center(child: Text('🌍', style: TextStyle(fontSize: 28))),
-            ),
+            const _SpinningGlobe(),
             const SizedBox(width: 14),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(children: [
-                    const Icon(Icons.verified, color: Colors.white, size: 14),
-                    const SizedBox(width: 5),
-                    Text(s.homeGuideBadge,
-                        style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w800, letterSpacing: 0.6)),
-                  ]),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFFEB3B),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Row(mainAxisSize: MainAxisSize.min, children: [
+                      const Icon(Icons.verified, color: Color(0xFF0D2A4A), size: 12),
+                      const SizedBox(width: 4),
+                      Text(s.homeGuideBadge,
+                          style: const TextStyle(color: Color(0xFF0D2A4A), fontSize: 10, fontWeight: FontWeight.w800, letterSpacing: 0.6)),
+                    ]),
+                  ),
                   const SizedBox(height: 6),
                   Text(s.homeGuideMainTitle,
-                      style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800, height: 1.2)),
+                      style: const TextStyle(color: Color(0xFF0D2A4A), fontSize: 18, fontWeight: FontWeight.w800, height: 1.2)),
                   const SizedBox(height: 4),
                   Text(s.homeGuideMainSub,
-                      style: const TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.w500)),
+                      style: const TextStyle(color: Color(0xFF64748B), fontSize: 12, fontWeight: FontWeight.w500)),
                 ],
               ),
             ),
-            const Icon(Icons.chevron_right, color: Colors.white, size: 26),
+            const Icon(Icons.chevron_right, color: Color(0xFF1E4A8A), size: 26),
           ]),
         ),
       ),
@@ -164,23 +162,16 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           gradient: const LinearGradient(
-            colors: [Color(0xFF1B5E20), Color(0xFF4CAF50)],
+            colors: [Color(0xFF0D47A1), Color(0xFF1976D2)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           borderRadius: BorderRadius.circular(18),
-          boxShadow: [BoxShadow(color: const Color(0xFF1B5E20).withValues(alpha: 0.35), blurRadius: 16, offset: const Offset(0, 6))],
+          boxShadow: [BoxShadow(color: const Color(0xFF0D47A1).withValues(alpha: 0.35), blurRadius: 16, offset: const Offset(0, 6))],
         ),
         child: Row(
           children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: const Icon(Icons.star, color: Colors.white, size: 28),
-            ),
+            const _ThumbsUpAnim(),
             const SizedBox(width: 14),
             Expanded(
               child: Column(
@@ -413,7 +404,14 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(s.yourServices, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: AppColors.textDark)),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(
+              color: const Color(0xFFFFEB3B),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Text(s.yourServices, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Color(0xFF0D2A4A))),
+          ),
           const SizedBox(height: 4),
           Text(s.yourServicesSub, style: TextStyle(fontSize: 12, color: Colors.grey.shade500)),
           const SizedBox(height: 14),
@@ -780,6 +778,157 @@ class _DisclaimerBox extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// ─── SPINNING GLOBE ────────────────────────────────────────────────────────
+// Emoji 🌍 che ruota lentamente in continuo (giro completo ogni 8s).
+class _SpinningGlobe extends StatefulWidget {
+  const _SpinningGlobe({this.size = 54});
+  final double size;
+
+  @override
+  State<_SpinningGlobe> createState() => _SpinningGlobeState();
+}
+
+class _SpinningGlobeState extends State<_SpinningGlobe> with SingleTickerProviderStateMixin {
+  late final AnimationController _ctrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 8),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: widget.size,
+      height: widget.size,
+      child: Center(
+        child: RotationTransition(
+          turns: _ctrl,
+          child: const Text('🌍', style: TextStyle(fontSize: 40)),
+        ),
+      ),
+    );
+  }
+}
+
+// ─── ANIMATED THUMBS UP ────────────────────────────────────────────────────
+// Pollice in su con bounce elastico: anticipation (lean back) → pop forward
+// con elastic bounce → settle. Sfondo soft con glow pulsante. Loop ogni 2s.
+
+class _ThumbsUpAnim extends StatefulWidget {
+  const _ThumbsUpAnim({this.size = 56});
+  final double size;
+
+  @override
+  State<_ThumbsUpAnim> createState() => _ThumbsUpAnimState();
+}
+
+class _ThumbsUpAnimState extends State<_ThumbsUpAnim> with SingleTickerProviderStateMixin {
+  late final AnimationController _ctrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 2000),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: widget.size,
+      height: widget.size,
+      child: AnimatedBuilder(
+        animation: _ctrl,
+        builder: (_, __) {
+          final t = _ctrl.value;
+          double scale = 1.0;
+          double rot = 0.0;
+
+          if (t < 0.20) {
+            final p = t / 0.20;
+            final eased = Curves.easeIn.transform(p);
+            scale = 1.0 - 0.12 * eased;
+            rot = -0.22 * eased;
+          } else if (t < 0.42) {
+            final p = (t - 0.20) / 0.22;
+            final eased = Curves.easeOutBack.transform(p);
+            scale = 0.88 + 0.34 * eased;
+            rot = -0.22 + 0.32 * eased;
+          } else if (t < 0.55) {
+            final p = (t - 0.42) / 0.13;
+            final eased = Curves.easeOut.transform(p);
+            scale = 1.22 - 0.22 * eased;
+            rot = 0.10 - 0.10 * eased;
+          }
+
+          // Glow pulse synced to the pop moment (peaks around t=0.42)
+          final glow = (1.0 - ((t - 0.40) * 4).abs()).clamp(0.0, 1.0);
+
+          return Stack(
+            alignment: Alignment.center,
+            children: [
+              // Soft pulsing white halo behind
+              IgnorePointer(
+                child: Container(
+                  width: widget.size,
+                  height: widget.size,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(
+                      colors: [
+                        Colors.white.withValues(alpha: 0.30 + 0.25 * glow),
+                        Colors.white.withValues(alpha: 0.0),
+                      ],
+                      stops: const [0.25, 1.0],
+                    ),
+                  ),
+                ),
+              ),
+              Transform.rotate(
+                angle: rot,
+                child: Transform.scale(
+                  scale: scale,
+                  child: Icon(
+                    Icons.thumb_up_rounded,
+                    color: Colors.white,
+                    size: widget.size * 0.58,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black.withValues(alpha: 0.30),
+                        blurRadius: 5,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

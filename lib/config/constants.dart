@@ -5,9 +5,9 @@ class AppColors {
   static const primary = Color(0xFF1565C0);
   static const primaryDark = Color(0xFF0D2D5E);
   static const primaryLight = Color(0xFF42A5F5);
-  static const headerStart = Color(0xFF0A1628);
-  static const headerMid = Color(0xFF0D2D5E);
-  static const headerEnd = Color(0xFF143D7A);
+  static const headerStart = Color(0xFF0D47A1);
+  static const headerMid = Color(0xFF1565C0);
+  static const headerEnd = Color(0xFF1976D2);
 
   // Service card icon backgrounds
   static const serviceBlueLight = Color(0xFFE3F2FD);
