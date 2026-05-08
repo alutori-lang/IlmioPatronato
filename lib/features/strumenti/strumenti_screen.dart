@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../config/constants.dart';
 import '../../core/localization/app_strings.dart';
+import '../../core/services/ad_service.dart';
+import '../../core/widgets/banner_ad_widget.dart';
 import '../../core/widgets/disclaimer_strip.dart';
 import 'documento_wallet_screen.dart';
 import 'quiz_cittadinanza_screen.dart';
 import 'cv_europass_screen.dart';
-import 'busta_paga_screen.dart';
 import 'delega_screen.dart';
-import 'confronto_lavoro_screen.dart';
+import '../profilo/scanner_doc_screen.dart';
+import '../profilo/translator_screen.dart';
 
 class StrumentiScreen extends StatelessWidget {
   const StrumentiScreen({super.key});
@@ -16,6 +18,7 @@ class StrumentiScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
+      bottomNavigationBar: const BannerAdWidget(),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(child: _buildHeader(context)),
@@ -26,12 +29,40 @@ class StrumentiScreen extends StatelessWidget {
             sliver: SliverList(
               delegate: SliverChildListDelegate([
                 _StrumentoCard(
+                  icon: Icons.document_scanner,
+                  color: Colors.indigo.shade700,
+                  title: 'Scanner Documenti',
+                  description: 'Scansiona e salva documenti in PDF',
+                  badge: 'AI',
+                  badgeColor: const Color(0xFF4CAF50),
+                  onTap: () => AdService().showAdEveryOther(
+                    key: 'strumenti',
+                    navigate: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ScannerDocScreen())),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                _StrumentoCard(
+                  icon: Icons.translate,
+                  color: Colors.green.shade800,
+                  title: 'Traduttore',
+                  description: 'Traduci testi in più lingue con AI',
+                  badge: 'AI',
+                  badgeColor: const Color(0xFF4CAF50),
+                  onTap: () => AdService().showAdThenNavigate(() {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => const TranslatorScreen()));
+                  }),
+                ),
+                const SizedBox(height: 12),
+                _StrumentoCard(
                   icon: Icons.folder_special,
                   color: Colors.blue.shade700,
                   title: 'Documento Wallet',
                   description: 'Salva documenti con alert scadenza',
                   badge: 'NUOVO',
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DocumentoWalletScreen())),
+                  onTap: () => AdService().showAdEveryOther(
+                    key: 'strumenti',
+                    navigate: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DocumentoWalletScreen())),
+                  ),
                 ),
                 const SizedBox(height: 12),
                 _StrumentoCard(
@@ -40,7 +71,10 @@ class StrumentiScreen extends StatelessWidget {
                   title: 'Quiz Cittadinanza',
                   description: '218 domande per il test B1 + cultura',
                   badge: '218 Q',
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const QuizCittadinanzaScreen())),
+                  onTap: () => AdService().showAdEveryOther(
+                    key: 'strumenti',
+                    navigate: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const QuizCittadinanzaScreen())),
+                  ),
                 ),
                 const SizedBox(height: 12),
                 _StrumentoCard(
@@ -50,17 +84,10 @@ class StrumentiScreen extends StatelessWidget {
                   description: 'Carica CV + foto, AI suggerisce esperienze',
                   badge: 'AI',
                   badgeColor: const Color(0xFF4CAF50),
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const CvEuropassScreen())),
-                ),
-                const SizedBox(height: 12),
-                _StrumentoCard(
-                  icon: Icons.receipt,
-                  color: Colors.orange.shade700,
-                  title: 'Busta Paga Spiegata',
-                  description: 'Carica foto busta paga, AI analizza tutto',
-                  badge: 'AI',
-                  badgeColor: const Color(0xFF4CAF50),
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const BustaPagaScreen())),
+                  onTap: () => AdService().showAdEveryOther(
+                    key: 'strumenti',
+                    navigate: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const CvEuropassScreen())),
+                  ),
                 ),
                 const SizedBox(height: 12),
                 _StrumentoCard(
@@ -70,17 +97,10 @@ class StrumentiScreen extends StatelessWidget {
                   description: 'Scansiona documento, AI compila la delega',
                   badge: 'AI',
                   badgeColor: const Color(0xFF4CAF50),
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DelegaScreen())),
-                ),
-                const SizedBox(height: 12),
-                _StrumentoCard(
-                  icon: Icons.compare_arrows,
-                  color: Colors.red.shade700,
-                  title: 'Confronto Offerte Lavoro',
-                  description: 'Carica contratti, AI confronta le offerte',
-                  badge: 'AI',
-                  badgeColor: const Color(0xFF4CAF50),
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ConfrontoLavoroScreen())),
+                  onTap: () => AdService().showAdEveryOther(
+                    key: 'strumenti',
+                    navigate: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DelegaScreen())),
+                  ),
                 ),
               ]),
             ),

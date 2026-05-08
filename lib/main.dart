@@ -15,6 +15,11 @@ void main() async {
   // Carica bonus da remoto/cache/asset PRIMA di runApp (fallback: lista hardcodata).
   // Include rilevamento nuovi bonus + notifica locale.
   await BonusRepository.instance.load();
+  // Schedula la notifica giornaliera "bonus del giorno" alle 12:20 per i
+  // prossimi 30 giorni con rotazione random dei titoli.
+  await NotificationService.instance.scheduleDailyBonusNotifications(
+    BonusRepository.instance.all,
+  );
   if (!kIsWeb) {
     await AdService().initialize();
   }

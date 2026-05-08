@@ -5,7 +5,6 @@ import '../prenotazioni/prenotazioni_screen.dart';
 import 'documento_wallet_screen.dart';
 import 'quiz_cittadinanza_screen.dart';
 import 'cv_europass_screen.dart';
-import 'busta_paga_screen.dart';
 import 'delega_screen.dart';
 
 class StrumentiTabScreen extends StatelessWidget {
@@ -44,11 +43,6 @@ class StrumentiTabScreen extends StatelessWidget {
                 title: 'CV Europass', desc: 'Crea CV professionale in PDF',
                 badge: 'PDF',
                 onTap: () => _push(context, const CvEuropassScreen()),
-              ),
-              _ToolCard(
-                icon: Icons.receipt, color: Colors.orange.shade700,
-                title: 'Busta Paga Spiegata', desc: 'Ogni voce spiegata in modo semplice',
-                onTap: () => _push(context, const BustaPagaScreen()),
               ),
               _ToolCard(
                 icon: Icons.assignment, color: Colors.teal.shade700,

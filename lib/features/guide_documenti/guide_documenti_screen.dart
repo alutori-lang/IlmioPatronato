@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../config/constants.dart';
+import '../../core/services/ad_service.dart';
 import '../../core/widgets/disclaimer_strip.dart';
 import 'guide_documenti_data.dart';
 import 'guide_documenti_i18n.dart';
@@ -34,10 +35,13 @@ class GuideDocumentiScreen extends StatelessWidget {
                   return _CategoriaCard(
                     categoria: cat,
                     schedeCount: count,
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => GuidaCategoriaScreen(categoriaId: cat.id),
+                    onTap: () => AdService().showAdEveryOther(
+                      key: 'guida_documenti',
+                      navigate: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => GuidaCategoriaScreen(categoriaId: cat.id),
+                        ),
                       ),
                     ),
                   );

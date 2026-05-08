@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../config/constants.dart';
+import '../../core/services/ad_service.dart';
+import '../../core/widgets/banner_ad_widget.dart';
 import '../../core/services/language_service.dart';
 import '../../core/services/theme_service.dart';
 import '../../core/localization/app_strings.dart';
@@ -25,12 +27,13 @@ class ProfiloScreen extends StatelessWidget {
         SliverToBoxAdapter(child: _buildHeader(context, s)),
         SliverToBoxAdapter(child: _buildProfileCard(s)),
         SliverToBoxAdapter(child: _buildStatsRow(s)),
-        SliverToBoxAdapter(child: _buildUpgradeBanner(s)),
         SliverToBoxAdapter(child: _sectionTitle(context, s.toolsTitleAlt)),
         SliverToBoxAdapter(child: _buildTools(context, s)),
         SliverToBoxAdapter(child: _sectionTitle(context, s.settingsSectionTitle)),
         SliverToBoxAdapter(child: _buildSettings(context, s)),
-        const SliverToBoxAdapter(child: SizedBox(height: 40)),
+        const SliverToBoxAdapter(child: SizedBox(height: 16)),
+        const SliverToBoxAdapter(child: Padding(padding: EdgeInsets.symmetric(horizontal: 16), child: BannerAdWidget())),
+        const SliverToBoxAdapter(child: SizedBox(height: 24)),
       ],
     );
   }
@@ -91,30 +94,6 @@ class ProfiloScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildUpgradeBanner(AppStrings s) {
-    return Container(
-      margin: const EdgeInsets.all(16),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(colors: [Color(0xFFFF6B35), Color(0xFFFF8F62)]),
-        borderRadius: BorderRadius.circular(14),
-        boxShadow: [BoxShadow(color: const Color(0xFFFF6B35).withValues(alpha: 0.3), blurRadius: 12, offset: const Offset(0, 4))],
-      ),
-      child: Row(children: [
-        Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(s.becomePro, style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800)),
-          const SizedBox(height: 4),
-          Text(s.proFeatures, style: const TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.w500)),
-        ])),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12)),
-          child: const Text('€4.99/m', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: Color(0xFFFF6B35))),
-        ),
-      ]),
-    );
-  }
-
   Widget _sectionTitle(BuildContext context, String t) => Padding(
     padding: const EdgeInsets.fromLTRB(20, 4, 20, 12),
     child: Text(t, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface)),
@@ -144,7 +123,9 @@ class ProfiloScreen extends StatelessWidget {
                 return;
               }
               if (t.id == 'translator') {
-                Navigator.push(context, MaterialPageRoute(builder: (_) => const TranslatorScreen()));
+                AdService().showAdThenNavigate(() {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const TranslatorScreen()));
+                });
                 return;
               }
               if (t.id == 'cv') {

@@ -1,25 +1,36 @@
 import 'package:flutter/material.dart';
 import '../../config/constants.dart';
+import '../../core/services/ad_service.dart';
+import '../../core/widgets/banner_ad_widget.dart';
 import '../../core/widgets/disclaimer_strip.dart';
 import 'adi_screen.dart';
 import 'isee_screen.dart';
 import 'irpef730_screen.dart';
-import 'imu_screen.dart';
 import 'codice_fiscale_screen.dart';
 import 'stipendio_netto_screen.dart';
 import 'assegno_unico_screen.dart';
 import 'naspi_screen.dart';
 import 'tfr_screen.dart';
 import 'bollo_auto_screen.dart';
-import 'rata_mutuo_screen.dart';
 
 class SimulatoreScreen extends StatelessWidget {
   const SimulatoreScreen({super.key});
+
+  void _openCalc(BuildContext context, Widget screen) {
+    AdService().showAdEveryOther(
+      key: 'simulatore',
+      navigate: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => screen),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
+      bottomNavigationBar: const BannerAdWidget(),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(child: _buildHeader(context)),
@@ -35,12 +46,7 @@ class SimulatoreScreen extends StatelessWidget {
                   color: Colors.green.shade800,
                   title: 'Stipendio Netto',
                   description: 'Da lordo a netto con INPS e IRPEF',
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const StipendioNettoScreen(),
-                    ),
-                  ),
+                  onTap: () => _openCalc(context, const StipendioNettoScreen()),
                 ),
                 const SizedBox(height: 12),
                 _SimulatoreCard(
@@ -48,12 +54,7 @@ class SimulatoreScreen extends StatelessWidget {
                   color: Colors.red.shade700,
                   title: 'Calcolo NASpI',
                   description: 'Indennità di disoccupazione e durata',
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const NaspiScreen(),
-                    ),
-                  ),
+                  onTap: () => _openCalc(context, const NaspiScreen()),
                 ),
                 const SizedBox(height: 12),
                 _SimulatoreCard(
@@ -61,12 +62,7 @@ class SimulatoreScreen extends StatelessWidget {
                   color: Colors.amber.shade800,
                   title: 'Calcolo TFR',
                   description: 'Stima la tua liquidazione fine rapporto',
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const TfrScreen(),
-                    ),
-                  ),
+                  onTap: () => _openCalc(context, const TfrScreen()),
                 ),
                 const SizedBox(height: 12),
                 _SimulatoreCard(
@@ -74,38 +70,7 @@ class SimulatoreScreen extends StatelessWidget {
                   color: Colors.cyan.shade700,
                   title: 'Bollo Auto',
                   description: 'Calcola la tassa automobilistica',
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const BolloAutoScreen(),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                _SimulatoreCard(
-                  icon: Icons.house,
-                  color: Colors.deepPurple,
-                  title: 'Rata Mutuo',
-                  description: 'Calcola rata e piano di ammortamento',
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const RataMutuoScreen(),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                _SimulatoreCard(
-                  icon: Icons.home_work,
-                  color: Colors.brown.shade700,
-                  title: 'Calcolatore IMU',
-                  description: 'Calcola imposta municipale su immobili',
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const ImuScreen(),
-                    ),
-                  ),
+                  onTap: () => _openCalc(context, const BolloAutoScreen()),
                 ),
                 const SizedBox(height: 12),
                 _SimulatoreCard(
@@ -114,12 +79,7 @@ class SimulatoreScreen extends StatelessWidget {
                   title: 'Verifica ADI',
                   description:
                       "Scopri se hai diritto all'Assegno di Inclusione",
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const AdiScreen(),
-                    ),
-                  ),
+                  onTap: () => _openCalc(context, const AdiScreen()),
                 ),
                 const SizedBox(height: 12),
                 _SimulatoreCard(
@@ -127,12 +87,7 @@ class SimulatoreScreen extends StatelessWidget {
                   color: Colors.purple.shade700,
                   title: 'Calcolo ISEE',
                   description: 'Simula il tuo ISEE con la formula ufficiale',
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const IseeScreen(),
-                    ),
-                  ),
+                  onTap: () => _openCalc(context, const IseeScreen()),
                 ),
                 const SizedBox(height: 12),
                 _SimulatoreCard(
@@ -140,12 +95,7 @@ class SimulatoreScreen extends StatelessWidget {
                   color: Colors.teal.shade700,
                   title: 'Calcolo 730 / IRPEF',
                   description: 'Calcola tasse, scaglioni e reddito netto',
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const Irpef730Screen(),
-                    ),
-                  ),
+                  onTap: () => _openCalc(context, const Irpef730Screen()),
                 ),
                 const SizedBox(height: 12),
                 // ── MANUALI (in basso) ──
@@ -154,12 +104,7 @@ class SimulatoreScreen extends StatelessWidget {
                   color: Colors.pink.shade600,
                   title: 'Assegno Unico Figli',
                   description: 'Calcola importo mensile per i tuoi figli',
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const AssegnoUnicoScreen(),
-                    ),
-                  ),
+                  onTap: () => _openCalc(context, const AssegnoUnicoScreen()),
                 ),
                 const SizedBox(height: 12),
                 _SimulatoreCard(
@@ -167,12 +112,7 @@ class SimulatoreScreen extends StatelessWidget {
                   color: Colors.indigo,
                   title: 'Codice Fiscale',
                   description: 'Genera il tuo codice fiscale italiano',
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const CodiceFiscaleScreen(),
-                    ),
-                  ),
+                  onTap: () => _openCalc(context, const CodiceFiscaleScreen()),
                 ),
               ]),
             ),

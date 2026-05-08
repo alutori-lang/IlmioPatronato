@@ -237,16 +237,21 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
   }
 
   void _openDetail(Agevolazione a) {
-    AdService().onNavigateToDetail();
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => AgevolazioneDetailScreen(
-          agevolazione: a,
-          icon: _getAgevolazioneIcon(a.iconName),
-          color: _getCategoriaColor(a.categoria),
-        ),
-      ),
+    AdService().showAdEveryOther(
+      key: 'bonus',
+      navigate: () {
+        if (!mounted) return;
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => AgevolazioneDetailScreen(
+              agevolazione: a,
+              icon: _getAgevolazioneIcon(a.iconName),
+              color: _getCategoriaColor(a.categoria),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -290,9 +295,15 @@ class _AgevolazioniScreenState extends State<AgevolazioniScreen> {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: () => Navigator.push(context, MaterialPageRoute(
-                builder: (_) => AgevolazioneAiDetailScreen(agevolazione: a),
-              )),
+              onTap: () => AdService().showAdEveryOther(
+                key: 'bonus',
+                navigate: () {
+                  if (!mounted) return;
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (_) => AgevolazioneAiDetailScreen(agevolazione: a),
+                  ));
+                },
+              ),
               borderRadius: BorderRadius.circular(14),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(14),

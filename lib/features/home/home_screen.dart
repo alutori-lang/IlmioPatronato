@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../config/constants.dart';
+import '../../core/services/ad_service.dart';
 import '../../core/widgets/banner_ad_widget.dart';
 import '../../core/widgets/language_switch_button.dart';
 import '../../core/services/agevolazioni_service.dart';
@@ -464,7 +465,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     'ISEE & 730',
                     'Stipendio Netto',
                     'NASpI & TFR',
-                    'IMU & Mutuo',
+                    'Bollo Auto',
                   ],
                   onTap: () => _push(const SimulatoreScreen()),
                 ),
@@ -487,10 +488,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   title: s.toolsTitleAlt,
                   subtitle: s.toolsCount,
                   items: const [
+                    'Scanner Documenti',
+                    'Traduttore AI',
                     'Wallet Documenti',
                     'Quiz Cittadinanza',
-                    'CV Europass',
-                    'Busta Paga Spiegata',
                   ],
                   onTap: () => _push(const StrumentiScreen()),
                 ),
@@ -512,7 +513,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     'Bonus & Diritti',
                     'Lavoro & Contratti',
                   ],
-                  onTap: widget.onNavigateToSbroglia,
+                  onTap: () => AdService().showAdThenNavigate(widget.onNavigateToSbroglia),
                 ),
               ),
             ],

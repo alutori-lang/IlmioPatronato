@@ -27,6 +27,9 @@ class NotificationService {
   static const _channelDocId = 'scadenze_documenti';
   static const _channelDocName = 'Scadenze Documenti';
   static const _channelDocDesc = 'Promemoria per documenti in scadenza (permesso, ISEE, pratiche)';
+  static const _channelDailyId = 'bonus_giornaliero';
+  static const _channelDailyName = 'Bonus del Giorno';
+  static const _channelDailyDesc = 'Ogni giorno alle 12:20 ricevi il titolo di un bonus interessante';
 
   static const _prefsKnownBonusIds = 'notification_known_bonus_ids_v1';
   static const _prefsInitialized = 'notification_first_run_done_v1';
@@ -68,6 +71,12 @@ class NotificationService {
       _channelDocId,
       _channelDocName,
       description: _channelDocDesc,
+      importance: Importance.high,
+    ));
+    await android.createNotificationChannel(const AndroidNotificationChannel(
+      _channelDailyId,
+      _channelDailyName,
+      description: _channelDailyDesc,
       importance: Importance.high,
     ));
   }
@@ -248,6 +257,60 @@ class NotificationService {
   Future<void> cancelDocumentExpiry(String id) async {
     for (final giorniPrima in [60, 30, 7, 1]) {
       await _plugin.cancel(_hashId('doc_${id}_$giorniPrima'));
+    }
+  }
+
+  /// Pianifica una notifica al giorno alle 12:20 per i prossimi 30 giorni.
+  /// Ogni notifica mostra il titolo di un bonus interessante (rotazione random).
+  /// Va richiamata dopo BonusRepository.load() così la lista è fresca.
+  Future<void> scheduleDailyBonusNotifications(List<Agevolazione> bonuses) async {
+    if (!_ready || bonuses.isEmpty) return;
+    try {
+      // Cancella eventuali notifiche giornaliere precedenti
+      for (int i = 0; i < 60; i++) {
+        await _plugin.cancel(_hashId('daily_bonus_$i'));
+      }
+
+      final now = tz.TZDateTime.now(tz.local);
+      // Mescola i bonus per rotazione random; usa DateTime come seed per
+      // mantenere lo stesso ordine entro la stessa giornata di scheduling.
+      final shuffled = List<Agevolazione>.from(bonuses)..shuffle();
+
+      int scheduledCount = 0;
+      for (int day = 0; day < 30; day++) {
+        var fireAt = tz.TZDateTime(tz.local, now.year, now.month, now.day, 12, 20);
+        fireAt = fireAt.add(Duration(days: day));
+        if (fireAt.isBefore(now)) continue;
+
+        final b = shuffled[day % shuffled.length];
+        final id = _hashId('daily_bonus_$day');
+        try {
+          await _plugin.zonedSchedule(
+            id,
+            '💰 ${b.titolo}',
+            'Tocca per scoprire requisiti e come richiederlo.',
+            fireAt,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                _channelDailyId,
+                _channelDailyName,
+                channelDescription: _channelDailyDesc,
+                importance: Importance.high,
+                priority: Priority.high,
+              ),
+            ),
+            androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+            uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+            payload: 'bonus:${b.id}',
+          );
+          scheduledCount++;
+        } catch (e) {
+          debugPrint('[Notif] daily schedule error day=$day: $e');
+        }
+      }
+      debugPrint('[Notif] daily bonus alerts scheduled: $scheduledCount @12:20');
+    } catch (e, st) {
+      debugPrint('[Notif] scheduleDailyBonusNotifications error: $e\n$st');
     }
   }
 

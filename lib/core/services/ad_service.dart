@@ -28,6 +28,8 @@ class AdService {
   InterstitialAd? _interstitialAd;
   int _navigationCount = 0;
   static const int _interstitialInterval = 3;
+  // Per-route counters: tap n°1 niente ad, tap n°2 ad, n°3 niente, n°4 ad...
+  final Map<String, int> _everyOtherCounters = {};
 
   Future<void> initialize() async {
     await MobileAds.instance.initialize();
@@ -89,6 +91,55 @@ class AdService {
     if (_interstitialAd != null) {
       _interstitialAd!.show();
       _interstitialAd = null;
+    }
+  }
+
+  /// Mostra l'ad ogni 2° tap su una stessa "chiave" (1° volta no, 2° sì,
+  /// 3° no, 4° sì...). La chiave separa i contatori per tipo di servizio
+  /// (es. 'bonus', 'guida_documenti'). Per AdMob policy: la 1° volta passa
+  /// libero così non triggera interstitial all'inizio della sessione.
+  Future<void> showAdEveryOther({
+    required String key,
+    required VoidCallback navigate,
+  }) async {
+    final count = (_everyOtherCounters[key] ?? 0) + 1;
+    _everyOtherCounters[key] = count;
+    if (count.isEven) {
+      await showAdThenNavigate(navigate);
+    } else {
+      navigate();
+    }
+  }
+
+  /// Mostra l'interstitial e SOLO quando viene chiuso esegue [navigate].
+  /// Se l'ad non è caricato (o fallisce) [navigate] parte subito.
+  /// Usato per: tap su un bonus → pubblicità → dettaglio bonus.
+  Future<void> showAdThenNavigate(VoidCallback navigate) async {
+    final ad = _interstitialAd;
+    if (ad == null) {
+      // Ad non pronto: navighi subito e provo a precaricarlo per la prossima volta.
+      _loadInterstitialAd();
+      navigate();
+      return;
+    }
+    _interstitialAd = null;
+    ad.fullScreenContentCallback = FullScreenContentCallback(
+      onAdDismissedFullScreenContent: (a) {
+        a.dispose();
+        _loadInterstitialAd();
+        navigate();
+      },
+      onAdFailedToShowFullScreenContent: (a, error) {
+        a.dispose();
+        _loadInterstitialAd();
+        navigate();
+      },
+    );
+    try {
+      await ad.show();
+    } catch (_) {
+      _loadInterstitialAd();
+      navigate();
     }
   }
 }
