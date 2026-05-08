@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdService {
@@ -13,11 +15,12 @@ class AdService {
   static const String _androidInterstitialId =
       'ca-app-pub-9396424020196768/3586366378';
 
-  // ── iOS Ad Unit IDs (test IDs ufficiali Google — sostituire con i tuoi quando crei l'app iOS su AdMob) ──
+  // ── iOS Ad Unit IDs ──
+  // App ID iOS: ca-app-pub-9396424020196768~7863269060 (in Info.plist)
   static const String _iosBannerId =
-      'ca-app-pub-3940256099942544/2934735716';
+      'ca-app-pub-9396424020196768/8918926323';
   static const String _iosInterstitialId =
-      'ca-app-pub-3940256099942544/4411468910';
+      'ca-app-pub-9396424020196768/5185134834';
 
   static String get bannerAdUnitId =>
       Platform.isAndroid ? _androidBannerId : _iosBannerId;
@@ -32,6 +35,21 @@ class AdService {
   final Map<String, int> _everyOtherCounters = {};
 
   Future<void> initialize() async {
+    // Su iOS 14.5+ chiediamo ATT (App Tracking Transparency) prima di
+    // inizializzare l'SDK ads. Senza questo prompt vediamo solo ads
+    // contestuali (eCPM ridotto del 50-70%).
+    if (Platform.isIOS) {
+      try {
+        final status = await AppTrackingTransparency.trackingAuthorizationStatus;
+        if (status == TrackingStatus.notDetermined) {
+          // Aspetta un attimo per evitare conflitto con altri prompt al lancio
+          await Future.delayed(const Duration(milliseconds: 200));
+          await AppTrackingTransparency.requestTrackingAuthorization();
+        }
+      } catch (e) {
+        debugPrint('[AdService] ATT request error: $e');
+      }
+    }
     await MobileAds.instance.initialize();
     _loadInterstitialAd();
   }
