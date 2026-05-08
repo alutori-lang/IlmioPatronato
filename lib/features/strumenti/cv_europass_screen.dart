@@ -1,10 +1,13 @@
 import 'dart:io';
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../config/constants.dart';
 import '../../core/services/gemini_service.dart';
@@ -86,7 +89,22 @@ class _CvEuropassScreenState extends State<CvEuropassScreen> {
     'confezion': ['Addetto confezionamento', 'Operaio confezionamento', 'Addetto packaging', 'Operaio alimentare'],
     'badant': ['Badante', 'Assistente familiare', 'OSS', 'Assistente anziani'],
     'colf': ['Colf', 'Collaboratrice domestica', 'Baby sitter', 'Governante'],
+    'sanita': ['Infermiere', 'OSS', 'Assistente sanitario', 'Operatore socio-sanitario', 'Ausiliario ospedaliero'],
+    'estetic': ['Parrucchiere', 'Barbiere', 'Estetista', 'Manicurista', 'Massaggiatore', 'Truccatore'],
+    'meccanic': ['Meccanico auto', 'Carrozziere', 'Gommista', 'Elettrauto', 'Meccanico moto'],
+    'portier': ['Portiere', 'Custode', 'Vigilanza', 'Guardia giurata', 'Steward'],
+    'lavander': ['Addetto lavanderia', 'Stiratrice', 'Lavasecco', 'Operatore tintoria'],
   };
+
+  // Preview rasterized images (one per style)
+  final Map<int, Uint8List?> _previewBytes = {};
+  bool _previewsBuilding = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _buildAllPreviews();
+  }
 
   @override
   void dispose() {
@@ -95,6 +113,49 @@ class _CvEuropassScreenState extends State<CvEuropassScreen> {
     _indirizzoCtrl.dispose(); _cittaCtrl.dispose(); _capCtrl.dispose();
     _telCtrl.dispose(); _emailCtrl.dispose(); _lavoroCercatoCtrl.dispose();
     super.dispose();
+  }
+
+  // Sample CV data (Mario Rossi) used for preview thumbnails so the user can
+  // see what each style looks like fully populated before choosing.
+  _CvData _sampleData() => _CvData(
+        nome: 'Mario Rossi',
+        dataNascita: '15/06/1985',
+        luogoNascita: 'Roma',
+        nazionalita: 'Italiana',
+        cf: 'RSSMRA85H15H501Z',
+        indirizzo: 'Via Roma 12, 00100 Roma',
+        telefono: '+39 333 123 4567',
+        email: 'mario.rossi@email.com',
+        posizione: 'Operaio Specializzato',
+        esperienze: [
+          _Esperienza(azienda: 'Edilcasa SRL', ruolo: 'Muratore', dalAl: '2020 - presente', descrizione: 'Costruzioni residenziali e ristrutturazioni edili.'),
+          _Esperienza(azienda: 'Logistica Italia', ruolo: 'Magazziniere', dalAl: '2017 - 2020', descrizione: 'Gestione magazzino, mulettista patentato, carico/scarico merci.'),
+        ],
+        haPatente: true,
+        patenti: ['B'],
+        linguaMadre: 'Italiano',
+        italianoLevel: 'C2',
+        photo: null,
+      );
+
+  Future<void> _buildAllPreviews() async {
+    final sample = _sampleData();
+    for (int i = 0; i < 10; i++) {
+      try {
+        final pdf = _buildPdf(sample, i);
+        final bytes = await pdf.save();
+        await for (final page in Printing.raster(bytes, dpi: 60)) {
+          final png = await page.toPng();
+          if (!mounted) return;
+          setState(() => _previewBytes[i] = png);
+          break;
+        }
+      } catch (_) {
+        if (!mounted) return;
+        setState(() => _previewBytes[i] = null);
+      }
+    }
+    if (mounted) setState(() => _previewsBuilding = false);
   }
 
   // ── AI: Scansiona documento ──
@@ -230,7 +291,7 @@ class _CvEuropassScreenState extends State<CvEuropassScreen> {
         _buildProgress(),
         Expanded(child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 30),
-          child: [_step1Photo, _step2Dati, _step3Indirizzo, _step4Esperienze, _step5Patente, _step6Stile][_step](),
+          child: [_stepStyleWithPreviews, _step1Photo, _step2Dati, _step3Indirizzo, _step4Esperienze, _step5Patente][_step](),
         )),
         _buildNavBar(),
       ]),
@@ -238,7 +299,7 @@ class _CvEuropassScreenState extends State<CvEuropassScreen> {
   }
 
   Widget _buildHeader() {
-    final titles = ['Foto Profilo', 'Dati Personali', 'Indirizzo', 'Esperienze', 'Patente & Lingue', 'Scegli Stile'];
+    final titles = ['Scegli Stile', 'Foto Profilo', 'Dati Personali', 'Indirizzo', 'Esperienze', 'Patente & Lingue'];
     return Container(
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 8, left: 16, right: 16, bottom: 12),
       decoration: const BoxDecoration(gradient: AppColors.headerGradient),
@@ -298,7 +359,7 @@ class _CvEuropassScreenState extends State<CvEuropassScreen> {
             padding: const EdgeInsets.symmetric(vertical: 14),
             decoration: BoxDecoration(gradient: AppColors.buttonGradient, borderRadius: BorderRadius.circular(12)),
             child: Center(child: Text(
-              _step < 5 ? 'Avanti' : 'Genera PDF',
+              _step < 5 ? 'Avanti' : 'Scarica PDF',
               style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.white),
             )),
           ),
@@ -642,57 +703,103 @@ class _CvEuropassScreenState extends State<CvEuropassScreen> {
   }
 
   // ══════════════════════════════════════════════════════════════
-  // STEP 6: SCEGLI STILE
+  // STEP 0: SCEGLI STILE — anteprime PDF reali (Mario Rossi)
   // ══════════════════════════════════════════════════════════════
-  Widget _step6Stile() {
-    final styles = [
-      _StyleInfo('Classico', Colors.grey.shade800, Icons.article),
-      _StyleInfo('Moderno', Colors.blue.shade700, Icons.dashboard),
-      _StyleInfo('Europass', const Color(0xFF003399), Icons.euro),
-      _StyleInfo('Minimalista', Colors.grey.shade600, Icons.crop_square),
-      _StyleInfo('Creativo', Colors.orange.shade700, Icons.palette),
-      _StyleInfo('Professionale', const Color(0xFF1B5E20), Icons.business_center),
-      _StyleInfo('Elegante', Colors.brown.shade700, Icons.auto_awesome),
-      _StyleInfo('Colorato', Colors.purple.shade700, Icons.color_lens),
-      _StyleInfo('Tech', Colors.teal.shade700, Icons.code),
-      _StyleInfo('Semplice', Colors.black87, Icons.text_fields),
+  Widget _stepStyleWithPreviews() {
+    const names = [
+      'Classico', 'Moderno', 'Europass', 'Minimalista', 'Creativo',
+      'Professionale', 'Elegante', 'Colorato', 'Tech', 'Semplice',
+    ];
+    final accents = [
+      Colors.grey.shade800, Colors.blue.shade700, const Color(0xFF003399),
+      Colors.grey.shade600, Colors.orange.shade700, const Color(0xFF1B5E20),
+      Colors.brown.shade700, Colors.purple.shade700, Colors.teal.shade700, Colors.black87,
     ];
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const SizedBox(height: 8),
-      const Text('Scegli lo stile del tuo CV', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.textDark)),
       const SizedBox(height: 4),
-      const Text('Tocca per selezionare, poi premi Genera PDF', style: TextStyle(fontSize: 13, color: AppColors.textLight)),
-      const SizedBox(height: 16),
+      const Text('Scegli lo stile del tuo CV', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800, color: AppColors.textDark)),
+      const SizedBox(height: 4),
+      Text(_previewsBuilding
+          ? 'Sto generando le anteprime con dati di esempio...'
+          : 'Tocca un design per selezionarlo, poi premi Avanti per compilare i tuoi dati',
+        style: const TextStyle(fontSize: 13, color: AppColors.textLight)),
+      const SizedBox(height: 14),
       GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10, childAspectRatio: 1.2),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 14,
+          crossAxisSpacing: 14,
+          childAspectRatio: 0.72, // A4 portrait-ish
+        ),
         itemCount: 10,
         itemBuilder: (_, i) {
-          final s = styles[i];
           final selected = _selectedStyle == i;
+          final accent = accents[i];
+          final png = _previewBytes[i];
           return GestureDetector(
             onTap: () => setState(() => _selectedStyle = i),
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: selected ? s.color : Colors.grey.shade200, width: selected ? 3 : 1),
-                boxShadow: selected ? [BoxShadow(color: s.color.withValues(alpha: 0.2), blurRadius: 12)] : null,
-              ),
-              child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Container(
-                  width: 44, height: 44,
-                  decoration: BoxDecoration(color: s.color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(12)),
-                  child: Icon(s.icon, color: s.color, size: 24),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: selected ? accent : Colors.grey.shade300,
+                  width: selected ? 3 : 1,
                 ),
-                const SizedBox(height: 8),
-                Text(s.name, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: selected ? s.color : AppColors.textDark)),
-                if (selected) ...[
-                  const SizedBox(height: 4),
-                  Icon(Icons.check_circle, color: s.color, size: 18),
-                ],
-              ]),
+                boxShadow: selected
+                    ? [BoxShadow(color: accent.withValues(alpha: 0.3), blurRadius: 14, offset: const Offset(0, 4))]
+                    : [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8, offset: const Offset(0, 2))],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Stack(children: [
+                  Positioned.fill(
+                    child: png != null
+                        ? Image.memory(png, fit: BoxFit.cover, gaplessPlayback: true)
+                        : Container(
+                            color: Colors.grey.shade100,
+                            child: Center(
+                              child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                SizedBox(
+                                  width: 24, height: 24,
+                                  child: CircularProgressIndicator(strokeWidth: 2.5, color: accent),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(names[i], style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: accent)),
+                              ]),
+                            ),
+                          ),
+                  ),
+                  // Bottom gradient overlay with name
+                  Positioned(
+                    left: 0, right: 0, bottom: 0,
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [Colors.transparent, Colors.black.withValues(alpha: 0.75)],
+                        ),
+                      ),
+                      child: Row(children: [
+                        Expanded(
+                          child: Text(
+                            names[i],
+                            style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w800, letterSpacing: 0.3),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        if (selected)
+                          const Icon(Icons.check_circle, color: Colors.white, size: 18),
+                      ]),
+                    ),
+                  ),
+                ]),
+              ),
             ),
           );
         },
@@ -757,146 +864,675 @@ class _CvEuropassScreenState extends State<CvEuropassScreen> {
     );
 
     final doc = _buildPdf(data, _selectedStyle);
+    final bytes = await doc.save();
 
-    await Printing.layoutPdf(onLayout: (_) => doc.save());
+    // Download directly to a file (no print dialog)
+    Directory? dir;
+    try {
+      dir = await getExternalStorageDirectory();
+    } catch (_) {}
+    dir ??= await getApplicationDocumentsDirectory();
+    final cleanName = nome.replaceAll(RegExp(r'[^a-zA-Z0-9]+'), '_');
+    final filename = 'CV_$cleanName.pdf';
+    final file = File('${dir.path}/$filename');
+    await file.writeAsBytes(bytes);
+
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(children: [
+          const Icon(Icons.check_circle, color: Colors.white, size: 20),
+          const SizedBox(width: 10),
+          Expanded(child: Text('PDF scaricato: $filename', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
+        ]),
+        backgroundColor: const Color(0xFF2E7D32),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        duration: const Duration(seconds: 6),
+        action: SnackBarAction(
+          label: 'APRI',
+          textColor: Colors.white,
+          onPressed: () {
+            Share.shareXFiles([XFile(file.path)], subject: filename);
+          },
+        ),
+      ),
+    );
   }
 
   pw.Document _buildPdf(_CvData d, int style) {
-    final colors = [
-      PdfColors.grey800,     // 0 Classico
-      PdfColors.blue700,     // 1 Moderno
-      PdfColor.fromHex('#003399'), // 2 Europass
-      PdfColors.grey600,     // 3 Minimalista
-      PdfColors.orange700,   // 4 Creativo
-      PdfColor.fromHex('#1B5E20'), // 5 Professionale
-      PdfColors.brown700,    // 6 Elegante
-      PdfColors.purple700,   // 7 Colorato
-      PdfColors.teal700,     // 8 Tech
-      PdfColors.grey900,     // 9 Semplice
-    ];
-    final accent = colors[style];
+    switch (style) {
+      case 0: return _pdfClassico(d);
+      case 1: return _pdfModerno(d);
+      case 2: return _pdfEuropass(d);
+      case 3: return _pdfMinimalista(d);
+      case 4: return _pdfCreativo(d);
+      case 5: return _pdfProfessionale(d);
+      case 6: return _pdfElegante(d);
+      case 7: return _pdfColorato(d);
+      case 8: return _pdfTech(d);
+      case 9: return _pdfSemplice(d);
+      default: return _pdfClassico(d);
+    }
+  }
 
+  // Shared helpers
+  List<String> _personalInfo(_CvData d) {
+    final l = <String>[];
+    if (d.dataNascita.isNotEmpty) l.add('Data di nascita: ${d.dataNascita}');
+    if (d.luogoNascita.isNotEmpty) l.add('Luogo: ${d.luogoNascita}');
+    if (d.nazionalita.isNotEmpty) l.add('Nazionalità: ${d.nazionalita}');
+    if (d.cf.isNotEmpty) l.add('CF: ${d.cf}');
+    return l;
+  }
+
+  pw.Widget _privacyFooter() => pw.Padding(
+        padding: const pw.EdgeInsets.only(top: 18),
+        child: pw.Text(
+          'Autorizzo il trattamento dei miei dati personali ai sensi del D.Lgs. 196/03 e del GDPR (UE) 2016/679.',
+          style: pw.TextStyle(fontSize: 7.5, fontStyle: pw.FontStyle.italic, color: PdfColors.grey500),
+        ),
+      );
+
+  // ════════════════════════════════════════════════════════════════
+  // 0. CLASSICO — Centered name, double horizontal lines, traditional
+  // ════════════════════════════════════════════════════════════════
+  pw.Document _pdfClassico(_CvData d) {
+    final accent = PdfColors.grey800;
     final doc = pw.Document();
-    final hasPhoto = d.photo != null;
-
     doc.addPage(pw.MultiPage(
       pageFormat: PdfPageFormat.a4,
-      margin: const pw.EdgeInsets.all(40),
-      build: (ctx) {
-        final widgets = <pw.Widget>[];
-
-        // ── Header ──
-        if (style == 1 || style == 4 || style == 7) {
-          // Moderno / Creativo / Colorato — full-width header bar
-          widgets.add(pw.Container(
-            padding: const pw.EdgeInsets.all(20),
-            decoration: pw.BoxDecoration(color: accent, borderRadius: pw.BorderRadius.circular(8)),
-            child: pw.Row(children: [
-              if (hasPhoto) ...[
-                pw.ClipOval(child: pw.Image(d.photo!, width: 60, height: 60, fit: pw.BoxFit.cover)),
-                pw.SizedBox(width: 16),
-              ],
-              pw.Expanded(child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
-                pw.Text(d.nome, style: pw.TextStyle(fontSize: 22, fontWeight: pw.FontWeight.bold, color: PdfColors.white)),
-                if (d.telefono.isNotEmpty || d.email.isNotEmpty)
-                  pw.Text('${d.telefono}  ${d.email}'.trim(), style: const pw.TextStyle(fontSize: 10, color: PdfColors.white)),
-                if (d.indirizzo.isNotEmpty && d.indirizzo != ', ')
-                  pw.Text(d.indirizzo, style: const pw.TextStyle(fontSize: 10, color: PdfColors.white)),
-              ])),
-            ]),
-          ));
-        } else {
-          // Other styles — classic header
-          widgets.add(pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
-            if (hasPhoto) ...[
-              pw.ClipOval(child: pw.Image(d.photo!, width: 56, height: 56, fit: pw.BoxFit.cover)),
-              pw.SizedBox(width: 14),
-            ],
-            pw.Expanded(child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
-              pw.Text(d.nome, style: pw.TextStyle(fontSize: 22, fontWeight: pw.FontWeight.bold, color: accent)),
-              pw.SizedBox(height: 4),
-              if (d.telefono.isNotEmpty || d.email.isNotEmpty)
-                pw.Text('${d.telefono}  |  ${d.email}'.trim(), style: const pw.TextStyle(fontSize: 10, color: PdfColors.grey700)),
-              if (d.indirizzo.isNotEmpty && d.indirizzo != ', ')
-                pw.Text(d.indirizzo, style: const pw.TextStyle(fontSize: 10, color: PdfColors.grey700)),
-            ])),
-          ]));
-        }
-
-        widgets.add(pw.SizedBox(height: 6));
-        widgets.add(pw.Divider(color: accent, thickness: 2));
-        widgets.add(pw.SizedBox(height: 10));
-
-        // ── Dati personali ──
-        widgets.add(_pdfSection('DATI PERSONALI', accent));
-        final info = <String>[];
-        if (d.dataNascita.isNotEmpty) info.add('Data di nascita: ${d.dataNascita}');
-        if (d.luogoNascita.isNotEmpty) info.add('Luogo di nascita: ${d.luogoNascita}');
-        if (d.nazionalita.isNotEmpty) info.add('Nazionalità: ${d.nazionalita}');
-        if (d.cf.isNotEmpty) info.add('Codice Fiscale: ${d.cf}');
-        for (final i in info) {
-          widgets.add(pw.Padding(
-            padding: const pw.EdgeInsets.only(bottom: 2),
-            child: pw.Text(i, style: const pw.TextStyle(fontSize: 10)),
-          ));
-        }
-
-        // ── Posizione desiderata ──
-        if (d.posizione.isNotEmpty) {
-          widgets.add(pw.SizedBox(height: 12));
-          widgets.add(_pdfSection('POSIZIONE DESIDERATA', accent));
-          widgets.add(pw.Text(d.posizione, style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold)));
-        }
-
-        // ── Esperienze ──
-        if (d.esperienze.isNotEmpty) {
-          widgets.add(pw.SizedBox(height: 12));
-          widgets.add(_pdfSection('ESPERIENZE LAVORATIVE', accent));
-          for (final e in d.esperienze) {
-            widgets.add(pw.Padding(
-              padding: const pw.EdgeInsets.only(bottom: 8),
-              child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
-                pw.Text('${e.ruolo} — ${e.azienda}', style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold)),
-                if (e.dalAl.isNotEmpty) pw.Text(e.dalAl, style: pw.TextStyle(fontSize: 9, color: PdfColors.grey600, fontStyle: pw.FontStyle.italic)),
-                if (e.descrizione.isNotEmpty) pw.Text(e.descrizione, style: const pw.TextStyle(fontSize: 10)),
-              ]),
-            ));
-          }
-        }
-
-        // ── Lingue ──
-        widgets.add(pw.SizedBox(height: 12));
-        widgets.add(_pdfSection('COMPETENZE LINGUISTICHE', accent));
-        widgets.add(pw.Text('Lingua madre: ${d.linguaMadre}', style: const pw.TextStyle(fontSize: 10)));
-        widgets.add(pw.Text('Italiano: ${d.italianoLevel}', style: const pw.TextStyle(fontSize: 10)));
-
-        // ── Patente ──
-        if (d.haPatente && d.patenti.isNotEmpty) {
-          widgets.add(pw.SizedBox(height: 12));
-          widgets.add(_pdfSection('PATENTE', accent));
-          widgets.add(pw.Text('Patente: ${d.patenti.join(", ")}', style: const pw.TextStyle(fontSize: 10)));
-        }
-
-        // ── Footer ──
-        widgets.add(pw.SizedBox(height: 20));
-        widgets.add(pw.Divider(color: PdfColors.grey300));
-        widgets.add(pw.Text(
-          'Autorizzo il trattamento dei miei dati personali ai sensi del D.Lgs. 196/03 e del GDPR (UE) 2016/679.',
-          style: pw.TextStyle(fontSize: 8, fontStyle: pw.FontStyle.italic, color: PdfColors.grey500),
-        ));
-
-        return widgets;
-      },
+      margin: const pw.EdgeInsets.all(48),
+      build: (_) => [
+        if (d.photo != null) pw.Center(child: pw.ClipOval(child: pw.Image(d.photo!, width: 80, height: 80, fit: pw.BoxFit.cover))),
+        if (d.photo != null) pw.SizedBox(height: 12),
+        pw.Center(child: pw.Text(d.nome, style: pw.TextStyle(fontSize: 26, fontWeight: pw.FontWeight.bold, color: accent, letterSpacing: 2))),
+        pw.SizedBox(height: 4),
+        pw.Center(child: pw.Text('${d.telefono} • ${d.email}'.replaceAll(' • ', d.telefono.isEmpty || d.email.isEmpty ? '' : ' • '), style: const pw.TextStyle(fontSize: 10, color: PdfColors.grey700))),
+        if (d.indirizzo.trim().replaceAll(',', '').trim().isNotEmpty) pw.Center(child: pw.Text(d.indirizzo, style: const pw.TextStyle(fontSize: 10, color: PdfColors.grey700))),
+        pw.SizedBox(height: 12),
+        pw.Container(height: 2, color: accent),
+        pw.SizedBox(height: 1),
+        pw.Container(height: 1, color: accent),
+        pw.SizedBox(height: 16),
+        ..._classicoSections(d, accent),
+        _privacyFooter(),
+      ],
     ));
-
     return doc;
   }
 
-  pw.Widget _pdfSection(String title, PdfColor accent) {
-    return pw.Padding(
-      padding: const pw.EdgeInsets.only(bottom: 6),
-      child: pw.Text(title, style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold, color: accent)),
-    );
+  List<pw.Widget> _classicoSections(_CvData d, PdfColor accent) {
+    final w = <pw.Widget>[];
+    void section(String title) {
+      w.add(pw.SizedBox(height: 8));
+      w.add(pw.Text(title, style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold, color: accent, letterSpacing: 1.5)));
+      w.add(pw.Container(height: 0.6, color: accent, margin: const pw.EdgeInsets.only(top: 3, bottom: 8)));
+    }
+    section('DATI PERSONALI');
+    for (final l in _personalInfo(d)) {
+      w.add(pw.Text(l, style: const pw.TextStyle(fontSize: 10)));
+    }
+    if (d.posizione.isNotEmpty) { section('POSIZIONE DESIDERATA'); w.add(pw.Text(d.posizione, style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold))); }
+    if (d.esperienze.isNotEmpty) {
+      section('ESPERIENZE LAVORATIVE');
+      for (final e in d.esperienze) {
+        w.add(pw.Padding(padding: const pw.EdgeInsets.only(bottom: 8), child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+          pw.Text('${e.ruolo} — ${e.azienda}', style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold)),
+          if (e.dalAl.isNotEmpty) pw.Text(e.dalAl, style: pw.TextStyle(fontSize: 9, color: PdfColors.grey600, fontStyle: pw.FontStyle.italic)),
+          if (e.descrizione.isNotEmpty) pw.Text(e.descrizione, style: const pw.TextStyle(fontSize: 10)),
+        ])));
+      }
+    }
+    section('COMPETENZE LINGUISTICHE');
+    w.add(pw.Text('Lingua madre: ${d.linguaMadre}', style: const pw.TextStyle(fontSize: 10)));
+    w.add(pw.Text('Italiano: ${d.italianoLevel}', style: const pw.TextStyle(fontSize: 10)));
+    if (d.haPatente && d.patenti.isNotEmpty) { section('PATENTE'); w.add(pw.Text(d.patenti.join(', '), style: const pw.TextStyle(fontSize: 10))); }
+    return w;
+  }
+
+  // ════════════════════════════════════════════════════════════════
+  // 1. MODERNO — Full-width colored header bar, white text, photo round
+  // ════════════════════════════════════════════════════════════════
+  pw.Document _pdfModerno(_CvData d) {
+    final accent = PdfColors.blue700;
+    final doc = pw.Document();
+    doc.addPage(pw.MultiPage(
+      pageFormat: PdfPageFormat.a4,
+      margin: pw.EdgeInsets.zero,
+      build: (_) => [
+        // Banner header bleed
+        pw.Container(
+          color: accent,
+          padding: const pw.EdgeInsets.fromLTRB(40, 36, 40, 28),
+          child: pw.Row(children: [
+            if (d.photo != null) ...[
+              pw.Container(width: 80, height: 80, decoration: pw.BoxDecoration(shape: pw.BoxShape.circle, border: pw.Border.all(color: PdfColors.white, width: 3)),
+                child: pw.ClipOval(child: pw.Image(d.photo!, fit: pw.BoxFit.cover))),
+              pw.SizedBox(width: 20),
+            ],
+            pw.Expanded(child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+              pw.Text(d.nome, style: pw.TextStyle(fontSize: 26, fontWeight: pw.FontWeight.bold, color: PdfColors.white)),
+              pw.SizedBox(height: 4),
+              if (d.posizione.isNotEmpty) pw.Text(d.posizione.toUpperCase(), style: pw.TextStyle(fontSize: 11, color: PdfColors.white, letterSpacing: 2)),
+              pw.SizedBox(height: 8),
+              if (d.telefono.isNotEmpty) pw.Text('TEL  ${d.telefono}', style: const pw.TextStyle(fontSize: 9, color: PdfColors.white)),
+              if (d.email.isNotEmpty) pw.Text('MAIL  ${d.email}', style: const pw.TextStyle(fontSize: 9, color: PdfColors.white)),
+            ])),
+          ]),
+        ),
+        pw.Padding(padding: const pw.EdgeInsets.fromLTRB(40, 20, 40, 28), child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+          ..._modernoSections(d, accent),
+          _privacyFooter(),
+        ])),
+      ],
+    ));
+    return doc;
+  }
+
+  List<pw.Widget> _modernoSections(_CvData d, PdfColor accent) {
+    final w = <pw.Widget>[];
+    void section(String title) {
+      w.add(pw.SizedBox(height: 12));
+      w.add(pw.Row(children: [
+        pw.Container(width: 4, height: 14, color: accent),
+        pw.SizedBox(width: 8),
+        pw.Text(title, style: pw.TextStyle(fontSize: 13, fontWeight: pw.FontWeight.bold, color: accent)),
+      ]));
+      w.add(pw.SizedBox(height: 8));
+    }
+    if (_personalInfo(d).isNotEmpty) { section('Dati Personali'); for (final l in _personalInfo(d)) w.add(pw.Text(l, style: const pw.TextStyle(fontSize: 10))); }
+    if (d.esperienze.isNotEmpty) {
+      section('Esperienze');
+      for (final e in d.esperienze) {
+        w.add(pw.Padding(padding: const pw.EdgeInsets.only(bottom: 10), child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+          pw.Row(children: [
+            pw.Expanded(child: pw.Text(e.ruolo, style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold, color: accent))),
+            if (e.dalAl.isNotEmpty) pw.Text(e.dalAl, style: pw.TextStyle(fontSize: 9, color: PdfColors.grey600)),
+          ]),
+          pw.Text(e.azienda, style: pw.TextStyle(fontSize: 10, fontStyle: pw.FontStyle.italic)),
+          if (e.descrizione.isNotEmpty) pw.Padding(padding: const pw.EdgeInsets.only(top: 3), child: pw.Text(e.descrizione, style: const pw.TextStyle(fontSize: 10))),
+        ])));
+      }
+    }
+    section('Lingue');
+    w.add(pw.Text('${d.linguaMadre} (madre) • Italiano ${d.italianoLevel}', style: const pw.TextStyle(fontSize: 10)));
+    if (d.haPatente && d.patenti.isNotEmpty) { section('Patente'); w.add(pw.Text(d.patenti.join(' • '), style: const pw.TextStyle(fontSize: 10))); }
+    return w;
+  }
+
+  // ════════════════════════════════════════════════════════════════
+  // 2. EUROPASS — Blue left vertical bar with "EUROPASS" wordmark
+  // ════════════════════════════════════════════════════════════════
+  pw.Document _pdfEuropass(_CvData d) {
+    final accent = PdfColor.fromHex('#003399');
+    final doc = pw.Document();
+    doc.addPage(pw.Page(
+      pageFormat: PdfPageFormat.a4,
+      margin: pw.EdgeInsets.zero,
+      build: (ctx) => pw.Stack(children: [
+        // Left blue bar
+        pw.Positioned(left: 0, top: 0, bottom: 0, child: pw.Container(width: 50, color: accent, child: pw.Padding(
+          padding: const pw.EdgeInsets.only(top: 30),
+          child: pw.Center(child: pw.Transform.rotate(angle: -1.5708, child: pw.Text('EUROPASS  CURRICULUM VITAE', style: pw.TextStyle(fontSize: 12, color: PdfColors.white, letterSpacing: 4, fontWeight: pw.FontWeight.bold)))),
+        ))),
+        // Content
+        pw.Positioned(left: 70, top: 36, right: 36, bottom: 36, child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+          pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+            if (d.photo != null) ...[
+              pw.Container(width: 70, height: 90, decoration: pw.BoxDecoration(border: pw.Border.all(color: accent, width: 1)), child: pw.Image(d.photo!, fit: pw.BoxFit.cover)),
+              pw.SizedBox(width: 16),
+            ],
+            pw.Expanded(child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+              pw.Text('CURRICULUM VITAE', style: pw.TextStyle(fontSize: 9, color: accent, letterSpacing: 2)),
+              pw.SizedBox(height: 2),
+              pw.Text(d.nome, style: pw.TextStyle(fontSize: 22, fontWeight: pw.FontWeight.bold, color: accent)),
+              pw.SizedBox(height: 6),
+              if (d.indirizzo.trim().replaceAll(',', '').trim().isNotEmpty) pw.Text('Indirizzo: ${d.indirizzo}', style: const pw.TextStyle(fontSize: 9)),
+              if (d.telefono.isNotEmpty) pw.Text('Telefono: ${d.telefono}', style: const pw.TextStyle(fontSize: 9)),
+              if (d.email.isNotEmpty) pw.Text('Email: ${d.email}', style: const pw.TextStyle(fontSize: 9)),
+            ])),
+          ]),
+          pw.SizedBox(height: 16),
+          pw.Container(height: 1, color: accent),
+          pw.SizedBox(height: 12),
+          ..._europassRows(d, accent),
+          pw.Spacer(),
+          _privacyFooter(),
+        ])),
+      ]),
+    ));
+    return doc;
+  }
+
+  List<pw.Widget> _europassRows(_CvData d, PdfColor accent) {
+    final w = <pw.Widget>[];
+    void row(String label, pw.Widget content) {
+      w.add(pw.Padding(padding: const pw.EdgeInsets.only(bottom: 10), child: pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+        pw.Container(width: 130, child: pw.Text(label, style: pw.TextStyle(fontSize: 9, color: accent, fontWeight: pw.FontWeight.bold))),
+        pw.Expanded(child: content),
+      ])));
+    }
+    row('INFORMAZIONI PERSONALI', pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: _personalInfo(d).map((l) => pw.Text(l, style: const pw.TextStyle(fontSize: 10))).toList()));
+    if (d.posizione.isNotEmpty) row('POSIZIONE DESIDERATA', pw.Text(d.posizione, style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold)));
+    if (d.esperienze.isNotEmpty) row('ESPERIENZA LAVORATIVA', pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: d.esperienze.map((e) => pw.Padding(padding: const pw.EdgeInsets.only(bottom: 6), child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+      pw.Text('${e.dalAl}  ${e.ruolo}', style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold)),
+      pw.Text(e.azienda, style: const pw.TextStyle(fontSize: 9)),
+      if (e.descrizione.isNotEmpty) pw.Text(e.descrizione, style: const pw.TextStyle(fontSize: 9)),
+    ]))).toList()));
+    row('LINGUA MADRE', pw.Text(d.linguaMadre, style: const pw.TextStyle(fontSize: 10)));
+    row('ALTRA LINGUA', pw.Text('Italiano — Livello ${d.italianoLevel}', style: const pw.TextStyle(fontSize: 10)));
+    if (d.haPatente && d.patenti.isNotEmpty) row('PATENTE DI GUIDA', pw.Text(d.patenti.join(', '), style: const pw.TextStyle(fontSize: 10)));
+    return w;
+  }
+
+  // ════════════════════════════════════════════════════════════════
+  // 3. MINIMALISTA — Pure white, hairlines, light typography
+  // ════════════════════════════════════════════════════════════════
+  pw.Document _pdfMinimalista(_CvData d) {
+    final doc = pw.Document();
+    doc.addPage(pw.MultiPage(
+      pageFormat: PdfPageFormat.a4,
+      margin: const pw.EdgeInsets.all(70),
+      build: (_) => [
+        pw.Text(d.nome, style: pw.TextStyle(fontSize: 32, fontWeight: pw.FontWeight.normal, color: PdfColors.grey900, letterSpacing: 1)),
+        pw.SizedBox(height: 4),
+        pw.Text([if (d.telefono.isNotEmpty) d.telefono, if (d.email.isNotEmpty) d.email, if (d.indirizzo.trim().replaceAll(',', '').trim().isNotEmpty) d.indirizzo].join('   '), style: pw.TextStyle(fontSize: 9, color: PdfColors.grey600, letterSpacing: 0.5)),
+        pw.SizedBox(height: 30),
+        ..._minimalistaSections(d),
+        _privacyFooter(),
+      ],
+    ));
+    return doc;
+  }
+
+  List<pw.Widget> _minimalistaSections(_CvData d) {
+    final w = <pw.Widget>[];
+    void section(String title) {
+      w.add(pw.SizedBox(height: 18));
+      w.add(pw.Row(children: [
+        pw.Container(width: 18, height: 0.4, color: PdfColors.grey800, margin: const pw.EdgeInsets.only(right: 10, top: 6)),
+        pw.Text(title.toUpperCase(), style: pw.TextStyle(fontSize: 8, color: PdfColors.grey800, letterSpacing: 4, fontWeight: pw.FontWeight.bold)),
+      ]));
+      w.add(pw.SizedBox(height: 10));
+    }
+    section('Profilo');
+    for (final l in _personalInfo(d)) w.add(pw.Text(l, style: pw.TextStyle(fontSize: 10, color: PdfColors.grey800, lineSpacing: 3)));
+    if (d.posizione.isNotEmpty) { section('Obiettivo'); w.add(pw.Text(d.posizione, style: pw.TextStyle(fontSize: 11, color: PdfColors.grey900))); }
+    if (d.esperienze.isNotEmpty) {
+      section('Esperienze');
+      for (final e in d.esperienze) {
+        w.add(pw.Padding(padding: const pw.EdgeInsets.only(bottom: 12), child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+          pw.Text(e.ruolo.toUpperCase(), style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold, letterSpacing: 1)),
+          pw.Text('${e.azienda}${e.dalAl.isEmpty ? '' : '  ·  ${e.dalAl}'}', style: pw.TextStyle(fontSize: 9, color: PdfColors.grey600)),
+          if (e.descrizione.isNotEmpty) pw.Padding(padding: const pw.EdgeInsets.only(top: 4), child: pw.Text(e.descrizione, style: pw.TextStyle(fontSize: 10, color: PdfColors.grey800, lineSpacing: 2))),
+        ])));
+      }
+    }
+    section('Lingue');
+    w.add(pw.Text('${d.linguaMadre}  ·  Italiano ${d.italianoLevel}', style: pw.TextStyle(fontSize: 10, color: PdfColors.grey800)));
+    if (d.haPatente && d.patenti.isNotEmpty) { section('Patente'); w.add(pw.Text(d.patenti.join('  ·  '), style: pw.TextStyle(fontSize: 10, color: PdfColors.grey800))); }
+    return w;
+  }
+
+  // ════════════════════════════════════════════════════════════════
+  // 4. CREATIVO — Top orange block with photo+name, asymmetric layout
+  // ════════════════════════════════════════════════════════════════
+  pw.Document _pdfCreativo(_CvData d) {
+    final accent = PdfColors.orange700;
+    final accentSoft = PdfColors.orange100;
+    final doc = pw.Document();
+    doc.addPage(pw.MultiPage(
+      pageFormat: PdfPageFormat.a4,
+      margin: pw.EdgeInsets.zero,
+      build: (_) => [
+        pw.Stack(children: [
+          pw.Container(height: 200, color: accent),
+          pw.Positioned(right: -40, top: -40, child: pw.Container(width: 200, height: 200, decoration: pw.BoxDecoration(shape: pw.BoxShape.circle, color: accentSoft))),
+          pw.Padding(padding: const pw.EdgeInsets.fromLTRB(40, 50, 40, 0), child: pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+            if (d.photo != null) ...[
+              pw.Container(width: 100, height: 100, decoration: pw.BoxDecoration(shape: pw.BoxShape.circle, border: pw.Border.all(color: PdfColors.white, width: 4)),
+                child: pw.ClipOval(child: pw.Image(d.photo!, fit: pw.BoxFit.cover))),
+              pw.SizedBox(width: 18),
+            ],
+            pw.Expanded(child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+              pw.SizedBox(height: 10),
+              pw.Text(d.nome.toUpperCase(), style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold, color: PdfColors.white, letterSpacing: 2)),
+              pw.SizedBox(height: 6),
+              if (d.posizione.isNotEmpty) pw.Container(padding: const pw.EdgeInsets.symmetric(horizontal: 10, vertical: 4), color: PdfColors.white, child: pw.Text(d.posizione, style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold, color: accent))),
+              pw.SizedBox(height: 10),
+              if (d.telefono.isNotEmpty) pw.Text('☎  ${d.telefono}', style: const pw.TextStyle(fontSize: 9, color: PdfColors.white)),
+              if (d.email.isNotEmpty) pw.Text('✉  ${d.email}', style: const pw.TextStyle(fontSize: 9, color: PdfColors.white)),
+            ])),
+          ])),
+        ]),
+        pw.Padding(padding: const pw.EdgeInsets.fromLTRB(40, 24, 40, 30), child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+          ..._creativoSections(d, accent, accentSoft),
+          _privacyFooter(),
+        ])),
+      ],
+    ));
+    return doc;
+  }
+
+  List<pw.Widget> _creativoSections(_CvData d, PdfColor accent, PdfColor accentSoft) {
+    final w = <pw.Widget>[];
+    void section(String title) {
+      w.add(pw.SizedBox(height: 10));
+      w.add(pw.Container(padding: const pw.EdgeInsets.symmetric(horizontal: 10, vertical: 5), color: accentSoft,
+        child: pw.Text('▶  $title', style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold, color: accent, letterSpacing: 1))));
+      w.add(pw.SizedBox(height: 8));
+    }
+    section('CHI SONO');
+    for (final l in _personalInfo(d)) w.add(pw.Text(l, style: const pw.TextStyle(fontSize: 10)));
+    if (d.esperienze.isNotEmpty) {
+      section('LE MIE ESPERIENZE');
+      for (final e in d.esperienze) {
+        w.add(pw.Padding(padding: const pw.EdgeInsets.only(bottom: 8), child: pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+          pw.Container(width: 8, height: 8, margin: const pw.EdgeInsets.only(top: 4, right: 8), decoration: pw.BoxDecoration(shape: pw.BoxShape.circle, color: accent)),
+          pw.Expanded(child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+            pw.Text('${e.ruolo} @ ${e.azienda}', style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold, color: accent)),
+            if (e.dalAl.isNotEmpty) pw.Text(e.dalAl, style: pw.TextStyle(fontSize: 9, color: PdfColors.grey600)),
+            if (e.descrizione.isNotEmpty) pw.Text(e.descrizione, style: const pw.TextStyle(fontSize: 10)),
+          ])),
+        ])));
+      }
+    }
+    section('LINGUE & PATENTE');
+    w.add(pw.Wrap(spacing: 8, runSpacing: 6, children: [
+      pw.Container(padding: const pw.EdgeInsets.symmetric(horizontal: 10, vertical: 4), decoration: pw.BoxDecoration(border: pw.Border.all(color: accent, width: 1.2), borderRadius: pw.BorderRadius.circular(20)), child: pw.Text('${d.linguaMadre} ★', style: pw.TextStyle(fontSize: 10, color: accent, fontWeight: pw.FontWeight.bold))),
+      pw.Container(padding: const pw.EdgeInsets.symmetric(horizontal: 10, vertical: 4), decoration: pw.BoxDecoration(border: pw.Border.all(color: accent, width: 1.2), borderRadius: pw.BorderRadius.circular(20)), child: pw.Text('Italiano ${d.italianoLevel}', style: pw.TextStyle(fontSize: 10, color: accent))),
+      if (d.haPatente) ...d.patenti.map((p) => pw.Container(padding: const pw.EdgeInsets.symmetric(horizontal: 10, vertical: 4), color: accent, child: pw.Text('Patente $p', style: const pw.TextStyle(fontSize: 10, color: PdfColors.white)))),
+    ]));
+    return w;
+  }
+
+  // ════════════════════════════════════════════════════════════════
+  // 5. PROFESSIONALE — Two-column with dark green sidebar on left
+  // ════════════════════════════════════════════════════════════════
+  pw.Document _pdfProfessionale(_CvData d) {
+    final accent = PdfColor.fromHex('#1B5E20');
+    final doc = pw.Document();
+    doc.addPage(pw.Page(
+      pageFormat: PdfPageFormat.a4,
+      margin: pw.EdgeInsets.zero,
+      build: (ctx) => pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+        // SIDEBAR LEFT
+        pw.Container(width: 180, height: PdfPageFormat.a4.availableHeight + 36, color: accent, padding: const pw.EdgeInsets.all(20),
+          child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+            if (d.photo != null) pw.Center(child: pw.Container(width: 120, height: 120, decoration: pw.BoxDecoration(shape: pw.BoxShape.circle, border: pw.Border.all(color: PdfColors.white, width: 4)),
+              child: pw.ClipOval(child: pw.Image(d.photo!, fit: pw.BoxFit.cover)))),
+            pw.SizedBox(height: 20),
+            pw.Text('CONTATTI', style: pw.TextStyle(fontSize: 10, color: PdfColors.white, fontWeight: pw.FontWeight.bold, letterSpacing: 2)),
+            pw.Container(width: 30, height: 2, color: PdfColors.white, margin: const pw.EdgeInsets.symmetric(vertical: 6)),
+            if (d.telefono.isNotEmpty) pw.Text(d.telefono, style: const pw.TextStyle(fontSize: 9, color: PdfColors.white)),
+            if (d.email.isNotEmpty) pw.Padding(padding: const pw.EdgeInsets.only(top: 3), child: pw.Text(d.email, style: const pw.TextStyle(fontSize: 9, color: PdfColors.white))),
+            if (d.indirizzo.trim().replaceAll(',', '').trim().isNotEmpty) pw.Padding(padding: const pw.EdgeInsets.only(top: 3), child: pw.Text(d.indirizzo, style: const pw.TextStyle(fontSize: 9, color: PdfColors.white))),
+            pw.SizedBox(height: 20),
+            pw.Text('LINGUE', style: pw.TextStyle(fontSize: 10, color: PdfColors.white, fontWeight: pw.FontWeight.bold, letterSpacing: 2)),
+            pw.Container(width: 30, height: 2, color: PdfColors.white, margin: const pw.EdgeInsets.symmetric(vertical: 6)),
+            pw.Text('${d.linguaMadre} (madre)', style: const pw.TextStyle(fontSize: 9, color: PdfColors.white)),
+            pw.Text('Italiano — ${d.italianoLevel}', style: const pw.TextStyle(fontSize: 9, color: PdfColors.white)),
+            if (d.haPatente && d.patenti.isNotEmpty) ...[
+              pw.SizedBox(height: 20),
+              pw.Text('PATENTE', style: pw.TextStyle(fontSize: 10, color: PdfColors.white, fontWeight: pw.FontWeight.bold, letterSpacing: 2)),
+              pw.Container(width: 30, height: 2, color: PdfColors.white, margin: const pw.EdgeInsets.symmetric(vertical: 6)),
+              pw.Text(d.patenti.join('  '), style: pw.TextStyle(fontSize: 11, color: PdfColors.white, fontWeight: pw.FontWeight.bold)),
+            ],
+            pw.SizedBox(height: 20),
+            pw.Text('DATI', style: pw.TextStyle(fontSize: 10, color: PdfColors.white, fontWeight: pw.FontWeight.bold, letterSpacing: 2)),
+            pw.Container(width: 30, height: 2, color: PdfColors.white, margin: const pw.EdgeInsets.symmetric(vertical: 6)),
+            for (final l in _personalInfo(d)) pw.Padding(padding: const pw.EdgeInsets.only(bottom: 2), child: pw.Text(l, style: const pw.TextStyle(fontSize: 8.5, color: PdfColors.white))),
+          ])),
+        // MAIN CONTENT RIGHT
+        pw.Expanded(child: pw.Padding(padding: const pw.EdgeInsets.fromLTRB(28, 36, 36, 36), child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+          pw.Text(d.nome, style: pw.TextStyle(fontSize: 28, fontWeight: pw.FontWeight.bold, color: accent)),
+          if (d.posizione.isNotEmpty) pw.Padding(padding: const pw.EdgeInsets.only(top: 4), child: pw.Text(d.posizione.toUpperCase(), style: pw.TextStyle(fontSize: 12, color: PdfColors.grey600, letterSpacing: 3))),
+          pw.SizedBox(height: 18),
+          pw.Container(height: 2, color: accent, width: 40),
+          pw.SizedBox(height: 18),
+          if (d.esperienze.isNotEmpty) ...[
+            pw.Text('ESPERIENZE PROFESSIONALI', style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold, color: accent, letterSpacing: 1.5)),
+            pw.SizedBox(height: 10),
+            for (final e in d.esperienze) pw.Padding(padding: const pw.EdgeInsets.only(bottom: 12), child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+              if (e.dalAl.isNotEmpty) pw.Text(e.dalAl.toUpperCase(), style: pw.TextStyle(fontSize: 9, color: accent, letterSpacing: 1)),
+              pw.Text(e.ruolo, style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold)),
+              pw.Text(e.azienda, style: pw.TextStyle(fontSize: 10, fontStyle: pw.FontStyle.italic, color: PdfColors.grey700)),
+              if (e.descrizione.isNotEmpty) pw.Padding(padding: const pw.EdgeInsets.only(top: 4), child: pw.Text(e.descrizione, style: const pw.TextStyle(fontSize: 10))),
+            ])),
+          ],
+          pw.Spacer(),
+          _privacyFooter(),
+        ]))),
+      ]),
+    ));
+    return doc;
+  }
+
+  // ════════════════════════════════════════════════════════════════
+  // 6. ELEGANTE — Brown serif, centered with flourishes, italic titles
+  // ════════════════════════════════════════════════════════════════
+  pw.Document _pdfElegante(_CvData d) {
+    final accent = PdfColors.brown700;
+    final doc = pw.Document();
+    doc.addPage(pw.MultiPage(
+      pageFormat: PdfPageFormat.a4,
+      margin: const pw.EdgeInsets.all(56),
+      build: (_) => [
+        if (d.photo != null) pw.Center(child: pw.Container(width: 90, height: 90, decoration: pw.BoxDecoration(shape: pw.BoxShape.circle, border: pw.Border.all(color: accent, width: 1.5)),
+          child: pw.ClipOval(child: pw.Image(d.photo!, fit: pw.BoxFit.cover)))),
+        if (d.photo != null) pw.SizedBox(height: 14),
+        pw.Center(child: pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
+          pw.Container(width: 60, height: 0.6, color: accent),
+          pw.Padding(padding: const pw.EdgeInsets.symmetric(horizontal: 12), child: pw.Text(d.nome, style: pw.TextStyle(fontSize: 26, fontWeight: pw.FontWeight.normal, color: accent, fontStyle: pw.FontStyle.italic, letterSpacing: 1.5))),
+          pw.Container(width: 60, height: 0.6, color: accent),
+        ])),
+        pw.SizedBox(height: 6),
+        if (d.posizione.isNotEmpty) pw.Center(child: pw.Text(d.posizione, style: pw.TextStyle(fontSize: 11, color: PdfColors.grey700, fontStyle: pw.FontStyle.italic, letterSpacing: 2))),
+        pw.SizedBox(height: 6),
+        pw.Center(child: pw.Text([if (d.telefono.isNotEmpty) d.telefono, if (d.email.isNotEmpty) d.email].join('  ·  '), style: pw.TextStyle(fontSize: 9, color: PdfColors.grey600))),
+        pw.SizedBox(height: 24),
+        ..._eleganteSections(d, accent),
+        _privacyFooter(),
+      ],
+    ));
+    return doc;
+  }
+
+  List<pw.Widget> _eleganteSections(_CvData d, PdfColor accent) {
+    final w = <pw.Widget>[];
+    void section(String title) {
+      w.add(pw.SizedBox(height: 14));
+      w.add(pw.Center(child: pw.Text(title, style: pw.TextStyle(fontSize: 12, color: accent, fontStyle: pw.FontStyle.italic, fontWeight: pw.FontWeight.bold, letterSpacing: 3))));
+      w.add(pw.SizedBox(height: 4));
+      w.add(pw.Center(child: pw.Container(width: 30, height: 0.6, color: accent)));
+      w.add(pw.SizedBox(height: 10));
+    }
+    section('Profilo personale');
+    for (final l in _personalInfo(d)) w.add(pw.Center(child: pw.Text(l, style: const pw.TextStyle(fontSize: 10))));
+    if (d.esperienze.isNotEmpty) {
+      section('Esperienze');
+      for (final e in d.esperienze) {
+        w.add(pw.Padding(padding: const pw.EdgeInsets.only(bottom: 10), child: pw.Column(children: [
+          pw.Text(e.ruolo, style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold, color: accent, fontStyle: pw.FontStyle.italic)),
+          pw.Text('${e.azienda}${e.dalAl.isEmpty ? '' : ' — ${e.dalAl}'}', style: pw.TextStyle(fontSize: 10, color: PdfColors.grey600)),
+          if (e.descrizione.isNotEmpty) pw.Padding(padding: const pw.EdgeInsets.only(top: 3), child: pw.Text(e.descrizione, textAlign: pw.TextAlign.center, style: const pw.TextStyle(fontSize: 10))),
+        ])));
+      }
+    }
+    section('Lingue');
+    w.add(pw.Center(child: pw.Text('${d.linguaMadre}  ·  Italiano ${d.italianoLevel}', style: const pw.TextStyle(fontSize: 10))));
+    if (d.haPatente && d.patenti.isNotEmpty) { section('Patente'); w.add(pw.Center(child: pw.Text(d.patenti.join('  ·  '), style: const pw.TextStyle(fontSize: 10)))); }
+    return w;
+  }
+
+  // ════════════════════════════════════════════════════════════════
+  // 7. COLORATO — Each section has its own colored background block
+  // ════════════════════════════════════════════════════════════════
+  pw.Document _pdfColorato(_CvData d) {
+    final doc = pw.Document();
+    final c1 = PdfColors.purple700;
+    final c2 = PdfColors.pink600;
+    final c3 = PdfColors.teal600;
+    final c4 = PdfColors.orange600;
+    doc.addPage(pw.MultiPage(
+      pageFormat: PdfPageFormat.a4,
+      margin: const pw.EdgeInsets.all(36),
+      build: (_) => [
+        pw.Container(padding: const pw.EdgeInsets.all(20),
+          decoration: pw.BoxDecoration(gradient: pw.LinearGradient(colors: [c1, c2], begin: pw.Alignment.topLeft, end: pw.Alignment.bottomRight), borderRadius: pw.BorderRadius.circular(12)),
+          child: pw.Row(children: [
+            if (d.photo != null) ...[
+              pw.ClipOval(child: pw.Image(d.photo!, width: 80, height: 80, fit: pw.BoxFit.cover)),
+              pw.SizedBox(width: 18),
+            ],
+            pw.Expanded(child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+              pw.Text(d.nome, style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold, color: PdfColors.white)),
+              if (d.posizione.isNotEmpty) pw.Text(d.posizione, style: const pw.TextStyle(fontSize: 12, color: PdfColors.white)),
+              pw.SizedBox(height: 6),
+              pw.Text([if (d.telefono.isNotEmpty) d.telefono, if (d.email.isNotEmpty) d.email].join(' • '), style: const pw.TextStyle(fontSize: 9, color: PdfColors.white)),
+            ])),
+          ])),
+        pw.SizedBox(height: 14),
+        _coloredSection('DATI PERSONALI', c1, _personalInfo(d).map((l) => pw.Text(l, style: const pw.TextStyle(fontSize: 10, color: PdfColors.white))).toList()),
+        if (d.esperienze.isNotEmpty) ...[
+          pw.SizedBox(height: 8),
+          _coloredSection('ESPERIENZE', c2, d.esperienze.map((e) => pw.Padding(padding: const pw.EdgeInsets.only(bottom: 6), child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+            pw.Text('${e.ruolo} @ ${e.azienda}', style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold, color: PdfColors.white)),
+            if (e.dalAl.isNotEmpty) pw.Text(e.dalAl, style: const pw.TextStyle(fontSize: 9, color: PdfColors.white)),
+            if (e.descrizione.isNotEmpty) pw.Text(e.descrizione, style: const pw.TextStyle(fontSize: 9, color: PdfColors.white)),
+          ]))).toList()),
+        ],
+        pw.SizedBox(height: 8),
+        _coloredSection('LINGUE', c3, [pw.Text('${d.linguaMadre} (madre)  •  Italiano ${d.italianoLevel}', style: const pw.TextStyle(fontSize: 10, color: PdfColors.white))]),
+        if (d.haPatente && d.patenti.isNotEmpty) ...[
+          pw.SizedBox(height: 8),
+          _coloredSection('PATENTE', c4, [pw.Text(d.patenti.join('  •  '), style: pw.TextStyle(fontSize: 11, color: PdfColors.white, fontWeight: pw.FontWeight.bold))]),
+        ],
+        _privacyFooter(),
+      ],
+    ));
+    return doc;
+  }
+
+  pw.Widget _coloredSection(String title, PdfColor color, List<pw.Widget> items) {
+    return pw.Container(padding: const pw.EdgeInsets.all(14), decoration: pw.BoxDecoration(color: color, borderRadius: pw.BorderRadius.circular(10)),
+      child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+        pw.Text(title, style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold, color: PdfColors.white, letterSpacing: 2)),
+        pw.SizedBox(height: 8),
+        ...items,
+      ]));
+  }
+
+  // ════════════════════════════════════════════════════════════════
+  // 8. TECH — Monospace, code-style headers, skills as [tags]
+  // ════════════════════════════════════════════════════════════════
+  pw.Document _pdfTech(_CvData d) {
+    final accent = PdfColors.teal700;
+    final mono = pw.Font.courier();
+    final monoBold = pw.Font.courierBold();
+    final doc = pw.Document();
+    doc.addPage(pw.MultiPage(
+      pageFormat: PdfPageFormat.a4,
+      margin: const pw.EdgeInsets.all(40),
+      build: (_) => [
+        pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+          if (d.photo != null) ...[
+            pw.Container(width: 70, height: 70, decoration: pw.BoxDecoration(border: pw.Border.all(color: accent, width: 2)), child: pw.Image(d.photo!, fit: pw.BoxFit.cover)),
+            pw.SizedBox(width: 16),
+          ],
+          pw.Expanded(child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+            pw.Text('// ${d.nome}', style: pw.TextStyle(font: monoBold, fontSize: 22, color: accent)),
+            pw.SizedBox(height: 4),
+            if (d.posizione.isNotEmpty) pw.Text('> ${d.posizione}', style: pw.TextStyle(font: mono, fontSize: 10, color: PdfColors.grey700)),
+            pw.SizedBox(height: 8),
+            if (d.telefono.isNotEmpty) pw.Text('phone = "${d.telefono}";', style: pw.TextStyle(font: mono, fontSize: 9, color: PdfColors.grey800)),
+            if (d.email.isNotEmpty) pw.Text('email = "${d.email}";', style: pw.TextStyle(font: mono, fontSize: 9, color: PdfColors.grey800)),
+          ])),
+        ]),
+        pw.SizedBox(height: 14),
+        pw.Container(height: 1, color: accent),
+        pw.SizedBox(height: 14),
+        ..._techSections(d, accent, mono, monoBold),
+        _privacyFooter(),
+      ],
+    ));
+    return doc;
+  }
+
+  List<pw.Widget> _techSections(_CvData d, PdfColor accent, pw.Font mono, pw.Font monoBold) {
+    final w = <pw.Widget>[];
+    void section(String title) {
+      w.add(pw.SizedBox(height: 12));
+      w.add(pw.Text('# $title', style: pw.TextStyle(font: monoBold, fontSize: 12, color: accent)));
+      w.add(pw.Container(margin: const pw.EdgeInsets.only(top: 4, bottom: 8), child: pw.Text('─' * 50, style: pw.TextStyle(font: mono, fontSize: 8, color: accent))));
+    }
+    section('PROFILE');
+    for (final l in _personalInfo(d)) w.add(pw.Text('  $l', style: pw.TextStyle(font: mono, fontSize: 9, color: PdfColors.grey800)));
+    if (d.esperienze.isNotEmpty) {
+      section('EXPERIENCE');
+      for (final e in d.esperienze) {
+        w.add(pw.Padding(padding: const pw.EdgeInsets.only(bottom: 8), child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+          pw.Text('[${e.dalAl}] ${e.ruolo} @ ${e.azienda}', style: pw.TextStyle(font: monoBold, fontSize: 10, color: PdfColors.grey900)),
+          if (e.descrizione.isNotEmpty) pw.Text('  ${e.descrizione}', style: pw.TextStyle(font: mono, fontSize: 9)),
+        ])));
+      }
+    }
+    section('LANGUAGES');
+    w.add(pw.Wrap(spacing: 6, runSpacing: 6, children: [
+      pw.Container(padding: const pw.EdgeInsets.symmetric(horizontal: 8, vertical: 3), color: accent, child: pw.Text('[${d.linguaMadre}]', style: pw.TextStyle(font: monoBold, fontSize: 9, color: PdfColors.white))),
+      pw.Container(padding: const pw.EdgeInsets.symmetric(horizontal: 8, vertical: 3), decoration: pw.BoxDecoration(border: pw.Border.all(color: accent, width: 1)), child: pw.Text('[Italiano:${d.italianoLevel}]', style: pw.TextStyle(font: monoBold, fontSize: 9, color: accent))),
+    ]));
+    if (d.haPatente && d.patenti.isNotEmpty) {
+      section('LICENSE');
+      w.add(pw.Wrap(spacing: 6, children: d.patenti.map((p) => pw.Container(padding: const pw.EdgeInsets.symmetric(horizontal: 8, vertical: 3), decoration: pw.BoxDecoration(border: pw.Border.all(color: accent, width: 1)), child: pw.Text('[$p]', style: pw.TextStyle(font: monoBold, fontSize: 9, color: accent)))).toList()));
+    }
+    return w;
+  }
+
+  // ════════════════════════════════════════════════════════════════
+  // 9. SEMPLICE — Pure black & white, no decorations, just text
+  // ════════════════════════════════════════════════════════════════
+  pw.Document _pdfSemplice(_CvData d) {
+    final doc = pw.Document();
+    doc.addPage(pw.MultiPage(
+      pageFormat: PdfPageFormat.a4,
+      margin: const pw.EdgeInsets.all(60),
+      build: (_) => [
+        pw.Text(d.nome.toUpperCase(), style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold)),
+        if (d.telefono.isNotEmpty) pw.Text(d.telefono, style: const pw.TextStyle(fontSize: 10)),
+        if (d.email.isNotEmpty) pw.Text(d.email, style: const pw.TextStyle(fontSize: 10)),
+        if (d.indirizzo.trim().replaceAll(',', '').trim().isNotEmpty) pw.Text(d.indirizzo, style: const pw.TextStyle(fontSize: 10)),
+        pw.SizedBox(height: 16),
+        if (d.posizione.isNotEmpty) ...[
+          pw.Text('Posizione cercata: ${d.posizione}', style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold)),
+          pw.SizedBox(height: 12),
+        ],
+        pw.Text('DATI PERSONALI', style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold)),
+        pw.SizedBox(height: 4),
+        for (final l in _personalInfo(d)) pw.Text(l, style: const pw.TextStyle(fontSize: 10)),
+        if (d.esperienze.isNotEmpty) ...[
+          pw.SizedBox(height: 12),
+          pw.Text('ESPERIENZE LAVORATIVE', style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold)),
+          pw.SizedBox(height: 4),
+          for (final e in d.esperienze) pw.Padding(padding: const pw.EdgeInsets.only(bottom: 6), child: pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
+            pw.Text('${e.ruolo}, ${e.azienda}${e.dalAl.isEmpty ? '' : ' (${e.dalAl})'}', style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold)),
+            if (e.descrizione.isNotEmpty) pw.Text(e.descrizione, style: const pw.TextStyle(fontSize: 10)),
+          ])),
+        ],
+        pw.SizedBox(height: 12),
+        pw.Text('LINGUE', style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold)),
+        pw.Text('Lingua madre: ${d.linguaMadre}', style: const pw.TextStyle(fontSize: 10)),
+        pw.Text('Italiano: ${d.italianoLevel}', style: const pw.TextStyle(fontSize: 10)),
+        if (d.haPatente && d.patenti.isNotEmpty) ...[
+          pw.SizedBox(height: 12),
+          pw.Text('PATENTE', style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold)),
+          pw.Text(d.patenti.join(', '), style: const pw.TextStyle(fontSize: 10)),
+        ],
+        _privacyFooter(),
+      ],
+    ));
+    return doc;
   }
 }
 

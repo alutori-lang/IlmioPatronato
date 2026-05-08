@@ -195,13 +195,26 @@ class GeminiService {
       }
 
       debugPrint('[Gemini] POST $_model (mime=$mimeType, base64Len=${base64Data.length})');
-      final response = await http.post(
-        _endpoint(_model),
-        headers: _headers,
-        body: jsonEncode(body),
-      ).timeout(const Duration(seconds: 90));
 
-      debugPrint('[Gemini] status=${response.statusCode} bodyLen=${response.body.length}');
+      // Retry on 429 (rate limit) / 503 (overload) with exponential backoff:
+      // 1.5s, 3s, 6s. Total max wait ≈ 10.5s before surfacing the error.
+      http.Response? response;
+      int delayMs = 1500;
+      for (int attempt = 0; attempt < 3; attempt++) {
+        response = await http.post(
+          _endpoint(_model),
+          headers: _headers,
+          body: jsonEncode(body),
+        ).timeout(const Duration(seconds: 90));
+
+        if (response.statusCode != 429 && response.statusCode != 503) break;
+        debugPrint('[Gemini] rate-limited (${response.statusCode}), retrying in ${delayMs}ms (attempt ${attempt + 1}/3)');
+        if (attempt == 2) break;
+        await Future.delayed(Duration(milliseconds: delayMs));
+        delayMs *= 2;
+      }
+
+      debugPrint('[Gemini] status=${response!.statusCode} bodyLen=${response.body.length}');
       if (response.statusCode != 200) {
         debugPrint('[Gemini] body: ${response.body.substring(0, response.body.length.clamp(0, 1500))}');
       }
@@ -265,7 +278,9 @@ class GeminiService {
       }
       return AiResponse.error('Risposta vuota (finishReason=$finishReason).');
     } else if (response.statusCode == 429) {
-      return AiResponse.error('Troppe richieste. Riprova tra qualche secondo.');
+      return AiResponse.error('Servizio AI momentaneamente sovraccarico. Riprova tra 30 secondi.');
+    } else if (response.statusCode == 503) {
+      return AiResponse.error('Servizio AI temporaneamente non disponibile. Riprova tra qualche minuto.');
     } else if (response.statusCode == 401 || response.statusCode == 403) {
       return AiResponse.error('API Key non valida o senza permessi.');
     } else {

@@ -7,6 +7,7 @@ import '../../core/services/language_service.dart';
 import '../../core/services/theme_service.dart';
 import '../../core/localization/app_strings.dart';
 import 'info_app_screen.dart';
+import '../strumenti/cv_europass_screen.dart';
 import '../strumenti/documento_wallet_screen.dart';
 import 'notifiche_screen.dart';
 import 'scanner_doc_screen.dart';
@@ -123,6 +124,7 @@ class ProfiloScreen extends StatelessWidget {
     final tools = [
       _ToolData(Icons.document_scanner, s.toolScanner, AppColors.iconBlue, false, 'scanner'),
       _ToolData(Icons.translate, s.toolTranslator, AppColors.iconGreen, false, 'translator'),
+      _ToolData(Icons.description, 'Curriculum Vitae', AppColors.iconPurple, false, 'cv'),
       _ToolData(Icons.track_changes, s.toolTracker, AppColors.iconOrange, false, 'tracker'),
       _ToolData(Icons.account_balance_wallet, s.toolWallet, AppColors.iconGreen, false, 'wallet'),
       _ToolData(Icons.notifications_active, s.toolNotifications, AppColors.iconOrange, false, 'notif'),
@@ -143,6 +145,10 @@ class ProfiloScreen extends StatelessWidget {
               }
               if (t.id == 'translator') {
                 Navigator.push(context, MaterialPageRoute(builder: (_) => const TranslatorScreen()));
+                return;
+              }
+              if (t.id == 'cv') {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => const CvEuropassScreen()));
                 return;
               }
               if (t.id == 'tracker') {

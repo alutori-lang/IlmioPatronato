@@ -22,7 +22,6 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
   DateTime? _dataNascita;
   String _sesso = 'M';
   _ComuneEntry? _selectedComune;
-  final _comuneSearchController = TextEditingController();
 
   // ── Result ──
   bool _showResult = false;
@@ -38,12 +37,6 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
   late AnimationController _animController;
   late Animation<double> _fadeAnim;
 
-  // ── Filtered comuni list ──
-  List<_ComuneEntry> _filteredComuni = [];
-  bool _showComuneDropdown = false;
-  final FocusNode _comuneFocusNode = FocusNode();
-  OverlayEntry? _overlayEntry;
-
   @override
   void initState() {
     super.initState();
@@ -53,73 +46,28 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
     );
     _fadeAnim =
         CurvedAnimation(parent: _animController, curve: Curves.easeOut);
-    _filteredComuni = _allComuni;
-
-    _comuneSearchController.addListener(_filterComuni);
-    _comuneFocusNode.addListener(() {
-      if (_comuneFocusNode.hasFocus) {
-        _showOverlay();
-      } else {
-        _removeOverlay();
-      }
-    });
   }
 
   @override
   void dispose() {
     _cognomeController.dispose();
     _nomeController.dispose();
-    _comuneSearchController.dispose();
-    _comuneFocusNode.dispose();
     _animController.dispose();
-    _removeOverlay();
     super.dispose();
   }
 
-  void _filterComuni() {
-    final query = _comuneSearchController.text.toLowerCase().trim();
-    setState(() {
-      if (query.isEmpty) {
-        _filteredComuni = _allComuni;
-      } else {
-        _filteredComuni = _allComuni
-            .where((c) => c.nome.toLowerCase().contains(query))
-            .toList();
-      }
-    });
-    _removeOverlay();
-    if (_comuneFocusNode.hasFocus) {
-      _showOverlay();
-    }
-  }
-
-  void _showOverlay() {
-    _removeOverlay();
-    final renderBox = context.findRenderObject() as RenderBox?;
-    if (renderBox == null) return;
-
-    _overlayEntry = OverlayEntry(
-      builder: (context) {
-        return Positioned.fill(
-          child: GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () {
-              _comuneFocusNode.unfocus();
-            },
-            child: const SizedBox.expand(),
-          ),
-        );
-      },
+  Future<void> _pickComune() async {
+    final result = await showModalBottomSheet<_ComuneEntry>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Theme.of(context).cardColor,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (_) => const _ComunePickerSheet(),
     );
-    Overlay.of(context).insert(_overlayEntry!);
-    setState(() => _showComuneDropdown = true);
-  }
-
-  void _removeOverlay() {
-    _overlayEntry?.remove();
-    _overlayEntry = null;
-    if (_showComuneDropdown) {
-      setState(() => _showComuneDropdown = false);
+    if (result != null) {
+      setState(() => _selectedComune = result);
     }
   }
 
@@ -266,7 +214,10 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
   void _showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
+        content: Text(
+          message,
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+        ),
         backgroundColor: const Color(0xFFF44336),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -326,7 +277,6 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: CustomScrollView(
@@ -449,10 +399,10 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
       child: Text(title,
-          style: const TextStyle(
+          style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w700,
-              color: AppColors.textDark)),
+              color: Theme.of(context).colorScheme.onSurface)),
     );
   }
 
@@ -484,6 +434,10 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
 
   // ── Data di nascita + Sesso ──
   Widget _buildDataSessoSection() {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final inputBg = isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey.shade50;
+    final inputBorder = isDark ? Colors.white24 : Colors.grey.shade200;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.all(16),
@@ -497,13 +451,13 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
               padding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               decoration: BoxDecoration(
-                color: Colors.grey.shade50,
+                color: inputBg,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade200),
+                border: Border.all(color: inputBorder),
               ),
               child: Row(
                 children: [
-                  Icon(Icons.calendar_today,
+                  const Icon(Icons.calendar_today,
                       size: 20, color: AppColors.primary),
                   const SizedBox(width: 12),
                   Expanded(
@@ -517,13 +471,13 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
                             ? FontWeight.w600
                             : FontWeight.w400,
                         color: _dataNascita != null
-                            ? AppColors.textDark
-                            : AppColors.textLight,
+                            ? theme.colorScheme.onSurface
+                            : theme.colorScheme.onSurface.withValues(alpha: 0.5),
                       ),
                     ),
                   ),
                   Icon(Icons.arrow_drop_down,
-                      color: AppColors.textMedium),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.6)),
                 ],
               ),
             ),
@@ -532,11 +486,11 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
           // Gender selector
           Row(
             children: [
-              const Text('Sesso:',
+              Text('Sesso:',
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textDark)),
+                      color: theme.colorScheme.onSurface)),
               const SizedBox(width: 20),
               Expanded(
                 child: Row(
@@ -556,6 +510,11 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
 
   Widget _buildGenderOption(String value, String label, IconData icon) {
     final selected = _sesso == value;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final inputBg = isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey.shade50;
+    final inputBorder = isDark ? Colors.white24 : Colors.grey.shade200;
+    final muted = theme.colorScheme.onSurface.withValues(alpha: 0.65);
     return Expanded(
       child: GestureDetector(
         onTap: () => setState(() => _sesso = value),
@@ -564,10 +523,10 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
           decoration: BoxDecoration(
             color: selected
                 ? AppColors.primary.withValues(alpha: 0.1)
-                : Colors.grey.shade50,
+                : inputBg,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: selected ? AppColors.primary : Colors.grey.shade200,
+              color: selected ? AppColors.primary : inputBorder,
               width: selected ? 2 : 1,
             ),
           ),
@@ -578,7 +537,7 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
                   size: 20,
                   color: selected
                       ? AppColors.primary
-                      : AppColors.textMedium),
+                      : muted),
               const SizedBox(width: 6),
               Text(
                 label,
@@ -588,7 +547,7 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
                       selected ? FontWeight.w700 : FontWeight.w500,
                   color: selected
                       ? AppColors.primary
-                      : AppColors.textMedium,
+                      : muted,
                 ),
               ),
             ],
@@ -600,6 +559,8 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
 
   // ── Comune / Stato di nascita ──
   Widget _buildComuneSection() {
+    final theme = Theme.of(context);
+    final c = _selectedComune;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.all(16),
@@ -607,177 +568,76 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Cerca il comune italiano o lo stato estero di nascita',
+          Text(
+            'Tocca per cercare il comune italiano o lo stato estero di nascita',
             style: TextStyle(
                 fontSize: 12,
-                color: AppColors.textMedium,
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                 height: 1.3),
           ),
           const SizedBox(height: 12),
-          // Search field
-          TextField(
-            controller: _comuneSearchController,
-            focusNode: _comuneFocusNode,
-            style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-                color: AppColors.textDark),
-            decoration: InputDecoration(
-              labelText: 'Comune o Stato di nascita',
-              labelStyle: const TextStyle(
-                  fontSize: 13, color: AppColors.textMedium),
-              hintText: 'Es: Roma, Milano, Albania...',
-              hintStyle: TextStyle(
-                  fontSize: 13, color: Colors.grey.shade400),
-              prefixIcon: const Icon(Icons.search,
-                  color: AppColors.primary, size: 20),
-              suffixIcon: _comuneSearchController.text.isNotEmpty
-                  ? IconButton(
-                      icon: const Icon(Icons.clear, size: 18),
-                      onPressed: () {
-                        _comuneSearchController.clear();
-                        setState(() => _selectedComune = null);
-                      },
-                    )
-                  : null,
-              filled: true,
-              fillColor: Colors.grey.shade50,
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey.shade200)),
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey.shade200)),
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(
-                      color: AppColors.primary, width: 2)),
-              contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16, vertical: 14),
-            ),
-          ),
-          // Selected comune chip
-          if (_selectedComune != null) ...[
-            const SizedBox(height: 10),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 12, vertical: 8),
+          GestureDetector(
+            onTap: _pickComune,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
               decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.08),
-                borderRadius: BorderRadius.circular(10),
+                color: theme.brightness == Brightness.dark
+                    ? Colors.white.withValues(alpha: 0.05)
+                    : Colors.grey.shade50,
+                borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                    color: AppColors.primary.withValues(alpha: 0.3)),
+                    color: c != null
+                        ? AppColors.primary
+                        : (theme.brightness == Brightness.dark ? Colors.white24 : Colors.grey.shade200),
+                    width: c != null ? 2 : 1),
               ),
               child: Row(
                 children: [
                   Icon(
-                    _selectedComune!.isEstero
-                        ? Icons.public
-                        : Icons.location_city,
-                    size: 18,
+                    c == null
+                        ? Icons.search
+                        : (c.isEstero ? Icons.public : Icons.location_city),
                     color: AppColors.primary,
+                    size: 22,
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 12),
                   Expanded(
-                    child: Text(
-                      '${_selectedComune!.nome}  (${_selectedComune!.codice})',
-                      style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.primary),
-                    ),
+                    child: c == null
+                        ? Text(
+                            'Cerca: Roma, Milano, Albania, Marocco…',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: theme.colorScheme.onSurface.withValues(alpha: 0.5)),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(c.nome,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w700,
+                                      color: theme.colorScheme.onSurface)),
+                              Text('Codice catastale: ${c.codice}',
+                                  style: TextStyle(
+                                      fontSize: 11,
+                                      color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                                      fontFamily: 'monospace')),
+                            ],
+                          ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _selectedComune = null;
-                        _comuneSearchController.clear();
-                      });
-                    },
-                    child: const Icon(Icons.close,
-                        size: 16, color: AppColors.primary),
-                  ),
-                ],
-              ),
-            ),
-          ],
-          // Dropdown list
-          if (_showComuneDropdown && _selectedComune == null)
-            Container(
-              margin: const EdgeInsets.only(top: 6),
-              constraints: const BoxConstraints(maxHeight: 220),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade200),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.08),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: _filteredComuni.isEmpty
-                  ? const Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Text('Nessun risultato trovato',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.textLight)),
+                  if (c != null)
+                    GestureDetector(
+                      onTap: () => setState(() => _selectedComune = null),
+                      child: Icon(Icons.close,
+                          size: 18, color: theme.colorScheme.onSurface.withValues(alpha: 0.5)),
                     )
-                  : ListView.separated(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      shrinkWrap: true,
-                      itemCount: _filteredComuni.length > 50
-                          ? 50
-                          : _filteredComuni.length,
-                      separatorBuilder: (_, _) => Divider(
-                          height: 1,
-                          color: Colors.grey.shade100),
-                      itemBuilder: (context, index) {
-                        final comune = _filteredComuni[index];
-                        return ListTile(
-                          dense: true,
-                          visualDensity: const VisualDensity(
-                              vertical: -2),
-                          leading: Icon(
-                            comune.isEstero
-                                ? Icons.public
-                                : Icons.location_city,
-                            size: 18,
-                            color: comune.isEstero
-                                ? const Color(0xFFE65100)
-                                : AppColors.primary,
-                          ),
-                          title: Text(
-                            comune.nome,
-                            style: const TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.textDark),
-                          ),
-                          trailing: Text(
-                            comune.codice,
-                            style: const TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.textLight,
-                                fontFamily: 'monospace'),
-                          ),
-                          onTap: () {
-                            setState(() {
-                              _selectedComune = comune;
-                              _comuneSearchController.text =
-                                  comune.nome;
-                            });
-                            _comuneFocusNode.unfocus();
-                          },
-                        );
-                      },
-                    ),
+                  else
+                    Icon(Icons.arrow_drop_down,
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.5)),
+                ],
+              ),
             ),
+          ),
         ],
       ),
     );
@@ -858,15 +718,19 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
                   color: Colors.white.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Text(
-                  _codiceFiscale,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 28,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 3,
-                    fontFamily: 'monospace',
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    _codiceFiscale,
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 3,
+                      fontFamily: 'monospace',
+                    ),
                   ),
                 ),
               ),
@@ -908,6 +772,7 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
 
   // ── Breakdown card ──
   Widget _buildBreakdownCard() {
+    final theme = Theme.of(context);
     return FadeTransition(
       opacity: _fadeAnim,
       child: Container(
@@ -917,16 +782,16 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Composizione del Codice',
+            Text('Composizione del Codice',
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
-                    color: AppColors.textDark)),
+                    color: theme.colorScheme.onSurface)),
             const SizedBox(height: 6),
-            const Text(
+            Text(
                 'Ogni parte del codice fiscale deriva dai tuoi dati anagrafici',
                 style: TextStyle(
-                    fontSize: 11, color: AppColors.textLight)),
+                    fontSize: 11, color: theme.colorScheme.onSurface.withValues(alpha: 0.6))),
             const SizedBox(height: 16),
             // Visual breakdown
             _buildColoredBreakdown(),
@@ -972,69 +837,76 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
       _CFPart(_parteCheck, 'CK', const Color(0xFF37474F)),
     ];
 
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
       decoration: BoxDecoration(
-        color: Colors.grey.shade50,
+        color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey.shade50,
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Column(
-        children: [
-          // CF characters with colors
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              for (final part in parts)
-                for (int i = 0; i < part.value.length; i++)
-                  Container(
-                    width: 20,
-                    height: 28,
-                    margin: const EdgeInsets.symmetric(horizontal: 0.5),
-                    decoration: BoxDecoration(
-                      color: part.color.withValues(alpha: 0.12),
-                      borderRadius: BorderRadius.circular(4),
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // CF characters with colors
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                for (final part in parts)
+                  for (int i = 0; i < part.value.length; i++)
+                    Container(
+                      width: 20,
+                      height: 28,
+                      margin: const EdgeInsets.symmetric(horizontal: 0.5),
+                      decoration: BoxDecoration(
+                        color: part.color.withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        part.value[i],
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w800,
+                          color: part.color,
+                          fontFamily: 'monospace',
+                        ),
+                      ),
                     ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            // Labels row
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                for (final part in parts)
+                  Container(
+                    width: (21.0 * part.value.length),
                     alignment: Alignment.center,
                     child: Text(
-                      part.value[i],
+                      part.label,
                       style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w800,
+                        fontSize: 8,
+                        fontWeight: FontWeight.w700,
                         color: part.color,
-                        fontFamily: 'monospace',
+                        letterSpacing: 0.3,
                       ),
                     ),
                   ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          // Labels row
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              for (final part in parts)
-                Container(
-                  width: (21.0 * part.value.length),
-                  alignment: Alignment.center,
-                  child: Text(
-                    part.label,
-                    style: TextStyle(
-                      fontSize: 8,
-                      fontWeight: FontWeight.w700,
-                      color: part.color,
-                      letterSpacing: 0.3,
-                    ),
-                  ),
-                ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _breakdownRow(String label, String code, String detail,
       {required Color color}) {
+    final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Row(
@@ -1064,14 +936,14 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(label,
-                    style: const TextStyle(
+                    style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.textDark)),
+                        color: theme.colorScheme.onSurface)),
                 Text(detail,
-                    style: const TextStyle(
+                    style: TextStyle(
                         fontSize: 11,
-                        color: AppColors.textLight)),
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.6))),
               ],
             ),
           ),
@@ -1093,7 +965,7 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
   // ─────────────────────────────────────────────────────
   BoxDecoration _cardDecoration() {
     return BoxDecoration(
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       borderRadius: BorderRadius.circular(16),
       boxShadow: [
         BoxShadow(
@@ -1110,28 +982,29 @@ class _CodiceFiscaleScreenState extends State<CodiceFiscaleScreen>
     required IconData icon,
     String? hint,
   }) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     return TextField(
       controller: controller,
       textCapitalization: TextCapitalization.characters,
-      style: const TextStyle(
+      style: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w600,
-          color: AppColors.textDark),
+          color: theme.colorScheme.onSurface),
       decoration: InputDecoration(
         labelText: label,
-        labelStyle:
-            const TextStyle(fontSize: 13, color: AppColors.textMedium),
+        labelStyle: TextStyle(fontSize: 13, color: theme.colorScheme.onSurface.withValues(alpha: 0.6)),
         hintText: hint,
-        hintStyle: TextStyle(fontSize: 13, color: Colors.grey.shade400),
+        hintStyle: TextStyle(fontSize: 13, color: theme.colorScheme.onSurface.withValues(alpha: 0.4)),
         prefixIcon: Icon(icon, color: AppColors.primary, size: 20),
         filled: true,
-        fillColor: Colors.grey.shade50,
+        fillColor: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey.shade50,
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: Colors.grey.shade200)),
+            borderSide: BorderSide(color: isDark ? Colors.white24 : Colors.grey.shade200)),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: Colors.grey.shade200)),
+            borderSide: BorderSide(color: isDark ? Colors.white24 : Colors.grey.shade200)),
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide:
@@ -1161,6 +1034,142 @@ class _ComuneEntry {
   final String codice;
   final bool isEstero;
   const _ComuneEntry(this.nome, this.codice, {this.isEstero = false});
+}
+
+// ─────────────────────────────────────────────────────
+// COMUNE PICKER BOTTOM SHEET (searchable)
+// ─────────────────────────────────────────────────────
+class _ComunePickerSheet extends StatefulWidget {
+  const _ComunePickerSheet();
+
+  @override
+  State<_ComunePickerSheet> createState() => _ComunePickerSheetState();
+}
+
+class _ComunePickerSheetState extends State<_ComunePickerSheet> {
+  final _searchController = TextEditingController();
+  late List<_ComuneEntry> _filtered;
+
+  @override
+  void initState() {
+    super.initState();
+    _filtered = _allComuni;
+    _searchController.addListener(_onSearch);
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _onSearch() {
+    final q = _searchController.text.toLowerCase().trim();
+    setState(() {
+      _filtered = q.isEmpty
+          ? _allComuni
+          : _allComuni.where((c) => c.nome.toLowerCase().contains(q)).toList();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final viewInsets = MediaQuery.of(context).viewInsets.bottom;
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.85,
+      child: Padding(
+        padding: EdgeInsets.only(bottom: viewInsets),
+        child: Column(
+          children: [
+            const SizedBox(height: 10),
+            Container(
+              width: 40, height: 4,
+              decoration: BoxDecoration(
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(height: 14),
+            Text('Comune o Stato di nascita',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: theme.colorScheme.onSurface)),
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: TextField(
+                controller: _searchController,
+                autofocus: true,
+                style: TextStyle(color: theme.colorScheme.onSurface),
+                decoration: InputDecoration(
+                  hintText: 'Cerca: Roma, Milano, Albania…',
+                  hintStyle: TextStyle(color: theme.colorScheme.onSurface.withValues(alpha: 0.4)),
+                  prefixIcon: const Icon(Icons.search, color: AppColors.primary),
+                  suffixIcon: _searchController.text.isNotEmpty
+                      ? IconButton(
+                          icon: Icon(Icons.clear, size: 20, color: theme.colorScheme.onSurface.withValues(alpha: 0.5)),
+                          onPressed: () => _searchController.clear(),
+                        )
+                      : null,
+                  filled: true,
+                  fillColor: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey.shade50,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: isDark ? Colors.white24 : Colors.grey.shade200),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: isDark ? Colors.white24 : Colors.grey.shade200),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Expanded(
+              child: _filtered.isEmpty
+                  ? Center(
+                      child: Text(
+                        'Nessun risultato.\nProva con un altro nome.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: theme.colorScheme.onSurface.withValues(alpha: 0.5), fontSize: 13),
+                      ),
+                    )
+                  : ListView.separated(
+                      itemCount: _filtered.length,
+                      separatorBuilder: (_, _) => Divider(
+                        height: 1,
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.08),
+                      ),
+                      itemBuilder: (_, i) {
+                        final c = _filtered[i];
+                        return ListTile(
+                          leading: Icon(
+                            c.isEstero ? Icons.public : Icons.location_city,
+                            color: c.isEstero ? const Color(0xFFE65100) : AppColors.primary,
+                          ),
+                          title: Text(c.nome,
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w600, color: theme.colorScheme.onSurface)),
+                          trailing: Text(c.codice,
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: theme.colorScheme.onSurface.withValues(alpha: 0.55),
+                                  fontFamily: 'monospace')),
+                          onTap: () => Navigator.pop(context, c),
+                        );
+                      },
+                    ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════
