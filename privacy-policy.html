@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - Il Mio Patronato</title>
+    <title>Privacy Policy - Il Mio Patronato / Bonus Italia</title>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; color: #333; line-height: 1.7; }
         h1 { color: #0D2D5E; border-bottom: 3px solid #1565C0; padding-bottom: 10px; }
@@ -12,83 +12,139 @@
         ul { padding-left: 20px; }
         li { margin-bottom: 8px; }
         .contact { background: #f5f8fc; padding: 20px; border-radius: 10px; margin-top: 30px; }
+        .important { background: #fff8e1; border-left: 4px solid #ffa000; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
     </style>
 </head>
 <body>
 
 <h1>Privacy Policy</h1>
-<p class="last-update">Ultimo aggiornamento: 14 marzo 2026</p>
+<p class="last-update">Ultimo aggiornamento: 19 maggio 2026</p>
 
-<p><strong>Il Mio Patronato</strong> ("l'App") è un'applicazione mobile sviluppata da <strong>MioPatronato</strong> ("noi", "nostro"). Questa Privacy Policy descrive come raccogliamo, utilizziamo e proteggiamo le informazioni degli utenti.</p>
+<p><strong>Il Mio Patronato</strong> / <strong>Bonus Italia: ISEE NASpI 730</strong> ("l'App") è un'applicazione mobile sviluppata da <strong>Adnan Riaz</strong> ("noi", "nostro"). Questa Privacy Policy descrive quali dati l'App tratta, come vengono utilizzati e a quali terze parti vengono trasmessi.</p>
 
-<h2>1. Informazioni che raccogliamo</h2>
-<p>L'App <strong>NON raccoglie dati personali identificabili</strong>. Nello specifico:</p>
+<div class="important">
+    <strong>In sintesi:</strong> L'App non richiede registrazione e non ha un proprio server. Tuttavia, quando l'utente utilizza le funzioni basate su intelligenza artificiale (chat con AI, analisi di documenti, ecc.), i contenuti che l'utente sceglie di inviare vengono trasmessi a <strong>Google Gemini API</strong> (Google LLC) per essere elaborati. Nessun dato viene inviato senza un'azione esplicita dell'utente.
+</div>
+
+<h2>1. Dati raccolti dall'App</h2>
+<p>L'App <strong>non</strong> richiede registrazione, login, nome, email o numero di telefono. Non raccogliamo automaticamente identificativi personali.</p>
+<p>L'App può accedere ai seguenti dati <strong>solo quando l'utente compie un'azione esplicita</strong> (ad esempio scattare una foto, selezionare un PDF, scrivere un messaggio):</p>
 <ul>
-    <li>Non richiediamo registrazione o login</li>
-    <li>Non raccogliamo nome, email, telefono o indirizzo</li>
-    <li>Non raccogliamo dati di posizione (GPS)</li>
-    <li>Non accediamo a fotocamera, contatti, calendario o file</li>
-    <li>Non raccogliamo dati finanziari o sanitari</li>
+    <li><strong>Fotocamera / Foto</strong> — usate solo se l'utente sceglie di acquisire o caricare un documento (es. ISEE, busta paga, documento d'identità) per farlo analizzare dall'AI.</li>
+    <li><strong>File / Documenti</strong> — usati solo se l'utente seleziona manualmente un PDF da analizzare.</li>
+    <li><strong>Testo digitato dall'utente</strong> — domande o messaggi inseriti nelle funzioni di chat AI.</li>
 </ul>
 
-<h2>2. Dati memorizzati localmente</h2>
-<p>L'App salva alcune preferenze <strong>esclusivamente sul dispositivo dell'utente</strong> (tramite SharedPreferences):</p>
+<h2>2. Dati memorizzati localmente sul dispositivo</h2>
+<p>L'App salva sul dispositivo dell'utente (tramite SharedPreferences e file system locale):</p>
 <ul>
-    <li>Lingua selezionata dall'utente</li>
-    <li>Dati inseriti nei moduli per l'auto-compilazione (nome, cognome, codice fiscale, indirizzo) — questi dati restano sul dispositivo e non vengono mai trasmessi a server esterni</li>
-    <li>Documenti salvati nel Document Wallet — archiviati solo localmente</li>
+    <li>Lingua selezionata e preferenze di interfaccia.</li>
+    <li>Dati inseriti dall'utente per la compilazione automatica dei moduli (nome, cognome, codice fiscale, indirizzo). Questi dati restano sul dispositivo.</li>
+    <li>Documenti salvati dall'utente nel "Document Wallet" — archiviati solo localmente.</li>
 </ul>
 <p>Questi dati possono essere cancellati in qualsiasi momento disinstallando l'App o cancellando i dati dell'App dalle impostazioni del dispositivo.</p>
 
-<h2>3. Pubblicità</h2>
-<p>L'App utilizza <strong>Google AdMob</strong> per mostrare annunci pubblicitari. Google AdMob potrebbe raccogliere e utilizzare dati secondo la propria privacy policy, tra cui:</p>
+<h2>3. Dati trasmessi a Google Gemini API (terza parte AI)</h2>
+<p>L'App utilizza <strong>Google Gemini API</strong> (fornita da Google LLC) per le proprie funzionalità di intelligenza artificiale. Le seguenti funzioni dell'App inviano dati a Google Gemini <strong>solo al momento dell'azione dell'utente</strong> e <strong>solo per il contenuto che l'utente decide di inviare</strong>:</p>
+
+<p><strong>Funzioni di chat testuale</strong> (vengono inviate le domande digitate dall'utente e lo storico della conversazione corrente):</p>
 <ul>
-    <li>Identificatori del dispositivo (Advertising ID)</li>
+    <li>AI Avvocato — assistenza legale</li>
+    <li>Sbroglia — assistente generale</li>
+    <li>Guide Documenti — spiegazioni su documenti italiani</li>
+    <li>Agevolazioni — chat sulle agevolazioni statali</li>
+</ul>
+
+<p><strong>Funzioni di analisi documenti</strong> (vengono inviati a Google Gemini, in forma di immagine o PDF, i file che l'utente sceglie esplicitamente di caricare):</p>
+<ul>
+    <li>Simulatore ISEE — certificazione ISEE</li>
+    <li>Simulatore IRPEF / Modello 730</li>
+    <li>Analizzatore busta paga</li>
+    <li>Simulatore IMU — visura catastale</li>
+    <li>Simulatore bollo auto — libretto di circolazione</li>
+    <li>Simulatore rata mutuo — documenti del mutuo</li>
+    <li>Simulatore ADI (Assegno di Inclusione) — documenti reddituali</li>
+    <li>Generatore deleghe — documenti d'identità per generare la delega</li>
+    <li>CV Europass — analisi del curriculum</li>
+    <li>Confronto offerte di lavoro — contratti</li>
+    <li>Traduttore — foto/documenti da tradurre</li>
+    <li>Sbroglia chat con allegato foto</li>
+</ul>
+
+<p><strong>I documenti caricati possono contenere dati personali</strong> che l'utente sceglie di condividere, come: nome, cognome, codice fiscale, indirizzo di residenza, redditi, patrimonio, composizione del nucleo familiare, nome del datore di lavoro, targa veicolo, dati catastali. Questi dati vengono trasmessi a Google Gemini solo per l'elaborazione richiesta dall'utente.</p>
+
+<p>Alcune chat utilizzano inoltre la funzione <strong>Google Search grounding</strong> di Gemini: in questo caso la domanda dell'utente viene inviata anche a Google Search per ottenere informazioni aggiornate.</p>
+
+<p><strong>Trattamento da parte di Google:</strong></p>
+<ul>
+    <li>I dati vengono trasmessi tramite connessione cifrata (HTTPS) direttamente dal dispositivo a Google.</li>
+    <li>Secondo i termini Gemini API a pagamento, Google <strong>non utilizza i contenuti inviati per addestrare i propri modelli</strong>.</li>
+    <li>Privacy policy Google: <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></li>
+    <li>Termini Gemini API: <a href="https://ai.google.dev/terms" target="_blank">https://ai.google.dev/terms</a></li>
+</ul>
+
+<p><strong>Cosa NON viene mai inviato a Google Gemini:</strong></p>
+<ul>
+    <li>Identificativi del dispositivo (IDFA / IDFV / Advertising ID)</li>
+    <li>Dati di posizione GPS</li>
+    <li>Contatti, calendario, rubrica</li>
+    <li>Foto o file diversi da quelli che l'utente sceglie esplicitamente di caricare</li>
+    <li>Microfono</li>
+    <li>Dati sanitari o credenziali finanziarie</li>
+</ul>
+
+<h2>4. Pubblicità (solo versione Android)</h2>
+<p>La versione Android dell'App utilizza <strong>Google AdMob</strong> per mostrare annunci pubblicitari. La versione iOS può utilizzare AdMob in modo equivalente. Google AdMob potrebbe raccogliere e utilizzare dati secondo la propria privacy policy, tra cui:</p>
+<ul>
+    <li>Identificatori del dispositivo (Advertising ID / IDFA)</li>
     <li>Dati di utilizzo dell'App (interazioni con gli annunci)</li>
     <li>Indirizzo IP (per la geolocalizzazione approssimativa)</li>
     <li>Informazioni sul dispositivo (modello, sistema operativo)</li>
 </ul>
-<p>Per maggiori informazioni sulla raccolta dati di Google: <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a></p>
-<p>L'utente può personalizzare le proprie preferenze pubblicitarie tramite le <a href="https://adssettings.google.com/" target="_blank">Impostazioni Annunci Google</a> o disattivare la personalizzazione degli annunci nelle impostazioni del dispositivo.</p>
+<p>Su iOS, prima di accedere all'IDFA, l'App richiede il consenso tramite App Tracking Transparency (ATT). Per maggiori informazioni: <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a>. L'utente può disattivare la personalizzazione degli annunci dalle impostazioni del dispositivo.</p>
 
-<h2>4. Servizi di terze parti</h2>
-<p>L'App utilizza i seguenti servizi di terze parti:</p>
+<h2>5. Servizi di terze parti utilizzati</h2>
 <ul>
-    <li><strong>Google AdMob</strong> — per la visualizzazione di annunci pubblicitari</li>
-    <li><strong>Google Fonts</strong> — per i font dell'interfaccia (nessun dato utente trasmesso)</li>
+    <li><strong>Google Gemini API</strong> (Google LLC) — elaborazione AI di chat e documenti caricati dall'utente</li>
+    <li><strong>Google Search</strong> (tramite Gemini grounding) — informazioni aggiornate per alcune chat</li>
+    <li><strong>Google AdMob</strong> (Google LLC) — visualizzazione di annunci pubblicitari</li>
+    <li><strong>Google Fonts</strong> — font dell'interfaccia (nessun dato personale trasmesso)</li>
 </ul>
-<p>L'App contiene link a siti web esterni (siti governativi, INPS, Agenzia delle Entrate, ecc.). Non siamo responsabili delle pratiche sulla privacy di questi siti.</p>
+<p>L'App contiene anche link a siti web esterni (siti governativi, INPS, Agenzia delle Entrate, ecc.) — non siamo responsabili delle pratiche sulla privacy di tali siti.</p>
 
-<h2>5. Sicurezza dei dati</h2>
+<h2>6. Sicurezza dei dati</h2>
 <ul>
-    <li>Tutti i dati inseriti dall'utente restano sul dispositivo</li>
-    <li>Non utilizziamo server, database o cloud storage</li>
-    <li>I PDF generati dall'App restano sul dispositivo dell'utente</li>
-    <li>Non trasmettiamo alcun dato personale a terze parti (ad eccezione dei dati raccolti automaticamente da Google AdMob)</li>
-</ul>
-
-<h2>6. Minori</h2>
-<p>L'App non è destinata a bambini di età inferiore ai 13 anni. Non raccogliamo consapevolmente informazioni personali da minori. L'App è classificata per tutte le età e non contiene contenuti inappropriati.</p>
-
-<h2>7. Diritti dell'utente (GDPR)</h2>
-<p>In conformità con il Regolamento Generale sulla Protezione dei Dati (GDPR) dell'Unione Europea, l'utente ha diritto a:</p>
-<ul>
-    <li><strong>Accesso</strong> — richiedere informazioni sui propri dati (nel nostro caso, non raccogliamo dati personali)</li>
-    <li><strong>Cancellazione</strong> — eliminare i dati locali disinstallando l'App o cancellando i dati dalle impostazioni</li>
-    <li><strong>Opt-out pubblicitario</strong> — disattivare la personalizzazione degli annunci dalle impostazioni del dispositivo</li>
-    <li><strong>Portabilità</strong> — i dati sono già sul proprio dispositivo</li>
+    <li>L'App non ha un proprio server e non memorizza i contenuti dell'utente su sistemi di nostra proprietà.</li>
+    <li>Le richieste verso Google Gemini API e Google AdMob avvengono tramite HTTPS.</li>
+    <li>Tutti i dati inseriti dall'utente per la compilazione moduli, e i documenti salvati nel Document Wallet, restano sul dispositivo dell'utente.</li>
 </ul>
 
-<h2>8. Modifiche alla Privacy Policy</h2>
+<h2>7. Consenso dell'utente</h2>
+<p>L'utilizzo delle funzioni AI è facoltativo. Ogni invio di dati a Google Gemini richiede un'azione esplicita dell'utente (scrivere un messaggio, premere "Analizza", selezionare una foto o un PDF). Utilizzando queste funzioni, l'utente acconsente alla trasmissione dei contenuti scelti a Google Gemini API per la finalità di elaborazione richiesta.</p>
+
+<h2>8. Minori</h2>
+<p>L'App non è destinata a bambini di età inferiore ai 13 anni. Non raccogliamo consapevolmente informazioni personali da minori. Si raccomanda ai minori di non caricare documenti contenenti dati di terzi senza il consenso degli interessati.</p>
+
+<h2>9. Diritti dell'utente (GDPR)</h2>
+<p>In conformità con il Regolamento Generale sulla Protezione dei Dati (GDPR), l'utente ha diritto a:</p>
+<ul>
+    <li><strong>Accesso</strong> — Noi non manteniamo un archivio dei dati dell'utente. I dati inviati a Google sono soggetti alla privacy policy di Google.</li>
+    <li><strong>Cancellazione</strong> — L'utente può eliminare i dati locali disinstallando l'App o cancellando i dati dell'App dalle impostazioni del dispositivo.</li>
+    <li><strong>Opposizione al trattamento AI</strong> — L'utente può semplicemente non utilizzare le funzioni AI; in tal caso nessun dato viene trasmesso a Google Gemini.</li>
+    <li><strong>Opt-out pubblicitario</strong> — Disattivabile dalle impostazioni del dispositivo (ATT su iOS, "Annunci personalizzati" su Android).</li>
+    <li><strong>Portabilità</strong> — I dati sono già archiviati sul dispositivo dell'utente.</li>
+</ul>
+
+<h2>10. Modifiche alla Privacy Policy</h2>
 <p>Ci riserviamo il diritto di aggiornare questa Privacy Policy. Le modifiche saranno pubblicate su questa pagina con la data di aggiornamento. L'uso continuato dell'App dopo le modifiche costituisce accettazione della nuova Privacy Policy.</p>
 
 <div class="contact">
-    <h2>9. Contatti</h2>
-    <p>Per domande o richieste relative alla privacy, contattaci a:</p>
+    <h2>11. Contatti</h2>
+    <p>Per domande o richieste relative alla privacy, contattare:</p>
     <p><strong>Email:</strong> alutori@gmail.com</p>
-    <p><strong>Sviluppatore:</strong> MioPatronato</p>
-    <p><strong>App:</strong> Il Mio Patronato - Il Patronato in Tasca</p>
-    <p><strong>Package:</strong> com.docflow.docflow_immigrati</p>
+    <p><strong>Titolare del trattamento:</strong> Adnan Riaz</p>
+    <p><strong>App:</strong> Il Mio Patronato / Bonus Italia: ISEE NASpI 730</p>
+    <p><strong>Package Android:</strong> com.docflow.docflow_immigrati</p>
 </div>
 
 </body>

@@ -96,6 +96,26 @@ class ScannerService extends ChangeNotifier {
     } on PlatformException catch (e) {
       debugPrint('[Scanner] native capture PlatformException: ${e.code} ${e.message}');
       return null;
+    } catch (e) {
+      debugPrint('[Scanner] native capture error: $e');
+      return null;
+    }
+  }
+
+  /// iOS-safe fallback: opens the standard system camera through image_picker.
+  /// The Android-only [_nativeCapture] method channel does not exist on iOS,
+  /// so VisionKit failures must fall through here instead.
+  Future<String?> _imagePickerCapture() async {
+    try {
+      final picker = ImagePicker();
+      final shot = await picker.pickImage(
+        source: ImageSource.camera,
+        imageQuality: 92,
+      );
+      return shot?.path;
+    } catch (e) {
+      debugPrint('[Scanner] image_picker camera capture failed: $e');
+      return null;
     }
   }
 
@@ -121,11 +141,14 @@ class ScannerService extends ChangeNotifier {
         return mlKitPages;
       }
       debugPrint('[Scanner] ML Kit returned no pages — user cancelled or empty');
+      if (Platform.isIOS) return [];
     } catch (e) {
-      debugPrint('[Scanner] ML Kit failed: $e — falling back to native camera intent');
+      debugPrint('[Scanner] ML Kit failed: $e — falling back');
     }
 
-    final path = await _nativeCapture();
+    final path = Platform.isIOS
+        ? await _imagePickerCapture()
+        : await _nativeCapture();
     if (path == null) return [];
     return [path];
   }
@@ -136,7 +159,9 @@ class ScannerService extends ChangeNotifier {
     if (!granted) {
       throw Exception('Permesso fotocamera negato');
     }
-    final path = await _nativeCapture();
+    final path = Platform.isIOS
+        ? await _imagePickerCapture()
+        : await _nativeCapture();
     if (path == null) return [];
     return [path];
   }
