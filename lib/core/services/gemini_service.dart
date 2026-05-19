@@ -3,41 +3,42 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'device_id_service.dart';
 import 'web_search_service.dart';
 
 // ---------------------------------------------------------------------------
 // Servizio Google Gemini AI — Singleton
 // - Modelli: gemini-2.5-flash (analisi), gemini-2.5-flash-lite (chat veloce)
-// - Supporta: testo, immagini, PDF nativamente
-// - Free tier generoso via Google AI Studio
+// - Le richieste passano dal nostro proxy Cloudflare Worker; l'API key
+//   Gemini vive SOLO sul server, mai nel binario app.
 // ---------------------------------------------------------------------------
 class GeminiService {
   static final GeminiService _instance = GeminiService._();
   factory GeminiService() => _instance;
   GeminiService._();
 
-  static const _apiKey = String.fromEnvironment(
-    'GEMINI_API_KEY',
-    defaultValue: '',
-  );
   static const _model = 'gemini-2.5-flash';
   static const _modelFast = 'gemini-2.5-flash-lite';
   static const _baseUrl =
-      'https://generativelanguage.googleapis.com/v1beta/models';
+      'https://bonus-italia-ai.alutori.workers.dev/v1beta/models';
 
   Uri _endpoint(String model) =>
-      Uri.parse('$_baseUrl/$model:generateContent?key=$_apiKey');
+      Uri.parse('$_baseUrl/$model:generateContent');
 
-  Map<String, String> get _headers => {
-    'Content-Type': 'application/json',
-  };
+  Future<Map<String, String>> _headers() async {
+    final deviceId = await DeviceIdService.getId();
+    return {
+      'Content-Type': 'application/json',
+      'X-Device-Id': deviceId,
+    };
+  }
 
   // ── Verifica connessione API ──
   Future<bool> testConnection() async {
     try {
       final response = await http.post(
         _endpoint(_modelFast),
-        headers: _headers,
+        headers: await _headers(),
         body: jsonEncode({
           'contents': [
             {'role': 'user', 'parts': [{'text': 'OK'}]}
@@ -99,9 +100,10 @@ class GeminiService {
 
       // Con Google Search serve il modello full, non flash-lite
       final modelToUse = useGoogleSearch ? _model : _modelFast;
+      final headers = await _headers();
 
       final result = await Future.any([
-        http.post(_endpoint(modelToUse), headers: _headers, body: jsonEncode(body))
+        http.post(_endpoint(modelToUse), headers: headers, body: jsonEncode(body))
             .then((r) => r as Object),
         Future.delayed(Duration(seconds: timeoutSeconds), () => 'timeout' as Object),
       ]);
@@ -141,11 +143,6 @@ class GeminiService {
     required String prompt,
     String? systemPrompt,
   }) async {
-    if (_apiKey.isEmpty) {
-      debugPrint('[Gemini] analyzeDocument: GEMINI_API_KEY is empty at compile time');
-      return AiResponse.error('API Key mancante (build senza --dart-define=GEMINI_API_KEY).');
-    }
-
     final ext = imageFile.path.split('.').last.toLowerCase();
 
     try {
@@ -198,12 +195,13 @@ class GeminiService {
 
       // Retry on 429 (rate limit) / 503 (overload) with exponential backoff:
       // 1.5s, 3s, 6s. Total max wait ≈ 10.5s before surfacing the error.
+      final headers = await _headers();
       http.Response? response;
       int delayMs = 1500;
       for (int attempt = 0; attempt < 3; attempt++) {
         response = await http.post(
           _endpoint(_model),
-          headers: _headers,
+          headers: headers,
           body: jsonEncode(body),
         ).timeout(const Duration(seconds: 90));
 

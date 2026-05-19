@@ -86,8 +86,8 @@ class ScannerService extends ChangeNotifier {
     return result.isGranted;
   }
 
-  /// Captures a photo using the native Android camera intent (bypasses
-  /// image_picker which fails silently on some OEM devices like HONOR).
+  /// Captures a single photo via the platform-native camera handler.
+  /// Android: system camera intent. iOS: UIImagePickerController (.camera).
   Future<String?> _nativeCapture() async {
     try {
       final path = await _cameraChannel.invokeMethod<String>('captureImage');
@@ -95,6 +95,9 @@ class ScannerService extends ChangeNotifier {
       return path;
     } on PlatformException catch (e) {
       debugPrint('[Scanner] native capture PlatformException: ${e.code} ${e.message}');
+      return null;
+    } on MissingPluginException catch (e) {
+      debugPrint('[Scanner] native capture MissingPluginException: ${e.message}');
       return null;
     } catch (e) {
       debugPrint('[Scanner] native capture error: $e');
@@ -119,16 +122,35 @@ class ScannerService extends ChangeNotifier {
     }
   }
 
-  /// Opens the CamScanner-style document scanner (Google ML Kit).
-  /// Provides edge detection, auto-crop and multi-page capture in a native UI.
-  /// Falls back to the system camera intent if ML Kit is unavailable.
+  /// Opens the document scanner.
+  /// - iOS: native VisionKit (VNDocumentCameraViewController) via method channel.
+  /// - Android: CunningDocumentScanner (ML Kit) with native camera intent fallback.
   Future<List<String>> scanPages({int maxPages = 100}) async {
     debugPrint('[Scanner] scanPages() called');
     final granted = await _ensureCameraPermission();
     if (!granted) {
       throw Exception(
-        'Permesso fotocamera negato. Vai in Impostazioni > App > Bonus Italia > Autorizzazioni e attiva Fotocamera.',
+        'Permesso fotocamera negato. Vai in Impostazioni > Bonus Italia e attiva Fotocamera.',
       );
+    }
+
+    if (Platform.isIOS) {
+      try {
+        final paths =
+            await _cameraChannel.invokeListMethod<String>('scanDocument');
+        debugPrint('[Scanner] iOS VisionKit returned ${paths?.length ?? 0} page(s)');
+        return paths ?? [];
+      } on PlatformException catch (e) {
+        debugPrint('[Scanner] iOS scanner PlatformException: ${e.code} ${e.message}');
+        if (e.code == 'UNAVAILABLE') {
+          final path = await _imagePickerCapture();
+          return path == null ? [] : [path];
+        }
+        throw Exception(e.message ?? 'Errore scanner (${e.code})');
+      } on MissingPluginException {
+        final path = await _imagePickerCapture();
+        return path == null ? [] : [path];
+      }
     }
 
     try {
@@ -141,7 +163,7 @@ class ScannerService extends ChangeNotifier {
         return mlKitPages;
       }
       debugPrint('[Scanner] ML Kit returned no pages — user cancelled or empty');
-      if (Platform.isIOS) return [];
+      return [];
     } catch (e) {
       debugPrint('[Scanner] ML Kit failed: $e — falling back');
     }
