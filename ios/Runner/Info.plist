@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Bonus Italia</string>
+	<string>Smart Bonus Italia</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -26,18 +26,26 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-9396424020196768~7863269060</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>itms-apps</string>
+		<string>https</string>
+		<string>http</string>
+		<string>tel</string>
+		<string>mailto</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Bonus Italia usa la fotocamera per scansionare i tuoi documenti (carta d'identità, permesso di soggiorno, ricevute) da salvare nel Portafoglio.</string>
+	<string>Smart Bonus Italia usa la fotocamera per scansionare i tuoi documenti (carta d'identità, permesso di soggiorno, ricevute) da salvare nel Portafoglio.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Bonus Italia usa il microfono per il traduttore vocale: pronuncia una frase e l'app la traduce.</string>
+	<string>Smart Bonus Italia usa il microfono per il traduttore vocale: pronuncia una frase e l'app la traduce.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Bonus Italia salva nella galleria i PDF dei documenti che hai scansionato, se richiesto.</string>
+	<string>Smart Bonus Italia salva nella galleria i PDF dei documenti che hai scansionato, se richiesto.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Bonus Italia accede alla galleria per importare foto di documenti da salvare nel Portafoglio.</string>
+	<string>Smart Bonus Italia accede alla galleria per importare foto di documenti da salvare nel Portafoglio.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Bonus Italia usa il riconoscimento vocale per convertire la tua voce in testo da tradurre.</string>
+	<string>Smart Bonus Italia usa il riconoscimento vocale per convertire la tua voce in testo da tradurre.</string>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>Mostriamo annunci pertinenti per tenere l'app gratuita. Accettando puoi vedere annunci più utili per te.</string>
 	<key>SKAdNetworkItems</key>

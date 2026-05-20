@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import '../../config/constants.dart';
 import '../../core/services/gemini_service.dart';
+import '../../core/widgets/ai_consent_dialog.dart';
 import '../../core/widgets/document_upload_widget.dart';
 import '../../core/widgets/rich_message_widget.dart';
 
@@ -69,6 +70,13 @@ class _AiChatScreenState extends State<AiChatScreen> {
   void initState() {
     super.initState();
     _initSpeech();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
+      final ok = await AiConsentDialog.ensureConsent(context);
+      if (!ok && mounted) {
+        Navigator.of(context).pop();
+      }
+    });
     _messages.add(_ChatMessage(
       text: 'Ciao! Sono il tuo Assistente AI Immigrazione.\n\n'
           'Posso aiutarti con:\n'
@@ -226,7 +234,7 @@ class _AiChatScreenState extends State<AiChatScreen> {
           const SizedBox(width: 12),
           const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text('AI Avvocato', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800)),
-            Text('Assistente legale con Claude AI', style: TextStyle(color: AppColors.textSubtitle, fontSize: 11)),
+            Text('Assistente informativo basato su Google Gemini', style: TextStyle(color: AppColors.textSubtitle, fontSize: 11)),
           ]),
           const Spacer(),
           Container(

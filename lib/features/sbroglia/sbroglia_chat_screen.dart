@@ -6,6 +6,7 @@ import 'package:speech_to_text/speech_to_text.dart' as stt;
 import '../../config/constants.dart';
 import '../../core/services/gemini_service.dart';
 import '../../core/services/language_service.dart';
+import '../../core/widgets/ai_consent_dialog.dart';
 import '../../core/widgets/rich_message_widget.dart';
 
 // ─────────────────────────────────────────────
@@ -560,9 +561,17 @@ class _ChatScreenState extends State<_ChatScreen> {
     _initSpeech();
     _addWelcomeMessage();
     final q = widget.initialQuestion?.trim();
-    if (q != null && q.isNotEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => _sendMessage(q));
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
+      final ok = await AiConsentDialog.ensureConsent(context);
+      if (!ok && mounted) {
+        widget.onBack();
+        return;
+      }
+      if (q != null && q.isNotEmpty && mounted) {
+        _sendMessage(q);
+      }
+    });
   }
 
   Future<void> _initSpeech() async {

@@ -129,8 +129,9 @@ class ScannerService extends ChangeNotifier {
     debugPrint('[Scanner] scanPages() called');
     final granted = await _ensureCameraPermission();
     if (!granted) {
+      final brand = Platform.isIOS ? 'Smart Bonus Italia' : 'Bonus Italia';
       throw Exception(
-        'Permesso fotocamera negato. Vai in Impostazioni > Bonus Italia e attiva Fotocamera.',
+        'Permesso fotocamera negato. Vai in Impostazioni > $brand e attiva Fotocamera.',
       );
     }
 

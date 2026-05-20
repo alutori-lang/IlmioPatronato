@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +37,9 @@ class MioPatronatoApp extends StatelessWidget {
           final code = lang.currentCode;
           final isRtl = code == 'ar' || code == 'ur';
           return MaterialApp(
-            title: 'Bonus Italia — ISEE NASpI 730',
+            title: Platform.isIOS
+                ? 'Smart Bonus Italia'
+                : 'Bonus Italia — ISEE NASpI 730',
             debugShowCheckedModeBanner: false,
             theme: AppTheme.light,
             darkTheme: AppTheme.dark,
@@ -88,8 +91,9 @@ class _LanguageGate extends StatefulWidget {
 }
 
 class _LanguageGateState extends State<_LanguageGate> {
-  bool? _languageChosen;
-  bool? _disclaimerAccepted;
+  // TEMP_SCREENSHOTS: bypass onboarding gates while capturing App Store screenshots.
+  bool? _languageChosen = true;
+  bool? _disclaimerAccepted = true;
 
   @override
   void initState() {
@@ -98,6 +102,9 @@ class _LanguageGateState extends State<_LanguageGate> {
   }
 
   Future<void> _check() async {
+    // TEMP_SCREENSHOTS: skip real check, gates pre-accepted.
+    return;
+    // ignore: dead_code
     final lang = await LanguagePickerScreen.alreadyChosen();
     final disc = await DisclaimerAcceptanceScreen.alreadyAccepted();
     if (!mounted) return;
@@ -134,7 +141,8 @@ class MainShell extends StatefulWidget {
 }
 
 class _MainShellState extends State<MainShell> {
-  int _currentIndex = 0;
+  // TEMP_SCREENSHOTS: change initial tab via --dart-define=INITIAL_TAB=N
+  int _currentIndex = const int.fromEnvironment('INITIAL_TAB', defaultValue: 0);
   DateTime? _lastBackPress;
 
   @override

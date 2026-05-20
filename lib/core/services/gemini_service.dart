@@ -58,7 +58,7 @@ class GeminiService {
     String? systemPrompt,
     bool useGoogleSearch = false,
     int maxTokens = 2048,
-    int timeoutSeconds = 20,
+    int timeoutSeconds = 30,
   }) async {
     final geminiContents = <Map<String, dynamic>>[];
     for (final msg in messages) {
@@ -84,37 +84,61 @@ class GeminiService {
       });
     }
 
-    try {
-      final body = <String, dynamic>{
-        'contents': geminiContents,
-        'generationConfig': {'maxOutputTokens': maxTokens},
-      };
-      if (useGoogleSearch) {
-        body['tools'] = [{'google_search': {}}];
-      }
-      if (systemPrompt != null && systemPrompt.isNotEmpty) {
-        body['systemInstruction'] = {
-          'parts': [{'text': systemPrompt}],
-        };
-      }
-
-      // Con Google Search serve il modello full, non flash-lite
-      final modelToUse = useGoogleSearch ? _model : _modelFast;
-      final headers = await _headers();
-
-      final result = await Future.any([
-        http.post(_endpoint(modelToUse), headers: headers, body: jsonEncode(body))
-            .then((r) => r as Object),
-        Future.delayed(Duration(seconds: timeoutSeconds), () => 'timeout' as Object),
-      ]);
-
-      if (result == 'timeout') return AiResponse.error('Timeout.');
-      return _parseResponse(result as http.Response);
-    } on SocketException {
-      return AiResponse.error('Nessuna connessione internet.');
-    } catch (e) {
-      return AiResponse.error('Errore: $e');
+    final body = <String, dynamic>{
+      'contents': geminiContents,
+      'generationConfig': {'maxOutputTokens': maxTokens},
+    };
+    if (useGoogleSearch) {
+      body['tools'] = [{'google_search': {}}];
     }
+    if (systemPrompt != null && systemPrompt.isNotEmpty) {
+      body['systemInstruction'] = {
+        'parts': [{'text': systemPrompt}],
+      };
+    }
+
+    // Con Google Search serve il modello full, non flash-lite
+    final modelToUse = useGoogleSearch ? _model : _modelFast;
+    final headers = await _headers();
+    final encodedBody = jsonEncode(body);
+
+    // Retry up to 3 attempts on transient failures (timeout / 429 / 503 / socket).
+    // Exponential backoff: 1s, 2s.
+    int delayMs = 1000;
+    http.Response? lastResponse;
+    String? lastErr;
+    for (int attempt = 0; attempt < 3; attempt++) {
+      try {
+        final response = await http
+            .post(_endpoint(modelToUse), headers: headers, body: encodedBody)
+            .timeout(Duration(seconds: timeoutSeconds));
+        lastResponse = response;
+        if (response.statusCode != 429 && response.statusCode != 503) {
+          return _parseResponse(response);
+        }
+        debugPrint('[Gemini] chat rate-limited (${response.statusCode}), retry ${attempt + 1}/3');
+      } on TimeoutException {
+        lastErr = 'timeout';
+        debugPrint('[Gemini] chat timeout, retry ${attempt + 1}/3');
+      } on SocketException catch (e) {
+        lastErr = 'socket: $e';
+        debugPrint('[Gemini] chat socket error, retry ${attempt + 1}/3');
+      } catch (e) {
+        return AiResponse.error('Errore di rete: $e');
+      }
+      if (attempt < 2) {
+        await Future.delayed(Duration(milliseconds: delayMs));
+        delayMs *= 2;
+      }
+    }
+    if (lastResponse != null) {
+      return _parseResponse(lastResponse);
+    }
+    if (lastErr == 'timeout') {
+      return AiResponse.error(
+          'Il servizio AI non risponde. Verifica la connessione internet e riprova.');
+    }
+    return AiResponse.error('Nessuna connessione al servizio AI. Riprova tra poco.');
   }
 
   // ── Chat con ricerca web integrata ──

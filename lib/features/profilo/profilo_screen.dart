@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -15,6 +16,12 @@ import 'notifiche_screen.dart';
 import 'scanner_doc_screen.dart';
 import 'tracker_pratica_screen.dart';
 import 'translator_screen.dart';
+
+// iOS App Store numeric ID assigned by Apple once the first version is approved.
+// While empty, the rate/share buttons fall back to an App Store search by name.
+// TODO: set the numeric Apple App ID (visible in App Store Connect URL) after first approval.
+const String _kIosAppStoreId = '';
+const String _kAppStoreSearchTerm = 'Smart+Bonus+Italia';
 
 class ProfiloScreen extends StatelessWidget {
   const ProfiloScreen({super.key});
@@ -267,6 +274,29 @@ class ProfiloScreen extends StatelessWidget {
   }
 
   Future<void> _rateApp(BuildContext context) async {
+    if (Platform.isIOS) {
+      final hasId = _kIosAppStoreId.isNotEmpty;
+      final primary = Uri.parse(hasId
+          ? 'itms-apps://itunes.apple.com/app/id$_kIosAppStoreId?action=write-review'
+          : 'itms-apps://itunes.apple.com/search?term=$_kAppStoreSearchTerm');
+      final fallback = Uri.parse(hasId
+          ? 'https://apps.apple.com/app/id$_kIosAppStoreId?action=write-review'
+          : 'https://apps.apple.com/search?term=$_kAppStoreSearchTerm');
+      try {
+        if (await canLaunchUrl(primary)) {
+          await launchUrl(primary, mode: LaunchMode.externalApplication);
+        } else {
+          await launchUrl(fallback, mode: LaunchMode.externalApplication);
+        }
+      } catch (_) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Impossibile aprire App Store')),
+          );
+        }
+      }
+      return;
+    }
     const pkg = 'com.docflow.docflow_immigrati';
     final marketUri = Uri.parse('market://details?id=$pkg');
     final webUri = Uri.parse('https://play.google.com/store/apps/details?id=$pkg');
@@ -286,8 +316,15 @@ class ProfiloScreen extends StatelessWidget {
   }
 
   Future<void> _shareApp(BuildContext context) async {
-    const pkg = 'com.docflow.docflow_immigrati';
-    final url = 'https://play.google.com/store/apps/details?id=$pkg';
+    final String url;
+    if (Platform.isIOS) {
+      url = _kIosAppStoreId.isNotEmpty
+          ? 'https://apps.apple.com/app/id$_kIosAppStoreId'
+          : 'https://apps.apple.com/search?term=$_kAppStoreSearchTerm';
+    } else {
+      const pkg = 'com.docflow.docflow_immigrati';
+      url = 'https://play.google.com/store/apps/details?id=$pkg';
+    }
     final text = 'Scarica IlmioPatronato — Bonus, ISEE, NASpI, permessi e guide per immigrati.\n\n$url';
     final box = context.findRenderObject() as RenderBox?;
     await Share.share(

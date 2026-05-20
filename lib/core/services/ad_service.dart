@@ -38,11 +38,13 @@ class AdService {
     // Su iOS 14.5+ chiediamo ATT (App Tracking Transparency) prima di
     // inizializzare l'SDK ads. Senza questo prompt vediamo solo ads
     // contestuali (eCPM ridotto del 50-70%).
+    // TEMP_SCREENSHOTS: ATT prompt disabled while capturing App Store screenshots.
+    // Restore the original block below before submitting to App Store.
+    /*
     if (Platform.isIOS) {
       try {
         final status = await AppTrackingTransparency.trackingAuthorizationStatus;
         if (status == TrackingStatus.notDetermined) {
-          // Aspetta un attimo per evitare conflitto con altri prompt al lancio
           await Future.delayed(const Duration(milliseconds: 200));
           await AppTrackingTransparency.requestTrackingAuthorization();
         }
@@ -50,6 +52,7 @@ class AdService {
         debugPrint('[AdService] ATT request error: $e');
       }
     }
+    */
     await MobileAds.instance.initialize();
     _loadInterstitialAd();
   }

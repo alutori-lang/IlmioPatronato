@@ -3,9 +3,16 @@
 // Uso: final s = AppStrings.of(context);  →  s.home, s.ask, s.chooseLanguage...
 // Aggiungere una stringa = aggiungere un getter qui + nel map di ogni lingua.
 // ---------------------------------------------------------------------------
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import '../services/language_service.dart';
+
+// iOS App Store branding: a coerent name across the app (matches CFBundleDisplayName).
+// Android keeps the original brand "Bonus Italia".
+const String _kIosAppDisplayName = 'Smart Bonus Italia';
+bool get _isApplePlatform => !kIsWeb && Platform.isIOS;
 
 class AppStrings {
   final String languageCode;
@@ -34,7 +41,9 @@ class AppStrings {
   bool get isRtl => languageCode == 'ar' || languageCode == 'ur';
 
   // ── Getters core ──
-  String get appName => get('appName');
+  // On iOS we display "Smart Bonus Italia" everywhere the brand appears in-app,
+  // to stay consistent with the iOS App Store listing (Apple guideline 5.1.1(ix)).
+  String get appName => _isApplePlatform ? _kIosAppDisplayName : get('appName');
   String get appTagline => get('appTagline');
 
   // Welcome / onboarding
@@ -51,7 +60,7 @@ class AppStrings {
   String get navProfile => get('navProfile');
 
   // Home
-  String get homeHeaderTitle => get('homeHeaderTitle');
+  String get homeHeaderTitle => _isApplePlatform ? _kIosAppDisplayName : get('homeHeaderTitle');
   String get homeHeaderSubtitle => get('homeHeaderSubtitle');
   String get homeDiscoverRights => get('homeDiscoverRights');
   String get homeDiscoverRightsSub => get('homeDiscoverRightsSub');
