@@ -1,9 +1,12 @@
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../config/app_links.dart';
 import '../../config/constants.dart';
 import '../../core/services/ai_consent_service.dart';
+import '../../core/services/profilo_utente_service.dart';
 import '../../core/widgets/disclaimer_widget.dart';
 
 class InfoAppScreen extends StatelessWidget {
@@ -322,6 +325,34 @@ class InfoAppScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
+          // Account/data deletion entry point — required by Apple
+          // Guideline 5.1.1(v). The app stores no server-side account
+          // (no login, no signup, no remote profile), only a local
+          // SharedPreferences profile + AI consent flag. Tapping this
+          // wipes both so the user can fully reset their footprint.
+          InkWell(
+            onTap: () => _confirmDeleteData(context),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.red.shade300),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.delete_forever, color: Colors.red.shade700, size: 18),
+                  const SizedBox(width: 10),
+                  const Expanded(
+                    child: Text('Cancella i miei dati e account',
+                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+                  ),
+                  Icon(Icons.chevron_right, size: 18, color: Colors.red.shade700),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
           InkWell(
             onTap: () => launchUrl(
               Uri.parse('mailto:${AppLinks.supportEmail}?subject=Supporto%20Smart%20Bonus%20Italia'),
@@ -350,6 +381,61 @@ class InfoAppScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _confirmDeleteData(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Cancellare i tuoi dati?'),
+        content: const Text(
+          'Questa azione cancellerà definitivamente:\n\n'
+          '• Il tuo profilo locale (ISEE, età, reddito, famiglia)\n'
+          '• Il consenso al servizio AI\n'
+          '• Tutte le preferenze salvate sul dispositivo\n\n'
+          'Nota: l\'app non crea account su server. Tutti i dati '
+          'sono solo sul tuo telefono e verranno rimossi subito. '
+          'L\'azione non è reversibile.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Annulla'),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: Colors.red.shade700),
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Elimina tutto'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+
+    // 1. Clear local profile (ISEE / family / income / ...).
+    final profiloService = context.read<ProfiloUtenteService>();
+    await profiloService.clear();
+
+    // 2. Revoke AI consent so the next AI usage re-prompts from scratch.
+    await AiConsentService.revoke();
+
+    // 3. Wipe every other SharedPreferences entry the app may have
+    // written (notification flags, onboarding flags, language pick,
+    // theme, etc.). Effectively a factory-reset of user data.
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Tutti i tuoi dati sono stati cancellati.'),
+          duration: Duration(seconds: 4),
+        ),
+      );
+      // Pop back to the previous screen so the user sees the change
+      // reflected immediately (profile card empties, etc.).
+      Navigator.of(context).maybePop();
+    }
   }
 
   Future<void> _confirmRevokeAiConsent(BuildContext context) async {
