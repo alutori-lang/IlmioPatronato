@@ -46,8 +46,6 @@
 	<string>Smart Bonus Italia accede alla galleria per importare foto di documenti da salvare nel Portafoglio.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>Smart Bonus Italia usa il riconoscimento vocale per convertire la tua voce in testo da tradurre.</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>Mostriamo annunci pertinenti per tenere l'app gratuita. Accettando puoi vedere annunci più utili per te.</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

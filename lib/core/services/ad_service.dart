@@ -1,7 +1,5 @@
 import 'dart:io';
 import 'dart:ui';
-import 'package:app_tracking_transparency/app_tracking_transparency.dart';
-import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdService {
@@ -35,24 +33,13 @@ class AdService {
   final Map<String, int> _everyOtherCounters = {};
 
   Future<void> initialize() async {
-    // Su iOS 14.5+ chiediamo ATT (App Tracking Transparency) prima di
-    // inizializzare l'SDK ads. Senza questo prompt vediamo solo ads
-    // contestuali (eCPM ridotto del 50-70%).
-    // TEMP_SCREENSHOTS: ATT prompt disabled while capturing App Store screenshots.
-    // Restore the original block below before submitting to App Store.
-    /*
-    if (Platform.isIOS) {
-      try {
-        final status = await AppTrackingTransparency.trackingAuthorizationStatus;
-        if (status == TrackingStatus.notDetermined) {
-          await Future.delayed(const Duration(milliseconds: 200));
-          await AppTrackingTransparency.requestTrackingAuthorization();
-        }
-      } catch (e) {
-        debugPrint('[AdService] ATT request error: $e');
-      }
-    }
-    */
+    // No App Tracking Transparency: the app declares "no tracking" in the
+    // App Privacy section on App Store Connect, so the ATT prompt is not
+    // required and was removed entirely (Apple flagged a previous build
+    // for declaring tracking + missing the prompt — guideline 2.1).
+    // AdMob on iOS 14.5+ automatically falls back to non-personalized
+    // ads when ATT has not been granted, which matches the privacy
+    // declaration.
     await MobileAds.instance.initialize();
     _loadInterstitialAd();
   }
