@@ -66,7 +66,7 @@ class _LanguagePickerScreenState extends State<LanguagePickerScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text('🌍', style: TextStyle(fontSize: 60)),
+                    const Icon(Icons.public, size: 60, color: Colors.white),
                     const SizedBox(height: 14),
                     Text(
                       s.chooseLanguage,
@@ -114,7 +114,24 @@ class _LanguagePickerScreenState extends State<LanguagePickerScreen> {
                         ),
                         child: Row(
                           children: [
-                            Text(lang.flag, style: const TextStyle(fontSize: 30)),
+                            Container(
+                              width: 38, height: 38,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: selected
+                                    ? Colors.white.withValues(alpha: 0.22)
+                                    : AppColors.primary.withValues(alpha: 0.10),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(
+                                lang.code.toUpperCase(),
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w900,
+                                  color: selected ? Colors.white : AppColors.primary,
+                                ),
+                              ),
+                            ),
                             const SizedBox(width: 10),
                             Expanded(
                               child: Column(
