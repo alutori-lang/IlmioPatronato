@@ -592,7 +592,7 @@ class _WowCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Center(
-                    child: Text(emoji, style: const TextStyle(fontSize: 22)),
+                    child: Icon(icon, size: 24, color: accent),
                   ),
                 ),
                 const Spacer(),
@@ -841,7 +841,7 @@ class _SpinningGlobeState extends State<_SpinningGlobe> with SingleTickerProvide
       child: Center(
         child: RotationTransition(
           turns: _ctrl,
-          child: const Text('🌍', style: TextStyle(fontSize: 40)),
+          child: Icon(Icons.public, size: 40, color: const Color(0xFF1E4A8A)),
         ),
       ),
     );

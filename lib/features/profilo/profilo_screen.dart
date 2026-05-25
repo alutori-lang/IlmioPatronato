@@ -337,7 +337,7 @@ class ProfiloScreen extends StatelessWidget {
     final langService = context.watch<LanguageService>();
     final themeService = context.watch<ThemeService>();
     final items = [
-      _SettData(Icons.language, s.settingsLang, '${langService.current.flag} ${langService.current.name}', AppColors.iconBlue),
+      _SettData(Icons.language, s.settingsLang, langService.current.name, AppColors.iconBlue),
       _SettData(themeService.isDark ? Icons.dark_mode : Icons.light_mode, s.settingsTheme, themeService.isDark ? 'Dark' : 'Light', AppColors.textDark),
       _SettData(Icons.notifications, s.settingsNotifs, s.notifsActive, AppColors.iconOrange),
       _SettData(Icons.info, s.settingsAbout, 'v1.0.11', AppColors.iconGreen),

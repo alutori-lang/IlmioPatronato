@@ -47,6 +47,19 @@ extension UserCategoryExt on UserCategory {
     }
   }
 
+  IconData get icon {
+    switch (this) {
+      case UserCategory.neogenitore:
+        return Icons.child_care;
+      case UserCategory.freelance:
+        return Icons.business_center;
+      case UserCategory.casaBonus:
+        return Icons.home_rounded;
+      case UserCategory.giovane:
+        return Icons.school;
+    }
+  }
+
   Color get color {
     switch (this) {
       case UserCategory.neogenitore:
@@ -293,7 +306,6 @@ class _CategorySelectorScreen extends StatelessWidget {
                                   fontSize: 22,
                                   fontWeight: FontWeight.w900,
                                   letterSpacing: -0.3,
-                                  fontFamily: 'serif',
                                 ),
                               ),
                               const SizedBox(height: 6),
@@ -340,7 +352,7 @@ class _CategorySelectorScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 12),
-                        const Text('🏛️', style: TextStyle(fontSize: 48)),
+                        const Icon(Icons.account_balance, size: 48, color: Colors.white),
                       ],
                     ),
                   ),
@@ -485,7 +497,7 @@ class _CategoryCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Center(
-                child: Text(category.emoji, style: const TextStyle(fontSize: 26)),
+                child: Icon(category.icon, size: 28, color: Colors.white),
               ),
             ),
             const SizedBox(width: 14),

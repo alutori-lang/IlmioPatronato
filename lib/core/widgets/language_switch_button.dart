@@ -25,7 +25,7 @@ class LanguageSwitchButton extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(lang.current.flag, style: const TextStyle(fontSize: 18)),
+            Icon(Icons.language, size: 18, color: iconColor ?? Colors.white),
             const SizedBox(width: 6),
             Text(
               lang.currentCode.toUpperCase(),

@@ -33,8 +33,14 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
     super.dispose();
   }
 
+  // TEMP_SCREENSHOTS: hide ads when capturing App Store screenshots
+  // (--dart-define=SCREENSHOT_MODE=true). Real builds keep ads.
+  static const bool _screenshotMode =
+      bool.fromEnvironment('SCREENSHOT_MODE', defaultValue: false);
+
   @override
   Widget build(BuildContext context) {
+    if (_screenshotMode) return const SizedBox.shrink();
     if (kIsWeb || !_isLoaded || _bannerAd == null) return const SizedBox.shrink();
     return Container(
       width: _bannerAd!.size.width.toDouble(),

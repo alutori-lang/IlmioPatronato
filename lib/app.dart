@@ -91,9 +91,8 @@ class _LanguageGate extends StatefulWidget {
 }
 
 class _LanguageGateState extends State<_LanguageGate> {
-  // TEMP_SCREENSHOTS: bypass onboarding gates while capturing App Store screenshots.
-  bool? _languageChosen = true;
-  bool? _disclaimerAccepted = true;
+  bool? _languageChosen;
+  bool? _disclaimerAccepted;
 
   @override
   void initState() {
@@ -102,9 +101,6 @@ class _LanguageGateState extends State<_LanguageGate> {
   }
 
   Future<void> _check() async {
-    // TEMP_SCREENSHOTS: skip real check, gates pre-accepted.
-    return;
-    // ignore: dead_code
     final lang = await LanguagePickerScreen.alreadyChosen();
     final disc = await DisclaimerAcceptanceScreen.alreadyAccepted();
     if (!mounted) return;

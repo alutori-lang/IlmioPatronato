@@ -14,7 +14,8 @@ class AppTheme {
         brightness: Brightness.light,
       ),
       scaffoldBackgroundColor: AppColors.background,
-      textTheme: GoogleFonts.interTextTheme(),
+      textTheme: GoogleFonts.interTextTheme()
+          .apply(fontFamilyFallback: const ['Apple Color Emoji']),
       appBarTheme: const AppBarTheme(
         elevation: 0,
         centerTitle: false,
@@ -37,7 +38,8 @@ class AppTheme {
         brightness: Brightness.dark,
       ),
       scaffoldBackgroundColor: const Color(0xFF0F1419),
-      textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
+      textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme)
+          .apply(fontFamilyFallback: const ['Apple Color Emoji']),
       appBarTheme: const AppBarTheme(
         elevation: 0,
         centerTitle: false,
