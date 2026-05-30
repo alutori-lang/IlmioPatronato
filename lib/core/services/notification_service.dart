@@ -47,7 +47,13 @@ class NotificationService {
       }
 
       const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
-      const init = InitializationSettings(android: androidInit);
+      // iOS: don't ask at init — we request later (after onboarding), like Android.
+      const iosInit = DarwinInitializationSettings(
+        requestAlertPermission: false,
+        requestBadgePermission: false,
+        requestSoundPermission: false,
+      );
+      const init = InitializationSettings(android: androidInit, iOS: iosInit);
       await _plugin.initialize(init);
 
       await _ensureChannels();
@@ -104,6 +110,14 @@ class NotificationService {
 
   Future<bool> requestPermission() async {
     try {
+      // iOS
+      final ios = _plugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>();
+      if (ios != null) {
+        final granted = await ios.requestPermissions(alert: true, badge: true, sound: true);
+        debugPrint('[Notif] iOS permission granted=$granted');
+        return granted ?? false;
+      }
+      // Android
       final android = _plugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
       if (android == null) return false;
       final granted = await android.requestNotificationsPermission();
@@ -266,9 +280,10 @@ class NotificationService {
   Future<void> scheduleDailyBonusNotifications(List<Agevolazione> bonuses) async {
     if (!_ready || bonuses.isEmpty) return;
     try {
-      // Cancella eventuali notifiche giornaliere precedenti
+      // Cancella eventuali notifiche giornaliere precedenti (bonus + funzioni)
       for (int i = 0; i < 60; i++) {
         await _plugin.cancel(_hashId('daily_bonus_$i'));
+        await _plugin.cancel(_hashId('daily_feature_$i'));
       }
 
       final now = tz.TZDateTime.now(tz.local);
@@ -298,6 +313,11 @@ class NotificationService {
                 importance: Importance.high,
                 priority: Priority.high,
               ),
+              iOS: DarwinNotificationDetails(
+                presentAlert: true,
+                presentBadge: true,
+                presentSound: true,
+              ),
             ),
             androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
             uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
@@ -309,6 +329,54 @@ class NotificationService {
         }
       }
       debugPrint('[Notif] daily bonus alerts scheduled: $scheduledCount @12:20');
+
+      // ── Sera (20:00): inviti a usare le funzioni dell'app, a rotazione ──
+      const featurePrompts = <List<String>>[
+        ['🤖 Una domanda al Patronato AI?', 'Chiedi gratis su ISEE, NASpI, bonus e pratiche. Tocca per iniziare.', 'feature:ai'],
+        ['📄 Crea il tuo CV Europass', 'Compila il curriculum europeo in pochi minuti, gratis.', 'feature:cv'],
+        ['🧮 Calcola il tuo stipendio netto', 'Scopri quanto ti resta in busta paga. Tocca per calcolare.', 'feature:stipendio'],
+        ['💶 Calcola la tua NASpI', 'Stima l\'indennità di disoccupazione in un minuto.', 'feature:naspi'],
+        ['📝 Compila una delega', 'Genera e scarica la tua delega pronta da firmare.', 'feature:delega'],
+        ['🏠 Calcola IMU, TFR e altro', 'Fai i conti delle tue tasse, gratis e al volo.', 'feature:calc'],
+        ['📋 Compila un modulo', 'Moduli pronti da compilare e scaricare in PDF.', 'feature:moduli'],
+      ];
+      int featureCount = 0;
+      for (int day = 0; day < 30; day++) {
+        var fireAt = tz.TZDateTime(tz.local, now.year, now.month, now.day, 20, 0);
+        fireAt = fireAt.add(Duration(days: day));
+        if (fireAt.isBefore(now)) continue;
+
+        final p = featurePrompts[day % featurePrompts.length];
+        try {
+          await _plugin.zonedSchedule(
+            _hashId('daily_feature_$day'),
+            p[0],
+            p[1],
+            fireAt,
+            const NotificationDetails(
+              android: AndroidNotificationDetails(
+                _channelDailyId,
+                _channelDailyName,
+                channelDescription: _channelDailyDesc,
+                importance: Importance.high,
+                priority: Priority.high,
+              ),
+              iOS: DarwinNotificationDetails(
+                presentAlert: true,
+                presentBadge: true,
+                presentSound: true,
+              ),
+            ),
+            androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+            uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+            payload: p[2],
+          );
+          featureCount++;
+        } catch (e) {
+          debugPrint('[Notif] feature schedule error day=$day: $e');
+        }
+      }
+      debugPrint('[Notif] daily feature prompts scheduled: $featureCount @20:00');
     } catch (e, st) {
       debugPrint('[Notif] scheduleDailyBonusNotifications error: $e\n$st');
     }

@@ -5,7 +5,9 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../config/constants.dart';
 import '../../core/services/ad_service.dart';
+import '../../core/services/premium_service.dart';
 import '../../core/widgets/banner_ad_widget.dart';
+import '../premium/premium_screen.dart';
 import '../../core/services/language_service.dart';
 import '../../core/services/theme_service.dart';
 import '../../core/localization/app_strings.dart';
@@ -34,6 +36,7 @@ class ProfiloScreen extends StatelessWidget {
         SliverToBoxAdapter(child: _buildHeader(context, s)),
         SliverToBoxAdapter(child: _buildProfileCard(s)),
         SliverToBoxAdapter(child: _buildStatsRow(s)),
+        SliverToBoxAdapter(child: _buildPremiumBanner(context)),
         SliverToBoxAdapter(child: _sectionTitle(context, s.toolsTitleAlt)),
         SliverToBoxAdapter(child: _buildTools(context, s)),
         SliverToBoxAdapter(child: _sectionTitle(context, s.settingsSectionTitle)),
@@ -42,6 +45,60 @@ class ProfiloScreen extends StatelessWidget {
         const SliverToBoxAdapter(child: Padding(padding: EdgeInsets.symmetric(horizontal: 16), child: BannerAdWidget())),
         const SliverToBoxAdapter(child: SizedBox(height: 24)),
       ],
+    );
+  }
+
+  Widget _buildPremiumBanner(BuildContext context) {
+    return AnimatedBuilder(
+      animation: PremiumService(),
+      builder: (context, _) {
+        final owned = PremiumService().isPremium;
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(16),
+              onTap: () => showPremiumSheet(context),
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  gradient: AppColors.headerGradient,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.workspace_premium, color: Colors.amber, size: 34),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            owned ? 'Premium PRO attivo' : 'Passa a Premium PRO',
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 16, fontWeight: FontWeight.w800),
+                          ),
+                          Text(
+                            owned
+                                ? 'Grazie! Niente pubblicità, AI illimitata.'
+                                : 'Niente pubblicità • niente video • AI illimitata',
+                            style: const TextStyle(color: Colors.white70, fontSize: 12),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (!owned)
+                      const Icon(Icons.chevron_right, color: Colors.white70)
+                    else
+                      const Icon(Icons.check_circle, color: Colors.amber),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 

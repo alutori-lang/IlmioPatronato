@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'app.dart';
 import 'core/services/ad_service.dart';
+import 'core/services/premium_service.dart';
 import 'core/services/bonus_repository.dart';
 import 'core/services/notification_service.dart';
 
@@ -20,6 +21,8 @@ void main() async {
   await NotificationService.instance.scheduleDailyBonusNotifications(
     BonusRepository.instance.all,
   );
+  // Premium entitlement (must load before ads so premium users see none).
+  await PremiumService().init();
   // Ads enabled: initialize Google Mobile Ads (banner + interstitial).
   if (!kIsWeb) {
     await AdService().initialize();

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'premium_service.dart';
 
 class AdService {
   static final AdService _instance = AdService._();
@@ -87,6 +88,7 @@ class AdService {
     required int widthDp,
     VoidCallback? onLoaded,
   }) async {
+    if (PremiumService().isPremium) return null; // premium = no banner
     final AdSize? size =
         await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(widthDp);
     if (size == null) return null;
@@ -149,6 +151,7 @@ class AdService {
   /// Chiama questo metodo ad ogni navigazione verso un dettaglio.
   /// Mostra l'interstitial solo ogni [_interstitialInterval] navigazioni.
   void onNavigateToDetail() {
+    if (PremiumService().isPremium) return;
     _navigationCount++;
     if (_navigationCount >= _interstitialInterval) {
       _navigationCount = 0;
@@ -172,6 +175,10 @@ class AdService {
     required String key,
     required VoidCallback navigate,
   }) async {
+    if (PremiumService().isPremium) {
+      navigate();
+      return;
+    }
     final count = (_everyOtherCounters[key] ?? 0) + 1;
     _everyOtherCounters[key] = count;
     if (count.isEven) {
@@ -185,6 +192,10 @@ class AdService {
   /// Se l'ad non è caricato (o fallisce) [navigate] parte subito.
   /// Usato per: tap su un bonus → pubblicità → dettaglio bonus.
   Future<void> showAdThenNavigate(VoidCallback navigate) async {
+    if (PremiumService().isPremium) {
+      navigate();
+      return;
+    }
     final ad = _interstitialAd;
     if (ad == null) {
       // Ad non pronto: navighi subito e provo a precaricarlo per la prossima volta.
@@ -248,6 +259,10 @@ class AdService {
   /// over an ad-fill miss; we just miss that one impression and preload the
   /// next. Returns once the flow is resolved.
   Future<void> showRewardedThen(VoidCallback onReward) async {
+    if (PremiumService().isPremium) {
+      onReward(); // premium = no video, run the action directly
+      return;
+    }
     final ad = _rewardedAd;
     if (ad == null) {
       // Not filled yet — don't punish the user. Grant + preload for next time.
@@ -291,6 +306,10 @@ class AdService {
   /// ready it falls through immediately (and preloads for next time). Used to
   /// show a video when OPENING a simulator, before calculating.
   Future<void> showRewardedGate(VoidCallback onDone) async {
+    if (PremiumService().isPremium) {
+      onDone(); // premium = open the calculator with no video
+      return;
+    }
     final ad = _rewardedAd;
     if (ad == null) {
       _loadRewardedAd();

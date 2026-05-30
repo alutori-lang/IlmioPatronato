@@ -4,6 +4,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import '../../config/constants.dart';
 import '../../core/services/gemini_service.dart';
+import '../../core/services/premium_service.dart';
+import '../premium/premium_screen.dart';
 import '../../core/widgets/ai_consent_dialog.dart';
 import '../../core/widgets/document_upload_widget.dart';
 import '../../core/widgets/rich_message_widget.dart';
@@ -140,6 +142,18 @@ class _AiChatScreenState extends State<AiChatScreen> {
   Future<void> _sendMessage() async {
     final text = _controller.text.trim();
     if (text.isEmpty && _pendingImage == null) return;
+
+    // Freemium gate: non-premium users get a limited number of AI messages/day.
+    if (!await PremiumService().canSendAiMessage()) {
+      if (!mounted) return;
+      showPremiumSheet(
+        context,
+        reason:
+            'Hai usato i ${PremiumService.freeAiMessagesPerDay} messaggi AI gratuiti di oggi. Passa a Premium PRO per chiedere senza limiti.',
+      );
+      return;
+    }
+    await PremiumService().registerAiMessage();
 
     if (_isListening) {
       await _speech.stop();
