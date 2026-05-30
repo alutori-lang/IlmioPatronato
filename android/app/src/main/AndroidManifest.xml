@@ -42,10 +42,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <!-- AdMob App ID -->
+        <!-- AdMob App ID — "Bonus Italia: ISEE NASpI 730" (Play-linked app) -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-9396424020196768~9936152307"/>
+            android:value="ca-app-pub-9396424020196768~2212115423"/>
 
         <!-- Receivers per notifiche schedulate (flutter_local_notifications) -->
         <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />

@@ -1,7 +1,7 @@
 name: docflow_immigrati
 description: "Bonus Italia — ISEE NASpI 730. App informativa indipendente, non è un servizio governativo."
 publish_to: 'none'
-version: 1.0.14+22
+version: 1.0.22+30
 
 environment:
   sdk: ^3.10.8

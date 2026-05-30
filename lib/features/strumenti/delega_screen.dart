@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/services/ad_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
@@ -820,7 +821,7 @@ class _DelegaScreenState extends State<DelegaScreen>
           children: [
             Expanded(
               child: GestureDetector(
-                onTap: _generaPdf,
+                onTap: () => AdService().showRewardedThen(_generaPdf),
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   decoration: BoxDecoration(

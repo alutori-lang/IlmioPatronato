@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import '../../core/services/ad_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -354,7 +355,9 @@ class _CvEuropassScreenState extends State<CvEuropassScreen> {
         )),
         if (_step > 0) const SizedBox(width: 12),
         Expanded(child: GestureDetector(
-          onTap: _step < 5 ? () => setState(() => _step++) : _generatePdf,
+          onTap: _step < 5
+              ? () => setState(() => _step++)
+              : () => AdService().showRewardedThen(_generatePdf),
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 14),
             decoration: BoxDecoration(gradient: AppColors.buttonGradient, borderRadius: BorderRadius.circular(12)),

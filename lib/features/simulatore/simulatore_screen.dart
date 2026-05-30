@@ -17,9 +17,10 @@ class SimulatoreScreen extends StatelessWidget {
   const SimulatoreScreen({super.key});
 
   void _openCalc(BuildContext context, Widget screen) {
-    AdService().showAdEveryOther(
-      key: 'simulatore',
-      navigate: () => Navigator.push(
+    // Rewarded video on opening a simulator (before calculating), then open
+    // regardless of whether the video was finished — never hard-block access.
+    AdService().showRewardedGate(
+      () => Navigator.push(
         context,
         MaterialPageRoute(builder: (_) => screen),
       ),

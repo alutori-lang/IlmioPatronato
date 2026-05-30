@@ -13,18 +13,30 @@ class BannerAdWidget extends StatefulWidget {
 class _BannerAdWidgetState extends State<BannerAdWidget> {
   BannerAd? _bannerAd;
   bool _isLoaded = false;
+  bool _requested = false;
 
   @override
-  void initState() {
-    super.initState();
-    if (!kIsWeb) {
-      _bannerAd = AdService().createBannerAd(
-        onLoaded: () {
-          if (mounted) setState(() => _isLoaded = true);
-        },
-      );
-      _bannerAd!.load();
-    }
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Adaptive banner needs the screen width (dp), only available once we
+    // have a BuildContext. Load it exactly once.
+    if (_requested || kIsWeb) return;
+    _requested = true;
+    final widthDp = MediaQuery.of(context).size.width.truncate();
+    AdService().createAdaptiveBannerAd(
+      widthDp: widthDp,
+      onLoaded: () {
+        if (mounted) setState(() => _isLoaded = true);
+      },
+    ).then((ad) {
+      if (ad == null) return;
+      if (!mounted) {
+        ad.dispose();
+        return;
+      }
+      _bannerAd = ad;
+      ad.load();
+    });
   }
 
   @override

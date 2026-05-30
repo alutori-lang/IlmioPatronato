@@ -20,12 +20,10 @@ void main() async {
   await NotificationService.instance.scheduleDailyBonusNotifications(
     BonusRepository.instance.all,
   );
-  // TEMP_SCREENSHOTS: AdService initialization disabled to prevent ATT dialog
-  // and Google Mobile Ads banners from appearing in App Store screenshots.
-  // Restore before submitting to App Store.
-  // if (!kIsWeb) {
-  //   await AdService().initialize();
-  // }
+  // Ads enabled: initialize Google Mobile Ads (banner + interstitial).
+  if (!kIsWeb) {
+    await AdService().initialize();
+  }
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

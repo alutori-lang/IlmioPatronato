@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../config/constants.dart';
+import '../../core/services/ad_service.dart';
 import 'moduli_data.dart';
 import 'pdf_generator.dart';
 
@@ -829,7 +830,9 @@ class _WizardScreenState extends State<WizardScreen> {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ElevatedButton.icon(
-                onPressed: () => PdfGenerator.genera(context, widget.modulo, _dati),
+                onPressed: () => AdService().showRewardedThen(
+                  () => PdfGenerator.genera(context, widget.modulo, _dati),
+                ),
                 icon: const Icon(Icons.download, size: 18, color: Colors.white),
                 label: Text(
                   'Scarica PDF',
