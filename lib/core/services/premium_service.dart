@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,9 +21,13 @@ class PremiumService extends ChangeNotifier {
   factory PremiumService() => _instance;
   PremiumService._();
 
-  /// In-app product id — must match the product created in Play Console
-  /// (Monetize → In-app products) and App Store Connect.
-  static const String productId = 'premium_pro';
+  /// In-app product id — must match the product created in the stores.
+  /// Android keeps `premium_pro` (already live on Play Console, untouched).
+  /// iOS uses a distinct id: App Store Connect permanently reserves a product
+  /// id once created, and `premium_pro` was burned on a first (wrong-type)
+  /// draft — so iOS gets a fresh non-consumable id `premium_pro_lifetime`.
+  static String get productId =>
+      Platform.isIOS ? 'premium_pro_lifetime' : 'premium_pro';
 
   /// Free AI messages per day for non-premium users.
   static const int freeAiMessagesPerDay = 5;
