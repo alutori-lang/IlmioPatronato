@@ -1,14 +1,15 @@
 // Centralised app URLs.
 //
 // Update these when the privacy policy / support page move.
-// Apple App Review (May 2026) flagged the Google Sites page as a non-functional
-// support URL — replace the URL below as soon as a real support page is online.
+// Hosted on GitHub Pages (repo alutori-lang.github.io) so the support and
+// privacy pages are real, functional URLs accepted by Apple and AdMob
+// (Google Sites was previously rejected for both).
 class AppLinks {
   static const String privacyPolicy =
-      'https://sites.google.com/view/ilmiopatronatoitalia/home-page';
+      'https://alutori-lang.github.io/smart-bonus-italia/privacy.html';
 
   static const String supportPage =
-      'https://sites.google.com/view/ilmiopatronatoitalia/home-page';
+      'https://alutori-lang.github.io/smart-bonus-italia/';
 
   static const String supportEmail = 'alutori@gmail.com';
 }

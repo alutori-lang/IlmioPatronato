@@ -38,13 +38,12 @@ class AdService {
   static String get rewardedAdUnitId =>
       Platform.isAndroid ? _androidRewardedId : _iosRewardedId;
 
-  // ── App Open Ad Unit IDs ──
-  // TODO(REVENUE): create an "App Open" ad unit in AdMob (one per platform)
-  // and paste the IDs here. These are Google TEST app-open units for now.
-  static const String _androidAppOpenId =
-      'ca-app-pub-3940256099942544/9257395921'; // TEST — replace
-  static const String _iosAppOpenId =
-      'ca-app-pub-3940256099942544/5575463023'; // TEST — replace
+  // ── App Open Ad Unit IDs ── DISABLED
+  // App-open ads are intentionally OFF: no real AdMob units were created for
+  // them, so no test IDs ship to production. To re-enable later, create one
+  // "App Open" unit per platform in AdMob and paste the real IDs below.
+  static const String _androidAppOpenId = '';
+  static const String _iosAppOpenId = '';
 
   static String get appOpenAdUnitId =>
       Platform.isAndroid ? _androidAppOpenId : _iosAppOpenId;
@@ -349,6 +348,7 @@ class AdService {
   static const Duration _appOpenMaxCacheAge = Duration(hours: 4);
 
   void _loadAppOpenAd() {
+    if (appOpenAdUnitId.isEmpty) return; // app-open ads disabled
     if (_appOpenAd != null || _appOpenLoading) return;
     _appOpenLoading = true;
     AppOpenAd.load(
@@ -378,6 +378,7 @@ class AdService {
   /// preloads the next. Never shown on the very first cold launch / onboarding
   /// because the lifecycle hook only fires this on resume-from-background.
   void showAppOpenIfAvailable() {
+    if (appOpenAdUnitId.isEmpty) return; // app-open ads disabled
     if (_isShowingFullScreenAd) return; // don't stack on interstitial/rewarded
     if (!_isAppOpenAvailable) {
       _loadAppOpenAd(); // not ready → fetch for next time
