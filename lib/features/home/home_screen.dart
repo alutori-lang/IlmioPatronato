@@ -69,6 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
       slivers: [
         SliverToBoxAdapter(child: _buildHeader(context)),
         SliverToBoxAdapter(child: _buildIlMioCasoBanner(context)),
+        SliverToBoxAdapter(child: _buildBonusShortcut(context)),
         SliverToBoxAdapter(child: _buildGuideDocumentiCard(context)),
         SliverToBoxAdapter(child: _buildAgevolazioneDelGiorno(context)),
         const SliverToBoxAdapter(child: SizedBox(height: 20)),
@@ -187,6 +188,53 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 4),
                   Text(
                     hasProfile ? s.homeRightsMainTitle : s.homeRightsMainSub,
+                    style: const TextStyle(color: Colors.white70, fontSize: 12, height: 1.3),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            const Icon(Icons.arrow_forward_ios, color: Colors.white70, size: 18),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ─── BONUS SHORTCUT (sotto il banner "Scopri i tuoi diritti") ────────────
+  Widget _buildBonusShortcut(BuildContext context) {
+    final s = AppStrings.of(context);
+    final bonusCount = 53 + _nuoveAgevolazioni.length;
+
+    return GestureDetector(
+      onTap: widget.onNavigateToAgevolazioni,
+      child: Container(
+        margin: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [Color(0xFFE65100), Color(0xFFF57C00)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: [BoxShadow(color: const Color(0xFFE65100).withValues(alpha: 0.35), blurRadius: 16, offset: const Offset(0, 6))],
+        ),
+        child: Row(
+          children: [
+            const Text('🎁', style: TextStyle(fontSize: 34)),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    s.navBonuses,
+                    style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w900, letterSpacing: 0.5),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '$bonusCount bonus',
                     style: const TextStyle(color: Colors.white70, fontSize: 12, height: 1.3),
                   ),
                 ],
