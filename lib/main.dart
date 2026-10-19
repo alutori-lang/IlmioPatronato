@@ -23,10 +23,6 @@ void main() async {
   );
   // Premium entitlement (must load before ads so premium users see none).
   await PremiumService().init();
-  // Ads enabled: initialize Google Mobile Ads (banner + interstitial).
-  if (!kIsWeb) {
-    await AdService().initialize();
-  }
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -38,4 +34,10 @@ void main() async {
     ),
   );
   runApp(const MioPatronatoApp());
+  // Google UMP consent (GDPR) first, then the Mobile Ads SDK, in the
+  // background so the UI never waits on it. Every ad load waits on
+  // AdsConsent.whenReady (no ad is requested before it).
+  if (!kIsWeb) {
+    AdService().start();
+  }
 }

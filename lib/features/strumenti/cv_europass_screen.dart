@@ -896,7 +896,10 @@ class _CvEuropassScreenState extends State<CvEuropassScreen> {
           label: 'APRI',
           textColor: Colors.white,
           onPressed: () {
-            Share.shareXFiles([XFile(file.path)], subject: filename);
+            // No interstitial on top of the share sheet.
+            AdService().withShareSheet(
+              () => Share.shareXFiles([XFile(file.path)], subject: filename),
+            );
           },
         ),
       ),
