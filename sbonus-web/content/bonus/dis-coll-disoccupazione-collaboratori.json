@@ -1,0 +1,83 @@
+{
+  "slug": "dis-coll-disoccupazione-collaboratori",
+  "titolo": "DIS-COLL 2026: la disoccupazione per collaboratori, assegnisti e dottorandi",
+  "descrizione": "DIS-COLL: indennità INPS per co.co.co., assegnisti e dottorandi con borsa che perdono il lavoro. Massimo 1.584,70 euro nel 2026, fino a 12 mesi.",
+  "intro": "La DIS-COLL è l'equivalente della NASpI per chi lavora con contratti di collaborazione coordinata e continuativa, assegni di ricerca o dottorati con borsa ed è iscritto solo alla Gestione Separata INPS. Basta un mese di contributi e la domanda va fatta entro 68 giorni dalla fine del rapporto. La durata dipende dai mesi coperti da contributi, fino a un massimo di un anno.",
+  "categoria": "lavoro",
+  "ente": "INPS",
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Collaboratori coordinati e continuativi, anche a progetto",
+    "Assegnisti di ricerca",
+    "Dottorandi di ricerca con borsa di studio",
+    "Purché iscritti in via esclusiva alla Gestione Separata INPS, non pensionati e senza partita IVA",
+    "Non spetta: titolari di pensione o di partita IVA, amministratori, sindaci e revisori di società ed enti"
+  ],
+  "requisiti": [
+    "Perdita involontaria della collaborazione, dell'assegno o della borsa",
+    "Stato di disoccupazione al momento della domanda",
+    "Almeno un mese di contribuzione tra il 1° gennaio dell'anno precedente la cessazione e la cessazione stessa",
+    "Iscrizione esclusiva alla Gestione Separata (nessuna sovrapposizione con altro lavoro, ad esempio subordinato)"
+  ],
+  "importi": [
+    "75% del reddito medio mensile, se non supera 1.456,72 euro (valore 2026)",
+    "Sopra tale soglia si aggiunge il 25% della differenza",
+    "Importo massimo mensile 2026: 1.584,70 euro",
+    "Riduzione del 3% al mese dal primo giorno del sesto mese",
+    "Durata pari ai mesi di contribuzione dal 1° gennaio dell'anno precedente alla cessazione, con un massimo di 12 mesi",
+    "Per il periodo di fruizione è riconosciuta la contribuzione figurativa"
+  ],
+  "comeFare": [
+    "Accedere al servizio online 'DIS-COLL – domanda' sul sito INPS con SPID, CIE o CNS",
+    "In alternativa farsi aiutare da un patronato o chiamare il Contact center 803 164 / 06 164 164",
+    "La domanda vale come dichiarazione di immediata disponibilità (DID)",
+    "Entro 15 giorni contattare il Centro per l'impiego per il patto di servizio personalizzato",
+    "Comunicare all'INPS entro 30 giorni l'eventuale avvio di un'attività autonoma o parasubordinata con il reddito presunto"
+  ],
+  "documenti": [
+    "Documento d'identità e codice fiscale",
+    "Credenziali SPID, CIE o CNS (o delega al patronato)",
+    "Dati del contratto di collaborazione, assegno o borsa cessati",
+    "IBAN di conto o libretto postale (in alternativa bonifico domiciliato alle Poste)"
+  ],
+  "scadenze": "Entro 68 giorni dalla cessazione della collaborazione, dell'assegno di ricerca o del dottorato con borsa. Il termine resta sospeso in caso di maternità o degenza ospedaliera indennizzate.",
+  "faq": [
+    {
+      "q": "Ho la partita IVA: posso chiedere la DIS-COLL?",
+      "a": "No, la DIS-COLL è esclusa per i titolari di partita IVA e per i pensionati."
+    },
+    {
+      "q": "Quanto dura la DIS-COLL?",
+      "a": "Quanti sono i mesi con contributi dal 1° gennaio dell'anno precedente alla fine del rapporto, fino a un massimo di 12 mesi."
+    },
+    {
+      "q": "Se trovo un lavoro breve perdo l'indennità?",
+      "a": "Un contratto subordinato fino a cinque giorni sospende soltanto la prestazione; oltre i cinque giorni si decade."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS – Scheda DIS-COLL: indennità mensile di disoccupazione",
+      "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.dis-coll-indennit-mensile-di-disoccupazione-50183.dis-coll-indennit-mensile-di-disoccupazione.html"
+    },
+    {
+      "label": "INPS – Circolare n. 4 del 28 gennaio 2026 (importi 2026)",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/01/Circolare_15147/Allegati/16539_Circolare-numero-4-del-28-01-2026.pdf"
+    }
+  ],
+  "tags": [
+    "dis-coll",
+    "collaboratori",
+    "co.co.co.",
+    "assegnisti",
+    "dottorandi",
+    "gestione separata",
+    "disoccupazione"
+  ],
+  "noteRedazione": "Rispetto alla bozza: la durata non è la metà dei mesi ma tutti i mesi di contribuzione dal 1° gennaio dell'anno precedente (max 12); importo massimo aggiornato a 1.584,70 euro (2026); la DID è assorbita nella domanda. La scheda INPS riporta ancora le soglie 2025 di reddito compatibile (5.500 euro autonomo, 8.500 euro parasubordinato): l'aggiornamento 2026 non è stato verificato e quindi non sono state inserite.",
+  "origineApp": "discoll"
+}

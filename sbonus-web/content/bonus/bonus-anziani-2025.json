@@ -1,0 +1,52 @@
+{
+  "slug": "bonus-anziani-2025",
+  "titolo": "Bonus Anziani Non Autosufficienti 2025",
+  "descrizione": "Nuovo contributo di €850/mese per anziani over 80 non autosufficienti.",
+  "intro": "La Legge di Bilancio 2025 ha introdotto una prestazione universale di €850/mese per gli anziani non autosufficienti over 80 con ISEE socio-sanitario fino a €6.000. Si somma all'indennità di accompagnamento (€531,76). Totale: circa €1.381/mese. Vincolato a servizi di cura (badante regolare, servizi domiciliari).",
+  "categoria": "pensioni",
+  "ente": "INPS",
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [],
+  "requisiti": [
+    "Età almeno 80 anni",
+    "Non autosufficienza certificata",
+    "ISEE socio-sanitario non superiore a €6.000",
+    "Titolarità dell'indennità di accompagnamento",
+    "Utilizzo per servizi di cura regolari"
+  ],
+  "importi": [
+    "€850/mese (+ €531,76 accompagnamento)"
+  ],
+  "comeFare": [
+    "1. Ottenere ISEE socio-sanitario\n2. Verificare titolarità accompagnamento\n3. Domanda su inps.it con SPID\n4. Indicare il servizio di cura utilizzato\n5. Erogazione mensile"
+  ],
+  "documenti": [
+    "ISEE socio-sanitario",
+    "Verbale di non autosufficienza",
+    "Titolarità indennità di accompagnamento",
+    "Contratto badante o fattura servizi domiciliari"
+  ],
+  "scadenze": "Dal 1° gennaio 2025",
+  "faq": [],
+  "fonti": [
+    {
+      "label": "INPS",
+      "url": "https://www.inps.it/prestazioni-servizi/prestazione-universale-anziani"
+    }
+  ],
+  "tags": [
+    "anziani",
+    "non autosufficiente",
+    "over 80",
+    "bonus",
+    "2025",
+    "badante",
+    "accompagnamento"
+  ],
+  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "origineApp": "bonus_anziani_2025"
+}

@@ -1,0 +1,50 @@
+{
+  "slug": "kit-digitale",
+  "titolo": "Kit Digitale per Immigrati",
+  "descrizione": "SPID, PEC e supporto digitale gratuito per stranieri.",
+  "intro": "Diversi Comuni e associazioni offrono sportelli di assistenza digitale per aiutare i cittadini stranieri ad attivare: SPID (identità digitale), PEC (posta certificata), App IO, accesso ai portali della PA. Alcuni CAF offrono questo servizio gratuitamente. È essenziale per accedere a tutti i servizi online.",
+  "categoria": "sostegno",
+  "ente": "Comune / CAF / Poste Italiane",
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [],
+  "requisiti": [
+    "Permesso di soggiorno valido o carta d'identità",
+    "Codice fiscale",
+    "Numero di telefono italiano",
+    "Indirizzo email"
+  ],
+  "importi": [
+    "Gratuito"
+  ],
+  "comeFare": [
+    "1. Recarsi al CAF o sportello comunale di assistenza digitale\n2. Portare documenti necessari\n3. Attivare SPID (PosteID, Aruba, ecc.)\n4. Attivare PEC se necessario\n5. Installare App IO sul telefono"
+  ],
+  "documenti": [
+    "Documento d'identità o permesso di soggiorno",
+    "Codice fiscale / tessera sanitaria",
+    "Numero di cellulare",
+    "Email personale"
+  ],
+  "scadenze": "Sempre disponibile",
+  "faq": [],
+  "fonti": [
+    {
+      "label": "Comune / CAF / Poste Italiane",
+      "url": "https://www.spid.gov.it"
+    }
+  ],
+  "tags": [
+    "spid",
+    "digitale",
+    "pec",
+    "app io",
+    "identità digitale",
+    "stranieri"
+  ],
+  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "origineApp": "kit_digitale"
+}

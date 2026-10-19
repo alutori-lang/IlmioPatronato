@@ -1,0 +1,88 @@
+{
+  "slug": "bonus-nuovi-nati-2026",
+  "titolo": "Bonus Nuovi Nati 2026 (1.000 euro)",
+  "descrizione": "Contributo INPS una tantum di 1.000 euro per ogni figlio nato, adottato o in affido preadottivo nel 2026, con ISEE fino a 40.000 euro.",
+  "intro": "Il Bonus Nuovi Nati è un contributo di 1.000 euro, pagato una sola volta, per ogni figlio nato, adottato o accolto in affidamento preadottivo nel 2026. Serve un ISEE per prestazioni familiari non superiore a 40.000 euro, calcolato senza l'Assegno Unico. La domanda va fatta all'INPS entro 120 giorni dall'evento, altrimenti si perde il diritto.",
+  "categoria": "famiglia",
+  "ente": "INPS",
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Genitori di figli nati, adottati o in affidamento preadottivo dal 1° gennaio al 31 dicembre 2026 (per adozioni e affidi solo figli minorenni)",
+    "La domanda la presenta uno dei genitori; se non convivono, il genitore che vive con il bambino"
+  ],
+  "requisiti": [
+    "Cittadinanza italiana o UE (o familiare titolare del diritto di soggiorno), oppure cittadinanza extra UE con permesso UE per soggiornanti di lungo periodo, permesso unico di lavoro o per ricerca oltre i sei mesi, o altro permesso di durata non inferiore a un anno",
+    "Apolidi, rifugiati e titolari di protezione internazionale sono equiparati ai cittadini italiani",
+    "Residenza in Italia del genitore richiedente, in modo continuativo dalla data dell'evento fino alla domanda",
+    "ISEE per prestazioni familiari e per l'inclusione del minore, al netto dell'Assegno Unico, non superiore a 40.000 euro"
+  ],
+  "importi": [
+    "1.000 euro una tantum per ogni figlio",
+    "Non concorre al reddito complessivo ai fini IRPEF"
+  ],
+  "comeFare": [
+    "Richiedi l'ISEE per prestazioni familiari valido per il minore (tramite CAF o Portale unico ISEE)",
+    "Accedi al servizio Bonus nuovi nati sul sito INPS con SPID, CIE o CNS, oppure usa l'app INPS Mobile",
+    "In alternativa chiama il Contact Center INPS o rivolgiti a un patronato",
+    "Presenta una domanda separata per ogni figlio e indica la modalità di pagamento (IBAN)",
+    "Controlla l'esito nella stessa area del sito INPS"
+  ],
+  "documenti": [
+    "ISEE per prestazioni familiari in corso di validità",
+    "Codice fiscale del genitore richiedente e del bambino",
+    "Dati della nascita, dell'adozione o dell'affidamento preadottivo",
+    "Per i cittadini extra UE: estremi del permesso di soggiorno valido (o della ricevuta di richiesta di rinnovo)",
+    "IBAN per l'accredito"
+  ],
+  "scadenze": "Entro 120 giorni dalla nascita, dall'adozione o dall'ingresso in famiglia del minore, a pena di decadenza. Per gli eventi avvenuti prima dell'apertura del servizio (14 aprile 2026) il termine era il 12 agosto 2026.",
+  "faq": [
+    {
+      "q": "Entro quando va presentata la domanda?",
+      "a": "Entro 120 giorni dall'evento. Dopo questo termine il diritto al bonus si perde."
+    },
+    {
+      "q": "Il bonus si somma all'Assegno Unico?",
+      "a": "Sì, sono due misure distinte. Anzi, l'Assegno Unico ricevuto non conta nel calcolo dell'ISEE usato per il bonus."
+    },
+    {
+      "q": "Per due gemelli spettano 2.000 euro?",
+      "a": "Il bonus spetta per ogni figlio e va presentata una domanda per ciascuno."
+    },
+    {
+      "q": "Il bonus è tassato?",
+      "a": "No, non concorre al reddito complessivo ai fini IRPEF."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS - Circolare n. 45 del 10 aprile 2026",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/04/Circolare_15234/Allegati/16714_Circolare-numero-45-del-10-04-2026.pdf"
+    },
+    {
+      "label": "INPS - Comunicato stampa 14 aprile 2026 Bonus nuovi nati 2026",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/comunicati-stampa/2026/04/Allegati/4076_CS-bonus-nuovi-nati.pdf"
+    },
+    {
+      "label": "INPS - Scheda Bonus nuovi nati",
+      "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.bonus-nuovi-nati.html"
+    },
+    {
+      "label": "INPS - Bonus nuovi nati 2026: domande entro il 12 agosto",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.08.bonus-nuovi-nati-2026-domande-entro-il-12-agosto.html"
+    }
+  ],
+  "tags": [
+    "bonus nuovi nati",
+    "bonus nascita",
+    "neonati",
+    "adozione",
+    "INPS",
+    "2026"
+  ],
+  "noteRedazione": "Questa scheda sostituisce anche la voce duplicata 'bonus_nascita', che indicava per errore un termine di 60 giorni: per il 2026 il termine è 120 giorni. Le misure per i nati nel 2025 si richiedono con il servizio separato 'Bonus nuovi nati 2025'.",
+  "origineApp": "bonus_nuovi_nati_2026"
+}

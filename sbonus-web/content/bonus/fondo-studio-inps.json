@@ -1,0 +1,49 @@
+{
+  "slug": "fondo-studio-inps",
+  "titolo": "Fondo Studio INPS (Borse di Studio)",
+  "descrizione": "Borse di studio INPS per figli di lavoratori iscritti alla Gestione Unitaria.",
+  "intro": "L'INPS eroga borse di studio per i figli e orfani di dipendenti e pensionati della pubblica amministrazione iscritti alla Gestione Unitaria delle prestazioni creditizie e sociali. Include: borse per scuole superiori, università, master, dottorati. Importi variabili in base al tipo di corso.",
+  "categoria": "studenti",
+  "ente": "INPS",
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [],
+  "requisiti": [
+    "Figlio/orfano di iscritto alla Gestione Unitaria INPS",
+    "Iscrizione a scuola superiore, università o post-laurea",
+    "Requisiti di merito e reddito specifici per bando"
+  ],
+  "importi": [
+    "Da €750 a €10.000 in base al corso"
+  ],
+  "comeFare": [
+    "1. Verificare il bando annuale su inps.it\n2. Domanda online tramite SPID\n3. Sezione Welfare → Borse di Studio\n4. Attendere graduatoria"
+  ],
+  "documenti": [
+    "ISEE",
+    "Certificato iscrizione scolastica/universitaria",
+    "Pagella o libretto universitario",
+    "Documento identità"
+  ],
+  "scadenze": "Bando annuale INPS",
+  "faq": [],
+  "fonti": [
+    {
+      "label": "INPS",
+      "url": "https://www.inps.it/prestazioni-servizi/borse-di-studio"
+    }
+  ],
+  "tags": [
+    "borsa",
+    "studio",
+    "inps",
+    "figli",
+    "dipendenti pubblici",
+    "università"
+  ],
+  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "origineApp": "fondo_studio_inps"
+}

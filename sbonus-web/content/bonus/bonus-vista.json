@@ -1,0 +1,48 @@
+{
+  "slug": "bonus-vista",
+  "titolo": "Bonus Vista / Occhiali (€50)",
+  "descrizione": "Voucher di €50 per l'acquisto di occhiali da vista o lenti a contatto.",
+  "intro": "Il Bonus Vista è un voucher una tantum di €50 per l'acquisto di occhiali da vista o lenti a contatto correttive. Destinato a chi ha un ISEE non superiore a €10.000. Si può richiedere come sconto diretto presso gli ottici aderenti o come rimborso per acquisti già effettuati dal 2021.",
+  "categoria": "salute",
+  "ente": "Ministero della Salute",
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [],
+  "requisiti": [
+    "ISEE non superiore a €10.000",
+    "Acquisto di occhiali da vista o lenti correttive",
+    "Residenza in Italia"
+  ],
+  "importi": [
+    "€50 una tantum"
+  ],
+  "comeFare": [
+    "1. Accedere al portale bonusvista.it con SPID\n2. Verificare requisiti ISEE\n3. Generare voucher per sconto in negozio\n4. Oppure richiedere rimborso per acquisti già fatti"
+  ],
+  "documenti": [
+    "ISEE in corso di validità",
+    "SPID o CIE",
+    "Fattura/scontrino acquisto (per rimborso)"
+  ],
+  "scadenze": "Fino a esaurimento fondi",
+  "faq": [],
+  "fonti": [
+    {
+      "label": "Ministero della Salute",
+      "url": "https://www.bonusvista.it"
+    }
+  ],
+  "tags": [
+    "occhiali",
+    "vista",
+    "lenti",
+    "ottico",
+    "voucher",
+    "bonus"
+  ],
+  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "origineApp": "bonus_vista"
+}

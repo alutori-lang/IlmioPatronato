@@ -1,0 +1,81 @@
+{
+  "slug": "bonus-mamme-2026",
+  "titolo": "Bonus Mamme 2026 (60 euro al mese)",
+  "descrizione": "Contributo di 60 euro al mese, fino a 720 euro l'anno, per le mamme lavoratrici con almeno due figli e reddito da lavoro fino a 40.000 euro.",
+  "intro": "La Legge di Bilancio 2026 ha portato il Bonus Mamme a 60 euro al mese, fino a 720 euro l'anno, per le lavoratrici dipendenti e autonome con almeno due figli e un reddito da lavoro non superiore a 40.000 euro. Il contributo è esentasse, non conta ai fini ISEE e viene pagato dall'INPS su domanda. Al momento della verifica non risulta però una procedura INPS aperta per la domanda 2026.",
+  "categoria": "famiglia",
+  "ente": "INPS",
+  "stato": "in-attesa",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Mamme lavoratrici dipendenti (pubbliche o private, escluso il lavoro domestico) o lavoratrici autonome",
+    "Con due figli: fino al mese in cui il secondo figlio compie 10 anni",
+    "Con più di due figli: fino al compimento dei 18 anni del figlio più piccolo"
+  ],
+  "requisiti": [
+    "Almeno due figli",
+    "Reddito da lavoro non superiore a 40.000 euro annui",
+    "Rapporto di lavoro dipendente (non domestico) o attività di lavoro autonomo",
+    "Per le madri con almeno tre figli assunte a tempo indeterminato che hanno già l'esonero contributivo IVS sono previste regole di coordinamento"
+  ],
+  "importi": [
+    "60 euro al mese, fino a 720 euro l'anno",
+    "Non tassato e non rilevante ai fini ISEE"
+  ],
+  "comeFare": [
+    "Attendi l'apertura del servizio INPS per la domanda 2026, che va presentata dall'interessata (il bonus non è automatico)",
+    "Quando il servizio sarà disponibile, si potrà presumibilmente usare il sito INPS con SPID, CIE o CNS, il Contact Center (803 164 o 06 164 164) o un patronato, come per la versione 2025",
+    "Controlla le notizie e i messaggi INPS per date e istruzioni ufficiali"
+  ],
+  "documenti": [
+    "Codice fiscale della richiedente e dei figli",
+    "Dati del rapporto di lavoro o della posizione da lavoratrice autonoma",
+    "IBAN per l'accredito"
+  ],
+  "scadenze": "Per il 2026 non risultano ancora date ufficiali di apertura o chiusura delle domande. La versione 2025 (40 euro al mese) si è chiusa il 31 gennaio 2026.",
+  "faq": [
+    {
+      "q": "Il Bonus Mamme 2026 arriva in busta paga?",
+      "a": "No, è pagato dall'INPS su domanda della lavoratrice, non dal datore di lavoro."
+    },
+    {
+      "q": "Spetta anche alle colf e badanti?",
+      "a": "No, le lavoratrici domestiche sono escluse."
+    },
+    {
+      "q": "Se ho tre figli e l'esonero contributivo cosa succede?",
+      "a": "Per le madri con almeno tre figli a tempo indeterminato che hanno già l'esonero IVS la legge prevede regole di coordinamento tra le due misure: conviene verificarle con un patronato."
+    },
+    {
+      "q": "Il bonus conta nell'ISEE o nelle tasse?",
+      "a": "No, non è tassato e non è rilevante ai fini ISEE."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS - Legge di bilancio 2026: genitorialità, inclusione sociale e disabilità",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.01.legge-di-bilancio-2026-genitorialit-inclusione-sociale-e-disabilit.html"
+    },
+    {
+      "label": "INPS - Vademecum Bonus mamme",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.01.vademecum-bonus-mamme.html"
+    },
+    {
+      "label": "INPS - Aggiornato il servizio per il nuovo Bonus mamme",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.01.aggiornato-il-servizio-per-il-nuovo-bonus-mamme.html"
+    }
+  ],
+  "tags": [
+    "bonus mamme",
+    "mamme lavoratrici",
+    "figli",
+    "lavoro",
+    "INPS",
+    "2026"
+  ],
+  "noteRedazione": "Requisiti e importo 2026 sono confermati dalle pagine INPS sulla Legge di Bilancio 2026. Non è stata trovata una circolare o un messaggio INPS che apra la domanda 2026, quindi canali, documenti e scadenze sono indicativi e vanno riverificati. La bozza descriveva invece l'esonero contributivo per le madri con 3+ figli, che è una misura diversa.",
+  "origineApp": "bonus_mamme"
+}

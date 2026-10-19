@@ -1,0 +1,48 @@
+{
+  "slug": "bonus-integrazione",
+  "titolo": "Bonus Integrazione Rifugiati",
+  "descrizione": "Percorso di integrazione con contributo per titolari di protezione internazionale.",
+  "intro": "Il Sistema di Accoglienza e Integrazione (SAI) offre ai titolari di protezione internazionale e umanitaria percorsi di integrazione che includono: alloggio temporaneo, corsi di italiano, orientamento al lavoro, supporto legale e contributo economico per l'autonomia. Durata del percorso: da 6 a 12 mesi.",
+  "categoria": "sostegno",
+  "ente": "Prefettura / Ministero dell'Interno",
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [],
+  "requisiti": [
+    "Titolarità di protezione internazionale o umanitaria",
+    "Richiesta di asilo in corso",
+    "Presenza sul territorio italiano"
+  ],
+  "importi": [
+    "Alloggio + €75-€150/mese pocket money"
+  ],
+  "comeFare": [
+    "1. Rivolgersi alla Prefettura o alla Questura\n2. Essere inseriti nel sistema SAI\n3. Il percorso viene assegnato dalla Prefettura\n4. Seguire il programma di integrazione"
+  ],
+  "documenti": [
+    "Permesso di soggiorno o ricevuta richiesta asilo",
+    "Documento identità (se disponibile)",
+    "Documentazione dello status di rifugiato"
+  ],
+  "scadenze": "Sempre aperto",
+  "faq": [],
+  "fonti": [
+    {
+      "label": "Prefettura / Ministero dell'Interno",
+      "url": "https://www.retesai.it"
+    }
+  ],
+  "tags": [
+    "rifugiati",
+    "integrazione",
+    "protezione",
+    "accoglienza",
+    "sai",
+    "asilo"
+  ],
+  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "origineApp": "bonus_integrazione"
+}

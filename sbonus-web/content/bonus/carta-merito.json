@@ -1,0 +1,47 @@
+{
+  "slug": "carta-merito",
+  "titolo": "Carta del Merito",
+  "descrizione": "Carta da €500 per diplomati con 100/100 alla maturità.",
+  "intro": "La Carta del Merito è un buono di €500 per chi si diploma con il punteggio di 100/100 alla maturità. È cumulabile con la Carta della Cultura Giovani (totale €1.000). Utilizzabile per acquisti culturali: libri, cinema, teatro, concerti, musei, corsi.",
+  "categoria": "studenti",
+  "ente": "Ministero dell'Istruzione",
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [],
+  "requisiti": [
+    "Diploma di maturità con 100/100",
+    "Anno scolastico di riferimento",
+    "Residenza in Italia"
+  ],
+  "importi": [
+    "€500"
+  ],
+  "comeFare": [
+    "1. Registrarsi su cartadellacultura.istruzione.it\n2. La verifica del punteggio è automatica\n3. Generare buoni di spesa\n4. Utilizzare presso esercenti convenzionati"
+  ],
+  "documenti": [
+    "SPID o CIE",
+    "Diploma (verifica automatica dal MIUR)"
+  ],
+  "scadenze": "Entro l'anno successivo al diploma",
+  "faq": [],
+  "fonti": [
+    {
+      "label": "Ministero dell'Istruzione",
+      "url": "https://cartadellacultura.istruzione.it"
+    }
+  ],
+  "tags": [
+    "merito",
+    "diploma",
+    "maturità",
+    "100",
+    "studenti",
+    "cultura"
+  ],
+  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "origineApp": "carta_merito"
+}

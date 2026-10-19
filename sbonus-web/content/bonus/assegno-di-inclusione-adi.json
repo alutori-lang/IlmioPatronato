@@ -1,0 +1,93 @@
+{
+  "slug": "assegno-di-inclusione-adi",
+  "titolo": "Assegno di Inclusione (ADI) 2026: requisiti, importi e rinnovo",
+  "descrizione": "Assegno di Inclusione 2026: ISEE fino a 10.140 euro, nuclei con minori, disabili o over 60. Importi, contributo affitto e come fare domanda.",
+  "intro": "L'Assegno di Inclusione è la misura nazionale contro la povertà per le famiglie in cui vive almeno un minorenne, una persona con disabilità, un over 60 o una persona svantaggiata seguita dai servizi socio-sanitari. Integra il reddito familiare e può aggiungere un contributo per l'affitto, in cambio dell'adesione a un percorso di inclusione sociale o lavorativa. Dal 2026 il rinnovo non prevede più il mese di stop.",
+  "categoria": "sostegno",
+  "ente": "INPS / Ministero del Lavoro",
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Nuclei familiari con almeno un componente con disabilità",
+    "Nuclei con almeno un minorenne",
+    "Nuclei con almeno un componente di 60 anni o più",
+    "Nuclei con un componente in condizione di svantaggio inserito in programmi di cura e assistenza certificati dalla pubblica amministrazione",
+    "Titolari di permesso di soggiorno per 'casi speciali' (artt. 18, 18-bis e 18-ter TUI), con regole specifiche"
+  ],
+  "requisiti": [
+    "Cittadinanza italiana o UE (o familiare con diritto di soggiorno), permesso UE per soggiornanti di lungo periodo, protezione internazionale o status di apolide",
+    "Residenza in Italia da almeno 5 anni, gli ultimi 2 in modo continuativo",
+    "ISEE in corso di validità non superiore a 10.140 euro",
+    "Reddito familiare sotto 6.500 euro annui moltiplicati per la scala di equivalenza ADI (8.190 euro se tutti hanno almeno 67 anni, o sono over 67 con familiari gravemente disabili o non autosufficienti); 10.140 euro se il nucleo vive in affitto",
+    "Patrimonio immobiliare, esclusa la casa di abitazione fino a 150.000 euro di valore IMU, non superiore a 30.000 euro",
+    "Patrimonio mobiliare entro 6.000 euro (1 componente), 8.000 (2), 10.000 (3 o più, +1.000 per ogni figlio dal terzo), con aumenti di 5.000 euro per ogni disabile e 7.500 per ogni componente con disabilità grave o non autosufficiente",
+    "Nessuna auto oltre 1.600 cc o moto oltre 250 cc immatricolata negli ultimi 36 mesi (salvo agevolazioni per disabilità), nessuna barca o aereo",
+    "Nessuna condanna definitiva o misura cautelare nei 10 anni precedenti; nessuna disoccupazione da dimissioni volontarie nei 12 mesi precedenti (salvo giusta causa)"
+  ],
+  "importi": [
+    "Quota A: integrazione del reddito familiare fino a 6.500 euro annui (8.190 euro per nuclei di soli over 67 o con familiari gravemente disabili), moltiplicati per la scala di equivalenza (da 1 fino a 2,2, o 2,3 con disabilità grave)",
+    "Quota B: contributo affitto pari al canone annuo registrato, fino a 3.640 euro l'anno (1.950 euro per nuclei di soli over 67 o con familiari gravemente disabili)",
+    "Importo minimo: 480 euro l'anno",
+    "Durata: fino a 18 mesi, rinnovabile per periodi di 12 mesi con nuova domanda; la prima mensilità del rinnovo è pari al 50%",
+    "Pagamento mensile sulla Carta di inclusione (Carta ADI)"
+  ],
+  "comeFare": [
+    "Ottenere un ISEE valido (DSU) per il nucleo",
+    "Presentare la domanda online sul sito INPS, oppure tramite patronato o CAF",
+    "Registrarsi sulla piattaforma SIISL e sottoscrivere il Patto di Attivazione Digitale (PAD)",
+    "Presentarsi al primo appuntamento con i servizi sociali entro 120 giorni dal PAD",
+    "Chi è tenuto al percorso lavorativo firma il Patto di servizio personalizzato al Centro per l'impiego entro 60 giorni dall'invio",
+    "Comunicare all'INPS ogni variazione di lavoro (modelli ADI-Com) e del nucleo (nuova DSU entro un mese)"
+  ],
+  "documenti": [
+    "ISEE in corso di validità",
+    "Documento d'identità e codice fiscale del richiedente e dei componenti del nucleo",
+    "Permesso di soggiorno UE per soggiornanti di lungo periodo o titolo di protezione (per cittadini extra UE)",
+    "Contratto d'affitto registrato (per la quota B)",
+    "Eventuale certificazione di disabilità o di presa in carico socio-sanitaria",
+    "Credenziali SPID/CIE per domanda e SIISL"
+  ],
+  "scadenze": "Domanda presentabile in qualsiasi momento. Il beneficio decorre dal mese successivo alla firma del PAD dopo l'esito positivo. Pagamenti: di norma intorno al 15 del mese per le prime mensilità e gli arretrati, intorno al 27 per le mensilità successive.",
+  "faq": [
+    {
+      "q": "Che cosa cambia nel 2026 per il rinnovo?",
+      "a": "La legge di bilancio 2026 ha eliminato il mese di sospensione tra la fine dei 18 (o 12) mesi e la domanda di rinnovo; la prima rata del rinnovo è però pagata al 50%."
+    },
+    {
+      "q": "Se inizio a lavorare perdo l'ADI?",
+      "a": "No, è compatibile con il lavoro. Il nuovo reddito non incide fino a 3.000 euro lordi annui per nucleo, ma va comunicato all'INPS entro 30 giorni (per l'attività autonoma entro il giorno prima dell'avvio)."
+    },
+    {
+      "q": "Uno straniero può chiedere l'ADI?",
+      "a": "Sì, se ha il permesso UE per soggiornanti di lungo periodo o la protezione internazionale e risiede in Italia da almeno 5 anni, gli ultimi 2 continuativi."
+    },
+    {
+      "q": "Quando si interrompe la residenza continuativa?",
+      "a": "Con un'assenza dall'Italia di 2 mesi consecutivi o più, oppure di almeno 4 mesi anche non consecutivi in 18 mesi, salvo gravi motivi di salute documentati."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS – Scheda Assegno di Inclusione (ADI)",
+      "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.assegno-di-inclusione-adi.html"
+    },
+    {
+      "label": "Ministero del Lavoro – Assegno di inclusione",
+      "url": "https://www.lavoro.gov.it/temi-e-priorita/decreto-lavoro/Pagine/assegno-di-inclusione"
+    }
+  ],
+  "tags": [
+    "adi",
+    "assegno di inclusione",
+    "povertà",
+    "isee",
+    "siisl",
+    "carta adi",
+    "affitto"
+  ],
+  "noteRedazione": "Rispetto alla bozza: ISEE aggiornato da 9.360 a 10.140 euro, soglia di reddito da 6.000 a 6.500 euro (8.190 per over 67), contributo affitto fino a 3.640 euro l'anno (non 280 euro al mese), patrimonio mobiliare a scaglioni 6.000/8.000/10.000 euro, aggiunte le novità 2026 sul rinnovo. Non è indicato un importo massimo mensile in euro perché dipende dalla scala di equivalenza: non esiste un tetto unico di 500 euro. Categoria cambiata da fisco a sostegno.",
+  "origineApp": "adi"
+}

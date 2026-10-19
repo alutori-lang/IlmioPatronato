@@ -1,0 +1,83 @@
+{
+  "slug": "bonus-sociale-bollette-luce-gas-acqua",
+  "titolo": "Bonus Sociale Bollette 2026: luce, gas e acqua",
+  "descrizione": "Sconto automatico in bolletta per famiglie con ISEE fino a 9.796 euro (20.000 con 4+ figli): luce fino a 204,40 euro l'anno nel 2026.",
+  "intro": "Il bonus sociale per disagio economico riduce le bollette di luce, gas e acqua delle famiglie con ISEE basso. Non serve fare domanda: basta presentare la DSU per l'ISEE e, se il valore è sotto soglia, lo sconto arriva in automatico. Dal 1° gennaio 2026 ARERA ha alzato la soglia ISEE a 9.796 euro, mentre per le famiglie con almeno quattro figli a carico resta a 20.000 euro.",
+  "categoria": "sostegno",
+  "ente": "ARERA / INPS",
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Nuclei familiari con ISEE non superiore a 9.796 euro",
+    "Famiglie numerose con almeno 4 figli a carico e ISEE non superiore a 20.000 euro"
+  ],
+  "requisiti": [
+    "ISEE valido sotto soglia (DSU presentata all'INPS, direttamente o tramite CAF)",
+    "Contratto di fornitura intestato a un componente del nucleo ISEE (se intestato ad altri, ad esempio al proprietario di casa, il bonus diretto non spetta)",
+    "Fornitura a uso domestico (per l'acqua: uso domestico residente)",
+    "Fornitura attiva o sospesa temporaneamente per morosità",
+    "Gas: uso riscaldamento, cottura e/o acqua calda con contatore non superiore alla classe G6"
+  ],
+  "importi": [
+    "Luce 2026 (annuo per fornitura): 146,00 euro per nuclei di 1-2 persone, 186,15 euro per 3-4 persone, 204,40 euro oltre 4 persone",
+    "Gas: importo trimestrale variabile in base a numero di componenti, uso e zona climatica (nel 3° trimestre 2026 da 0 a 9,10 euro)",
+    "Acqua: fornitura gratuita di 50 litri al giorno per ogni componente; il valore in euro dipende dalle tariffe del gestore locale"
+  ],
+  "comeFare": [
+    "Presentare la DSU all'INPS (online o tramite CAF) per ottenere l'ISEE",
+    "Se l'ISEE è sotto soglia, il bonus viene riconosciuto automaticamente: non serve alcuna domanda",
+    "Lo sconto compare direttamente in bolletta, ripartito sulle fatture",
+    "Rinnovare la DSU ogni anno per continuare a riceverlo"
+  ],
+  "documenti": [
+    "DSU / ISEE in corso di validità",
+    "Dati della fornitura intestata a un componente del nucleo"
+  ],
+  "scadenze": "Nessuna domanda: il bonus è automatico finché si ha un ISEE valido sotto soglia. Gli importi luce indicati valgono fino al 31 dicembre 2026; quelli gas sono aggiornati ogni trimestre.",
+  "faq": [
+    {
+      "q": "Devo fare domanda per il bonus bollette?",
+      "a": "No. È sufficiente presentare la DSU per l'ISEE: se il valore è sotto soglia, INPS e gestori applicano il bonus in automatico."
+    },
+    {
+      "q": "Abito in affitto e le bollette sono intestate al proprietario: ho diritto?",
+      "a": "Il bonus diretto in bolletta spetta solo se il contratto è intestato a un componente del nucleo ISEE. Conviene valutare la voltura del contratto."
+    },
+    {
+      "q": "Qual è la soglia ISEE nel 2026?",
+      "a": "9.796 euro, oppure 20.000 euro per le famiglie con almeno quattro figli a carico."
+    },
+    {
+      "q": "Esiste un bonus per chi usa apparecchi medici a energia elettrica?",
+      "a": "Sì, c'è un bonus separato per disagio fisico (gravi condizioni di salute), con regole diverse: va verificato sulla pagina dedicata di ARERA."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "ARERA - Bonus sociale per disagio economico: requisiti",
+      "url": "https://www.arera.it/consumatori/bonus-sociale/bonus-sociale-per-disagio-economico/quali-sono-i-requisiti"
+    },
+    {
+      "label": "ARERA - Bonus sociale: a quanto ammontano",
+      "url": "https://www.arera.it/consumatori/bonus-sociale/bonus-sociale-per-disagio-economico/a-quanto-ammontano"
+    },
+    {
+      "label": "ARERA - Comunicato: soglia ISEE a 9.796 euro",
+      "url": "https://www.arera.it/comunicati-stampa/dettaglio/bonus-sociali-arera-alza-a-9796-euro-la-soglia-isee-per-laccesso-alle-agevolazioni-per-acqua-luce-gas-e-rifiuti"
+    }
+  ],
+  "tags": [
+    "bonus bollette",
+    "bonus sociale",
+    "luce",
+    "gas",
+    "acqua",
+    "ISEE",
+    "ARERA"
+  ],
+  "noteRedazione": "Soglie ISEE 2026, requisiti e importi luce 2026 confermati su arera.it; per il gas è disponibile solo il 3° trimestre 2026. Il bonus per disagio fisico e il nuovo bonus sociale rifiuti (TARI) non sono stati verificati in dettaglio. Rispetto alla bozza: soglia aggiornata da 9.530 a 9.796 euro, importi luce corretti (146-204,40 euro), gas non più '50-300 euro/anno', categoria cambiata in 'sostegno'.",
+  "origineApp": "bonus_bollette"
+}

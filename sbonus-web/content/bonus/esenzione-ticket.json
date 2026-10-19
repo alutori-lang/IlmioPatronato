@@ -1,0 +1,51 @@
+{
+  "slug": "esenzione-ticket",
+  "titolo": "Esenzione Ticket Sanitario per Reddito",
+  "descrizione": "Esenzione dal pagamento del ticket su visite ed esami per reddito basso.",
+  "intro": "L'esenzione dal ticket sanitario per reddito è prevista per: disoccupati con reddito familiare <€8.263,31 (cod. E02), pensionati over 60 con reddito <€8.263,31 (cod. E01), titolari di pensione sociale/assegno sociale (cod. E03), under 6 o over 65 in nucleo con reddito <€36.151,98 (cod. E04).",
+  "categoria": "salute",
+  "ente": "ASL / Regione",
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [],
+  "requisiti": [
+    "Rientrare in una delle categorie reddituali",
+    "Disoccupati con reddito familiare <€8.263,31",
+    "O pensionati over 60 con reddito <€8.263,31",
+    "O under 6 / over 65 con reddito familiare <€36.151,98"
+  ],
+  "importi": [
+    "Esenzione totale ticket visite/esami"
+  ],
+  "comeFare": [
+    "1. Verificare la propria fascia di reddito\n2. Presentare autocertificazione all'ASL\n3. Oppure online tramite il portale regionale\n4. L'esenzione viene registrata sulla tessera sanitaria"
+  ],
+  "documenti": [
+    "Autocertificazione del reddito",
+    "Tessera sanitaria",
+    "Documento identità",
+    "Stato di disoccupazione (per cod. E02)"
+  ],
+  "scadenze": "Rinnovo annuale con autocertificazione",
+  "faq": [],
+  "fonti": [
+    {
+      "label": "ASL / Regione",
+      "url": "https://www.salute.gov.it/portale/esenzioni"
+    }
+  ],
+  "tags": [
+    "ticket",
+    "esenzione",
+    "sanità",
+    "medico",
+    "visite",
+    "esami",
+    "reddito"
+  ],
+  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "origineApp": "esenzione_ticket"
+}

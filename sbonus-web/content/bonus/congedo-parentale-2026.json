@@ -1,0 +1,88 @@
+{
+  "slug": "congedo-parentale-2026",
+  "titolo": "Congedo parentale 2026 per lavoratori dipendenti",
+  "descrizione": "Congedo per i genitori dipendenti fino ai 14 anni del figlio: tre mesi pagati all'80% per i figli sotto i 6 anni, gli altri al 30%.",
+  "intro": "Il congedo parentale permette ai genitori lavoratori dipendenti di assentarsi dal lavoro per accudire i figli. Dal 1° gennaio 2026 si può usare fino ai 14 anni del bambino (prima il limite era 12). Tre mesi per coppia possono essere pagati all'80% della retribuzione se usati entro i 6 anni del figlio; gli altri mesi indennizzati sono pagati al 30%.",
+  "categoria": "lavoro",
+  "ente": "INPS",
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Madri e padri lavoratori dipendenti con rapporto di lavoro in corso",
+    "Operai agricoli a tempo determinato con almeno 51 giornate di lavoro agricolo nell'anno precedente",
+    "Genitori adottivi o affidatari, entro 14 anni dall'ingresso del minore in famiglia e comunque non oltre la sua maggiore età",
+    "Esclusi: genitori con rapporto di lavoro cessato o sospeso, lavoratori domestici e lavoratori a domicilio"
+  ],
+  "requisiti": [
+    "Rapporto di lavoro dipendente in corso",
+    "Figlio con meno di 14 anni (o entro 14 anni dall'ingresso in famiglia in caso di adozione o affidamento)",
+    "Per i mesi all'80%: figlio con meno di 6 anni (o entro 6 anni dall'ingresso in famiglia)",
+    "Domanda presentata prima dell'inizio del congedo"
+  ],
+  "importi": [
+    "30% della retribuzione media giornaliera per un massimo di 9 mesi per coppia (3 mesi non trasferibili per ciascun genitore più 3 mesi da dividere)",
+    "3 mesi per coppia elevati all'80% per i figli nati o adottati dal 1° gennaio 2025, usati entro i 6 anni del bambino (2 mesi all'80% per i nati nel 2024, 1 mese per i nati nel 2023, con le condizioni previste dall'INPS)",
+    "I mesi all'80% spettano anche al genitore solo",
+    "Mesi oltre i 9 indennizzati: pagati al 30% solo se il reddito individuale è inferiore a 2,5 volte il trattamento minimo di pensione"
+  ],
+  "comeFare": [
+    "Concorda le date con il datore di lavoro, rispettando il preavviso previsto",
+    "Presenta la domanda all'INPS prima dell'inizio del congedo con il servizio online Domande di maternità e paternità (SPID, CIE o CNS)",
+    "In alternativa chiama il Contact Center (803 164 da fisso, 06 164 164 da cellulare) o rivolgiti a un patronato",
+    "Indica se usi il congedo a giorni o a ore",
+    "Ricevi l'indennità in busta paga: di norma la anticipa il datore di lavoro (per agricoli e lavoratori dello spettacolo a termine paga direttamente l'INPS)"
+  ],
+  "documenti": [
+    "Codice fiscale del genitore e del figlio",
+    "Periodo di congedo richiesto",
+    "Dati del datore di lavoro",
+    "In caso di adozione o affidamento: provvedimento e data di ingresso del minore in famiglia"
+  ],
+  "scadenze": "La domanda va presentata prima dell'inizio del periodo di congedo: se arriva dopo, vengono pagati solo i giorni successivi alla domanda. Il congedo si può usare fino ai 14 anni del figlio; i mesi all'80% entro i 6 anni.",
+  "faq": [
+    {
+      "q": "Quanti mesi di congedo parentale spettano in totale?",
+      "a": "Fino a 10 mesi per coppia, che diventano 11 se il padre ne usa almeno 3. Ogni genitore può usarne fino a 6 (il padre fino a 7). Il genitore solo ha diritto fino a 11 mesi."
+    },
+    {
+      "q": "Quanti mesi sono pagati all'80%?",
+      "a": "Per i figli nati o adottati dal 2025, tre mesi per coppia, da usare entro i 6 anni del bambino. Gli altri mesi indennizzati sono pagati al 30%."
+    },
+    {
+      "q": "Cosa cambia nel 2026?",
+      "a": "Dal 1° gennaio 2026 il congedo si può usare fino ai 14 anni del figlio invece che fino ai 12. Durata massima e indennità non cambiano."
+    },
+    {
+      "q": "Spetta ai lavoratori autonomi?",
+      "a": "Questa scheda riguarda solo i dipendenti: autonomi e iscritti alla Gestione separata hanno regole diverse."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS - Indennità di congedo parentale per lavoratrici e lavoratori dipendenti",
+      "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50583.indennit-di-congedo-parentale-per-lavoratrici-e-lavoratori-dipendenti.html"
+    },
+    {
+      "label": "INPS - Congedo parentale: limite esteso ai 14 anni del figlio",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.03.congedo-parentale-limite-esteso-ai-14-anni-del-figlio.html"
+    },
+    {
+      "label": "INPS - Schema mesi indennizzabili all'80%",
+      "url": "https://www.inps.it/content/dam/inps-site/pdf/allegati/2026/Schema_ripartizione_mesi_congedo_parentale_indennizzabili_80.pdf"
+    }
+  ],
+  "tags": [
+    "congedo parentale",
+    "genitori",
+    "lavoratori dipendenti",
+    "maternità",
+    "paternità",
+    "INPS",
+    "2026"
+  ],
+  "noteRedazione": "Nella bozza c'erano due mesi all'80% e il limite dei 12 anni: oggi sono tre mesi all'80% (per i figli dal 2025) e il limite è di 14 anni (dal 1° gennaio 2026, messaggio INPS n. 251/2026). Non sono stati verificati i termini di preavviso al datore di lavoro.",
+  "origineApp": "congedo_parentale"
+}

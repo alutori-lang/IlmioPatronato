@@ -1,0 +1,48 @@
+{
+  "slug": "servizio-civile",
+  "titolo": "Servizio Civile Universale",
+  "descrizione": "Impegno volontario di 12 mesi con compenso di €507,30/mese.",
+  "intro": "Il Servizio Civile Universale è un'esperienza di impegno civico di 12 mesi (25 ore/settimana) in enti no-profit, PA o organizzazioni del terzo settore. Compenso: €507,30/mese. Settori: assistenza, ambiente, patrimonio culturale, educazione, protezione civile. Aperto anche a stranieri regolarmente soggiornanti.",
+  "categoria": "lavoro",
+  "ente": "Dipartimento Politiche Giovanili",
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [],
+  "requisiti": [
+    "Età tra 18 e 28 anni (non aver compiuto 29)",
+    "Cittadinanza italiana/UE o permesso di soggiorno",
+    "Non aver già svolto il Servizio Civile"
+  ],
+  "importi": [
+    "€507,30/mese per 12 mesi"
+  ],
+  "comeFare": [
+    "1. Attendere il bando annuale (dicembre-febbraio)\n2. Consultare i progetti disponibili su scelgoilserviziocivile.gov.it\n3. Presentare domanda online con SPID\n4. Sostenere il colloquio di selezione\n5. Se selezionati, iniziare il servizio"
+  ],
+  "documenti": [
+    "Documento identità",
+    "Codice fiscale",
+    "Curriculum vitae",
+    "Domanda online su scelgoilserviziocivile.gov.it"
+  ],
+  "scadenze": "Bando annuale",
+  "faq": [],
+  "fonti": [
+    {
+      "label": "Dipartimento Politiche Giovanili",
+      "url": "https://www.scelgoilserviziocivile.gov.it"
+    }
+  ],
+  "tags": [
+    "servizio civile",
+    "volontariato",
+    "giovani",
+    "esperienza",
+    "compenso"
+  ],
+  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "origineApp": "servizio_civile"
+}

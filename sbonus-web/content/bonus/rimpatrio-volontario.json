@@ -1,0 +1,47 @@
+{
+  "slug": "rimpatrio-volontario",
+  "titolo": "Contributo Rimpatrio Volontario Assistito",
+  "descrizione": "Assistenza e contributo economico per il ritorno volontario nel paese d'origine.",
+  "intro": "Il programma di Rimpatrio Volontario Assistito (RVA) offre ai cittadini stranieri che desiderano tornare nel proprio paese: biglietto aereo, assistenza al viaggio, contributo per il reinserimento socio-economico (fino a €2.500). Il programma è gestito dall'OIM in collaborazione con il Ministero dell'Interno.",
+  "categoria": "sostegno",
+  "ente": "OIM / Ministero dell'Interno",
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [],
+  "requisiti": [
+    "Cittadino straniero presente in Italia",
+    "Volontà di rimpatriare definitivamente",
+    "Non avere provvedimenti di espulsione con accompagnamento"
+  ],
+  "importi": [
+    "Biglietto aereo + fino a €2.500"
+  ],
+  "comeFare": [
+    "1. Contattare l'OIM Italia (oimitalia.it)\n2. Colloquio di orientamento\n3. Preparazione del piano di reinserimento\n4. Organizzazione del viaggio\n5. Erogazione contributo alla partenza"
+  ],
+  "documenti": [
+    "Documento identità o passaporto",
+    "Permesso di soggiorno (se presente)",
+    "Dichiarazione di volontà di rimpatrio"
+  ],
+  "scadenze": "Sempre aperto",
+  "faq": [],
+  "fonti": [
+    {
+      "label": "OIM / Ministero dell'Interno",
+      "url": "https://italy.iom.int/it/rimpatrio-volontario-assistito"
+    }
+  ],
+  "tags": [
+    "rimpatrio",
+    "ritorno",
+    "volontario",
+    "paese origine",
+    "oim"
+  ],
+  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "origineApp": "rimpatrio_volontario"
+}

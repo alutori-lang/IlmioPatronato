@@ -1,0 +1,50 @@
+{
+  "slug": "bonus-donne",
+  "titolo": "Bonus Assunzione Donne Svantaggiate",
+  "descrizione": "Sgravio contributivo per assunzione di donne in condizioni svantaggiate.",
+  "intro": "Esonero contributivo del 100% (fino a €6.000/anno) per l'assunzione di donne in determinate condizioni di svantaggio: over 50 disoccupate da 12+ mesi, donne di qualsiasi età disoccupate da 24+ mesi, donne residenti in aree svantaggiate, donne impiegate in settori con forte disparità di genere.",
+  "categoria": "lavoro",
+  "ente": "INPS",
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [],
+  "requisiti": [
+    "Donna over 50 disoccupata da almeno 12 mesi, OPPURE",
+    "Donna di qualsiasi età disoccupata da almeno 24 mesi, OPPURE",
+    "Donna residente in zone con alto tasso disoccupazione femminile",
+    "Assunzione a tempo indeterminato o determinato (12+ mesi)"
+  ],
+  "importi": [
+    "Esonero fino a €6.000/anno per 18 mesi"
+  ],
+  "comeFare": [
+    "1. Verificare requisiti della lavoratrice\n2. Procedere con l'assunzione\n3. Domanda online INPS\n4. Applicare esonero nel flusso UniEmens"
+  ],
+  "documenti": [
+    "Stato di disoccupazione della lavoratrice",
+    "Comunicazione UniLav",
+    "DURC regolare",
+    "Certificato di residenza (per aree svantaggiate)"
+  ],
+  "scadenze": "31 dicembre 2026",
+  "faq": [],
+  "fonti": [
+    {
+      "label": "INPS",
+      "url": "https://www.inps.it/prestazioni-servizi/incentivo-donne"
+    }
+  ],
+  "tags": [
+    "assunzione",
+    "donne",
+    "incentivo",
+    "sgravio",
+    "lavoro",
+    "pari opportunità"
+  ],
+  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "origineApp": "bonus_donne"
+}

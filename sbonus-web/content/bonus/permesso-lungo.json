@@ -1,0 +1,50 @@
+{
+  "slug": "permesso-lungo",
+  "titolo": "Permesso Soggiorno Lungo Periodo - Vantaggi",
+  "descrizione": "Tutti i vantaggi del permesso di soggiorno CE di lungo periodo.",
+  "intro": "Il permesso di soggiorno UE di lungo periodo (ex carta di soggiorno) offre numerosi vantaggi: durata illimitata, accesso a tutte le prestazioni sociali come cittadini italiani, possibilità di lavorare in altri paesi UE, esenzione dal test di italiano per la cittadinanza, accesso a bandi e concorsi pubblici.",
+  "categoria": "sostegno",
+  "ente": "Questura / Ministero dell'Interno",
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [],
+  "requisiti": [
+    "5 anni di soggiorno regolare e continuativo in Italia",
+    "Reddito non inferiore all'assegno sociale (€6.947,33/anno)",
+    "Alloggio idoneo",
+    "Superamento test di lingua italiana A2"
+  ],
+  "importi": [
+    "Accesso a tutte le prestazioni sociali"
+  ],
+  "comeFare": [
+    "1. Verificare i 5 anni di soggiorno regolare\n2. Superare il test A2 (se non già fatto)\n3. Ottenere certificato idoneità alloggiativa\n4. Compilare il kit postale\n5. Inviare domanda tramite ufficio postale\n6. Appuntamento in Questura per foto e impronte"
+  ],
+  "documenti": [
+    "Passaporto valido",
+    "Permesso di soggiorno in corso di validità",
+    "Dichiarazione dei redditi o CU degli ultimi 3 anni",
+    "Certificato idoneità alloggiativa",
+    "Certificato lingua italiana A2"
+  ],
+  "scadenze": "Sempre aperto (dopo 5 anni di soggiorno)",
+  "faq": [],
+  "fonti": [
+    {
+      "label": "Questura / Ministero dell'Interno",
+      "url": "https://www.portaleimmigrazione.it"
+    }
+  ],
+  "tags": [
+    "permesso",
+    "lungo periodo",
+    "carta soggiorno",
+    "diritti",
+    "vantaggi"
+  ],
+  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "origineApp": "permesso_lungo"
+}

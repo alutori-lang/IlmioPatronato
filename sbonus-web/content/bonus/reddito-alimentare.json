@@ -1,0 +1,48 @@
+{
+  "slug": "reddito-alimentare",
+  "titolo": "Reddito Alimentare",
+  "descrizione": "Pacchi alimentari distribuiti tramite app per famiglie in difficoltà.",
+  "intro": "Il Reddito Alimentare è una misura sperimentale che prevede la distribuzione di pacchi alimentari realizzati con le eccedenze della distribuzione alimentare e della ristorazione. Attivo in via sperimentale in alcune città metropolitane (Genova, Firenze, Napoli, Palermo). I beneficiari vengono individuati tramite i servizi sociali.",
+  "categoria": "fisco",
+  "ente": "Comune / Ministero del Lavoro",
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [],
+  "requisiti": [
+    "Residenza in un Comune aderente",
+    "Condizione di povertà certificata dai servizi sociali",
+    "Segnalazione da parte dei servizi sociali comunali"
+  ],
+  "importi": [
+    "Pacchi alimentari periodici"
+  ],
+  "comeFare": [
+    "1. Rivolgersi ai servizi sociali del Comune\n2. Valutazione della condizione di bisogno\n3. Inserimento nella lista beneficiari\n4. Ritiro pacchi alimentari"
+  ],
+  "documenti": [
+    "Segnalazione ai servizi sociali",
+    "ISEE (se richiesto dal Comune)",
+    "Documento identità"
+  ],
+  "scadenze": "Sperimentale",
+  "faq": [],
+  "fonti": [
+    {
+      "label": "Comune / Ministero del Lavoro",
+      "url": "https://www.lavoro.gov.it/temi-e-priorita/poverta-e-esclusione-sociale"
+    }
+  ],
+  "tags": [
+    "alimentare",
+    "cibo",
+    "pacchi",
+    "povertà",
+    "aiuto",
+    "emergenza"
+  ],
+  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "origineApp": "reddito_alimentare"
+}

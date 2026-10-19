@@ -1,0 +1,50 @@
+{
+  "slug": "garanzia-giovani",
+  "titolo": "Garanzia Giovani (Programma GOL)",
+  "descrizione": "Percorsi di formazione e inserimento lavorativo per NEET under 30.",
+  "intro": "Il Programma Garanzia Giovani (ora integrato nel GOL) offre ai giovani NEET (né studio né lavoro) tra 15 e 29 anni: orientamento professionale, tirocini retribuiti (€300-€500/mese), corsi di formazione gratuiti, accompagnamento al lavoro, incentivi per l'autoimprenditorialità.",
+  "categoria": "lavoro",
+  "ente": "ANPAL / Centro per l'Impiego",
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [],
+  "requisiti": [
+    "Età tra 15 e 29 anni",
+    "Non essere impegnato in studio, lavoro o formazione (NEET)",
+    "Residenza in Italia",
+    "DID al Centro per l'Impiego"
+  ],
+  "importi": [
+    "Tirocini €300-€500/mese + formazione gratuita"
+  ],
+  "comeFare": [
+    "1. Registrarsi su garanziagiovani.anpal.gov.it\n2. Iscriversi al CpI con DID\n3. Colloquio di orientamento\n4. Assegnazione a un percorso (tirocinio, formazione, ecc.)\n5. Iniziare il percorso"
+  ],
+  "documenti": [
+    "DID (Dichiarazione Immediata Disponibilità)",
+    "Documento identità e CF",
+    "Curriculum vitae",
+    "Titoli di studio"
+  ],
+  "scadenze": "Sempre aperto",
+  "faq": [],
+  "fonti": [
+    {
+      "label": "ANPAL / Centro per l'Impiego",
+      "url": "https://garanziagiovani.anpal.gov.it"
+    }
+  ],
+  "tags": [
+    "garanzia giovani",
+    "neet",
+    "tirocinio",
+    "formazione",
+    "lavoro",
+    "stage"
+  ],
+  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "origineApp": "garanzia_giovani"
+}

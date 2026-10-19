@@ -1,0 +1,84 @@
+{
+  "slug": "assegno-maternita-comuni-2026",
+  "titolo": "Assegno di maternità dei Comuni 2026",
+  "descrizione": "Assegno di 2.065,50 euro per le mamme senza indennità di maternità o con un'indennità bassa, con ISEE fino a 20.668,26 euro (nascite 2026).",
+  "intro": "L'assegno di maternità dei Comuni, detto anche assegno di maternità di base, aiuta le mamme che non hanno un'indennità di maternità o ne ricevono una bassa. Lo concede il Comune di residenza e lo paga l'INPS. Per le nascite, adozioni e affidamenti preadottivi del 2026 vale 413,10 euro al mese per cinque mesi, con ISEE fino a 20.668,26 euro.",
+  "categoria": "famiglia",
+  "ente": "Comune di residenza (pagamento INPS)",
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Madri residenti italiane, comunitarie o straniere con titolo di soggiorno, per nascite, affidamenti preadottivi o adozioni senza affidamento avvenuti dal 1° gennaio al 31 dicembre 2026",
+    "Madri senza copertura previdenziale, oppure con un'indennità di maternità inferiore all'importo dell'assegno (in questo caso spetta la quota differenziale)"
+  ],
+  "requisiti": [
+    "Residenza nel Comune in cui si presenta la domanda",
+    "Cittadinanza italiana o UE, oppure titolo di soggiorno (il tipo di permesso ammesso va verificato con il Comune)",
+    "ISEE non superiore a 20.668,26 euro",
+    "Non ricevere già l'assegno di maternità dello Stato erogato dall'INPS"
+  ],
+  "importi": [
+    "413,10 euro al mese per cinque mensilità, cioè 2.065,50 euro in tutto se spetta per intero",
+    "Se si riceve già un'indennità di maternità più bassa, il Comune riconosce solo la differenza (quota differenziale)"
+  ],
+  "comeFare": [
+    "Richiedi l'ISEE in corso di validità",
+    "Presenta la domanda al Comune di residenza (ufficio servizi sociali o sportello indicato dal Comune) entro sei mesi dalla nascita o dall'ingresso in famiglia del bambino",
+    "Il Comune verifica i requisiti e trasmette la concessione all'INPS",
+    "L'INPS paga l'assegno secondo la modalità indicata"
+  ],
+  "documenti": [
+    "ISEE in corso di validità",
+    "Documento d'identità e codice fiscale della madre",
+    "Dati del bambino (nascita, adozione o affidamento)",
+    "Per le cittadine extra UE: titolo di soggiorno",
+    "Eventuale documentazione su altre indennità di maternità ricevute",
+    "IBAN per l'accredito (la modulistica esatta dipende dal Comune)"
+  ],
+  "scadenze": "Entro sei mesi dalla nascita del bambino o dal suo effettivo ingresso in famiglia (adozione o affidamento preadottivo).",
+  "faq": [
+    {
+      "q": "A chi si presenta la domanda?",
+      "a": "Al Comune di residenza, non all'INPS. Il Comune concede l'assegno e l'INPS lo paga."
+    },
+    {
+      "q": "Lavoro e ricevo l'indennità di maternità: posso averlo?",
+      "a": "Solo se la tua indennità è più bassa dell'assegno. In quel caso il Comune ti riconosce la differenza."
+    },
+    {
+      "q": "Si può avere insieme al Bonus Nuovi Nati e all'Assegno Unico?",
+      "a": "Sono misure diverse con requisiti propri; le fonti consultate non indicano incompatibilità con queste due misure, ma conviene verificarlo con il Comune o con un patronato."
+    },
+    {
+      "q": "Quanto vale nel 2026?",
+      "a": "Per gli eventi del 2026: 413,10 euro al mese per cinque mesi, cioè 2.065,50 euro in tutto se spetta per intero."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS - Circolare n. 16 dell'11 febbraio 2026",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/02/Circolare_15164/Allegati/16563_Circolare-numero-16-del-11-02-2026.pdf"
+    },
+    {
+      "label": "INPS - Assegno di maternità e soglia ISEE: aggiornamenti per il 2026",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.02.assegno-di-maternit-e-soglia-isee-aggiornamenti-per-il-2026.html"
+    },
+    {
+      "label": "INPS - Scheda Assegno di maternità dei Comuni",
+      "url": "https://www.inps.it/it/it/dettaglio-approfondimento.schede-informative.assegno-di-maternit--dei-comuni.html"
+    }
+  ],
+  "tags": [
+    "assegno di maternità",
+    "comune",
+    "mamme",
+    "nascita",
+    "ISEE",
+    "2026"
+  ],
+  "noteRedazione": "I valori della bozza erano quelli 2025 (383,46 euro al mese, ISEE 20.221,13 euro) e sono stati aggiornati ai valori 2026. Le fonti INPS non elencano i documenti richiesti né i tipi di permesso ammessi, che dipendono dal Comune: le voci dei documenti sono indicative.",
+  "origineApp": "assegno_maternita_comune"
+}

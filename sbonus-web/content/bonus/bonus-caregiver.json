@@ -1,0 +1,50 @@
+{
+  "slug": "bonus-caregiver",
+  "titolo": "Bonus Caregiver Familiare",
+  "descrizione": "Contributo per chi assiste familiari non autosufficienti.",
+  "intro": "Alcuni Comuni e Regioni prevedono un contributo economico per i caregiver familiari, cioè coloro che assistono gratuitamente un familiare non autosufficiente. L'importo varia da regione a regione (€400-€800/mese). Alcune regioni offrono anche formazione e supporto psicologico gratuito.",
+  "categoria": "sostegno",
+  "ente": "Regione / Comune",
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [],
+  "requisiti": [
+    "Assistere un familiare non autosufficiente",
+    "Familiare con riconoscimento invalidità/L. 104",
+    "ISEE variabile per regione",
+    "Residenza nella regione che eroga il contributo"
+  ],
+  "importi": [
+    "€400-€800/mese (varia per regione)"
+  ],
+  "comeFare": [
+    "1. Verificare bando regionale/comunale\n2. Presentare domanda online o allo sportello\n3. Allegare documentazione\n4. Attendere graduatoria"
+  ],
+  "documenti": [
+    "ISEE",
+    "Verbale L. 104 o invalidità del familiare",
+    "Autocertificazione attività di caregiver",
+    "Documento identità e CF"
+  ],
+  "scadenze": "Bandi regionali periodici",
+  "faq": [],
+  "fonti": [
+    {
+      "label": "Regione / Comune",
+      "url": "https://www.lavoro.gov.it/temi-e-priorita/disabilita-e-non-autosufficienza"
+    }
+  ],
+  "tags": [
+    "caregiver",
+    "assistenza",
+    "familiare",
+    "anziani",
+    "disabili",
+    "contributo"
+  ],
+  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "origineApp": "bonus_caregiver"
+}

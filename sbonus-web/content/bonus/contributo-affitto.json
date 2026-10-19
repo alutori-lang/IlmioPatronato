@@ -1,0 +1,51 @@
+{
+  "slug": "contributo-affitto",
+  "titolo": "Contributo Affitto Comunale",
+  "descrizione": "Contributo dal Comune per chi ha difficoltà a pagare l'affitto.",
+  "intro": "I Comuni erogano contributi economici per il pagamento del canone di locazione a nuclei familiari in difficoltà economica. L'importo e i requisiti variano da Comune a Comune. Generalmente richiesto ISEE basso, contratto registrato e residenza nel Comune. Il bando viene pubblicato annualmente.",
+  "categoria": "casa",
+  "ente": "Comune di residenza",
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [],
+  "requisiti": [
+    "Residenza nel Comune che pubblica il bando",
+    "ISEE sotto la soglia comunale (varia, es. €16.000-€26.000)",
+    "Contratto di locazione regolarmente registrato",
+    "Incidenza canone su reddito superiore al 30%"
+  ],
+  "importi": [
+    "Variabile (€500-€3.000 a seconda del Comune)"
+  ],
+  "comeFare": [
+    "1. Controllare il sito del proprio Comune per il bando\n2. Verificare i requisiti ISEE\n3. Presentare domanda online o allo sportello\n4. Allegare documentazione richiesta\n5. Attendere graduatoria"
+  ],
+  "documenti": [
+    "ISEE in corso di validità",
+    "Contratto di locazione registrato",
+    "Ricevute pagamento affitto",
+    "Certificato di residenza",
+    "Documento d'identità e CF"
+  ],
+  "scadenze": "Varia per Comune (bandi annuali)",
+  "faq": [],
+  "fonti": [
+    {
+      "label": "Comune di residenza",
+      "url": "https://www.comune.milano.it/servizi/contributo-affitto"
+    }
+  ],
+  "tags": [
+    "affitto",
+    "contributo",
+    "comune",
+    "canone",
+    "locazione",
+    "bando"
+  ],
+  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "origineApp": "contributo_affitto"
+}

@@ -1,0 +1,50 @@
+{
+  "slug": "morosita-incolpevole",
+  "titolo": "Fondo Morosità Incolpevole",
+  "descrizione": "Aiuto per chi non riesce a pagare l'affitto per cause non dipendenti.",
+  "intro": "Il Fondo Nazionale per la Morosità Incolpevole è destinato agli inquilini che non riescono a pagare il canone di locazione a causa di eventi imprevisti: perdita del lavoro, cassa integrazione, malattia grave, separazione. Il contributo può coprire fino a €12.000 e serve per sanare la morosità ed evitare lo sfratto.",
+  "categoria": "casa",
+  "ente": "Comune / Ministero Infrastrutture",
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [],
+  "requisiti": [
+    "Contratto di locazione regolare",
+    "Morosità dovuta a cause involontarie (licenziamento, malattia, ecc.)",
+    "ISEE non superiore a €26.000",
+    "Reddito annuo lordo non superiore a €35.000"
+  ],
+  "importi": [
+    "Fino a €12.000"
+  ],
+  "comeFare": [
+    "1. Verificare bando del proprio Comune\n2. Documentare la causa della morosità\n3. Presentare domanda al Comune\n4. Allegare tutta la documentazione"
+  ],
+  "documenti": [
+    "ISEE in corso di validità",
+    "Contratto di locazione",
+    "Documentazione evento che ha causato la morosità",
+    "Atto di intimazione sfratto (se presente)"
+  ],
+  "scadenze": "Bandi comunali periodici",
+  "faq": [],
+  "fonti": [
+    {
+      "label": "Comune / Ministero Infrastrutture",
+      "url": "https://www.mit.gov.it/comunicazione/news/fondo-morosita-incolpevole"
+    }
+  ],
+  "tags": [
+    "morosità",
+    "sfratto",
+    "affitto",
+    "emergenza",
+    "casa",
+    "aiuto"
+  ],
+  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "origineApp": "morosita_incolpevole"
+}

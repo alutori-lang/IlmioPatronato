@@ -1,0 +1,49 @@
+{
+  "slug": "legge-104",
+  "titolo": "Legge 104 - Permessi Retribuiti",
+  "descrizione": "3 giorni di permesso retribuito al mese per assistere familiari disabili.",
+  "intro": "La Legge 104/1992 prevede 3 giorni di permesso retribuito al mese (o 2 ore/giorno) per lavoratori dipendenti che assistono familiari con handicap grave (art. 3, comma 3). I permessi sono retribuiti e coperti da contribuzione figurativa. Possono essere frazionati in ore.",
+  "categoria": "sostegno",
+  "ente": "INPS / ASL",
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [],
+  "requisiti": [
+    "Lavoratore dipendente",
+    "Familiare con riconoscimento handicap grave (art. 3 c. 3 L. 104)",
+    "Referente unico per l'assistenza"
+  ],
+  "importi": [
+    "3 giorni retribuiti/mese"
+  ],
+  "comeFare": [
+    "1. Ottenere il riconoscimento L. 104 dalla commissione ASL\n2. Presentare domanda all'INPS online\n3. Comunicare al datore di lavoro\n4. Fruire dei permessi (3 gg/mese o 2 ore/giorno)"
+  ],
+  "documenti": [
+    "Verbale della commissione medica ASL (art. 3 c. 3)",
+    "Domanda al datore di lavoro",
+    "Domanda INPS online",
+    "Certificazione di parentela"
+  ],
+  "scadenze": "Valido finché persiste la condizione",
+  "faq": [],
+  "fonti": [
+    {
+      "label": "INPS / ASL",
+      "url": "https://www.inps.it/prestazioni-servizi/permessi-legge-104"
+    }
+  ],
+  "tags": [
+    "104",
+    "disabilità",
+    "permessi",
+    "handicap",
+    "caregiver",
+    "assistenza"
+  ],
+  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "origineApp": "legge_104"
+}

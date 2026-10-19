@@ -1,0 +1,47 @@
+{
+  "slug": "bonus-trasporto",
+  "titolo": "Bonus Trasporti Studenti",
+  "descrizione": "Voucher fino a €60 per abbonamenti trasporto pubblico.",
+  "intro": "Il Bonus Trasporti è un voucher per l'acquisto di abbonamenti ai servizi di trasporto pubblico locale, regionale e interregionale. Importo: fino a €60, con ISEE non superiore a €20.000. Copre abbonamenti mensili o annuali di treni, bus, metro. Disponibile tramite il portale dedicato.",
+  "categoria": "studenti",
+  "ente": "Ministero del Lavoro",
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [],
+  "requisiti": [
+    "ISEE non superiore a €20.000",
+    "Acquisto di abbonamento trasporto pubblico",
+    "Residenza in Italia"
+  ],
+  "importi": [
+    "Fino a €60"
+  ],
+  "comeFare": [
+    "1. Accedere al portale bonustrasporti.lavoro.gov.it\n2. Autenticarsi con SPID\n3. Generare il voucher\n4. Presentarlo all'azienda di trasporto per lo sconto"
+  ],
+  "documenti": [
+    "ISEE in corso di validità",
+    "SPID o CIE"
+  ],
+  "scadenze": "Bando annuale",
+  "faq": [],
+  "fonti": [
+    {
+      "label": "Ministero del Lavoro",
+      "url": "https://www.bonustrasporti.lavoro.gov.it"
+    }
+  ],
+  "tags": [
+    "trasporto",
+    "bus",
+    "treno",
+    "abbonamento",
+    "studenti",
+    "bonus"
+  ],
+  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "origineApp": "bonus_trasporto"
+}

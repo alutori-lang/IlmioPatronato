@@ -1,0 +1,77 @@
+{
+  "slug": "assegno-sociale",
+  "titolo": "Assegno sociale 2026: 546,24 euro al mese per over 67 con redditi bassi",
+  "descrizione": "Assegno sociale 2026: 546,24 euro per 13 mensilità a chi ha 67 anni e reddito sotto 7.101,12 euro (14.202,24 se coniugato). Requisiti e domanda.",
+  "intro": "L'assegno sociale è un aiuto economico dell'INPS per le persone di almeno 67 anni che hanno redditi molto bassi o nessun reddito, anche senza contributi versati. Nel 2026 vale fino a 546,24 euro al mese per tredici mensilità ed è esente da IRPEF. Spetta a italiani e stranieri con residenza effettiva e almeno dieci anni di soggiorno legale e continuativo in Italia.",
+  "categoria": "pensioni",
+  "ente": "INPS",
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Cittadini italiani",
+    "Cittadini UE iscritti all'anagrafe del Comune di residenza",
+    "Cittadini extra UE familiari di cittadini comunitari",
+    "Cittadini extra UE con permesso di soggiorno UE per soggiornanti di lungo periodo, rifugiati e titolari di protezione sussidiaria"
+  ],
+  "requisiti": [
+    "Almeno 67 anni di età",
+    "Stato di bisogno economico: reddito annuo inferiore a 7.101,12 euro se non coniugati, 14.202,24 euro se coniugati (valori 2026, reddito proprio più quello del coniuge)",
+    "Residenza effettiva in Italia",
+    "Almeno 10 anni di soggiorno legale e continuativo in Italia",
+    "Per i cittadini extra UE: permesso di soggiorno UE per soggiornanti di lungo periodo"
+  ],
+  "importi": [
+    "Importo pieno 2026: 546,24 euro al mese per 13 mensilità (7.101,12 euro l'anno)",
+    "Importo pieno a chi non è coniugato e non ha redditi, o è coniugato con reddito di coppia inferiore a 7.101,12 euro",
+    "Importo ridotto, pari alla differenza, se il reddito è inferiore alla soglia ma non nullo",
+    "Non è soggetto a IRPEF, non è reversibile né pignorabile"
+  ],
+  "comeFare": [
+    "Verificare età, residenza e i 10 anni di soggiorno legale e continuativo",
+    "Presentare la domanda online sul sito INPS (servizio 'Assegno sociale – Domanda') con SPID, CIE o CNS",
+    "In alternativa tramite patronato o Contact center 803 164 / 06 164 164",
+    "Dichiarare i redditi propri e del coniuge",
+    "Ogni anno l'INPS verifica di nuovo redditi e residenza effettiva"
+  ],
+  "documenti": [
+    "Documento d'identità e codice fiscale",
+    "Permesso di soggiorno UE per soggiornanti di lungo periodo (per cittadini extra UE)",
+    "Dati sui redditi propri e del coniuge",
+    "IBAN per l'accredito",
+    "Credenziali SPID/CIE/CNS o delega al patronato"
+  ],
+  "scadenze": "Domanda presentabile in qualsiasi momento; il pagamento parte dal primo giorno del mese successivo alla domanda. La prestazione è sospesa se si resta all'estero più di 29 giorni consecutivi e revocata se la sospensione dura oltre un anno.",
+  "faq": [
+    {
+      "q": "Serve aver versato contributi?",
+      "a": "No, l'assegno sociale è una prestazione assistenziale legata solo all'età, alla residenza e al reddito."
+    },
+    {
+      "q": "Posso andare all'estero mentre lo percepisco?",
+      "a": "Se resti fuori dall'Italia più di 29 giorni di fila l'assegno viene sospeso; dopo un anno di sospensione viene revocato."
+    },
+    {
+      "q": "La casa in cui abito conta come reddito?",
+      "a": "No, il reddito della casa di abitazione, il TFR e gli arretrati a tassazione separata non vengono considerati."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS – Scheda Assegno sociale",
+      "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.assegno-sociale-50184.assegno-sociale.html"
+    }
+  ],
+  "tags": [
+    "assegno sociale",
+    "over 67",
+    "anziani",
+    "pensione",
+    "reddito basso",
+    "inps"
+  ],
+  "noteRedazione": "Rispetto alla bozza: importi aggiornati al 2026 (546,24 euro mensili, soglie 7.101,12 / 14.202,24 euro); precisati i 10 anni di soggiorno 'legale e continuativo' e le regole di sospensione per soggiorni all'estero. Il certificato di residenza storico non è indicato dall'INPS come documento obbligatorio ed è stato tolto.",
+  "origineApp": "assegno_sociale"
+}

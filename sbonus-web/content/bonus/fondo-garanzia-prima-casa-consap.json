@@ -1,0 +1,80 @@
+{
+  "slug": "fondo-garanzia-prima-casa-consap",
+  "titolo": "Fondo Garanzia Prima Casa Consap: mutuo garantito fino all'80%",
+  "descrizione": "Garanzia pubblica sul mutuo prima casa fino a 250.000 euro: 50% ordinaria, fino all'80% per under 36 e categorie prioritarie fino al 31/12/2027.",
+  "intro": "Il Fondo di garanzia per la prima casa, gestito da Consap per conto del MEF, garantisce una parte del mutuo per l'acquisto dell'abitazione principale, rendendo più facile ottenerlo dalla banca. La garanzia ordinaria copre il 50% della quota capitale. Giovani under 36, giovani coppie, genitori soli con figli minori, inquilini di case popolari e famiglie numerose possono chiedere la garanzia elevata fino all'80% quando il mutuo supera l'80% del prezzo. Questa disciplina è prorogata fino al 31 dicembre 2027.",
+  "categoria": "casa",
+  "ente": "Consap / MEF",
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Chiunque compri la prima casa da adibire ad abitazione principale (garanzia ordinaria 50%)",
+    "Categorie prioritarie: giovani che non hanno compiuto 36 anni, giovani coppie (almeno uno under 36, insieme da almeno 2 anni), nuclei monogenitoriali con figli minori, conduttori di alloggi IACP",
+    "Famiglie numerose con figli under 21: 3 figli con ISEE fino a 40.000 euro, 4 figli fino a 45.000 euro, 5 o più figli fino a 50.000 euro",
+    "Dal 3 agosto 2026: persone con disabilità permanente certificata e familiari del nucleo (garanzia 80% con ISEE fino a 40.000 euro)"
+  ],
+  "requisiti": [
+    "Non essere proprietari di altri immobili a uso abitativo, anche all'estero (salvo quelli ricevuti in successione)",
+    "Immobile da destinare ad abitazione principale, non di categoria catastale A/1, A/8 o A/9 e non di lusso",
+    "Importo del mutuo non superiore a 250.000 euro",
+    "Per la garanzia all'80% delle categorie prioritarie: mutuo superiore all'80% del prezzo d'acquisto (oneri accessori inclusi) e rispetto dei limiti ISEE previsti"
+  ],
+  "importi": [
+    "Garanzia ordinaria: 50% della quota capitale del mutuo",
+    "Garanzia elevata: fino all'80% della quota capitale per le categorie prioritarie, per domande presentate fino al 31 dicembre 2027",
+    "Mutuo massimo garantibile: 250.000 euro",
+    "La garanzia non è un contributo in denaro: riduce il rischio per la banca e facilita il finanziamento"
+  ],
+  "comeFare": [
+    "Scegliere una banca o un intermediario aderente al Fondo",
+    "Compilare il modulo di domanda (disponibile sul sito Consap o in banca) insieme alla richiesta di mutuo",
+    "Consegnare la domanda alla banca: non va inviata direttamente a Consap",
+    "La banca trasmette la richiesta; Consap comunica l'esito entro 20 giorni",
+    "Dopo l'ok, la banca ha 90 giorni per comunicare la stipula del mutuo"
+  ],
+  "documenti": [
+    "Modulo di domanda Fondo Prima Casa",
+    "Documento d'identità e codice fiscale",
+    "ISEE in corso di validità (se si chiede la garanzia elevata come categoria prioritaria)",
+    "Documentazione sull'immobile e sul compromesso/proposta d'acquisto, come richiesta dalla banca"
+  ],
+  "scadenze": "Fondo operativo. La garanzia elevata fino all'80% per le categorie prioritarie è prorogata per le domande presentate fino al 31 dicembre 2027.",
+  "faq": [
+    {
+      "q": "Il Fondo mi dà soldi?",
+      "a": "No, offre una garanzia pubblica sul mutuo. Se il debitore non paga, lo Stato copre la parte garantita: per questo la banca può concedere il mutuo più facilmente."
+    },
+    {
+      "q": "Devo chiedere a Consap?",
+      "a": "No, la domanda si consegna alla banca aderente insieme alla richiesta di mutuo. È la banca a inviarla a Consap."
+    },
+    {
+      "q": "Quando vale l'80%?",
+      "a": "Per le categorie prioritarie, quando il mutuo supera l'80% del prezzo e si rispettano i limiti ISEE previsti, per domande entro il 31 dicembre 2027. Per persone con disabilità permanente l'80% è previsto con ISEE fino a 40.000 euro."
+    },
+    {
+      "q": "La banca deve applicare un tasso agevolato?",
+      "a": "Per le domande con garanzia elevata la banca deve applicare condizioni più favorevoli rispetto al tasso medio di riferimento (TEGM) quando previsto; la garanzia elevata può essere concessa anche se il TEG supera il TEGM. Chiedere alla banca le condizioni precise."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "Consap - Fondo di garanzia per la prima casa",
+      "url": "https://www.consap.it/fondo-prima-casa/"
+    }
+  ],
+  "tags": [
+    "mutuo",
+    "prima casa",
+    "under 36",
+    "garanzia",
+    "Consap",
+    "famiglie numerose",
+    "giovani coppie"
+  ],
+  "noteRedazione": "Requisiti, tetto 250.000 euro, percentuali 50%/80%, proroga al 31/12/2027, nuove categorie da L. 116/2026 e procedura confermati su consap.it. La pagina Consap non riporta, nella sezione sulla garanzia elevata, il limite ISEE esplicito per under 36 e giovani coppie: non indicato. Rispetto alla bozza: la bozza indicava ISEE 40.000 e scadenza 31/12/2026; scadenza corretta al 31/12/2027, aggiunte famiglie numerose e persone con disabilità, garanzia 80% non automatica (serve mutuo oltre l'80% del prezzo).",
+  "origineApp": "bonus_mutuo_under36"
+}

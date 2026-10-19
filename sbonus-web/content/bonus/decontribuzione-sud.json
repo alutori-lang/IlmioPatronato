@@ -1,0 +1,49 @@
+{
+  "slug": "decontribuzione-sud",
+  "titolo": "Decontribuzione Sud",
+  "descrizione": "Sgravio contributivo per aziende del Mezzogiorno.",
+  "intro": "Riduzione dei contributi previdenziali a carico dei datori di lavoro privati del Mezzogiorno. Sgravio del 30% sui contributi INPS per lavoratori in Abruzzo, Molise, Campania, Puglia, Basilicata, Calabria, Sicilia, Sardegna. Misura prorogata fino al 2029 con riduzione progressiva.",
+  "categoria": "lavoro",
+  "ente": "INPS",
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [],
+  "requisiti": [
+    "Datore di lavoro privato",
+    "Sede operativa nel Mezzogiorno (8 regioni)",
+    "Lavoratori occupati nelle sedi del Sud",
+    "Regolarità contributiva (DURC)"
+  ],
+  "importi": [
+    "Sgravio 30% contributi INPS"
+  ],
+  "comeFare": [
+    "1. Verifica automatica INPS per sedi nel Mezzogiorno\n2. Applicazione sgravio nel flusso UniEmens\n3. Nessuna domanda specifica richiesta"
+  ],
+  "documenti": [
+    "DURC",
+    "Visura camerale",
+    "Flusso UniEmens"
+  ],
+  "scadenze": "Fino al 2029",
+  "faq": [],
+  "fonti": [
+    {
+      "label": "INPS",
+      "url": "https://www.inps.it/prestazioni-servizi/decontribuzione-sud"
+    }
+  ],
+  "tags": [
+    "sud",
+    "mezzogiorno",
+    "contributi",
+    "sgravio",
+    "aziende",
+    "lavoro"
+  ],
+  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "origineApp": "decontribuzione_sud"
+}

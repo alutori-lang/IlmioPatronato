@@ -1,0 +1,50 @@
+{
+  "slug": "borsa-studio",
+  "titolo": "Borsa di Studio Universitaria",
+  "descrizione": "Borsa di studio regionale per studenti universitari meritevoli a basso reddito.",
+  "intro": "Le borse di studio universitarie sono erogate dagli Enti Regionali per il Diritto allo Studio (ERSU/EDISU). Coprono: tasse universitarie, vitto, alloggio e trasporti. L'importo varia da €2.000 a €6.000+ in base a ISEE, merito e sede. Requisiti: ISEE universitario fino a €24.335,11 e ISPE fino a €52.902,43 (valori 2025).",
+  "categoria": "studenti",
+  "ente": "ERSU / EDISU Regionale",
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [],
+  "requisiti": [
+    "ISEE universitario non superiore a €24.335,11",
+    "ISPE non superiore a €52.902,43",
+    "Requisiti di merito (crediti minimi)",
+    "Iscrizione a università o AFAM"
+  ],
+  "importi": [
+    "Da €2.000 a €6.000+/anno"
+  ],
+  "comeFare": [
+    "1. Ottenere ISEE universitario\n2. Verificare i bandi dell'ERSU/EDISU della propria regione\n3. Presentare domanda online nel periodo indicato\n4. Allegare documentazione\n5. Attendere graduatoria"
+  ],
+  "documenti": [
+    "ISEE universitario",
+    "Iscrizione all'università",
+    "Certificato esami sostenuti",
+    "Documento identità e CF"
+  ],
+  "scadenze": "Bandi regionali (luglio-settembre)",
+  "faq": [],
+  "fonti": [
+    {
+      "label": "ERSU / EDISU Regionale",
+      "url": "https://www.miur.gov.it/borse-di-studio"
+    }
+  ],
+  "tags": [
+    "borsa",
+    "studio",
+    "università",
+    "studenti",
+    "merito",
+    "tasse"
+  ],
+  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "origineApp": "borsa_studio"
+}

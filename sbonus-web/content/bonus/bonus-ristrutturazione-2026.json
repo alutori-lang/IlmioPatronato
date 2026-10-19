@@ -1,0 +1,81 @@
+{
+  "slug": "bonus-ristrutturazione-2026",
+  "titolo": "Bonus Ristrutturazione 2026: detrazione 50% prima casa, 36% altri immobili",
+  "descrizione": "Detrazione IRPEF 2026 per lavori edilizi: 50% sull'abitazione principale, 36% sugli altri immobili, tetto di 96.000 euro per unità, in 10 anni.",
+  "intro": "Chi esegue lavori di recupero edilizio su un immobile residenziale può recuperare parte della spesa con una detrazione IRPEF. Per le spese pagate nel 2026 la Legge di Bilancio 2026 ha confermato la percentuale più alta per la prima casa: 50% se l'immobile è abitazione principale del proprietario, 36% negli altri casi. Dal 2027 le percentuali scendono rispettivamente al 36% e al 30%. Lo sconto si recupera in dieci rate annuali nella dichiarazione dei redditi.",
+  "categoria": "casa",
+  "ente": "Agenzia delle Entrate",
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Proprietari o titolari di un diritto reale (usufrutto, uso, abitazione) che sostengono le spese",
+    "Altri soggetti che sostengono le spese su immobili residenziali, con la percentuale ordinaria del 36% per il 2026",
+    "Acquirenti di abitazioni in edifici interamente ristrutturati da imprese o cooperative che vendono entro 18 mesi dalla fine dei lavori"
+  ],
+  "requisiti": [
+    "Lavori rientranti tra quelli agevolati (ad esempio manutenzione straordinaria, restauro e risanamento conservativo, ristrutturazione edilizia)",
+    "Per la detrazione al 50%: immobile adibito ad abitazione principale e spesa sostenuta dal proprietario o titolare di diritto reale",
+    "Se l'immobile non è abitazione principale all'inizio dei lavori, il 50% spetta se lo diventa entro la fine dei lavori",
+    "Pagamento con bonifico 'parlante' (bancario o postale) con causale, codice fiscale del beneficiario e partita IVA/codice fiscale di chi esegue i lavori",
+    "Spesa massima agevolabile di 96.000 euro per unità immobiliare"
+  ],
+  "importi": [
+    "Spese 2026: 50% per l'abitazione principale (proprietario o titolare di diritto reale), 36% negli altri casi",
+    "Spese 2027: 36% per l'abitazione principale, 30% negli altri casi",
+    "Tetto di spesa: 96.000 euro per unità immobiliare",
+    "Detrazione ripartita in 10 quote annuali di pari importo"
+  ],
+  "comeFare": [
+    "Verificare con il tecnico il titolo edilizio necessario (CILA, SCIA o altro) oppure, se non serve, predisporre un'autocertificazione con la data di inizio lavori",
+    "Pagare ogni fattura con bonifico parlante specifico per le detrazioni edilizie",
+    "Effettuare la comunicazione ENEA quando prevista per il tipo di intervento",
+    "Conservare fatture, ricevute dei bonifici e documentazione edilizia",
+    "Indicare la spesa nel 730 o nel modello Redditi a partire dall'anno successivo al pagamento, per dieci anni"
+  ],
+  "documenti": [
+    "Titolo abilitativo edilizio o autocertificazione di inizio lavori",
+    "Fatture intestate a chi chiede la detrazione",
+    "Ricevute dei bonifici parlanti",
+    "Comunicazione ENEA (se prevista per l'intervento)",
+    "Dati catastali dell'immobile e, se l'interessato non è proprietario, titolo di detenzione (es. contratto di locazione registrato)"
+  ],
+  "scadenze": "Le percentuali 50%/36% valgono per le spese pagate dal 1° gennaio al 31 dicembre 2026. Dal 2027 si passa al 36%/30%.",
+  "faq": [
+    {
+      "q": "La seconda casa ha diritto al 50% nel 2026?",
+      "a": "No. Il 50% è riservato all'abitazione principale del proprietario o del titolare di diritto reale. Per una seconda casa la detrazione 2026 è del 36%, sempre con tetto di 96.000 euro."
+    },
+    {
+      "q": "Si può ancora avere lo sconto in fattura o cedere il credito?",
+      "a": "Per i lavori ordinari no: dal 17 febbraio 2023 queste opzioni non sono più ammesse, salvo eccezioni limitate a specifiche aree colpite da eventi sismici. La detrazione si recupera in dichiarazione."
+    },
+    {
+      "q": "Cosa succede se nel 2027 continuo i lavori?",
+      "a": "La percentuale dipende dalla data del pagamento: le spese pagate nel 2027 hanno diritto al 36% (abitazione principale) o al 30% (altri immobili)."
+    },
+    {
+      "q": "In quanti anni recupero la spesa?",
+      "a": "In dieci rate annuali uguali, scalate dall'IRPEF dovuta. Se l'imposta è insufficiente, la parte non utilizzata di quell'anno si perde."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "Agenzia delle Entrate - Ristrutturazioni edilizie: che cos'è",
+      "url": "https://www.agenziaentrate.gov.it/portale/schede/agevolazioni/detrristredil36/schinfodetrristredil36"
+    }
+  ],
+  "tags": [
+    "ristrutturazione",
+    "detrazione 50%",
+    "detrazione 36%",
+    "casa",
+    "lavori edilizi",
+    "legge di bilancio 2026",
+    "730"
+  ],
+  "noteRedazione": "Percentuali, tetto e riferimento normativo (L. 199/2025, art. 1, c. 22) confermati sulla scheda Agenzia Entrate. L'elenco completo degli interventi agevolati e i casi in cui la comunicazione ENEA è obbligatoria vanno controllati sulla guida AE di febbraio 2026. Rispetto alla bozza: la bozza indicava 50% per tutti; per il 2026 il 50% vale solo per l'abitazione principale.",
+  "origineApp": "bonus_ristrutturazione"
+}

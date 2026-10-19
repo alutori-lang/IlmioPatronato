@@ -1,0 +1,73 @@
+{
+  "slug": "bonus-psicologo",
+  "titolo": "Bonus Psicologo: contributo per la psicoterapia",
+  "descrizione": "Contributo INPS fino a 1.500 euro per sedute di psicoterapia in base all'ISEE (max 50.000 euro). Bando 2026 non ancora pubblicato.",
+  "intro": "Il bonus psicologo è un contributo INPS per pagare sedute di psicoterapia con professionisti privati iscritti all'albo che aderiscono all'iniziativa. L'importo dipende dall'ISEE e viene versato direttamente al terapeuta, fino a 50 euro per seduta. L'ultima finestra per le domande si è svolta dal 15 settembre al 14 novembre 2025; alla data di aggiornamento INPS non ha ancora comunicato le date per il 2026.",
+  "categoria": "salute",
+  "ente": "INPS / Ministero della Salute",
+  "stato": "in-attesa",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Persone residenti in Italia con ISEE non superiore a 50.000 euro che vogliono seguire un percorso di psicoterapia (es. per ansia, stress, depressione, fragilità psicologica)"
+  ],
+  "requisiti": [
+    "Residenza in Italia",
+    "ISEE ordinario o corrente in corso di validità non superiore a 50.000 euro",
+    "Domanda presentata nella finestra temporale stabilita da INPS"
+  ],
+  "importi": [
+    "Fino a 50 euro per seduta, pagati al professionista",
+    "ISEE inferiore a 15.000 euro: fino a 1.500 euro",
+    "ISEE tra 15.000 e 30.000 euro: fino a 1.000 euro",
+    "ISEE oltre 30.000 e fino a 50.000 euro: fino a 500 euro",
+    "Valori riferiti al bando 2025"
+  ],
+  "comeFare": [
+    "Avere un ISEE valido prima dell'apertura del bando",
+    "Quando INPS apre la finestra, presentare la domanda online sul sito INPS con SPID (livello 2 o superiore), CIE o CNS",
+    "Attendere la graduatoria, ordinata per ISEE (a parità, conta l'ordine di presentazione); l'esito arriva via SMS o email",
+    "Se accolti, comunicare il codice univoco a uno psicoterapeuta aderente",
+    "Fare la prima seduta entro 60 giorni e usare il codice entro 270 giorni dall'accoglimento"
+  ],
+  "documenti": [
+    "ISEE in corso di validità",
+    "SPID, CIE o CNS per l'accesso al servizio INPS"
+  ],
+  "scadenze": "Bando 2025 chiuso (domande dal 15 settembre al 14 novembre 2025). Date 2026 non ancora pubblicate da INPS alla data di verifica (19 ottobre 2026).",
+  "faq": [
+    {
+      "q": "Posso fare domanda adesso?",
+      "a": "Solo quando INPS apre la finestra annuale. Al momento della verifica non risultano date ufficiali per il 2026: conviene preparare l'ISEE e seguire le comunicazioni INPS."
+    },
+    {
+      "q": "Cosa succede se non inizio le sedute subito?",
+      "a": "Se non si fa almeno una seduta entro 60 giorni dall'accoglimento si perde il beneficio; in ogni caso il codice scade dopo 270 giorni."
+    },
+    {
+      "q": "Posso scegliere qualsiasi psicologo?",
+      "a": "Deve essere uno psicoterapeuta iscritto all'albo che ha aderito all'iniziativa ed è presente nell'elenco dei professionisti."
+    },
+    {
+      "q": "Chi chiama per assistenza?",
+      "a": "Il Contact Center INPS: 803.164 da rete fissa (gratuito) o 06 164.164 da cellulare."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS - Bonus psicologo (scheda prestazione)",
+      "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.contributo-per-sostenere-le-spese-relative-a-sessioni-di-psicoterapia-bonus-psicologo.html"
+    }
+  ],
+  "tags": [
+    "bonus psicologo",
+    "psicoterapia",
+    "salute mentale",
+    "INPS",
+    "ISEE"
+  ],
+  "noteRedazione": "Requisiti e importi confermati su inps.it ma riferiti al bando 2025. Nessun messaggio INPS, finestra o decreto di riparto per il 2026 trovato su fonti ufficiali: stato impostato su 'in-attesa'. Rispetto alla bozza: la bozza indicava il bando 'marzo-maggio'; l'ultima finestra è stata settembre-novembre 2025. Non è più vero che 'lo psicoterapeuta fattura all'INPS' in modo generico: il contributo è versato al professionista tramite codice univoco.",
+  "origineApp": "bonus_psicologo"
+}
