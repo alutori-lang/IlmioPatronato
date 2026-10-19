@@ -4,7 +4,7 @@ import { useId } from "react";
 import { formatEuro } from "@/lib/calc/money";
 
 const inputCls =
-  "w-full rounded-xl border bg-bg px-3.5 py-3 text-base text-ink placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]";
+  "w-full rounded-2xl border-2 bg-white px-4 py-3 text-base font-bold text-ink placeholder:font-semibold placeholder:text-ink-3 focus:outline-none focus:ring-4 focus:ring-[var(--ring)]";
 
 type NumberFieldProps = {
   label: string;
@@ -22,7 +22,7 @@ export function NumberField({ label, value, onChange, suffix, hint, error, place
   const describedBy = [hint && `${id}-hint`, error && `${id}-err`].filter(Boolean).join(" ") || undefined;
   return (
     <div>
-      <label htmlFor={id} className="block text-sm font-semibold text-ink">
+      <label htmlFor={id} className="block text-sm font-extrabold text-ink">
         {label}
       </label>
       <div className="relative mt-1.5">
@@ -71,7 +71,7 @@ export function SelectField<T extends string>({
   const id = useId();
   return (
     <div>
-      <label htmlFor={id} className="block text-sm font-semibold text-ink">
+      <label htmlFor={id} className="block text-sm font-extrabold text-ink">
         {label}
       </label>
       <select
@@ -99,7 +99,7 @@ export function SelectField<T extends string>({
 export function CheckField({ label, checked, onChange, hint }: { label: string; checked: boolean; onChange: (v: boolean) => void; hint?: string }) {
   const id = useId();
   return (
-    <div className="flex items-start gap-3 rounded-xl border border-line bg-bg p-3.5">
+    <div className="flex items-start gap-3 rounded-2xl border-2 border-line bg-white p-3.5">
       <input
         id={id}
         type="checkbox"
@@ -108,7 +108,7 @@ export function CheckField({ label, checked, onChange, hint }: { label: string; 
         aria-describedby={hint ? `${id}-hint` : undefined}
         className="mt-0.5 h-5 w-5 shrink-0 accent-[var(--brand)]"
       />
-      <label htmlFor={id} className="text-[0.95rem] text-ink">
+      <label htmlFor={id} className="text-[0.95rem] font-bold text-ink">
         {label}
         {hint && (
           <span id={`${id}-hint`} className="mt-0.5 block text-sm text-ink-3">
@@ -128,14 +128,14 @@ export function CalcForm({ onSubmit, onReset, children, submitLabel = "Calcola" 
         e.preventDefault();
         onSubmit();
       }}
-      className="space-y-5 rounded-2xl border border-line p-5 sm:p-6"
+      className="space-y-5 rounded-[28px] bg-surface-2 p-5 sm:p-7"
     >
       {children}
       <div className="flex flex-col gap-2 pt-1 sm:flex-row">
-        <button type="submit" className="rounded-xl bg-brand px-6 py-3 font-semibold text-brand-ink transition hover:bg-brand-2">
+        <button type="submit" className="rounded-full bg-coral px-7 py-3 font-black text-white transition hover:bg-coral-2">
           {submitLabel}
         </button>
-        <button type="button" onClick={onReset} className="rounded-xl border border-line px-6 py-3 font-semibold text-ink-2 transition hover:bg-surface-2">
+        <button type="button" onClick={onReset} className="rounded-full border-2 border-ink bg-white px-7 py-3 font-black text-ink transition hover:bg-ink hover:text-sun">
           Ricomincia
         </button>
       </div>
@@ -145,9 +145,9 @@ export function CalcForm({ onSubmit, onReset, children, submitLabel = "Calcola" 
 
 export function ResultPanel({ titolo, valore, nota, children }: { titolo: string; valore: string; nota?: string; children?: React.ReactNode }) {
   return (
-    <section aria-live="polite" aria-label="Risultato" className="animate-rise rounded-2xl border border-line p-5 sm:p-6">
-      <p className="text-sm text-ink-3">{titolo}</p>
-      <p className="mt-1 text-4xl font-semibold tracking-tight tabular-nums text-ink">{valore}</p>
+    <section aria-live="polite" aria-label="Risultato" className="animate-rise rounded-[28px] border-[3px] border-ink bg-white p-5 shadow-step sm:p-7">
+      <p className="text-sm font-extrabold text-ink-3">{titolo}</p>
+      <p className="mt-1 text-5xl font-black tracking-tight tabular-nums text-coral">{valore}</p>
       {nota && <p className="mt-1 text-sm text-ink-3">{nota}</p>}
       {children && <div className="mt-5">{children}</div>}
     </section>
@@ -156,9 +156,9 @@ export function ResultPanel({ titolo, valore, nota, children }: { titolo: string
 
 export function Righe({ righe }: { righe: { l: string; v: number | string; segno?: "+" | "-"; forte?: boolean }[] }) {
   return (
-    <dl className="divide-y divide-line rounded-xl border border-line">
+    <dl className="divide-y-2 divide-line overflow-hidden rounded-2xl border-2 border-line">
       {righe.map((r) => (
-        <div key={r.l} className={`flex items-center justify-between gap-4 px-4 py-2.5 ${r.forte ? "bg-surface-2 font-semibold text-ink" : "text-ink-2"}`}>
+        <div key={r.l} className={`flex items-center justify-between gap-4 px-4 py-2.5 ${r.forte ? "bg-sun-2 font-black text-ink" : "font-semibold text-ink-2"}`}>
           <dt>{r.l}</dt>
           <dd className="shrink-0 tabular-nums">
             {typeof r.v === "number" ? `${r.segno === "-" ? "−" : r.segno === "+" ? "+" : ""}${formatEuro(r.v)}` : r.v}
@@ -171,12 +171,12 @@ export function Righe({ righe }: { righe: { l: string; v: number | string; segno
 
 export function ErrorBox({ msg }: { msg: string }) {
   return (
-    <p role="alert" className="rounded-2xl border border-danger/30 bg-danger-soft p-4 font-medium text-danger">
+    <p role="alert" className="rounded-[24px] bg-danger-soft p-4 font-bold text-danger">
       {msg}
     </p>
   );
 }
 
 export function EmptyResult({ testo }: { testo: string }) {
-  return <div className="rounded-2xl border border-dashed border-line p-6 text-center text-ink-3">{testo}</div>;
+  return <div className="rounded-[28px] border-2 border-dashed border-line p-8 text-center font-bold text-ink-3">{testo}</div>;
 }

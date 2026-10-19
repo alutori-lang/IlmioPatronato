@@ -19,14 +19,14 @@ export function StoreBadges({ className = "" }: { className?: string }) {
 /** Riquadro sobrio di promozione dell'app, usato nelle barre laterali. */
 export function AppPromo() {
   return (
-    <section aria-labelledby="app-promo" className="rounded-2xl border border-line p-5">
+    <section aria-labelledby="app-promo" className="rounded-[28px] bg-ink p-5 text-white">
       <div className="flex items-center gap-3">
         <Image src="/img/smart-bonus-italia-icon.png" alt="" width={44} height={44} className="rounded-xl" />
-        <h2 id="app-promo" className="font-semibold leading-snug text-ink">
+        <h2 id="app-promo" className="font-black leading-snug">
           {APP.name}
         </h2>
       </div>
-      <p className="mt-3 text-sm leading-relaxed text-ink-2">Bonus, guide e calcolatori sul telefono. Gratis, in 12 lingue.</p>
+      <p className="mt-3 text-sm font-semibold leading-relaxed text-white/80">Bonus, guide e calcolatori sul telefono. Gratis, in 12 lingue.</p>
       <StoreBadges className="mt-4 [&_a:last-child_img]:h-8 [&_img]:h-[44px]" />
     </section>
   );

@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/PageHero";
-import { StatoBadge, BonusList } from "@/components/Rows";
+import { StatoBadge, BonusList, NuovoBadge } from "@/components/Rows";
 import { JsonLd } from "@/components/JsonLd";
 import { Icon } from "@/components/Icon";
 import { AdSlot } from "@/components/AdSlot";
 import { AppPromo } from "@/components/AppPromo";
 import { Fonti, Faqs, AvvisoIndipendente } from "@/components/Editorial";
-import { bonusPubblicati, getBonus, bonusPerCategoria, formatData, toLite } from "@/lib/content";
+import { bonusPubblicati, getBonus, bonusPerCategoria, formatData, toLite, isNuovo } from "@/lib/content";
 import { getCategoria } from "@/lib/categories";
 import { CALCOLATORI } from "@/lib/calcolatori";
 import { ADSENSE_SLOTS, absoluteUrl } from "@/lib/site";
@@ -41,8 +41,8 @@ const CALC_PER_BONUS: Record<string, string> = {
 
 function Blocco({ id, titolo, children }: { id: string; titolo: string; icona?: string; children: React.ReactNode }) {
   return (
-    <section id={id} aria-labelledby={`${id}-t`} className="scroll-mt-24 border-t border-line pt-8">
-      <h2 id={`${id}-t`} className="text-xl font-semibold tracking-tight text-ink">
+    <section id={id} aria-labelledby={`${id}-t`} className="scroll-mt-24 border-t-2 border-line pt-8">
+      <h2 id={`${id}-t`} className="text-2xl font-black tracking-tight text-ink">
         {titolo}
       </h2>
       <div className="mt-4 text-ink-2">{children}</div>
@@ -55,7 +55,7 @@ function Lista({ items }: { items: string[] }) {
     <ul className="space-y-2.5">
       {items.map((x) => (
         <li key={x} className="flex gap-3 leading-relaxed">
-          <span className="mt-[0.6rem] h-1.5 w-1.5 shrink-0 rounded-full bg-brand" aria-hidden="true" />
+          <span className="mt-[0.55rem] h-2 w-2 shrink-0 rounded-full bg-coral" aria-hidden="true" />
           <span>{x}</span>
         </li>
       ))}
@@ -94,9 +94,10 @@ export default async function BonusPage({ params }: PageProps<"/bonus/[slug]">) 
       >
         <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
           <StatoBadge stato={b.stato} />
-          {b.ente && <span className="text-sm text-ink-3">{b.ente}</span>}
+          {b.novita && isNuovo(b.novita.data) && <NuovoBadge />}
+          {b.ente && <span className="rounded-full bg-white/60 px-3 py-0.5 text-sm font-extrabold text-ink">{b.ente}</span>}
           {b.ultimoControllo && (
-            <span className="inline-flex items-center gap-1.5 text-sm text-ink-3">
+            <span className="inline-flex items-center gap-1.5 text-sm font-bold text-sun-ink">
               <Icon name="calendar" className="h-3.5 w-3.5" />
               Controllato il <time dateTime={b.ultimoControllo}>{formatData(b.ultimoControllo)}</time>
             </span>
@@ -106,23 +107,23 @@ export default async function BonusPage({ params }: PageProps<"/bonus/[slug]">) 
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
       {b.evidenza && (
-        <dl className="mt-8 flex flex-wrap gap-x-12 gap-y-4">
-          <div>
-            <dt className="text-sm text-ink-3">Importo</dt>
-            <dd className="mt-1 text-3xl font-semibold tracking-tight text-ink">{b.evidenza.valore}</dd>
-            <dd className="text-sm text-ink-2">{b.evidenza.etichetta}</dd>
+        <dl className="relative z-10 -mt-4 grid gap-4 sm:grid-cols-[auto_1fr]">
+          <div className="rounded-[28px] border-[3px] border-ink bg-white px-6 py-5 shadow-step">
+            <dt className="text-sm font-extrabold text-ink-3">Importo</dt>
+            <dd className="mt-1 text-4xl font-black tracking-tight text-coral tabular-nums">{b.evidenza.valore}</dd>
+            <dd className="font-extrabold text-ink-2">{b.evidenza.etichetta}</dd>
           </div>
           {b.scadenze && (
-            <div className="max-w-md">
-              <dt className="text-sm text-ink-3">Scadenza</dt>
-              <dd className="mt-1 line-clamp-3 text-ink-2">{b.scadenze}</dd>
+            <div className="rounded-[28px] bg-surface-2 px-6 py-5">
+              <dt className="text-sm font-extrabold text-ink-3">Scadenza</dt>
+              <dd className="mt-1 line-clamp-4 font-bold text-ink-2">{b.scadenze}</dd>
             </div>
           )}
         </dl>
       )}
 
       {b.stato === "scaduto" && (
-        <div role="note" className="mt-6 flex max-w-3xl gap-3 rounded-2xl border border-danger/30 bg-danger-soft p-4 text-ink">
+        <div role="note" className="mt-6 flex max-w-3xl gap-3 rounded-[24px] bg-danger-soft p-4 font-semibold text-ink">
           <Icon name="alert" className="h-5 w-5 shrink-0 text-danger" />
           <p>
             <strong>Misura scaduta.</strong> Questa agevolazione non è più richiedibile nella forma descritta. La scheda resta
@@ -131,7 +132,7 @@ export default async function BonusPage({ params }: PageProps<"/bonus/[slug]">) 
         </div>
       )}
       {b.stato === "in-attesa" && (
-        <div role="note" className="mt-6 flex max-w-3xl gap-3 rounded-2xl border border-warn/30 bg-warn-soft p-4 text-ink">
+        <div role="note" className="mt-6 flex max-w-3xl gap-3 rounded-[24px] bg-warn-soft p-4 font-semibold text-ink">
           <Icon name="info" className="h-5 w-5 shrink-0 text-warn" />
           <p>
             <strong>In attesa di attuazione.</strong> La misura è prevista ma le modalità di domanda non sono ancora state
@@ -156,7 +157,7 @@ export default async function BonusPage({ params }: PageProps<"/bonus/[slug]">) 
             <Blocco id="importi" titolo="Importi" icona="euro">
               <Lista items={b.importi} />
               {calc && (
-                <Link href={`/calcolatori/${calc.slug}`} className="mt-5 inline-flex items-center gap-2 font-medium text-brand hover:underline">
+                <Link href={`/calcolatori/${calc.slug}`} className="mt-5 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 font-black text-sun hover:bg-coral hover:text-white">
                   <Icon name="calc" className="h-5 w-5" /> Stima il tuo importo: {calc.titolo}
                 </Link>
               )}
@@ -170,7 +171,7 @@ export default async function BonusPage({ params }: PageProps<"/bonus/[slug]">) 
               <ol className="space-y-3">
                 {b.comeFare.map((s, i) => (
                   <li key={s} className="flex gap-3 leading-relaxed">
-                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-line text-sm font-medium tabular-nums text-ink">{i + 1}</span>
+                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-sun text-sm font-black tabular-nums text-ink">{i + 1}</span>
                     <span className="pt-0.5">{s}</span>
                   </li>
                 ))}
@@ -194,11 +195,11 @@ export default async function BonusPage({ params }: PageProps<"/bonus/[slug]">) 
 
         <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
           <nav aria-label="Indice della scheda" className="hidden lg:block">
-            <p className="text-sm font-semibold text-ink">In questa scheda</p>
+            <p className="text-sm font-black uppercase tracking-wider text-ink">In questa scheda</p>
             <ul className="mt-3 space-y-2 text-[0.95rem]">
               {indice.map((x) => (
                 <li key={x.id}>
-                  <a href={`#${x.id}`} className="text-ink-2 hover:text-brand">
+                  <a href={`#${x.id}`} className="font-bold text-ink-2 hover:text-coral-2">
                     {x.l}
                   </a>
                 </li>
@@ -211,7 +212,7 @@ export default async function BonusPage({ params }: PageProps<"/bonus/[slug]">) 
 
       {correlati.length > 0 && (
         <section aria-labelledby="correlati" className="mt-14">
-          <h2 id="correlati" className="text-xl font-semibold tracking-tight text-ink">
+          <h2 id="correlati" className="text-2xl font-black tracking-tight text-ink">
             Altri bonus in {cat?.nome ?? "questa categoria"}
           </h2>
           <div className="mt-5">

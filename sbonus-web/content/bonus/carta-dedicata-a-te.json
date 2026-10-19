@@ -9,6 +9,10 @@
     "valore": "500 €",
     "etichetta": "all'anno per la spesa"
   },
+  "novita": {
+    "data": "2026-09",
+    "nota": "Nuova edizione: 500 € accreditati dal 4 novembre 2026, senza domanda"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

@@ -58,7 +58,7 @@ export default async function GuidaPage({ params }: PageProps<"/guide/[slug]">) 
         categoria={g.categoria}
         icona={cat?.icona ?? "book"}
       >
-        <p className="text-sm text-ink-3">
+        <p className="text-sm font-bold text-sun-ink">
           {g.autore} · Pubblicata il <time dateTime={g.dataPubblicazione ?? undefined}>{formatData(g.dataPubblicazione)}</time>
           {g.dataAggiornamento && g.dataAggiornamento !== g.dataPubblicazione && (
             <>
@@ -86,7 +86,7 @@ export default async function GuidaPage({ params }: PageProps<"/guide/[slug]">) 
 
       {correlate.length > 0 && (
         <section aria-labelledby="correlate" className="mt-14">
-          <h2 id="correlate" className="text-xl font-semibold tracking-tight text-ink">
+          <h2 id="correlate" className="text-2xl font-black tracking-tight text-ink">
             Leggi anche
           </h2>
           <div className="mt-5">

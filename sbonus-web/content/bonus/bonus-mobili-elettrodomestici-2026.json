@@ -9,6 +9,10 @@
     "valore": "50%",
     "etichetta": "su spese fino a 5.000 €"
   },
+  "novita": {
+    "data": "2025-12-30",
+    "nota": "Confermato per gli acquisti del 2026, fino a 5.000 €"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

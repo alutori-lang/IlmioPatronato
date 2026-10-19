@@ -58,6 +58,13 @@ collections:
         fields:
           - { name: valore, label: "Valore (es. 203,80 €)", widget: string }
           - { name: etichetta, label: "Etichetta (es. al mese per figlio)", widget: string }
+      - name: novita
+        label: "Novità (compare in cima alla homepage)"
+        widget: object
+        required: false
+        fields:
+          - { name: data, label: "Data della novità ufficiale (AAAA-MM o AAAA-MM-GG)", widget: string, pattern: ['^\d{4}-\d{2}(-\d{2})?$', 'Formato AAAA-MM o AAAA-MM-GG'] }
+          - { name: nota, label: "Cosa è cambiato (una frase)", widget: string }
       - name: stato
         label: Stato della misura
         widget: select

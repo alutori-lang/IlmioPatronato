@@ -63,7 +63,7 @@ export default async function CalcolatorePage({ params }: PageProps<"/calcolator
         categoria={c.categoria}
         icona={c.icona}
       >
-        <span className="inline-flex items-center gap-1.5 text-sm text-ink-3">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-white/60 px-3 py-1 text-sm font-bold text-ink">
           <Icon name="calendar" className="h-4 w-4" />
           Parametri {PARAMS.anno} · controllati il <time dateTime={PARAMS.ultimoControllo}>{formatData(PARAMS.ultimoControllo)}</time>
         </span>
@@ -73,7 +73,7 @@ export default async function CalcolatorePage({ params }: PageProps<"/calcolator
         <Widget />
       </div>
 
-      <p className="mt-6 flex gap-2.5 rounded-xl border border-line bg-surface-2 p-4 text-sm leading-relaxed text-ink-2">
+      <p className="mt-6 flex gap-2.5 rounded-[24px] bg-sun-2 p-4 text-sm font-semibold leading-relaxed text-ink">
         <Icon name="info" className="mt-0.5 h-4 w-4 shrink-0 text-ink-3" />
         <span>
           <strong>È una stima, non un importo ufficiale.</strong> Il risultato ha valore orientativo: l&apos;importo effettivo lo
@@ -86,28 +86,28 @@ export default async function CalcolatorePage({ params }: PageProps<"/calcolator
 
       <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_320px]">
         <div className="min-w-0 space-y-10">
-          <section aria-labelledby="come" className="border-t border-line pt-8">
-            <h2 id="come" className="text-xl font-semibold tracking-tight text-ink">
+          <section aria-labelledby="come" className="border-t-2 border-line pt-8">
+            <h2 id="come" className="text-2xl font-black tracking-tight text-ink">
               Come funziona il calcolo
             </h2>
             <ol className="mt-4 space-y-3 text-ink-2">
               {info.come.map((s, i) => (
                 <li key={s} className="flex gap-3 leading-relaxed">
-                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-line text-sm font-medium tabular-nums text-ink">{i + 1}</span>
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-sun text-sm font-black tabular-nums text-ink">{i + 1}</span>
                   <span className="pt-0.5">{s}</span>
                 </li>
               ))}
             </ol>
           </section>
 
-          <section aria-labelledby="ipotesi" className="border-t border-line pt-8">
-            <h2 id="ipotesi" className="text-xl font-semibold tracking-tight text-ink">
+          <section aria-labelledby="ipotesi" className="border-t-2 border-line pt-8">
+            <h2 id="ipotesi" className="text-2xl font-black tracking-tight text-ink">
               Ipotesi e limiti
             </h2>
             <ul className="mt-4 space-y-2.5 text-ink-2">
               {info.ipotesi.map((s) => (
                 <li key={s} className="flex gap-2.5 leading-relaxed">
-                  <Icon name="alert" className="mt-1 h-4 w-4 shrink-0 text-warn" />
+                  <span className="mt-[0.55rem] h-2 w-2 shrink-0 rounded-full bg-coral" aria-hidden="true" />
                   <span>{s}</span>
                 </li>
               ))}
@@ -120,15 +120,15 @@ export default async function CalcolatorePage({ params }: PageProps<"/calcolator
         </div>
 
         <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
-          <section aria-labelledby="parametri" className="rounded-2xl border border-line p-5">
-            <h2 id="parametri" className="font-semibold text-ink">
+          <section aria-labelledby="parametri" className="rounded-[28px] bg-surface-2 p-5">
+            <h2 id="parametri" className="font-black text-ink">
               Parametri {PARAMS.anno}
             </h2>
             <dl className="mt-3 space-y-3 text-sm">
               {info.parametri.map((p) => (
                 <div key={p.voce}>
                   <dt className="text-ink-3">{p.voce}</dt>
-                  <dd className="font-semibold text-ink">{p.valore}</dd>
+                  <dd className="font-extrabold text-ink">{p.valore}</dd>
                 </div>
               ))}
             </dl>
@@ -139,7 +139,7 @@ export default async function CalcolatorePage({ params }: PageProps<"/calcolator
             </p>
           </section>
           {bonus && (
-            <Link href={`/bonus/${bonus.slug}`} className="flex items-center justify-between gap-3 rounded-2xl border border-line p-5 font-medium text-ink hover:border-brand/50">
+            <Link href={`/bonus/${bonus.slug}`} className="flex items-center justify-between gap-3 rounded-[28px] border-2 border-ink p-5 font-black text-ink hover:bg-sun">
               <span>
                 <span className="block text-sm text-ink-3">Scheda completa</span>
                 {bonus.titolo}
@@ -151,7 +151,7 @@ export default async function CalcolatorePage({ params }: PageProps<"/calcolator
       </div>
 
       <section aria-labelledby="altri" className="mt-14">
-        <h2 id="altri" className="text-xl font-semibold tracking-tight text-ink">
+        <h2 id="altri" className="text-2xl font-black tracking-tight text-ink">
           Altri calcolatori
         </h2>
         <div className="mt-5">

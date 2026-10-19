@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import Link from "next/link";
-import { Icon } from "@/components/Icon";
-import { CATEGORIE } from "@/lib/categories";
+import { Bolla } from "@/components/Rows";
+import { CATEGORIE, stileTono } from "@/lib/categories";
 import { bonusPerCategoria, guidePerCategoria } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -19,18 +19,18 @@ export default function CategorieIndex() {
     <>
       <PageHero crumbs={[{ label: "Categorie", href: "/categorie" }]} occhiello="Esplora" titolo="Categorie" intro="Trova bonus e guide raggruppati per argomento." icona="search" />
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-      <ul className="mt-10 border-t border-line">
+      <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {categorieAttive().map(({ c, n }) => (
-          <li key={c.slug} className="border-b border-line">
-            <Link href={`/categorie/${c.slug}`} className="group -mx-3 flex items-center gap-6 rounded-lg px-3 py-5 transition-colors hover:bg-surface-2">
-              <div className="min-w-0 flex-1">
-                <p className="font-medium text-ink group-hover:text-brand">{c.nome}</p>
-                <p className="mt-1 text-sm text-ink-3">{c.descrizione}</p>
+          <li key={c.slug}>
+            <Link href={`/categorie/${c.slug}`} style={stileTono(c.slug)} className="group flex h-full items-center gap-4 rounded-[28px] border-2 border-line bg-white p-5 transition hover:-translate-y-0.5 hover:border-[var(--tone)]">
+              <Bolla categoria={c.slug} size="lg" />
+              <div className="min-w-0">
+                <p className="text-lg font-black text-ink">{c.nome}</p>
+                <p className="mt-0.5 text-sm font-semibold text-ink-3">{c.descrizione}</p>
+                <p className="mt-1.5 text-sm font-extrabold text-[var(--tone)]">
+                  {n} {n === 1 ? "contenuto" : "contenuti"}
+                </p>
               </div>
-              <span className="shrink-0 text-sm tabular-nums text-ink-3">
-                {n} {n === 1 ? "contenuto" : "contenuti"}
-              </span>
-              <Icon name="arrow" className="hidden h-4 w-4 shrink-0 text-ink-3 sm:block" />
             </Link>
           </li>
         ))}

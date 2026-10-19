@@ -66,6 +66,9 @@ const bonus = readDir("bonus", ".json").map(({ file, raw }) => {
     ente: j.ente || "",
     evidenza:
       j.evidenza && j.evidenza.valore ? { valore: String(j.evidenza.valore), etichetta: String(j.evidenza.etichetta || "") } : null,
+    // Data dell'ultima novità ufficiale (AAAA-MM o AAAA-MM-GG): ordina la sezione "Novità" in homepage
+    novita:
+      j.novita && /^\d{4}-\d{2}(-\d{2})?$/.test(j.novita.data || "") ? { data: j.novita.data, nota: String(j.novita.nota || "") } : null,
     stato: j.stato,
     pubblicato: j.pubblicato === true,
     verificato: j.verificato === true,

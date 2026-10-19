@@ -9,6 +9,10 @@
     "valore": "1.000 €",
     "etichetta": "una tantum per figlio"
   },
+  "novita": {
+    "data": "2026-08",
+    "nota": "1.000 € per ogni figlio nato nel 2026, domanda entro 120 giorni"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

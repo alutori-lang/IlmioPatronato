@@ -23,9 +23,9 @@ export default function GuideIndex() {
         icona="book"
       />
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-      <nav aria-label="Categorie delle guide" className="mt-10 flex flex-wrap gap-2">
+      <nav aria-label="Categorie delle guide" className="mt-4 flex flex-wrap gap-2">
         {categorie.map((c) => (
-          <Link key={c.slug} href={`/categorie/${c.slug}`} className="rounded-full border border-line px-3.5 py-1.5 text-sm text-ink-2 transition-colors hover:border-ink-3 hover:text-ink">
+          <Link key={c.slug} href={`/categorie/${c.slug}`} className="rounded-full border-2 border-line bg-white px-4 py-1.5 text-sm font-extrabold text-ink transition-colors hover:border-ink">
             {c.nome}
           </Link>
         ))}

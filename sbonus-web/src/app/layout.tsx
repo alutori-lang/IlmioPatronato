@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Nunito } from "next/font/google";
 import "./globals.css";
 import { SITE, APP, INDEXABLE, absoluteUrl } from "@/lib/site";
 import { Header } from "@/components/Header";
@@ -7,7 +7,7 @@ import { Footer } from "@/components/Footer";
 import { CookieBanner } from "@/components/CookieBanner";
 import { JsonLd } from "@/components/JsonLd";
 
-const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
+const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"], weight: ["500", "600", "700", "800", "900"], display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -32,15 +32,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0b1222" },
-  ],
+  themeColor: "#ffd43b",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="it" className={`${inter.variable} h-full antialiased`}>
+    <html lang="it" className={`${nunito.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <JsonLd
           data={[

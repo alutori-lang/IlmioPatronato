@@ -13,6 +13,8 @@ export type Bonus = {
   ente: string;
   /** Cifra chiave mostrata in grande sulle card (es. "203,80 €" + "al mese per figlio"). */
   evidenza: { valore: string; etichetta: string } | null;
+  /** Ultima novità ufficiale sulla misura: data AAAA-MM o AAAA-MM-GG e cosa è cambiato. */
+  novita: { data: string; nota: string } | null;
   stato: StatoBonus;
   pubblicato: boolean;
   verificato: boolean;
@@ -29,7 +31,7 @@ export type Bonus = {
   tags: string[];
 };
 
-export type BonusLite = Pick<Bonus, "slug" | "titolo" | "descrizione" | "categoria" | "stato" | "ente" | "tags" | "evidenza">;
+export type BonusLite = Pick<Bonus, "slug" | "titolo" | "descrizione" | "categoria" | "stato" | "ente" | "tags" | "evidenza" | "novita">;
 
 export const toLite = (b: Bonus): BonusLite => ({
   slug: b.slug,
@@ -40,6 +42,7 @@ export const toLite = (b: Bonus): BonusLite => ({
   ente: b.ente,
   tags: b.tags,
   evidenza: b.evidenza,
+  novita: b.novita,
 });
 
 export type Guida = {
@@ -71,4 +74,17 @@ export function formatData(iso: string | null | undefined) {
   if (!iso) return "";
   const [y, m, d] = iso.split("-").map(Number);
   return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString("it-IT", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+}
+
+/** "2026-09" → "settembre 2026"; "2026-03-27" → "27 marzo 2026". */
+export function formatNovita(d: string) {
+  if (d.length === 10) return formatData(d);
+  const [y, m] = d.split("-").map(Number);
+  return new Date(Date.UTC(y, m - 1, 1)).toLocaleDateString("it-IT", { month: "long", year: "numeric", timeZone: "UTC" });
+}
+
+/** "Nuovo" se la novità è degli ultimi 90 giorni rispetto a oggi (data della build). */
+export function isNuovo(d: string, oggi = new Date()) {
+  const t = Date.parse(d.length === 7 ? `${d}-01` : d);
+  return Number.isFinite(t) && oggi.getTime() - t <= 90 * 24 * 3600 * 1000;
 }

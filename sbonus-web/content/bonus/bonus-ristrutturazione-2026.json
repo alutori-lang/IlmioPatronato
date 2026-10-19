@@ -9,6 +9,10 @@
     "valore": "50%",
     "etichetta": "detrazione sulla prima casa"
   },
+  "novita": {
+    "data": "2025-12-30",
+    "nota": "Legge di Bilancio 2026: 50% sulla prima casa, 36% sulle altre"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

@@ -9,6 +9,10 @@
     "valore": "60 €",
     "etichetta": "al mese, fino a 720 € l'anno"
   },
+  "novita": {
+    "data": "2026-01",
+    "nota": "60 € al mese dal 2026, in attesa delle istruzioni INPS"
+  },
   "stato": "in-attesa",
   "pubblicato": true,
   "verificato": true,

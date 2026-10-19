@@ -25,13 +25,13 @@ export function BonusFilter({ bonus, categorie }: Props) {
   }, [bonus, cat, stato, testo]);
 
   const chip = (on: boolean) =>
-    `rounded-full border px-3.5 py-1.5 text-sm transition-colors ${on ? "border-ink bg-ink text-bg" : "border-line text-ink-2 hover:border-ink-3 hover:text-ink"}`;
+    `rounded-full border-2 px-4 py-1.5 text-sm font-extrabold transition-colors ${on ? "border-ink bg-ink text-sun" : "border-line bg-white text-ink hover:border-ink"}`;
 
   return (
     <div className="mt-10">
       <div className="space-y-5">
         <div>
-          <label htmlFor="filtro-testo" className="text-sm font-semibold text-ink">
+          <label htmlFor="filtro-testo" className="text-sm font-extrabold text-ink">
             Filtra per parola
           </label>
           <input
@@ -41,11 +41,11 @@ export function BonusFilter({ bonus, categorie }: Props) {
             onChange={(e) => setTesto(e.target.value)}
             placeholder="es. figli, affitto, disoccupazione"
             maxLength={60}
-            className="mt-1.5 w-full rounded-xl border border-line bg-bg px-3.5 py-2.5 text-ink placeholder:text-ink-3 focus:border-brand focus:outline-none"
+            className="mt-1.5 w-full rounded-full border-2 border-line bg-white px-5 py-3 font-bold text-ink placeholder:font-semibold placeholder:text-ink-3 focus:border-ink focus:outline-none"
           />
         </div>
         <fieldset>
-          <legend className="text-sm font-semibold text-ink">Categoria</legend>
+          <legend className="text-sm font-extrabold text-ink">Categoria</legend>
           <div className="mt-2 flex flex-wrap gap-2">
             <button type="button" aria-pressed={cat === "tutte"} onClick={() => setCat("tutte")} className={chip(cat === "tutte")}>
               Tutte
@@ -59,7 +59,7 @@ export function BonusFilter({ bonus, categorie }: Props) {
         </fieldset>
         {stati.length > 1 && (
           <fieldset>
-            <legend className="text-sm font-semibold text-ink">Stato</legend>
+            <legend className="text-sm font-extrabold text-ink">Stato</legend>
             <div className="mt-2 flex flex-wrap gap-2">
               <button type="button" aria-pressed={stato === "tutti"} onClick={() => setStato("tutti")} className={chip(stato === "tutti")}>
                 Tutti
@@ -74,7 +74,7 @@ export function BonusFilter({ bonus, categorie }: Props) {
         )}
       </div>
 
-      <p role="status" className="mt-6 text-sm text-ink-3">
+      <p role="status" className="mt-8 text-sm font-extrabold text-ink-3">
         {filtrati.length} {filtrati.length === 1 ? "bonus trovato" : "bonus trovati"}
       </p>
       {filtrati.length > 0 ? (
@@ -82,11 +82,11 @@ export function BonusFilter({ bonus, categorie }: Props) {
           <BonusList bonus={filtrati} />
         </div>
       ) : (
-        <div className="mt-3 rounded-2xl border border-dashed border-line p-10 text-center text-ink-2">
+        <div className="mt-3 rounded-[28px] border-2 border-dashed border-line p-10 text-center font-bold text-ink-2">
           Nessun bonus corrisponde ai filtri scelti.{" "}
           <button
             type="button"
-            className="font-semibold text-brand underline"
+            className="font-black text-coral-2 underline"
             onClick={() => {
               setCat("tutte");
               setStato("tutti");

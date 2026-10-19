@@ -9,6 +9,10 @@
     "valore": "3.600 €",
     "etichetta": "all'anno (massimo)"
   },
+  "novita": {
+    "data": "2026-03-27",
+    "nota": "Fino a 3.600 € l'anno per i bambini nati dal 2024"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

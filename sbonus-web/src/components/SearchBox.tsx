@@ -97,8 +97,8 @@ export function SearchBox({ size = "md", autoFocus, defaultValue = "", onNavigat
         Cerca nel sito
       </label>
       <div
-        className={`flex items-center gap-2 rounded-2xl border border-line bg-surface shadow-sm transition focus-within:border-brand focus-within:shadow-md ${
-          big ? "px-4 py-1.5 sm:px-5" : "px-3 py-1"
+        className={`flex items-center gap-2 rounded-full bg-white transition focus-within:ring-4 focus-within:ring-[var(--ring)] ${
+          big ? "shadow-step py-2 pl-5 pr-2" : "py-1.5 pl-4 pr-1.5"
         }`}
       >
         <Icon name="search" className={big ? "h-6 w-6 shrink-0 text-ink-3" : "h-5 w-5 shrink-0 text-ink-3"} />
@@ -127,13 +127,13 @@ export function SearchBox({ size = "md", autoFocus, defaultValue = "", onNavigat
             setOpen(true);
           }}
           onKeyDown={onKeyDown}
-          className={`min-w-0 flex-1 bg-transparent text-ink placeholder:text-ink-3 focus:outline-none [&::-webkit-search-cancel-button]:hidden ${
-            big ? "py-3 text-base sm:text-lg" : "py-2 text-[0.95rem]"
+          className={`min-w-0 flex-1 bg-transparent font-bold text-ink placeholder:font-semibold placeholder:text-ink-3 focus:outline-none [&::-webkit-search-cancel-button]:hidden ${
+            big ? "py-2.5 text-base sm:text-lg" : "py-1.5 text-[0.95rem]"
           }`}
         />
         <button
           type="submit"
-          className={`shrink-0 rounded-xl bg-brand font-semibold text-brand-ink transition hover:bg-brand-2 ${big ? "px-4 py-2.5 sm:px-5" : "px-3 py-1.5 text-sm"}`}
+          className={`shrink-0 rounded-full bg-coral font-black text-white transition hover:bg-coral-2 ${big ? "px-6 py-3" : "px-4 py-2 text-sm"}`}
         >
           Cerca
         </button>
@@ -144,7 +144,7 @@ export function SearchBox({ size = "md", autoFocus, defaultValue = "", onNavigat
           id={listId}
           role="listbox"
           aria-label="Suggerimenti"
-          className="absolute inset-x-0 top-full z-50 mt-2 max-h-[60vh] overflow-auto rounded-2xl border border-line bg-surface p-1.5 text-left shadow-xl"
+          className="absolute inset-x-0 top-full z-50 mt-3 max-h-[60vh] overflow-auto rounded-3xl border-2 border-ink bg-surface p-2 text-left shadow-step"
         >
           {indice === null && <li className="px-3 py-3 text-sm text-ink-3">Caricamento…</li>}
           {indice !== null && risultati.length === 0 && (
@@ -161,10 +161,10 @@ export function SearchBox({ size = "md", autoFocus, defaultValue = "", onNavigat
                 vai(r.url);
               }}
               onMouseEnter={() => setActive(i)}
-              className={`cursor-pointer rounded-xl px-3 py-2.5 ${i === active ? "bg-brand-soft" : ""}`}
+              className={`cursor-pointer rounded-2xl px-3 py-2.5 ${i === active ? "bg-sun-2" : ""}`}
             >
-              <span className="block text-[0.7rem] font-semibold uppercase tracking-wide text-brand">{TIPO_LABEL[r.tipo]}</span>
-              <span className="block font-medium text-ink">{r.titolo}</span>
+              <span className="block text-[0.7rem] font-extrabold uppercase tracking-wide text-coral-2">{TIPO_LABEL[r.tipo]}</span>
+              <span className="block font-bold text-ink">{r.titolo}</span>
             </li>
           ))}
         </ul>

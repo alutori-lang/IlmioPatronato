@@ -6,15 +6,15 @@ import { Icon } from "./Icon";
 export function Faqs({ faq }: { faq: Faq[] }) {
   return (
     <section id="faq" aria-labelledby="faq-t" className="scroll-mt-24 border-t border-line pt-8">
-      <h2 id="faq-t" className="text-xl font-semibold tracking-tight text-ink">
+      <h2 id="faq-t" className="text-2xl font-black tracking-tight text-ink">
         Domande frequenti
       </h2>
       <div className="mt-4 divide-y divide-line">
         {faq.map((f, i) => (
           <details key={f.q} id={`faq-${i + 1}`} className="group scroll-mt-24 py-3" open={i === 0}>
-            <summary className="flex cursor-pointer list-none items-start justify-between gap-4 py-1 font-semibold text-ink [&::-webkit-details-marker]:hidden">
+            <summary className="flex cursor-pointer list-none items-start justify-between gap-4 py-1 font-extrabold text-ink [&::-webkit-details-marker]:hidden">
               {f.q}
-              <span aria-hidden="true" className="mt-0.5 text-xl leading-none text-brand transition group-open:rotate-45">
+              <span aria-hidden="true" className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-sun text-lg font-black leading-none text-ink transition group-open:rotate-45">
                 +
               </span>
             </summary>
@@ -36,13 +36,13 @@ export function Faqs({ faq }: { faq: Faq[] }) {
 export function Fonti({ fonti, ultimoControllo }: { fonti: Fonte[]; ultimoControllo?: string | null }) {
   return (
     <section id="fonti" aria-labelledby="fonti-t" className="scroll-mt-24 border-t border-line pt-8">
-      <h2 id="fonti-t" className="text-xl font-semibold tracking-tight text-ink">
+      <h2 id="fonti-t" className="text-2xl font-black tracking-tight text-ink">
         Fonti ufficiali
       </h2>
       <ul className="mt-3 space-y-2">
         {fonti.map((f) => (
           <li key={f.url}>
-            <a href={f.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-start gap-2 text-brand underline-offset-2 hover:underline">
+            <a href={f.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-start gap-2 font-bold text-brand underline-offset-2 hover:underline">
               <Icon name="external" className="mt-1 h-4 w-4 shrink-0" />
               <span>{f.label}</span>
             </a>

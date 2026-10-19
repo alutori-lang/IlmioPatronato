@@ -36,3 +36,8 @@ const IN_EVIDENZA = [
   "bonus-ristrutturazione-2026",
 ];
 export const bonusInEvidenza = IN_EVIDENZA.map(getBonus).filter((b): b is Bonus => Boolean(b));
+
+/** Novità in ordine dal più recente: come in app, i nuovi bonus stanno sempre in cima. */
+export const bonusNovita = bonusPubblicati
+  .filter((b) => b.novita)
+  .sort((a, b) => (b.novita!.data.padEnd(10, "-00")).localeCompare(a.novita!.data.padEnd(10, "-00")));

@@ -34,7 +34,7 @@ export function CookieBanner() {
 
   return (
     <div role="dialog" aria-modal="false" aria-labelledby="cookie-title" className="fixed inset-x-0 bottom-0 z-50 p-3 sm:p-4">
-      <div className="animate-rise mx-auto max-w-3xl rounded-2xl border border-line bg-surface p-5 shadow-2xl">
+      <div className="animate-rise mx-auto max-w-3xl rounded-[28px] border-[3px] border-ink bg-white p-5 shadow-step">
         <h2 id="cookie-title" className="text-lg font-bold text-ink">
           La tua privacy
         </h2>
@@ -83,7 +83,7 @@ export function CookieBanner() {
           <button type="button" onClick={() => scegli(false)} className="rounded-xl border border-line px-4 py-2.5 text-sm font-semibold text-ink hover:bg-surface-2">
             Rifiuta
           </button>
-          <button type="button" onClick={() => scegli(serveConsenso)} className="rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-brand-ink hover:bg-brand-2">
+          <button type="button" onClick={() => scegli(serveConsenso)} className="rounded-full bg-coral px-5 py-2.5 text-sm font-black text-white hover:bg-coral-2">
             Accetta
           </button>
         </div>

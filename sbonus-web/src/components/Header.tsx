@@ -34,24 +34,24 @@ export function Header() {
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-surface/90 backdrop-blur supports-[backdrop-filter]:bg-surface/80">
-      <a href="#contenuto" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:rounded-lg focus:bg-brand focus:px-4 focus:py-2 focus:text-brand-ink">
+    <header className="sticky top-0 z-40 bg-sun">
+      <a href="#contenuto" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sun">
         Vai al contenuto
       </a>
-      <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4 sm:px-6">
+      <div className="mx-auto flex h-[72px] max-w-6xl items-center gap-4 px-4 sm:px-6">
         <Link href="/" aria-label="SBonus, vai alla home" className="shrink-0">
           <Logo />
         </Link>
 
-        <nav aria-label="Principale" className="ml-4 hidden md:block">
-          <ul className="flex items-center gap-1">
+        <nav aria-label="Principale" className="ml-auto hidden md:block">
+          <ul className="flex items-center gap-2">
             {NAV.map((n) => (
               <li key={n.href}>
                 <Link
                   href={n.href}
                   aria-current={isActive(n.href) ? "page" : undefined}
-                  className={`rounded-lg px-3 py-2 text-[0.95rem] font-medium transition ${
-                    isActive(n.href) ? "bg-brand-soft text-brand" : "text-ink-2 hover:bg-surface-2 hover:text-ink"
+                  className={`rounded-full px-4 py-2 text-[0.95rem] font-extrabold transition ${
+                    isActive(n.href) ? "bg-ink text-sun" : "bg-white/55 text-ink hover:bg-white"
                   }`}
                 >
                   {n.label}
@@ -61,7 +61,7 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="ml-auto flex items-center gap-1">
+        <div className="ml-auto flex items-center gap-1 md:ml-2">
           <button
             type="button"
             onClick={() => {
@@ -69,7 +69,7 @@ export function Header() {
             }}
             aria-expanded={search}
             aria-controls="header-search"
-            className="grid h-11 w-11 place-items-center rounded-xl text-ink-2 transition hover:bg-surface-2 hover:text-ink"
+            className="grid h-11 w-11 place-items-center rounded-full bg-white/55 text-ink transition hover:bg-white"
           >
             <Icon name={search ? "close" : "search"} />
             <span className="sr-only">{search ? "Chiudi ricerca" : "Apri ricerca"}</span>
@@ -81,7 +81,7 @@ export function Header() {
             }}
             aria-expanded={menu}
             aria-controls="mobile-menu"
-            className="grid h-11 w-11 place-items-center rounded-xl text-ink-2 transition hover:bg-surface-2 hover:text-ink md:hidden"
+            className="grid h-11 w-11 place-items-center rounded-full bg-white/55 text-ink transition hover:bg-white md:hidden"
           >
             <Icon name={menu ? "close" : "menu"} />
             <span className="sr-only">{menu ? "Chiudi menu" : "Apri menu"}</span>
@@ -90,7 +90,7 @@ export function Header() {
       </div>
 
       {search && (
-        <div id="header-search" className="animate-rise border-t border-line bg-surface px-4 py-3 sm:px-6">
+        <div id="header-search" className="animate-rise bg-sun px-4 pb-4 sm:px-6">
           <div className="mx-auto max-w-3xl">
             <SearchBox autoFocus onNavigate={() => setSearch(false)} />
           </div>
@@ -98,19 +98,19 @@ export function Header() {
       )}
 
       {menu && (
-        <nav id="mobile-menu" aria-label="Menu mobile" className="animate-rise border-t border-line bg-surface px-4 pb-4 md:hidden">
-          <ul className="flex flex-col py-2">
+        <nav id="mobile-menu" aria-label="Menu mobile" className="animate-rise bg-sun px-4 pb-4 md:hidden">
+          <ul className="flex flex-col gap-2 py-2">
             {NAV.map((n) => (
               <li key={n.href}>
                 <Link
                   href={n.href}
                   aria-current={isActive(n.href) ? "page" : undefined}
-                  className={`flex items-center justify-between rounded-xl px-3 py-3.5 text-base font-medium ${
-                    isActive(n.href) ? "bg-brand-soft text-brand" : "text-ink"
+                  className={`flex items-center justify-between rounded-2xl px-4 py-3.5 text-base font-extrabold ${
+                    isActive(n.href) ? "bg-ink text-sun" : "bg-white/55 text-ink"
                   }`}
                 >
                   {n.label}
-                  <Icon name="arrow" className="h-4 w-4 text-ink-3" />
+                  <Icon name="arrow" className="h-4 w-4" />
                 </Link>
               </li>
             ))}

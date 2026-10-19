@@ -42,7 +42,7 @@ export default async function CategoriaPage({ params }: PageProps<"/categorie/[s
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
       {bonus.length > 0 && (
         <section aria-labelledby="cat-bonus" className="mt-12">
-          <h2 id="cat-bonus" className="text-xl font-semibold tracking-tight text-ink">
+          <h2 id="cat-bonus" className="text-2xl font-black tracking-tight text-ink">
             Bonus e prestazioni
           </h2>
           <div className="mt-5">
@@ -52,7 +52,7 @@ export default async function CategoriaPage({ params }: PageProps<"/categorie/[s
       )}
       {guide.length > 0 && (
         <section aria-labelledby="cat-guide" className="mt-14">
-          <h2 id="cat-guide" className="text-xl font-semibold tracking-tight text-ink">
+          <h2 id="cat-guide" className="text-2xl font-black tracking-tight text-ink">
             Guide
           </h2>
           <div className="mt-5">
@@ -62,7 +62,7 @@ export default async function CategoriaPage({ params }: PageProps<"/categorie/[s
       )}
       {calc.length > 0 && (
         <section aria-labelledby="cat-calc" className="mt-12">
-          <h2 id="cat-calc" className="text-xl font-semibold tracking-tight text-ink">
+          <h2 id="cat-calc" className="text-2xl font-black tracking-tight text-ink">
             Calcolatori
           </h2>
           <div className="mt-5">
