@@ -1,0 +1,107 @@
+{
+  "slug": "permesso-soggiorno-lungo-periodo",
+  "titolo": "Permesso di soggiorno UE per soggiornanti di lungo periodo",
+  "descrizione": "Il permesso UE di lungo periodo (ex carta di soggiorno): requisiti, costi (130,46 € più bollo e spedizione) e come chiederlo all'ufficio postale.",
+  "intro": "Il permesso di soggiorno UE per soggiornanti di lungo periodo (art. 9 D.Lgs. 286/1998) è a tempo indeterminato e si chiede dopo almeno 5 anni di soggiorno regolare in Italia. Servono un reddito non inferiore all'assegno sociale, la conoscenza dell'italiano almeno a livello A2 e, se la domanda riguarda anche i familiari, un alloggio idoneo. Il documento va aggiornato ogni 10 anni (5 per i minori) e permette, tra l'altro, di lavorare senza contratto di soggiorno e di accedere alle prestazioni sociali e ai servizi pubblici. La domanda si presenta agli uffici postali Sportello Amico, ai Comuni abilitati o ai patronati.",
+  "categoria": "sostegno",
+  "ente": "Questura / Ministero dell'Interno (Polizia di Stato)",
+  "evidenza": {
+    "valore": "130,46 €",
+    "etichetta": "bollettino (contributo + card)"
+  },
+  "novita": {
+    "data": "2026-01",
+    "nota": "Per il 2026 l'assegno sociale, che è la soglia minima di reddito, vale 7.101,12 euro annui (546,24 euro per 13 mensilità)."
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Cittadini non UE con permesso di soggiorno valido da almeno 5 anni, per un motivo che consente rinnovi illimitati (ad esempio lavoro, famiglia, asilo, motivi religiosi)",
+    "Coniuge e figli conviventi del richiedente, anche nella stessa domanda",
+    "Esclusi: chi soggiorna per studio, formazione professionale o ricerca, chi ha un permesso di breve durata o protezione temporanea, diplomatici e assimilati, chi è pericoloso per l'ordine pubblico o la sicurezza dello Stato"
+  ],
+  "requisiti": [
+    "Soggiorno regolare in Italia da almeno 5 anni; le assenze non devono superare 6 mesi consecutivi né 10 mesi in totale nei 5 anni, salvo gravi motivi documentati",
+    "Reddito non inferiore all'importo annuo dell'assegno sociale (7.101,12 euro nel 2026); con familiari serve un reddito adeguato al nucleo (il doppio dell'assegno sociale con due o più figli sotto i 14 anni)",
+    "Italiano almeno a livello A2: certificato riconosciuto, titolo di studio italiano o test superato in Prefettura; esenti i minori di 14 anni e chi ha gravi limitazioni certificate da una struttura sanitaria pubblica",
+    "Alloggio idoneo (parametri dell'edilizia residenziale pubblica o idoneità igienico-sanitaria ASL) se la domanda riguarda anche i familiari; non richiesto a rifugiati e titolari di protezione sussidiaria",
+    "Passaporto valido o documento equivalente"
+  ],
+  "importi": [
+    "Bollettino postale da 130,46 euro: 100 euro di contributo più 30,46 euro per il permesso elettronico (conto corrente 67422402 intestato al MEF)",
+    "Marca da bollo da 16 euro",
+    "30 euro di spedizione, pagati all'ufficio postale",
+    "Minori: nessun contributo, solo il bollettino da 30,46 euro"
+  ],
+  "comeFare": [
+    "Se non hai un certificato A2 o un titolo di studio italiano, chiedi online il test di italiano alla Prefettura e superalo",
+    "Prendi il kit all'ufficio postale Sportello Amico e compila i moduli 1 e 2 (codice 09)",
+    "Paga il bollettino da 130,46 euro e procurati la marca da bollo da 16 euro",
+    "Consegna la busta aperta allo Sportello Amico (oppure rivolgiti a un Comune abilitato o a un patronato) e paga la spedizione",
+    "Vai in Questura alla data indicata per foto e impronte digitali, portando gli originali dei documenti"
+  ],
+  "documenti": [
+    "Moduli 1 e 2 compilati e firmati",
+    "Fotocopia completa del passaporto o di un documento equivalente",
+    "Fotocopia del permesso di soggiorno",
+    "Dichiarazione dei redditi o CU dell'anno precedente (per i lavoratori domestici: bollettini o estratto contributivo INPS) e buste paga dell'anno in corso",
+    "Certificato del casellario giudiziale e dei carichi pendenti",
+    "Certificato di italiano A2 o esito del test, se non esente",
+    "Per i familiari: certificati di stato di famiglia (se esteri, tradotti e legalizzati) e certificato di idoneità alloggiativa"
+  ],
+  "scadenze": "Nessuna scadenza: si può chiedere in qualsiasi momento dopo 5 anni di soggiorno regolare. Il documento va aggiornato ogni 10 anni (5 per i minori).",
+  "faq": [
+    {
+      "q": "Il permesso di lungo periodo scade?",
+      "a": "Lo status è a tempo indeterminato. Il documento va aggiornato ogni 10 anni per gli adulti e ogni 5 per i minori, con nuove foto; i requisiti non vengono ricontrollati, salvo la valutazione di pericolosità."
+    },
+    {
+      "q": "Quanto reddito serve nel 2026?",
+      "a": "Almeno l'importo annuo dell'assegno sociale, cioè 7.101,12 euro nel 2026 per chi chiede da solo. Con familiari serve un reddito più alto, adeguato al nucleo."
+    },
+    {
+      "q": "Quanto costa?",
+      "a": "130,46 euro di bollettino (100 di contributo e 30,46 per la card), 16 euro di marca da bollo e 30 euro di spedizione all'ufficio postale."
+    },
+    {
+      "q": "Quando si può perdere?",
+      "a": "Ad esempio dopo 12 mesi consecutivi fuori dall'UE, dopo più di 6 anni fuori dall'Italia, in caso di espulsione o se è stato ottenuto con frode."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "Polizia di Stato - Permesso UE per soggiornanti di lungo periodo",
+      "url": "https://www.poliziadistato.it/articolo/permesso-di-soggiorno-ue-per-soggiornanti-di-lungo-periodo.--carta-di-soggiorno-per-cittadini-stranieri"
+    },
+    {
+      "label": "Portale Immigrazione - Codice 09, permesso UE lungo periodo",
+      "url": "https://www.portaleimmigrazione.it/ITA/permessosoggUELungoPeriodo.html"
+    },
+    {
+      "label": "Portale Immigrazione - Tabelle costi",
+      "url": "https://www.portaleimmigrazione.it/ITA/tabelleCosti.html"
+    },
+    {
+      "label": "Integrazione Migranti - Il permesso di soggiorno UE per lungo soggiornanti",
+      "url": "https://integrazionemigranti.gov.it/it-it/Altre-info/e/4/o/5/id/2/Il-permesso-di-soggiorno-UE-per-lungo-soggiornanti"
+    },
+    {
+      "label": "INPS - Assegno sociale (importo 2026)",
+      "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.assegno-sociale-50184.assegno-sociale.html"
+    }
+  ],
+  "tags": [
+    "permesso di soggiorno",
+    "lungo periodo",
+    "carta di soggiorno",
+    "permesso ue",
+    "test italiano a2",
+    "questura",
+    "kit postale"
+  ],
+  "noteRedazione": "Bozza corretta. L'importo dell'assegno sociale (6.947,33 €) era superato: aggiornato a 7.101,12 € (INPS, 2026). Tolti i 'vantaggi' non confermati: l'esenzione dal test di italiano per la cittadinanza non risulta, e l'accesso ai concorsi pubblici esclude i posti con esercizio di pubblici poteri. L'idoneità alloggiativa serve solo se la domanda include i familiari. I costi vengono dalle tabelle del Portale Immigrazione (senza data visibile) e dalla pagina della Polizia di Stato (ultima modifica 15/1/2024); il contributo da 100 € risale al DM del 5 maggio 2017. Le fonti sulla procedura sono del 2022-2024: verificare eventuali novità con la Questura competente.",
+  "origineApp": "permesso_lungo"
+}

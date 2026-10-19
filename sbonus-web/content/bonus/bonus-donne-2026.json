@@ -1,0 +1,94 @@
+{
+  "slug": "bonus-donne-2026",
+  "titolo": "Bonus Donne 2026: esonero contributivo per l'assunzione di donne svantaggiate",
+  "descrizione": "Contributi azzerati fino a 650 € al mese (800 € per residenti ZES) per assunzioni stabili nel 2026 di donne senza lavoro o svantaggiate.",
+  "intro": "Con il decreto Lavoro 2026 (D.L. 62/2026, art. 1) i datori di lavoro privati che assumono a tempo indeterminato nel 2026 donne di qualsiasi età prive di un lavoro regolarmente retribuito, o in altre condizioni di svantaggio previste dalle regole UE, non pagano i contributi previdenziali per un periodo fino a 24 mesi. Il tetto è di 650 € al mese per lavoratrice, che sale a 800 € se la donna risiede in una regione della ZES unica. Dal 2026 esiste anche un esonero distinto per chi assume madri di almeno tre figli minorenni.",
+  "categoria": "lavoro",
+  "ente": "INPS",
+  "evidenza": {
+    "valore": "650 €",
+    "etichetta": "al mese per lavoratrice (800 € se residente ZES)"
+  },
+  "novita": {
+    "data": "2026-07-30",
+    "nota": "INPS ha dato le istruzioni (circolare n. 82/2026) per il nuovo esonero, previsto dalla legge di Bilancio 2026, per chi assume madri di almeno tre figli minorenni."
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Datori di lavoro privati, compresi quelli agricoli, che assumono donne a tempo indeterminato tra il 1° gennaio e il 31 dicembre 2026",
+    "Il beneficio è per il datore di lavoro; la lavoratrice non riceve somme dirette",
+    "Escluse pubblica amministrazione e lavoro domestico"
+  ],
+  "requisiti": [
+    "Donna di qualsiasi età, ovunque residente, priva di impiego regolarmente retribuito da almeno 24 mesi; oppure",
+    "Donna priva di impiego regolarmente retribuito da almeno 12 mesi e appartenente a una delle categorie di svantaggio del regolamento UE 651/2014 (ad esempio over 50, senza diploma di scuola superiore, adulta che vive sola con persone a carico, occupata in settori o professioni con forte disparità uomo-donna); oppure",
+    "Donna 'svantaggiata' secondo il regolamento UE (ad esempio senza impiego regolarmente retribuito da almeno 6 mesi)",
+    "Solo assunzioni a tempo indeterminato (anche in somministrazione): esclusi contratti a termine, trasformazioni di contratti a termine, apprendistato e lavoro intermittente",
+    "Incremento occupazionale netto rispetto alla media dei 12 mesi precedenti",
+    "DURC regolare, rispetto dei contratti collettivi e delle norme sulla sicurezza"
+  ],
+  "importi": [
+    "Esonero del 100% dei contributi previdenziali a carico del datore (esclusi premi e contributi INAIL)",
+    "Tetto di 650 € al mese per lavoratrice; 800 € al mese se la lavoratrice risiede nelle regioni della ZES unica (Abruzzo, Basilicata, Calabria, Campania, Molise, Puglia, Sicilia, Sardegna, Marche, Umbria)",
+    "Durata massima 24 mesi per le donne senza impiego da 24 mesi o da 12 mesi con un ulteriore fattore di svantaggio; 12 mesi per le altre lavoratrici svantaggiate",
+    "Misura collegata - madri di almeno tre figli minorenni senza lavoro regolarmente retribuito da almeno 6 mesi, assunte dal 1° gennaio 2026: esonero del 100% fino a 8.000 € l'anno, per 12 mesi (tempo determinato), 18 mesi (trasformazione) o 24 mesi (tempo indeterminato)"
+  ],
+  "comeFare": [
+    "1. Il datore di lavoro verifica la condizione della lavoratrice (mesi senza impiego, categoria di svantaggio, residenza per la maggiorazione ZES) e l'incremento occupazionale",
+    "2. Invia la domanda online all'INPS tramite il Portale delle Agevolazioni (ex DiResCo) con il modulo dedicato all'esonero donne 2026",
+    "3. Se la domanda è inviata prima dell'assunzione, INPS accantona le risorse e l'assunzione con comunicazione obbligatoria va fatta entro il termine indicato",
+    "4. Dopo l'accoglimento, l'esonero si applica nelle denunce UniEmens",
+    "5. Per le madri di almeno tre figli si usa invece il modulo 'ELM3' sullo stesso Portale delle Agevolazioni"
+  ],
+  "documenti": [
+    "Dati dell'azienda e della lavoratrice",
+    "Indicazione della condizione di svantaggio",
+    "Comunicazione obbligatoria di assunzione (UniLav/UniSomm)",
+    "Dati su tipo di contratto, orario e retribuzione prevista",
+    "Dichiarazioni sostitutive richieste dal modulo INPS"
+  ],
+  "scadenze": "Assunzioni a tempo indeterminato effettuate dal 1° gennaio al 31 dicembre 2026, nei limiti delle risorse disponibili.",
+  "faq": [
+    {
+      "q": "Serve che la donna abbia più di 50 anni?",
+      "a": "No. Nel 2026 l'età non è un requisito a sé: conta soprattutto da quanto tempo la donna è senza un lavoro regolarmente retribuito (24, 12 o 6 mesi) e l'eventuale appartenenza a una categoria di svantaggio. Avere più di 50 anni è una delle categorie che, insieme a 12 mesi senza impiego, dà diritto ai 24 mesi."
+    },
+    {
+      "q": "Vale anche per assunzioni a tempo determinato?",
+      "a": "No, il Bonus Donne 2026 riguarda solo le assunzioni a tempo indeterminato. Fa eccezione l'esonero per le madri di almeno tre figli, che copre anche i contratti a termine."
+    },
+    {
+      "q": "Quando spetta il tetto di 800 €?",
+      "a": "Quando la lavoratrice, alla data dell'assunzione, risiede in una delle regioni della ZES unica, che dal 2025 comprende anche Marche e Umbria."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS - Circolare n. 57 del 14 maggio 2026 (Bonus donne)",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/05/Circolare_15260/Allegati/16772_Circolare-numero-57-del-14-05-2026.pdf"
+    },
+    {
+      "label": "INPS - Giovani, donne e ZES: incentivi per la stabilizzazione professionale",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.05.giovani-donne-e-zes-incentivi-per-la-stabilizzazione-professionale.html"
+    },
+    {
+      "label": "INPS - Decontribuzione under 35 e madri con almeno tre figli: novità",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.07.decontribuzione-under-35-e-madri-con-almeno-tre-figli-novit.html"
+    }
+  ],
+  "tags": [
+    "bonus donne 2026",
+    "assunzione donne",
+    "donne svantaggiate",
+    "esonero contributivo",
+    "decreto lavoro",
+    "madri tre figli",
+    "ZES"
+  ],
+  "noteRedazione": "Bozza riscritta. La bozza indicava 6.000 €/anno per 18 mesi e ammetteva anche contratti a termine: valori della vecchia disciplina (L. 92/2012), non più corretti per il bonus 2026. La misura vigente è l'art. 1 del D.L. 62/2026 (circ. INPS 57/2026), che ha sostituito la proroga a tutto il 2026 del bonus donne del D.L. 60/2024 (abrogata dal decreto Lavoro). Requisiti, importi e durate verificati sulla circolare 57. Il riferimento al messaggio INPS che ha pubblicato il modulo (fonti di settore: n. 1970 dell'11 giugno 2026) non è stato verificato direttamente; il termine esatto per l'assunzione dopo la prenotazione è indicato per analogia con il Bonus Giovani (10 giorni) e quindi non riportato come cifra. Aggiunta come misura collegata l'esonero madri con almeno tre figli (L. Bilancio 2026, circ. INPS 82/2026), verificato su notizia INPS.",
+  "origineApp": "bonus_donne"
+}

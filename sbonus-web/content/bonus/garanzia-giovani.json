@@ -1,50 +1,78 @@
 {
   "slug": "garanzia-giovani",
-  "titolo": "Garanzia Giovani (Programma GOL)",
-  "descrizione": "Percorsi di formazione e inserimento lavorativo per NEET under 30.",
-  "intro": "Il Programma Garanzia Giovani (ora integrato nel GOL) offre ai giovani NEET (né studio né lavoro) tra 15 e 29 anni: orientamento professionale, tirocini retribuiti (€300-€500/mese), corsi di formazione gratuiti, accompagnamento al lavoro, incentivi per l'autoimprenditorialità.",
+  "titolo": "Garanzia Giovani (oggi nel Programma nazionale Giovani, donne e lavoro)",
+  "descrizione": "Orientamento, formazione, tirocini e accompagnamento al lavoro per i NEET 15-29 anni, ora tramite i Centri per l'impiego e le Regioni.",
+  "intro": "Garanzia Giovani è il programma europeo di politiche attive per i giovani che non studiano e non lavorano (NEET). Il vecchio programma nazionale 2014-2020 (PON IOG) è concluso e il portale dell'ANPAL, soppressa, non viene più aggiornato; secondo il Ministero del Lavoro le misure proseguono nel Programma nazionale Giovani, donne e lavoro 2021-2027. Per sapere quali percorsi sono attivi oggi bisogna rivolgersi al Centro per l'impiego della propria Regione.",
   "categoria": "lavoro",
-  "ente": "ANPAL / Centro per l'Impiego",
-  "stato": "da-verificare",
+  "ente": "Ministero del Lavoro e delle politiche sociali / Regioni (Centri per l'impiego)",
+  "evidenza": {
+    "valore": "15-29 anni",
+    "etichetta": "giovani NEET"
+  },
+  "novita": null,
+  "stato": "in-attesa",
   "pubblicato": false,
   "verificato": false,
   "ultimoControllo": null,
   "aggiornatoIl": "2026-10-19",
-  "aChiSpetta": [],
+  "aChiSpetta": [
+    "Giovani tra 15 e 29 anni che non studiano, non lavorano e non frequentano percorsi di formazione (NEET), in tutte le Regioni e nella Provincia autonoma di Trento",
+    "Nel vecchio programma, nelle regioni del Sud (Abruzzo, Basilicata, Calabria, Campania, Molise, Puglia, Sardegna, Sicilia) alcune opportunità erano aperte fino a 34 anni"
+  ],
   "requisiti": [
-    "Età tra 15 e 29 anni",
-    "Non essere impegnato in studio, lavoro o formazione (NEET)",
-    "Residenza in Italia",
-    "DID al Centro per l'Impiego"
+    "Età compresa tra 15 e 29 anni",
+    "Non essere occupati né inseriti in percorsi di studio o formazione",
+    "Le condizioni precise di accesso ai percorsi attuali dipendono dalla Regione e dal Centro per l'impiego"
   ],
   "importi": [
-    "Tirocini €300-€500/mese + formazione gratuita"
+    "I servizi di orientamento, formazione e accompagnamento sono gratuiti",
+    "I tirocini prevedono un'indennità mensile di partecipazione e il servizio civile un compenso, ma gli importi dipendono dalla misura e dalla Regione: non sono indicati nelle fonti ufficiali consultate"
   ],
   "comeFare": [
-    "1. Registrarsi su garanziagiovani.anpal.gov.it\n2. Iscriversi al CpI con DID\n3. Colloquio di orientamento\n4. Assegnazione a un percorso (tirocinio, formazione, ecc.)\n5. Iniziare il percorso"
+    "1. Contattare il Centro per l'impiego della propria Regione e chiedere quali percorsi per giovani NEET sono attivi",
+    "2. Sostenere il colloquio di orientamento",
+    "3. Concordare un percorso personalizzato (formazione, tirocinio, apprendistato, servizio civile, autoimprenditorialità, mobilità)",
+    "4. Seguire le indicazioni regionali per l'avvio del percorso"
   ],
   "documenti": [
-    "DID (Dichiarazione Immediata Disponibilità)",
-    "Documento identità e CF",
-    "Curriculum vitae",
-    "Titoli di studio"
+    "Documento d'identità e codice fiscale",
+    "Permesso di soggiorno per i cittadini extra UE",
+    "Eventuali titoli di studio e curriculum (secondo le richieste del Centro per l'impiego)"
   ],
-  "scadenze": "Sempre aperto",
-  "faq": [],
+  "scadenze": "Nessuna scadenza nazionale verificata: le opportunità sono gestite a livello regionale con tempi propri.",
+  "faq": [
+    {
+      "q": "Mi posso ancora iscrivere sul portale Garanzia Giovani?",
+      "a": "Il portale nazionale dell'ANPAL non viene più aggiornato perché l'agenzia è stata soppressa. Le indicazioni ufficiali invitano a rivolgersi al Centro per l'impiego della propria Regione."
+    },
+    {
+      "q": "Garanzia Giovani è finita?",
+      "a": "Il programma 2014-2020 è concluso, ma il Ministero del Lavoro indica che le sue misure proseguono nel Programma nazionale Giovani, donne e lavoro 2021-2027, attuato insieme alle Regioni."
+    },
+    {
+      "q": "Quanto si guadagna con un tirocinio?",
+      "a": "Il tirocinio prevede un'indennità mensile, ma l'importo è fissato dalle regole regionali e dalla singola misura: chiedetelo al Centro per l'impiego."
+    }
+  ],
   "fonti": [
     {
-      "label": "ANPAL / Centro per l'Impiego",
-      "url": "https://garanziagiovani.anpal.gov.it"
+      "label": "Ministero del Lavoro (archivio ANPAL) - Garanzia Giovani",
+      "url": "https://storicoanpal.politicheattive.lavoro.gov.it/garanzia-giovani.html"
+    },
+    {
+      "label": "Ministero del Lavoro - PN Giovani, donne e lavoro",
+      "url": "https://www.lavoro.gov.it/temi-e-priorita/europa-e-fondi-europei/focus/pagine/pn-giovani-donne-e-lavoro"
     }
   ],
   "tags": [
     "garanzia giovani",
     "neet",
+    "centro per l'impiego",
     "tirocinio",
     "formazione",
-    "lavoro",
-    "stage"
+    "orientamento",
+    "politiche attive"
   ],
-  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "noteRedazione": "Stato impostato su 'in-attesa' perché il programma nazionale originario (PON IOG 2014-2020) è concluso e non è stata trovata una pagina ufficiale che descriva le modalità di adesione vigenti a ottobre 2026; le fonti ufficiali dicono solo che le misure proseguono nel PN Giovani, donne e lavoro 2021-2027 e rimandano ai Centri per l'impiego regionali. Un verbale del Comitato di sorveglianza (giugno 2025) cita un futuro strumento su piattaforma SIISL, di cui non è stato verificato l'avvio. Rimossi dalla bozza: gli importi dei tirocini (300-500 €/mese, non verificati e variabili per Regione), l'iscrizione su garanziagiovani.anpal.gov.it (portale non più aggiornato), la 'integrazione nel GOL' (non confermata su fonte ufficiale) e la DID come requisito (non verificata). Prima della pubblicazione serve verificare almeno una pagina regionale ufficiale.",
   "origineApp": "garanzia_giovani"
 }

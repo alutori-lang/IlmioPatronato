@@ -44,11 +44,11 @@ sbonus-web/
 
 ### Stato attuale dei contenuti (controllo del 19/10/2026)
 
-- **19 schede pubblicate**, verificate su inps.it, agenziaentrate.gov.it, lavoro.gov.it, mef.gov.it, masaf.gov.it,
-  arera.it, consap.it.
-- **33 bozze** importate dall'app (dati di aprile 2026), da verificare prima della pubblicazione. Una (bonus psicologo) è
-  in attesa del bando 2026.
-- **7 guide** originali.
+- **47 schede pubblicate**, verificate il 19/10/2026 su inps.it, agenziaentrate.gov.it, lavoro.gov.it, mef.gov.it, masaf.gov.it, mur.gov.it, cultura.gov.it, mimit.gov.it,
+  arera.it, consap.it e siti ufficiali regionali (le misure scadute restano online, segnalate come tali).
+- **5 bozze** non pubblicate perché manca una conferma ufficiale nazionale: Bonus caregiver (disegno di legge), Garanzia Giovani,
+  contributo affitto, morosità incolpevole, SAI.
+- **11 guide** originali.
 
 ## Calcolatori
 
@@ -108,4 +108,4 @@ Dopo l'approvazione:
 - [ ] Far rivedere Privacy, Cookie Policy e Termini a un consulente
 - [ ] Verificare le 33 bozze o lasciarle non pubblicate
 - [ ] Ricontrollare i parametri contrassegnati come non verificati
-- [ ] Collegare Google Search Console e inviare `https://sbonus.it/sitemap.xml`
+- [ ] Collegare Google Search Console (metodo "tag HTML": incolla il codice in `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`) e inviare `https://sbonus.it/sitemap.xml`

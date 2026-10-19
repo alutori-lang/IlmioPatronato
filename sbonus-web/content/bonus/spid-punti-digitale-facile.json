@@ -1,0 +1,87 @@
+{
+  "slug": "spid-punti-digitale-facile",
+  "titolo": "SPID e aiuto digitale gratuito: i Punti Digitale Facile",
+  "descrizione": "Non esiste un 'Kit Digitale per Immigrati': ci sono i Punti Digitale Facile, con aiuto gratuito sui servizi online, e lo SPID, che vuole un documento italiano.",
+  "intro": "Non risulta una misura nazionale chiamata 'Kit Digitale per Immigrati'. Esiste la rete dei Punti Digitale Facile, finanziata con il PNRR dal Dipartimento per la trasformazione digitale e gestita da Regioni e Province autonome: facilitatori formati aiutano gratis i cittadini a usare i servizi online della PA, l'App IO e i servizi sanitari digitali. Per lo SPID servono un documento d'identità italiano valido, la tessera sanitaria o il codice fiscale, un'email e un cellulare. Il permesso di soggiorno non basta: lo straniero residente può prima chiedere la carta d'identità al Comune e poi usarla per lo SPID.",
+  "categoria": "sostegno",
+  "ente": "Dipartimento per la trasformazione digitale / Regioni / Comuni",
+  "evidenza": {
+    "valore": "Gratis",
+    "etichetta": "aiuto nei Punti Digitale Facile"
+  },
+  "novita": {
+    "data": "2025-02-17",
+    "nota": "Avviata la campagna istituzionale per far conoscere la rete nazionale dei Punti Digitale Facile."
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Punti Digitale Facile: tutti i cittadini che vogliono aiuto con i servizi digitali; le fonti non indicano requisiti specifici",
+    "SPID: maggiorenni con documento d'identità italiano valido e codice fiscale, compresi gli stranieri residenti che hanno una carta d'identità italiana"
+  ],
+  "requisiti": [
+    "SPID: almeno 18 anni",
+    "SPID: documento di riconoscimento italiano valido (carta d'identità, patente o passaporto); il permesso di soggiorno non è accettato",
+    "SPID: tessera sanitaria o tesserino del codice fiscale (o certificato di attribuzione)",
+    "SPID: indirizzo email e numero di cellulare personali"
+  ],
+  "importi": [
+    "Assistenza nei Punti Digitale Facile: gratuita",
+    "SPID: l'uso per accedere ai servizi pubblici online è gratuito; il rilascio può essere gratuito o a pagamento secondo il gestore e la modalità di riconoscimento"
+  ],
+  "comeFare": [
+    "Cerca il Punto Digitale Facile più vicino sulla mappa di Repubblica Digitale",
+    "Se sei straniero residente e non hai un documento italiano, chiedi prima la carta d'identità al tuo Comune",
+    "Scegli un gestore di identità digitale accreditato e registrati",
+    "Completa il riconoscimento: di persona, via webcam, con CIE, CNS o firma digitale, oppure presso uno sportello pubblico che aderisce",
+    "Usa SPID o CIE per entrare nei servizi online della PA e nell'App IO"
+  ],
+  "documenti": [
+    "Carta d'identità, patente o passaporto italiani validi",
+    "Tessera sanitaria o codice fiscale",
+    "Email e numero di cellulare"
+  ],
+  "scadenze": "Nessuna scadenza per lo SPID. La rete dei Punti Digitale Facile è finanziata dal PNRR, che termina nel 2026: verificare con la propria Regione se il servizio prosegue.",
+  "faq": [
+    {
+      "q": "Posso fare lo SPID con il permesso di soggiorno?",
+      "a": "No. Il sito ufficiale dello SPID precisa che il permesso di soggiorno non vale per la richiesta. Lo straniero residente può ottenere la carta d'identità dal Comune e usarla per lo SPID."
+    },
+    {
+      "q": "Lo SPID è gratuito?",
+      "a": "Usarlo per i servizi pubblici è gratuito. Il costo del rilascio dipende dal gestore e dalla modalità di riconoscimento scelta."
+    },
+    {
+      "q": "Dove trovo aiuto gratuito per i servizi online?",
+      "a": "Nei Punti Digitale Facile, dove facilitatori formati aiutano gratis con servizi della PA, App IO, fascicolo sanitario elettronico e pagamenti digitali."
+    },
+    {
+      "q": "Esiste un kit digitale riservato agli immigrati?",
+      "a": "Non risulta una misura nazionale con questo nome. Alcuni Comuni, patronati o associazioni hanno sportelli di aiuto, ma sono iniziative locali da verificare sul territorio."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "SPID - Come attivare SPID",
+      "url": "https://www.spid.gov.it/cos-e-spid/come-attivare-spid/"
+    },
+    {
+      "label": "Dipartimento per la trasformazione digitale - Punti Digitale Facile",
+      "url": "https://innovazione.gov.it/notizie/articoli/al-via-la-campagna-di-comunicazione-istituzionale-per-la-promozione-dei-punti-digitale-facile/"
+    }
+  ],
+  "tags": [
+    "spid",
+    "punti digitale facile",
+    "facilitazione digitale",
+    "app io",
+    "identità digitale",
+    "stranieri",
+    "carta d'identità"
+  ],
+  "noteRedazione": "Il 'Kit Digitale per Immigrati' non esiste come misura: pagina rifatta su SPID + Punti Digitale Facile. Errore importante corretto: la bozza indicava il permesso di soggiorno come documento valido per lo SPID, mentre spid.gov.it lo esclude espressamente. Tolta la PEC dai passaggi standard (non serve per lo SPID). Non verificati: numero attuale dei Punti e loro continuità dopo il PNRR (la fonte consultata è del 17/2/2025) e costi dei singoli gestori SPID. La mappa dei Punti è su https://repubblicadigitale.gov.it/servizi/digitalefacile (indicata dalla fonte, non aperta).",
+  "origineApp": "kit_digitale"
+}

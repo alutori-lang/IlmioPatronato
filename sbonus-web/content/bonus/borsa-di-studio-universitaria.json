@@ -1,0 +1,96 @@
+{
+  "slug": "borsa-di-studio-universitaria",
+  "titolo": "Borsa di studio universitaria regionale (diritto allo studio)",
+  "descrizione": "Borse per universitari e AFAM con ISEE fino a 28.339,88 € e ISPE fino a 61.608,48 € (a.a. 2026/27). Bandi e scadenze li fissa ogni ente regionale.",
+  "intro": "Le borse di studio per il diritto allo studio universitario sono finanziate da Stato e Regioni e assegnate dagli enti regionali (ER.GO, DSU Toscana, ADiSU, EDISU e simili) o, in alcuni casi, direttamente dagli atenei. Il Ministero dell'Università fissa ogni anno le soglie economiche massime e gli importi minimi; requisiti di merito, scadenze e procedure dipendono invece dal bando della propria regione. Per l'anno accademico 2026/2027 la borsa minima va da 2.890,16 € (studente in sede) a 7.171,11 € (fuori sede).",
+  "categoria": "studenti",
+  "ente": "Enti regionali per il diritto allo studio (quadro nazionale MUR)",
+  "evidenza": {
+    "valore": "fino a 7.171 €",
+    "etichetta": "borsa minima fuori sede 2026/27"
+  },
+  "novita": {
+    "data": "2026-02-10",
+    "nota": "Il MUR ha aggiornato dell'1,4% soglie ISEE/ISPE e importi minimi delle borse per l'a.a. 2026/2027 (decreti direttoriali n. 175 e 176)."
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Studenti iscritti a corsi di laurea, laurea magistrale, ciclo unico, dottorato e specializzazione di università e istituzioni AFAM",
+    "Con ISEE per prestazioni universitarie e ISPE entro i limiti massimi nazionali (entrambi i requisiti)",
+    "Con i requisiti di merito (crediti) richiesti dal bando regionale"
+  ],
+  "requisiti": [
+    "A.a. 2026/2027: ISEE per prestazioni universitarie non superiore a 28.339,88 €",
+    "A.a. 2026/2027: ISPE non superiore a 61.608,48 €",
+    "Requisiti di merito (crediti minimi per anno di iscrizione) stabiliti dal bando dell'ente regionale",
+    "Domanda presentata all'ente regionale o all'ateneo competente entro la scadenza del bando",
+    "Le Regioni possono applicare soglie più basse dei limiti massimi: fa fede il bando locale"
+  ],
+  "importi": [
+    "Importi minimi 2026/2027: 7.171,11 € fuori sede",
+    "4.190,71 € pendolari",
+    "2.890,16 € in sede",
+    "Gli enti regionali possono prevedere importi superiori, integrazioni o servizi (alloggio, mensa) secondo il proprio bando"
+  ],
+  "comeFare": [
+    "Richiedere l'ISEE per prestazioni universitarie (DSU presso CAF o portale INPS)",
+    "Individuare l'ente per il diritto allo studio della regione in cui ha sede il proprio corso",
+    "Leggere il bando: requisiti di merito, scadenze, eventuali soglie regionali",
+    "Presentare la domanda online sul portale dell'ente nei termini (in genere in estate, prima dell'inizio dell'anno accademico)",
+    "Controllare graduatorie e adempimenti successivi (es. conferma iscrizione, crediti da raggiungere)"
+  ],
+  "documenti": [
+    "ISEE per prestazioni universitarie",
+    "Credenziali SPID o CIE per il portale dell'ente",
+    "Dati di iscrizione e carriera (esami/crediti)",
+    "Eventuale contratto di locazione per lo status di fuori sede, se richiesto dal bando"
+  ],
+  "scadenze": "Variano per regione e per ente: ogni bando fissa le proprie date. Le soglie e gli importi minimi nazionali per il 2026/2027 sono stati fissati il 10 febbraio 2026.",
+  "faq": [
+    {
+      "q": "Basta rientrare nella soglia ISEE?",
+      "a": "No. Occorre rispettare sia il limite ISEE sia quello ISPE, oltre ai requisiti di merito del bando."
+    },
+    {
+      "q": "A chi presento la domanda?",
+      "a": "All'ente regionale per il diritto allo studio competente per la sede del corso (o all'ateneo, dove previsto), non al Ministero."
+    },
+    {
+      "q": "Perché nella mia regione gli importi sono diversi?",
+      "a": "Il MUR fissa solo importi minimi e soglie massime: ogni Regione può prevedere importi più alti o soglie più restrittive."
+    },
+    {
+      "q": "Che ISEE serve?",
+      "a": "L'ISEE per prestazioni per il diritto allo studio universitario, che può differire da quello ordinario."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "MUR – Decreto direttoriale n. 176 del 10/02/2026 (limiti ISEE e ISPE 2026/27)",
+      "url": "https://www.mur.gov.it/it/atti-e-normativa/decreto-direttoriale-n-176-del-10-02-2026"
+    },
+    {
+      "label": "MUR – Decreto direttoriale n. 175 del 10/02/2026 (importi minimi borse 2026/27, PDF)",
+      "url": "https://www.mur.gov.it/sites/default/files/2026-03/Decreto%20Direttoriale%20n.%20175%20del%2010-02-2026.pdf"
+    },
+    {
+      "label": "MUR – Diritto allo studio",
+      "url": "https://www.mur.gov.it/it/aree-tematiche/universita/studenti-diritto-allo-studio-e-residenze/diritto-allo-studio"
+    }
+  ],
+  "tags": [
+    "università",
+    "borsa di studio",
+    "ISEE universitario",
+    "diritto allo studio",
+    "ER.GO",
+    "AFAM",
+    "regionale"
+  ],
+  "noteRedazione": "Verificati sui testi dei d.d. MUR n. 175 e 176 del 10/02/2026: ISEE 28.339,88 €, ISPE 61.608,48 €, importi minimi 7.171,11/4.190,71/2.890,16 €. La bozza riportava soglie superate (24.335,11 / 52.902,43) e un range importi '2.000-6.000+' non ufficiale. Requisiti di merito, scadenze, eventuale riduzione regionale delle soglie e importi effettivi dipendono dal bando del singolo ente: non elencati nel dettaglio. L'affermazione che le Regioni possano fissare soglie più basse è prassi dei bandi; non l'ho letta testualmente nei decreti aperti (sono 'limiti massimi').",
+  "origineApp": "borsa_studio"
+}

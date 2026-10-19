@@ -1,0 +1,89 @@
+{
+  "slug": "bonus-trasporti",
+  "titolo": "Bonus Trasporti (misura chiusa nel 2023)",
+  "descrizione": "Il buono fino a 60 € per gli abbonamenti al trasporto pubblico è terminato nel 2023. Oggi resta la detrazione Irpef del 19% sugli abbonamenti.",
+  "intro": "Il Bonus Trasporti del Ministero del Lavoro era un buono fino a 60 € per abbonamenti a bus, metro e treni regionali, riservato nel 2023 a chi aveva un reddito 2022 non superiore a 20.000 €. Le risorse sono finite tra novembre e dicembre 2023 e la piattaforma è stata disattivata: al momento non risulta una nuova edizione. Chi acquista un abbonamento può comunque recuperare il 19% della spesa, fino a 250 € l'anno, nella dichiarazione dei redditi.",
+  "categoria": "studenti",
+  "ente": "Ministero del Lavoro e delle Politiche Sociali",
+  "evidenza": {
+    "valore": "60 €",
+    "etichetta": "massimo per buono (chiuso)"
+  },
+  "novita": {
+    "data": "2023-12-01",
+    "nota": "Ultima riapertura della piattaforma con i fondi residui; esaurite le risorse, non è più possibile presentare domanda."
+  },
+  "stato": "scaduto",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Misura chiusa: nel 2023 spettava a persone fisiche con reddito complessivo 2022 fino a 20.000 €, anche per conto di un figlio minorenne",
+    "Oggi: chi paga un abbonamento al trasporto pubblico può usare la detrazione Irpef del 19% per sé e per i familiari a carico"
+  ],
+  "requisiti": [
+    "Bonus 2023 (chiuso): reddito complessivo 2022 non superiore a 20.000 €",
+    "Bonus 2023 (chiuso): accesso alla piattaforma bonustrasporti.lavoro.gov.it con SPID o CIE, fino a esaurimento fondi",
+    "Detrazione attuale: abbonamento a servizi di trasporto pubblico locale, regionale o interregionale pagato con mezzi tracciabili",
+    "Detrazione attuale: conservare titolo di viaggio e ricevuta di pagamento"
+  ],
+  "importi": [
+    "Bonus 2023 (chiuso): fino a 60 € per abbonamento mensile, plurimensile o annuale",
+    "Detrazione Irpef: 19% su una spesa massima di 250 € l'anno (complessiva per contribuente e familiari a carico)"
+  ],
+  "comeFare": [
+    "Il Bonus Trasporti non è più richiedibile: la piattaforma bonustrasporti.lavoro.gov.it è stata disattivata a fondi esauriti",
+    "Per la detrazione: pagare l'abbonamento con carta, bancomat, bonifico o altro mezzo tracciabile",
+    "Conservare abbonamento e ricevuta",
+    "Verificare la spesa nella dichiarazione precompilata (i gestori trasmettono i dati all'Agenzia delle Entrate) o indicarla nel 730/Redditi PF"
+  ],
+  "documenti": [
+    "Abbonamento al trasporto pubblico",
+    "Ricevuta o prova di pagamento tracciabile"
+  ],
+  "scadenze": "Bonus Trasporti: chiuso (fondi esauriti, ultima finestra 1° dicembre 2023). Detrazione: si fa valere con la dichiarazione dei redditi relativa all'anno della spesa.",
+  "faq": [
+    {
+      "q": "Il bonus trasporti da 60 € esiste ancora?",
+      "a": "No. Le risorse del 2023 sono state esaurite e la piattaforma è stata spenta. Sui siti ufficiali non risulta una nuova edizione."
+    },
+    {
+      "q": "Posso detrarre l'abbonamento di mio figlio?",
+      "a": "Sì, se è fiscalmente a carico. Il tetto di 250 € vale però in modo cumulativo per la spesa propria e per quella dei familiari a carico."
+    },
+    {
+      "q": "Se il datore di lavoro mi rimborsa l'abbonamento?",
+      "a": "Le somme rimborsate o pagate dal datore di lavoro non formano reddito di lavoro; la detrazione si applica solo sulla parte effettivamente rimasta a tuo carico."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "Ministero del Lavoro – Esaurite le disponibilità di fondi per il Bonus trasporti (2/11/2023)",
+      "url": "https://www.lavoro.gov.it/stampa-e-media/comunicati/pagine/esaurite-le-disponibilita-di-fondi-il-bonus-trasporti"
+    },
+    {
+      "label": "Ministero del Lavoro – Riapertura piattaforma 1° dicembre 2023",
+      "url": "https://www.lavoro.gov.it/notizie/pagine/bonus-trasporti-il-primo-dicembre-2023-riapre-la-piattaforma"
+    },
+    {
+      "label": "Agenzia delle Entrate – Spese per abbonamenti al trasporto pubblico",
+      "url": "https://www.agenziaentrate.gov.it/portale/schede/agevolazioni/scheda-spese-per-abbonamenti-al-trasporto-pubblico/infogen-spese-per-abbonamenti-al-trasporto-pubblico?page=agevolazionicitt"
+    },
+    {
+      "label": "Agenzia delle Entrate – FAQ abbonamenti trasporto pubblico",
+      "url": "https://www.agenziaentrate.gov.it/portale/risposte-alle-domande-piu-frequenti-abbonamenti"
+    }
+  ],
+  "tags": [
+    "trasporto",
+    "abbonamento",
+    "bus",
+    "treno",
+    "detrazione 19%",
+    "studenti",
+    "misura chiusa"
+  ],
+  "noteRedazione": "Verificato su lavoro.gov.it: importo max 60 €, requisito reddito 2022 ≤ 20.000 € (non ISEE come nella bozza), fondi esauriti e piattaforma disattivata (ultima riapertura 1/12/2023). Nessuna edizione 2024-2026 trovata su fonti ufficiali. Ente corretto: Ministero del Lavoro. Aggiunta come alternativa la detrazione 19% su max 250 € (Agenzia Entrate). Non verificati i limiti di reddito che dal 2025 riducono alcune detrazioni al 19% per redditi alti: omessi. Non inserita la 'Carta Dedicata a te' come sostituto perché nessuna fonte ufficiale la presenta così.",
+  "origineApp": "bonus_trasporto"
+}

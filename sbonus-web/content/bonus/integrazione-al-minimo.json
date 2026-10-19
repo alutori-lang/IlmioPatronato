@@ -1,0 +1,83 @@
+{
+  "slug": "integrazione-al-minimo",
+  "titolo": "Integrazione al trattamento minimo della pensione",
+  "descrizione": "Se la pensione calcolata è sotto il minimo (611,85 € al mese nel 2026) e i redditi sono entro i limiti, l'INPS la porta fino al trattamento minimo.",
+  "intro": "L'integrazione al trattamento minimo è la somma che l'INPS aggiunge alla pensione quando l'importo calcolato sui contributi è inferiore al minimo di legge. Per il 2026 il trattamento minimo provvisorio è di 611,85 euro al mese (7.954,05 euro l'anno). Il diritto dipende dal reddito personale e, per i pensionati sposati con pensione decorrente dal 1994 in poi, anche dal reddito della coppia.",
+  "categoria": "pensioni",
+  "ente": "INPS",
+  "evidenza": {
+    "valore": "611,85 €/mese",
+    "etichetta": "trattamento minimo 2026"
+  },
+  "novita": {
+    "data": "2025-12-19",
+    "nota": "La circolare INPS n. 153/2025 ha fissato il trattamento minimo provvisorio 2026 a 611,85 euro mensili e aggiornato i limiti di reddito per l'integrazione."
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Titolari di pensioni previdenziali INPS il cui importo calcolato è inferiore al trattamento minimo e che rispettano i limiti di reddito personali e, se coniugati, coniugali."
+  ],
+  "requisiti": [
+    "Pensione calcolata di importo inferiore al trattamento minimo (611,85 € al mese nel 2026)",
+    "Reddito personale annuo fino a 7.954,05 € per l'integrazione intera; tra 7.954,05 € e 15.908,10 € integrazione totale o parziale secondo l'importo della pensione; oltre 15.908,10 € l'integrazione è esclusa",
+    "Pensioni con decorrenza successiva al 1994, pensionati coniugati e non separati: reddito di coppia fino a 23.862,15 € per l'integrazione intera, tra 23.862,15 € e 31.816,20 € totale o parziale, oltre 31.816,20 € esclusa",
+    "Pensioni con decorrenza nel 1994: limiti coniugali di 31.816,20 € (intera) e 39.770,25 € (esclusione)"
+  ],
+  "importi": [
+    "La pensione viene portata fino a 611,85 € al mese (valore provvisorio 2026), interamente o in parte a seconda dei redditi",
+    "Per il 2026 le pensioni pari o inferiori al minimo ricevono anche un incremento dell'1,3%, fino a un importo massimo riconosciuto di 619,80 € al mese"
+  ],
+  "comeFare": [
+    "L'integrazione viene valutata dall'INPS al momento della liquidazione della pensione, sulla base dei redditi dichiarati",
+    "Comunicare all'INPS i redditi personali e, se richiesto, quelli del coniuge, e segnalare le variazioni",
+    "Se si ritiene di averne diritto ma non è stata riconosciuta, chiedere la ricostituzione della pensione online (SPID, CIE, CNS) o tramite patronato"
+  ],
+  "documenti": [
+    "Dichiarazione dei redditi personali (e del coniuge, se rilevante)",
+    "Documento d'identità e codice fiscale"
+  ],
+  "scadenze": "Misura strutturale, senza scadenza. Importi e limiti di reddito vengono aggiornati ogni anno; quelli 2026 sono provvisori e soggetti a conguaglio.",
+  "faq": [
+    {
+      "q": "Il reddito del coniuge conta sempre?",
+      "a": "Conta per i pensionati sposati e non separati con pensione decorrente dal 1994 in poi; per queste pensioni è previsto un limite di reddito di coppia pari a 4 volte il minimo annuo (5 volte per le pensioni decorrenti nel 1994)."
+    },
+    {
+      "q": "Cosa vuol dire integrazione parziale?",
+      "a": "Se il reddito personale supera 7.954,05 euro ma resta entro 15.908,10 euro, l'integrazione spetta solo fino a concorrenza del limite, quindi può essere ridotta."
+    },
+    {
+      "q": "Quanto è il minimo nel 2026?",
+      "a": "611,85 euro al mese per 13 mensilità, cioè 7.954,05 euro l'anno, in via provvisoria."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS – Pensioni 2026: i nuovi importi e le date di pagamento",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.12.pensioni-2026-i-nuovi-importi-e-le-date-di-pagamento.html"
+    },
+    {
+      "label": "INPS – Circolare n. 153 del 19/12/2025",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2025/12/Circolare_15109/Allegati/16484_Circolare-numero-153-del-19-12-2025.pdf"
+    },
+    {
+      "label": "INPS – Circolare n. 153/2025, Allegato 2 (Tabella D, limiti di reddito)",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2025/12/Circolare_15109/Allegati/16486_Circolare-numero-153-del-19-12-2025_Allegato-n-2.pdf"
+    }
+  ],
+  "tags": [
+    "pensione",
+    "trattamento minimo",
+    "integrazione al minimo",
+    "pensionati",
+    "reddito",
+    "INPS",
+    "2026"
+  ],
+  "noteRedazione": "Aggiornato il minimo da 603,40 € (2025) a 611,85 € (provvisorio 2026). Limiti di reddito verificati sulla Tabella D dell'Allegato 2 alla circolare INPS 153/2025 (Fondo lavoratori dipendenti). Il draft citava limite coniugale 'fino a 4 volte': corretto con distinzione intera/parziale e regola diversa per le pensioni decorrenti nel 1994. Non verificati su fonte ufficiale: esclusione delle pensioni interamente contributive, elenco dei redditi esclusi dal calcolo e uso del modello RED. Il messaggio INPS 628/2026 ha rettificato alcune tabelle (M.1-M.3) dell'Allegato 2, non quelle qui utilizzate.",
+  "origineApp": "integrazione_minimo"
+}

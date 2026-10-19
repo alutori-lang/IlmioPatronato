@@ -1,49 +1,92 @@
 {
   "slug": "legge-104",
-  "titolo": "Legge 104 - Permessi Retribuiti",
-  "descrizione": "3 giorni di permesso retribuito al mese per assistere familiari disabili.",
-  "intro": "La Legge 104/1992 prevede 3 giorni di permesso retribuito al mese (o 2 ore/giorno) per lavoratori dipendenti che assistono familiari con handicap grave (art. 3, comma 3). I permessi sono retribuiti e coperti da contribuzione figurativa. Possono essere frazionati in ore.",
+  "titolo": "Legge 104: permessi retribuiti per disabilità grave",
+  "descrizione": "3 giorni al mese di permesso retribuito (o ore giornaliere) per chi ha una disabilità grave o assiste un familiare con disabilità grave.",
+  "intro": "L'articolo 33 della legge 104/1992 riconosce ai lavoratori dipendenti permessi retribuiti per assistere un familiare con disabilità grave o, se il lavoratore stesso ha una disabilità grave, per sé. Di norma si tratta di 3 giorni al mese, che il lavoratore disabile può sostituire con permessi orari giornalieri. L'indennità è calcolata sulla retribuzione e, per la generalità dei dipendenti, viene anticipata in busta paga dal datore di lavoro. Il limite di 3 giorni mensili è complessivo per ogni persona assistita, anche se più familiari hanno diritto.",
   "categoria": "sostegno",
-  "ente": "INPS / ASL",
-  "stato": "da-verificare",
-  "pubblicato": false,
-  "verificato": false,
-  "ultimoControllo": null,
+  "ente": "INPS",
+  "evidenza": {
+    "valore": "3 giorni",
+    "etichetta": "di permesso retribuito al mese"
+  },
+  "novita": {
+    "data": "2026-09-21",
+    "nota": "Con la circolare n. 100 del 18 settembre 2026 INPS ha chiarito cosa accade se più familiari che assistono la stessa persona superano il limite di 3 giorni o usano gli stessi giorni."
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
   "aggiornatoIl": "2026-10-19",
-  "aChiSpetta": [],
+  "aChiSpetta": [
+    "Lavoratori dipendenti, anche part-time, assicurati INPS per la maternità, che hanno una disabilità grave",
+    "Lavoratori dipendenti che assistono un familiare con disabilità grave: genitori (anche adottivi o affidatari), coniuge, parte dell'unione civile, convivente di fatto, parenti e affini entro il secondo grado",
+    "Parenti e affini di terzo grado solo se i genitori o il coniuge della persona assistita hanno almeno 65 anni, sono affetti da patologie invalidanti, sono deceduti o mancanti",
+    "Esclusi: lavoratori a domicilio, lavoratori domestici, lavoratori agricoli a giornata, autonomi e parasubordinati"
+  ],
   "requisiti": [
-    "Lavoratore dipendente",
-    "Familiare con riconoscimento handicap grave (art. 3 c. 3 L. 104)",
-    "Referente unico per l'assistenza"
+    "Riconoscimento della disabilità in situazione di gravità (art. 3, comma 3, legge 104/1992) da parte della commissione medica ASL/INPS",
+    "La persona assistita non deve essere ricoverata a tempo pieno, salvo le eccezioni previste",
+    "Rapporto di lavoro dipendente in corso"
   ],
   "importi": [
-    "3 giorni retribuiti/mese"
+    "Familiare che assiste: 3 giorni di permesso retribuito al mese, anche frazionabili in ore",
+    "Lavoratore con disabilità grave: 3 giorni al mese oppure 2 ore al giorno (1 ora se l'orario giornaliero è inferiore a 6 ore)",
+    "Genitori di figli con disabilità grave: in alternativa ai 3 giorni, prolungamento del congedo parentale fino a 3 anni complessivi (congedo ordinario incluso) da usare entro i 14 anni del bambino, indennizzato al 30%; per figli sotto i 3 anni anche permessi orari",
+    "Indennità pari alla retribuzione effettivamente corrisposta, anticipata dal datore di lavoro (pagamento diretto INPS per operai agricoli e alcuni lavoratori dello spettacolo)"
   ],
   "comeFare": [
-    "1. Ottenere il riconoscimento L. 104 dalla commissione ASL\n2. Presentare domanda all'INPS online\n3. Comunicare al datore di lavoro\n4. Fruire dei permessi (3 gg/mese o 2 ore/giorno)"
+    "Ottenere il verbale di riconoscimento della disabilità grave (art. 3, comma 3)",
+    "Presentare la domanda di permessi online sul sito INPS (servizio dedicato), oppure tramite Contact Center (803 164 da fisso, 06 164 164 da cellulare) o un patronato",
+    "Consegnare copia della domanda e del provvedimento al datore di lavoro e concordare la fruizione dei giorni o delle ore",
+    "Comunicare a INPS eventuali variazioni o rinunce tramite lo stesso servizio online"
   ],
   "documenti": [
-    "Verbale della commissione medica ASL (art. 3 c. 3)",
-    "Domanda al datore di lavoro",
-    "Domanda INPS online",
-    "Certificazione di parentela"
+    "Verbale della commissione medica con riconoscimento della gravità (art. 3, comma 3, legge 104/1992)",
+    "Dati della persona assistita e del rapporto di parentela o affinità",
+    "SPID, CIE o CNS per la domanda online"
   ],
-  "scadenze": "Valido finché persiste la condizione",
-  "faq": [],
+  "scadenze": "Nessuna scadenza: i permessi spettano finché permangono la condizione di gravità (riconosciuta nel verbale, anche con eventuale revisione) e il rapporto di lavoro dipendente.",
+  "faq": [
+    {
+      "q": "Più familiari possono avere i permessi per la stessa persona?",
+      "a": "Sì, il diritto può essere riconosciuto a più familiari, ma il limite di 3 giorni al mese per la persona assistita resta complessivo. Sui casi di superamento del limite INPS ha dato istruzioni con la circolare n. 100/2026."
+    },
+    {
+      "q": "Chi paga i permessi?",
+      "a": "Per la maggior parte dei dipendenti li anticipa il datore di lavoro in busta paga e poi li recupera da INPS; per operai agricoli e alcuni lavoratori dello spettacolo paga direttamente INPS su domanda."
+    },
+    {
+      "q": "Posso usare i permessi a ore?",
+      "a": "Sì: i 3 giorni mensili possono essere frazionati in ore; il lavoratore con disabilità grave può scegliere in alternativa 2 ore al giorno (1 ora se lavora meno di 6 ore)."
+    },
+    {
+      "q": "Ci sono novità per chi ha malattie oncologiche o croniche?",
+      "a": "Dal 1° gennaio 2026 la legge 106/2025 dà ai dipendenti con invalidità almeno al 74% per malattie oncologiche, invalidanti o croniche (o con figli minori nelle stesse condizioni) altre 10 ore annue di permesso retribuito per visite, esami e cure, con prescrizione medica. È una misura distinta dai permessi 104."
+    }
+  ],
   "fonti": [
     {
-      "label": "INPS / ASL",
-      "url": "https://www.inps.it/prestazioni-servizi/permessi-legge-104"
+      "label": "INPS - Indennità per permessi legge 104 (scheda servizio)",
+      "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50098.indennit-per-permessi-fruiti-dai-lavoratori-per-assistere-familiari-disabili-in-situazione-di-gravit-o-fruiti-dai-lavoratori-disabili.html"
+    },
+    {
+      "label": "INPS - Legge 104: permessi e superamento dei limiti (21/9/2026)",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.09.legge-104-permessi-e-superamento-dei-limiti-previsti.html"
+    },
+    {
+      "label": "INPS - Permessi retribuiti 2026 per malattie gravi e invalidanti (22/12/2025)",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.12.permessi-retribuiti-2026-per-malattie-gravi-e-invalidanti-indicazioni.html"
     }
   ],
   "tags": [
     "104",
     "disabilità",
     "permessi",
-    "handicap",
     "caregiver",
-    "assistenza"
+    "assistenza",
+    "congedo"
   ],
-  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "noteRedazione": "Destinatari, requisiti, misura dei permessi e modalità di pagamento verificati sulla scheda INPS (ultimo aggiornamento 2/1/2026); novità dalla notizia INPS del 21/9/2026 (circolare n. 100/2026, testo integrale non letto). Rispetto alla bozza: eliminato il requisito del 'referente unico' (la scheda INPS e la circolare 100/2026 ammettono più aventi diritto entro il limite complessivo di 3 giorni); precisati esclusioni, alternative per i genitori e 10 ore legge 106/2025 (verificate su notizia INPS 22/12/2025). Contribuzione figurativa non citata nella scheda consultata e quindi omessa. Non verificati gli effetti della riforma della disabilità (d.lgs. 62/2024, fase sperimentale) sulla terminologia e sull'accertamento.",
   "origineApp": "legge_104"
 }

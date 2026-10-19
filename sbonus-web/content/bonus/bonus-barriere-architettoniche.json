@@ -1,0 +1,95 @@
+{
+  "slug": "bonus-barriere-architettoniche",
+  "titolo": "Bonus barriere architettoniche 75%: terminato nel 2025",
+  "descrizione": "Il 75% per scale, rampe, ascensori e servoscala vale solo per le spese fino al 31/12/2025. Dal 2026 resta la detrazione per le ristrutturazioni.",
+  "intro": "La detrazione del 75% dell'art. 119-ter del DL 34/2020, per eliminare le barriere architettoniche negli edifici esistenti, copriva le spese dal 1° gennaio 2022 al 31 dicembre 2025. La Legge di Bilancio 2026 non l'ha prorogata, quindi per le spese dal 1° gennaio 2026 non si può più chiedere. Chi ha speso entro il 2025 continua a recuperare le quote annuali. Per i lavori del 2026 si usa la detrazione per il recupero edilizio: 50% sull'abitazione principale e 36% negli altri casi, fino a 96.000 euro.",
+  "categoria": "casa",
+  "ente": "Agenzia delle Entrate",
+  "evidenza": {
+    "valore": "50%",
+    "etichetta": "detrazione 2026 su abitazione principale"
+  },
+  "novita": {
+    "data": "2026-02",
+    "nota": "La guida dell'Agenzia sulle agevolazioni per le persone con disabilità, aggiornata alla Legge di Bilancio 2026, conferma che il 75% non spetta per le spese dal 1° gennaio 2026."
+  },
+  "stato": "scaduto",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Bonus 75%: solo i contribuenti che hanno sostenuto le spese tra il 1° gennaio 2022 e il 31 dicembre 2025, che continuano a usare le quote residue",
+    "Dal 2026: chi esegue lavori per eliminare barriere architettoniche può usare la detrazione per il recupero edilizio (art. 16-bis, comma 1, lett. e, TUIR)"
+  ],
+  "requisiti": [
+    "Bonus 75% (spese fino al 2025): interventi su edifici esistenti conformi al DM 236/1989; dal 30 dicembre 2023 solo scale, rampe, ascensori, servoscala e piattaforme elevatrici",
+    "Bonus 75%: asseverazione di un tecnico abilitato sul rispetto del DM 236/1989 e pagamento con bonifico parlante; cessione del credito e sconto in fattura non erano più ammessi",
+    "Detrazione 2026 (recupero edilizio): lavori sull'immobile che favoriscono la mobilità interna ed esterna, ad esempio ascensori, montacarichi, elevatori esterni, rampe al posto dei gradini",
+    "Detrazione 2026: pagamento con bonifico parlante; il semplice acquisto di beni mobili (telefoni, computer, tastiere) non rientra",
+    "Nei condomini la delibera richiede la maggioranza dei partecipanti all'assemblea che rappresenti almeno un terzo dei millesimi"
+  ],
+  "importi": [
+    "Bonus 75% (spese 2022-2025): tetto di 50.000 euro per edifici unifamiliari o unità indipendenti con accesso autonomo; 40.000 euro per unità negli edifici da 2 a 8 unità; 30.000 euro per unità negli edifici con più di 8 unità",
+    "Bonus 75%: 5 quote annuali per le spese fino al 2023, 10 quote per le spese dal 2024",
+    "Spese 2026 (recupero edilizio): 50% per proprietari o titolari di diritto reale sull'abitazione principale, 36% negli altri casi, su massimo 96.000 euro per unità immobiliare, in 10 anni",
+    "Spese 2027: 36% sull'abitazione principale e 30% negli altri casi, sempre su 96.000 euro"
+  ],
+  "comeFare": [
+    "Per spese sostenute fino al 2025: continua a indicare le quote del 75% nel 730 o nel modello Redditi",
+    "Per lavori nel 2026: verifica con un tecnico che l'intervento rientri nel recupero edilizio",
+    "Paga con bonifico parlante, con causale della detrazione, codice fiscale del beneficiario e partita IVA dell'impresa",
+    "Conserva fatture e ricevute dei bonifici e indica la detrazione nella dichiarazione dei redditi"
+  ],
+  "documenti": [
+    "Fatture dei lavori",
+    "Ricevute dei bonifici parlanti",
+    "Titolo o comunicazione edilizia, se richiesti",
+    "Per i lavori condominiali: delibera assembleare e tabella di ripartizione",
+    "Per le spese 2022-2025 al 75%: asseverazione del tecnico abilitato"
+  ],
+  "scadenze": "Bonus 75% valido solo per le spese sostenute entro il 31 dicembre 2025. Recupero edilizio: 50%/36% per le spese 2026, 36%/30% per le spese 2027.",
+  "faq": [
+    {
+      "q": "Nel 2026 posso ancora avere il 75% per un ascensore o un servoscala?",
+      "a": "No. Il bonus 75% riguarda solo le spese sostenute entro il 31 dicembre 2025. Per le spese del 2026 si usa la detrazione per il recupero edilizio."
+    },
+    {
+      "q": "Quanto posso detrarre nel 2026?",
+      "a": "Il 50% se sei proprietario o titolare di un diritto reale e i lavori riguardano la tua abitazione principale, il 36% negli altri casi. Il limite di spesa è 96.000 euro per unità immobiliare e la detrazione si divide in 10 anni."
+    },
+    {
+      "q": "Ho speso nel 2025: cosa succede?",
+      "a": "Mantieni il 75% e continui a recuperare le quote annuali (10 quote per le spese dal 2024). Se vendi l'immobile, le quote non usate restano a chi ha sostenuto la spesa."
+    },
+    {
+      "q": "La detrazione del 2026 si somma a quella del 19% per le spese sanitarie?",
+      "a": "No, per le spese relative ai mezzi di sollevamento della persona con disabilità le due detrazioni non si possono usare insieme."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "Agenzia delle Entrate - Le agevolazioni fiscali per le persone con disabilità (febbraio 2026)",
+      "url": "https://www.agenziaentrate.gov.it/portale/documents/d/guest/le_agevolazioni_fiscali_per_le_persone_con_disabilita"
+    },
+    {
+      "label": "Agenzia delle Entrate - Agevolazione per l'eliminazione delle barriere architettoniche",
+      "url": "https://www.agenziaentrate.gov.it/portale/aree-tematiche/casa/agevolazioni/agevolazione-per-eliminazione-delle-barriere-architettoniche"
+    },
+    {
+      "label": "Camera dei deputati - Bonus edilizi e tassazione immobiliare (aliquote 2025-2027)",
+      "url": "https://temi.camera.it/leg19/temi/19_tl18_tassazione_immobili.html"
+    }
+  ],
+  "tags": [
+    "barriere architettoniche",
+    "disabilità",
+    "accessibilità",
+    "ascensore",
+    "servoscala",
+    "rampa",
+    "detrazione 2026"
+  ],
+  "noteRedazione": "Bozza corretta. La scadenza '31 dicembre 2026' era sbagliata: il 75% finisce con le spese del 2025 e la L. 199/2025 non lo proroga. Era sbagliata anche la 'detrazione in 5 quote': dal 2024 le quote sono 10. Aggiunta la limitazione in vigore dal 30/12/2023 (solo scale, rampe, ascensori, servoscala e piattaforme elevatrici). La pagina tematica dell'Agenzia sulle barriere non ha una data visibile e per il recupero edilizio 2026 riporta ancora le aliquote 30%/36%, non aggiornate; ho usato la guida Agenzia di febbraio 2026 (50%/36% per il 2026), coerente con la Camera. Non ho verificato le eccezioni al blocco di cessione/sconto per le spese 2026, quindi non le tratto.",
+  "origineApp": "bonus_barriere"
+}

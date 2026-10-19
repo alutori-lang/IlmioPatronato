@@ -1,0 +1,96 @@
+{
+  "slug": "borse-studio-inps",
+  "titolo": "Borse di studio INPS per figli di dipendenti e pensionati pubblici",
+  "descrizione": "Bandi INPS per i figli di iscritti alla Gestione Unitaria e alla Gestione Magistrale: borse universitarie da 2.000 €, master, collegi di merito, ITS.",
+  "intro": "L'INPS pubblica ogni anno bandi di welfare per figli e orfani di dipendenti e pensionati pubblici iscritti alla Gestione Unitaria delle prestazioni creditizie e sociali, alla Gestione Assistenza Magistrale e al Fondo ex Ipost. Il bando per corsi di laurea e specializzazione (a.a. 2023/2024, domande fino al 2 marzo 2026) prevedeva borse da 2.000 € con requisiti di merito e graduatoria in base all'ISEE. Ci sono anche bandi distinti per master, collegi universitari di merito e ITS.",
+  "categoria": "studenti",
+  "ente": "INPS – Gestione Dipendenti Pubblici",
+  "evidenza": {
+    "valore": "2.000 €",
+    "etichetta": "per borsa universitaria"
+  },
+  "novita": {
+    "data": "2026-09-22",
+    "nota": "L'INPS ha riepilogato i bandi 2026 per under 36 (borse universitarie, master, master executive, 477 posti nei collegi di merito per il 2026/2027)."
+  },
+  "stato": "in-attesa",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Figli o orfani di iscritti (dipendenti o pensionati) alla Gestione Unitaria delle prestazioni creditizie e sociali",
+    "Figli o orfani di iscritti alla Gestione Assistenza Magistrale",
+    "Figli o orfani di iscritti al Fondo ex Ipost (Poste Italiane)",
+    "La domanda la presenta lo studente maggiorenne, non il genitore"
+  ],
+  "requisiti": [
+    "Età inferiore a 32 anni alla scadenza del bando",
+    "Iscrizione del genitore alla gestione da almeno un anno (anche non continuativo) fino alla chiusura delle domande",
+    "Corsi di laurea: non ripetente né fuori corso, tutti gli esami e crediti dell'anno superati, media ponderata minima 24/30 (bando 2023/24)",
+    "Specializzazione post lauream: laurea con almeno 92/110 (bando 2023/24)",
+    "Non aver ricevuto per lo stesso anno aiuti analoghi superiori al 50% della borsa (la no-tax area non conta)",
+    "Esclusi master, dottorati, corsi part-time e specializzazioni mediche"
+  ],
+  "importi": [
+    "Borse per corsi di laurea e di specializzazione post lauream: 2.000 € ciascuna (bando a.a. 2023/2024)",
+    "Bando 2023/24: 9.900 borse di laurea e 300 post lauream per la Gestione Unitaria; 2.900 e 80 per la Gestione Magistrale; 45 e 3 per l'ex Ipost",
+    "Importi di master, collegi di merito e ITS: secondo i rispettivi bandi"
+  ],
+  "comeFare": [
+    "Controllare su inps.it la sezione Avvisi, Bandi e Fatturazione > Welfare, Assistenza e Mutualità > Bandi nuovi",
+    "Presentare la DSU per l'ISEE per prestazioni universitarie dell'anno del bando",
+    "Lo studente accede con SPID, CIE o CNS al 'Portale prestazioni welfare' e invia la domanda nei termini",
+    "Usare la funzione 'Riesame' per correggere errori entro i giorni indicati dal bando",
+    "Consultare la graduatoria pubblicata dall'INPS"
+  ],
+  "documenti": [
+    "SPID, CIE o CNS dello studente",
+    "ISEE per prestazioni universitarie (acquisito in automatico dall'INPS)",
+    "Dati della carriera universitaria (esami, voti, crediti)"
+  ],
+  "scadenze": "Ogni bando ha le sue date. Bando borse universitarie a.a. 2023/2024: domande dal 29 gennaio al 2 marzo 2026 (chiuso), riesame entro il 9 marzo 2026. Il bando successivo non risulta ancora pubblicato al momento della verifica.",
+  "faq": [
+    {
+      "q": "Chi presenta la domanda?",
+      "a": "Lo studente maggiorenne, con le proprie credenziali. Il genitore iscritto è il 'titolare del diritto' ma non può essere anche richiedente."
+    },
+    {
+      "q": "Serve l'ISEE?",
+      "a": "L'ISEE non è una soglia di accesso ma incide sulla posizione in graduatoria: senza DSU valida la domanda viene collocata in coda secondo le regole del bando."
+    },
+    {
+      "q": "Vale per i dipendenti privati?",
+      "a": "No, i bandi riguardano le famiglie iscritte alla Gestione Unitaria (dipendenti e pensionati pubblici), alla Gestione Magistrale o al Fondo ex Ipost."
+    },
+    {
+      "q": "Posso partecipare con un master?",
+      "a": "Non con il bando per corsi di laurea: per i master l'INPS pubblica bandi separati."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS – Scheda borse di studio per corsi universitari e post lauream",
+      "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.borse-di-studio-per-corsi-universitari-di-laurea-e-corsi-universitari-di-specializzazione-post-lauream.html"
+    },
+    {
+      "label": "INPS – Bando borse universitarie a.a. 2023/2024 (PDF)",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/welfare-bandi/2025/12/Bando_149/Allegati/968_Bando-Borse-di-studio-universitarie-aa-2023-2024.pdf"
+    },
+    {
+      "label": "INPS – Borse di studio e master universitari 2026: bandi per under 36 (22/9/2026)",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.09.borse-di-studio-e-master-universitari-2026-bandi-per-under-36.html"
+    }
+  ],
+  "tags": [
+    "INPS",
+    "borse di studio",
+    "dipendenti pubblici",
+    "Gestione Unitaria",
+    "università",
+    "master",
+    "welfare"
+  ],
+  "noteRedazione": "Il nome 'Fondo Studio INPS' non è una denominazione ufficiale: rinominato. Verificati sul bando INPS a.a. 2023/2024 importo 2.000 €, numero borse, età < 32 anni, media 24/30, laurea 92/110, finestra 29/1–2/3/2026. La bozza indicava 'da 750 a 10.000 €' e borse per scuole superiori/dottorati: non confermato (i dottorati sono esclusi dal bando universitario; per le superiori non ho trovato un bando attivo). Stato 'in-attesa': il bando universitario si è chiuso a marzo 2026 e il prossimo non risulta pubblicato; altri bandi INPS 2026 (master, collegi) possono essere aperti con scadenze proprie, non verificate singolarmente. Requisiti futuri potrebbero cambiare.",
+  "origineApp": "fondo_studio_inps"
+}

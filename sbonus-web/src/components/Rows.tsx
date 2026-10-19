@@ -142,7 +142,7 @@ export function GuideList({ guide }: { guide: Guida[] }) {
             >
               <span className="self-start rounded-full bg-[var(--tone)] px-3 py-1 text-xs font-extrabold text-white">{cat?.nome ?? "Guida"}</span>
               <span className="mt-4 block text-lg font-black leading-snug text-ink">{g.titolo}</span>
-              <span className="mt-2 line-clamp-2 block text-sm font-semibold leading-relaxed text-ink-3">{g.descrizione}</span>
+              <span className="mt-2 line-clamp-2 text-sm font-semibold leading-relaxed text-ink-3">{g.descrizione}</span>
               <span className="mt-auto flex items-center justify-between pt-5 text-sm font-bold text-ink-3">
                 <time dateTime={g.dataAggiornamento ?? undefined}>{formatData(g.dataAggiornamento)}</time>
                 <span className="grid h-9 w-9 place-items-center rounded-full bg-white text-ink transition group-hover:bg-ink group-hover:text-sun">

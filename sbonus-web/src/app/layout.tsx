@@ -29,6 +29,8 @@ export const metadata: Metadata = {
   robots: INDEXABLE ? { index: true, follow: true } : { index: false, follow: false },
   itunes: { appId: APP.iosId },
   formatDetection: { telephone: false },
+  // Codice di verifica di Google Search Console (meta tag), impostato su Vercel
+  verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } : undefined,
 };
 
 export const viewport: Viewport = {

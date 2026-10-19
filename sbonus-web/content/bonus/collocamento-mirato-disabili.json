@@ -1,0 +1,90 @@
+{
+  "slug": "collocamento-mirato-disabili",
+  "titolo": "Collocamento mirato delle persone con disabilità (legge 68/1999)",
+  "descrizione": "Iscrizione agli elenchi del Centro per l'impiego per accedere ai posti riservati per legge alle persone con disabilità nelle aziende con almeno 15 dipendenti.",
+  "intro": "La legge 68/1999 tutela il diritto al lavoro delle persone con disabilità attraverso il collocamento mirato, gestito dai servizi per l'impiego. Chi ha i requisiti e non ha un lavoro si iscrive in un elenco dedicato e viene valutato da un comitato tecnico, che considera capacità e limiti della persona. I datori di lavoro con almeno 15 dipendenti devono riservare una quota di posti a lavoratori con disabilità. Non è un contributo economico ma un canale di accesso al lavoro.",
+  "categoria": "lavoro",
+  "ente": "Centro per l'impiego / servizi regionali per il collocamento mirato",
+  "evidenza": {
+    "valore": "7%",
+    "etichetta": "quota di riserva nelle aziende con più di 50 dipendenti"
+  },
+  "novita": null,
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Persone in età lavorativa con invalidità civile superiore al 45% (cioè dal 46%)",
+    "Invalidi del lavoro con grado superiore al 33% riconosciuto dall'INAIL",
+    "Persone non vedenti o sordomute come definite dalla legge",
+    "Invalidi di guerra, invalidi civili di guerra e invalidi per servizio con minorazioni dalla prima all'ottava categoria"
+  ],
+  "requisiti": [
+    "Appartenere a una delle categorie previste dall'art. 1 della legge 68/1999, con accertamento della commissione competente",
+    "Età lavorativa",
+    "Stato di disoccupazione: dichiarazione di immediata disponibilità al lavoro (DID) e adesione alle misure di politica attiva",
+    "Iscrizione nell'elenco del collocamento mirato del territorio di residenza (o di un altro servizio scelto, cancellandosi da quello precedente)"
+  ],
+  "importi": [
+    "Non è previsto un importo: la misura dà accesso ai posti riservati per legge",
+    "Quote di riserva per i datori di lavoro: 1 lavoratore con disabilità se occupano da 15 a 35 dipendenti, 2 se da 36 a 50, il 7% dell'organico se più di 50",
+    "Dal 2018 l'obbligo per le aziende da 15 a 35 dipendenti vale in ogni caso, non più solo in caso di nuove assunzioni"
+  ],
+  "comeFare": [
+    "Ottenere il verbale di accertamento dell'invalidità o della condizione prevista",
+    "Rendere la DID (dichiarazione di immediata disponibilità) e iscriversi al collocamento mirato presso il Centro per l'impiego, presentando la documentazione sulla disabilità; l'iscrizione può avvenire anche tramite il portale nazionale dei servizi per il lavoro",
+    "Sostenere la valutazione del comitato tecnico, che definisce capacità lavorative e percorso",
+    "Partecipare alle selezioni: l'avviamento può avvenire su richiesta nominativa del datore di lavoro, per chiamata numerica dalla graduatoria o tramite convenzioni e avvisi pubblici"
+  ],
+  "documenti": [
+    "Verbale di invalidità civile o certificazione INAIL / di categoria",
+    "Documento d'identità e codice fiscale",
+    "Dichiarazione di immediata disponibilità (DID)",
+    "Eventuale relazione conclusiva della commissione per l'accertamento della disabilità ai fini lavorativi, se già disponibile"
+  ],
+  "scadenze": "Nessuna scadenza: l'iscrizione è possibile in qualsiasi momento. Per le aziende, il prospetto informativo sui lavoratori in quota va inviato ogni anno entro il 31 gennaio.",
+  "faq": [
+    {
+      "q": "Con quale percentuale di invalidità posso iscrivermi?",
+      "a": "Con invalidità civile superiore al 45%, oppure invalidità del lavoro INAIL superiore al 33%, oppure se si è non vedenti o sordomuti, o invalidi di guerra o per servizio dalla prima all'ottava categoria."
+    },
+    {
+      "q": "Devo essere disoccupato?",
+      "a": "Sì, l'iscrizione negli elenchi richiede lo stato di disoccupazione, che si ottiene con la dichiarazione di immediata disponibilità al lavoro."
+    },
+    {
+      "q": "Quali aziende devono assumere?",
+      "a": "I datori di lavoro con almeno 15 dipendenti computabili: 1 persona tra 15 e 35 dipendenti, 2 tra 36 e 50, il 7% oltre 50."
+    },
+    {
+      "q": "Come avviene l'assunzione?",
+      "a": "Il datore di lavoro può chiedere un candidato nominativamente; se non lo fa entro 60 giorni dall'insorgere dell'obbligo, gli uffici avviano lavoratori dalla graduatoria. Sono previste anche convenzioni con tempi e modalità concordati."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "Ministero del Lavoro - Legge 12 marzo 1999, n. 68 (testo)",
+      "url": "https://www.lavoro.gov.it/archivio-doc-pregressi/Strumenti_normativa/1999/19990312_L_68.pdf"
+    },
+    {
+      "label": "Ministero del Lavoro - Linee guida sul collocamento mirato",
+      "url": "https://www.lavoro.gov.it/temi-e-priorita-disabilita-e-non-autosufficienza/focus/linee-guida-collocamento-mirato"
+    },
+    {
+      "label": "Cliclavoro (Ministero del Lavoro) - Avviamento al lavoro e accesso ai servizi",
+      "url": "https://www.cliclavoro.gov.it/focus-on/tematiche/lavoratori-con-disabilita/avviamento-al-lavoro-e-accesso-ai-servizi"
+    }
+  ],
+  "tags": [
+    "collocamento mirato",
+    "legge 68",
+    "disabilità",
+    "lavoro",
+    "centro per l'impiego",
+    "categorie protette"
+  ],
+  "noteRedazione": "Categorie (art. 1) e quote (art. 3) verificate sul testo della L. 68/1999 pubblicato da lavoro.gov.it; superamento della gradualità per le aziende 15-35 dal 2018, DID e avviamento verificati sulle Linee guida del Ministero e su Cliclavoro. Categoria cambiata da 'sostegno' a 'lavoro'. Il testo della legge consultato è la versione originaria: modifiche successive diverse da quelle citate nelle Linee guida non sono state controllate su Normattiva. Non verificati: incentivi INPS all'assunzione, quote per la PA, novità 2026 (nessuna trovata). 'novita' lasciata vuota per assenza di notizie ufficiali recenti.",
+  "origineApp": "collocamento_mirato"
+}

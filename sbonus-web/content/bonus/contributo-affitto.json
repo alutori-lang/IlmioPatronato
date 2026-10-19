@@ -1,51 +1,84 @@
 {
   "slug": "contributo-affitto",
-  "titolo": "Contributo Affitto Comunale",
-  "descrizione": "Contributo dal Comune per chi ha difficoltà a pagare l'affitto.",
-  "intro": "I Comuni erogano contributi economici per il pagamento del canone di locazione a nuclei familiari in difficoltà economica. L'importo e i requisiti variano da Comune a Comune. Generalmente richiesto ISEE basso, contratto registrato e residenza nel Comune. Il bando viene pubblicato annualmente.",
+  "titolo": "Contributo affitto (Fondo sostegno locazione)",
+  "descrizione": "Contributi per pagare l'affitto erogati da Regioni e Comuni con bandi propri. Il Fondo nazionale L. 431/98 non risulta rifinanziato per il 2025 e il 2026.",
+  "intro": "Il contributo affitto aiuta le famiglie con reddito basso a sostenere il canone di locazione nel mercato privato. Storicamente era alimentato dal Fondo nazionale per il sostegno all'accesso alle abitazioni in locazione (art. 11 della legge 431/1998), ripartito tra le Regioni e poi tra i Comuni. Nelle leggi di bilancio 2025 e 2026 non risulta un rifinanziamento di questo Fondo: oggi i bandi dipendono soprattutto da risorse regionali o comunali, quindi esistenza, requisiti e importi cambiano molto da territorio a territorio.",
   "categoria": "casa",
-  "ente": "Comune di residenza",
+  "ente": "Regione e Comune di residenza",
+  "evidenza": null,
+  "novita": {
+    "data": "2026-09-30",
+    "nota": "La Regione Emilia-Romagna ha aperto il Bando Fondo Affitto 2026 con 10 milioni di euro, domande dal 22 settembre al 20 ottobre 2026."
+  },
   "stato": "da-verificare",
   "pubblicato": false,
   "verificato": false,
   "ultimoControllo": null,
   "aggiornatoIl": "2026-10-19",
-  "aChiSpetta": [],
+  "aChiSpetta": [
+    "Nuclei familiari in affitto nel mercato privato, con contratto registrato e ISEE basso, residenti in Regioni o Comuni che pubblicano un bando nell'anno."
+  ],
   "requisiti": [
-    "Residenza nel Comune che pubblica il bando",
-    "ISEE sotto la soglia comunale (varia, es. €16.000-€26.000)",
-    "Contratto di locazione regolarmente registrato",
-    "Incidenza canone su reddito superiore al 30%"
+    "Requisiti fissati dal bando regionale o comunale",
+    "Di solito: contratto di locazione regolarmente registrato, residenza nel territorio, ISEE entro una soglia stabilita dal bando e un'incidenza minima del canone sul reddito",
+    "Esempio Emilia-Romagna 2026: ISEE fino a 8.000 €, incidenza del canone sull'ISR almeno del 25%, contratto registrato in regione, titolo di soggiorno di almeno un anno per i cittadini extra UE"
   ],
   "importi": [
-    "Variabile (€500-€3.000 a seconda del Comune)"
+    "Variabili secondo il bando locale",
+    "Esempio Emilia-Romagna 2026: 20% del canone annuo fino a 1.500 € (incidenza 25–40%) oppure 25% fino a 2.000 € (incidenza oltre il 40%)"
   ],
   "comeFare": [
-    "1. Controllare il sito del proprio Comune per il bando\n2. Verificare i requisiti ISEE\n3. Presentare domanda online o allo sportello\n4. Allegare documentazione richiesta\n5. Attendere graduatoria"
+    "Controllare sul sito della propria Regione e del proprio Comune se è aperto un bando affitto",
+    "Presentare l'ISEE (DSU) prima della domanda",
+    "Inviare la domanda nei tempi e con le modalità indicate (spesso online con SPID/CIE)",
+    "Attendere l'istruttoria e la graduatoria del Comune o del distretto"
   ],
   "documenti": [
     "ISEE in corso di validità",
     "Contratto di locazione registrato",
-    "Ricevute pagamento affitto",
-    "Certificato di residenza",
-    "Documento d'identità e CF"
+    "Ricevute di pagamento del canone, se richieste",
+    "Documento d'identità, codice fiscale ed eventuale permesso di soggiorno",
+    "IBAN di un conto intestato al richiedente"
   ],
-  "scadenze": "Varia per Comune (bandi annuali)",
-  "faq": [],
+  "scadenze": "Dipendono dal singolo bando. Esempio: Emilia-Romagna, Bando Fondo Affitto 2026 dal 22 settembre alle ore 12 del 20 ottobre 2026 (esclusi i residenti nel Comune di Bologna).",
+  "faq": [
+    {
+      "q": "Esiste un bonus affitto nazionale nel 2026?",
+      "a": "Non risulta un rifinanziamento del Fondo nazionale per il sostegno alle locazioni (L. 431/1998) nelle leggi di bilancio 2025 e 2026. I contributi dipendono quindi da Regioni e Comuni."
+    },
+    {
+      "q": "Come so se il mio Comune ha un bando?",
+      "a": "Consulta l'albo online e la sezione politiche abitative del Comune, oppure il sito della Regione. Anche patronati, CAF e sindacati inquilini sono spesso informati sui bandi aperti."
+    },
+    {
+      "q": "Posso cumulare il contributo affitto con altri aiuti?",
+      "a": "Dipende dal bando. In Emilia-Romagna, per esempio, è escluso chi nel 2026 ha ricevuto contributi dal fondo regionale per l'emergenza abitativa o dal fondo per i morosi incolpevoli."
+    }
+  ],
   "fonti": [
     {
-      "label": "Comune di residenza",
-      "url": "https://www.comune.milano.it/servizi/contributo-affitto"
+      "label": "Regione Emilia-Romagna – Bando Fondo Affitto 2026",
+      "url": "https://territorio.regione.emilia-romagna.it/politiche-abitative/bandi/2026/bando-fondo-affitto-2026"
+    },
+    {
+      "label": "Consiglio regionale Marche – Mozione n. 5/2025 sul mancato rifinanziamento del Fondo L. 431/98",
+      "url": "https://www.consiglio.marche.it/banche_dati_e_documentazione/atti_di_indirizzo_e_controllo/mozioni/pdf/moz5_12.pdf"
+    },
+    {
+      "label": "Gazzetta Ufficiale – Legge 30 dicembre 2025, n. 199 (bilancio 2026)",
+      "url": "https://www.gazzettaufficiale.it/eli/id/2025/12/30/25G00212/sg"
     }
   ],
   "tags": [
     "affitto",
-    "contributo",
-    "comune",
-    "canone",
+    "contributo affitto",
     "locazione",
-    "bando"
+    "canone",
+    "bando",
+    "regione",
+    "comune",
+    "ISEE"
   ],
-  "noteRedazione": "BOZZA importata dall'app Smart Bonus Italia (dati aprile 2026). Da verificare su fonti ufficiali prima di pubblicare.",
+  "noteRedazione": "Rinominato da 'Contributo Affitto Comunale'. Rimossa la fonte del Comune di Milano (non verificata) e i valori generici del draft (ISEE 16.000–26.000 €, importi 500–3.000 €, incidenza 30%): non sono regole nazionali. Mancato rifinanziamento del Fondo L. 431/98: nel testo in Gazzetta delle leggi 207/2024 e 199/2025 non è stato trovato alcuno stanziamento per l'art. 11 L. 431/98; lo afferma anche un atto del Consiglio regionale Marche (nov. 2025), ma manca una nota ufficiale MIT. La pagina Emilia-Romagna non precisa l'origine (statale/regionale) dei 10 mln. Requisiti e importi verificati solo per l'esempio Emilia-Romagna 2026. Novità: la L. 199/2025 (c. 234-235) ha creato un fondo distinto di 20 mln €/anno per genitori separati o divorziati non assegnatari della casa, con decreto attuativo MIT-MEF: candidabile come scheda separata (stato attuativo non verificato).",
   "origineApp": "contributo_affitto"
 }

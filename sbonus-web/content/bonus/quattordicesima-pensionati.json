@@ -1,0 +1,88 @@
+{
+  "slug": "quattordicesima-pensionati",
+  "titolo": "Quattordicesima pensionati 2026",
+  "descrizione": "Somma aggiuntiva da 336 a 655 € pagata d'ufficio con la pensione di luglio a chi ha almeno 64 anni e redditi entro 2 volte il trattamento minimo.",
+  "intro": "La quattordicesima è una somma aggiuntiva che l'INPS paga con la rata di pensione di luglio ai pensionati con almeno 64 anni e redditi personali contenuti. Per il 2026 spetta per intero fino a 11.931,08 euro di reddito annuo e in misura ridotta fino a 15.908,10 euro. L'importo, tra 336 e 655 euro, dipende dagli anni di contributi e dalla fascia di reddito. Non serve domanda: il pagamento è automatico, salvo verifiche successive sui redditi effettivi.",
+  "categoria": "pensioni",
+  "ente": "INPS",
+  "evidenza": {
+    "valore": "336–655 €",
+    "etichetta": "importo 2026, pagato a luglio"
+  },
+  "novita": {
+    "data": "2026-06-19",
+    "nota": "Con il messaggio n. 2052 del 19 giugno 2026 l'INPS ha avviato il pagamento della quattordicesima 2026 con la rata di luglio."
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Titolari di pensioni a carico dell'Assicurazione Generale Obbligatoria e delle forme sostitutive, esclusive ed esonerative gestite dall'INPS che, al 31 luglio 2026, hanno almeno 64 anni e rispettano i limiti di reddito.",
+    "Chi compie 64 anni dopo luglio o va in pensione nel corso del 2026 la riceve con la rata di dicembre."
+  ],
+  "requisiti": [
+    "Almeno 64 anni di età (al 31 luglio 2026 per il pagamento di luglio)",
+    "Titolarità di una pensione INPS di natura previdenziale",
+    "Reddito personale complessivo 2026 fino a 11.931,08 euro (1,5 volte il trattamento minimo annuo) per l'importo pieno",
+    "Reddito tra 11.931,09 e 15.908,10 euro (2 volte il trattamento minimo) per l'importo ridotto",
+    "Per redditi appena sopra le soglie si applica una clausola di salvaguardia che riconosce una somma parziale"
+  ],
+  "importi": [
+    "Reddito fino a 11.931,08 €: 437 € (fino a 15 anni di contributi da dipendente / 18 da autonomo), 546 € (oltre 15 e fino a 25 anni / oltre 18 e fino a 28), 655 € (oltre 25 anni / oltre 28)",
+    "Reddito tra 11.931,09 € e 15.908,10 €: 336 €, 420 € o 504 € con le stesse fasce contributive",
+    "Valori riferiti al trattamento minimo provvisorio 2026 di 611,85 € al mese (7.954,05 € annui)"
+  ],
+  "comeFare": [
+    "Non è necessaria alcuna domanda: l'INPS paga la somma d'ufficio con la pensione di luglio (o di dicembre nei casi indicati)",
+    "Verificare la voce sul cedolino di pensione nell'area personale MyINPS",
+    "Se si ritiene di averne diritto ma non è stata pagata, presentare domanda di ricostituzione online con SPID, CIE o CNS",
+    "In alternativa rivolgersi a un patronato",
+    "Il diritto viene poi verificato dall'INPS sui redditi effettivi comunicati dall'Agenzia delle Entrate"
+  ],
+  "documenti": [
+    "Nessun documento per il pagamento automatico",
+    "In caso di domanda di ricostituzione: documento d'identità e dati sui redditi personali"
+  ],
+  "scadenze": "Pagamento con la rata di pensione di luglio 2026; con la rata di dicembre 2026 per chi compie 64 anni dopo luglio o è andato in pensione nel 2026. La domanda di ricostituzione può essere presentata se la somma non è stata riconosciuta.",
+  "faq": [
+    {
+      "q": "Devo fare domanda per la quattordicesima?",
+      "a": "Di norma no: l'INPS la paga automaticamente. La domanda di ricostituzione serve solo se pensi di averne diritto e non l'hai ricevuta."
+    },
+    {
+      "q": "Quale reddito conta?",
+      "a": "Conta il reddito personale del pensionato, confrontato con 1,5 e 2 volte il trattamento minimo annuo (per il 2026 rispettivamente 11.931,08 e 15.908,10 euro)."
+    },
+    {
+      "q": "Possono chiedermi indietro la somma?",
+      "a": "Sì. Il pagamento di luglio è provvisorio: l'INPS verifica poi il diritto sui redditi definitivi comunicati dall'Agenzia delle Entrate e può recuperare quanto non dovuto."
+    },
+    {
+      "q": "Ho compiuto 64 anni a settembre: la perdo?",
+      "a": "No, chi raggiunge l'età dopo luglio o va in pensione nel 2026 riceve la somma con la rata di dicembre."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS – Quattordicesima 2026: pagamento con la pensione di luglio",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.06.quattordicesima-2026-pagamento-con-la-pensione-di-luglio.html"
+    },
+    {
+      "label": "INPS – Circolare n. 153/2025, Allegato 2 (tabella Quattordicesima 2026)",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2025/12/Circolare_15109/Allegati/16486_Circolare-numero-153-del-19-12-2025_Allegato-n-2.pdf"
+    }
+  ],
+  "tags": [
+    "quattordicesima",
+    "pensione",
+    "pensionati",
+    "luglio",
+    "somma aggiuntiva",
+    "INPS",
+    "2026"
+  ],
+  "noteRedazione": "Soglie e importi 2026 verificati sulla tabella 'Quattordicesima 2026' dell'Allegato 2 alla circolare INPS 153/2025; data e modalità di pagamento sulla notizia INPS del 22/06/2026 (messaggio 2052/2026). Corretto il limite di reddito del draft (~15.500 €) in 15.908,10 €. Il testo integrale del messaggio 2052/2026 non è stato letto direttamente: non sono riportate le prestazioni escluse (es. assistenziali) né i valori esatti della clausola di salvaguardia. Rimosso il riferimento al modello RED, non confermato per il 2026.",
+  "origineApp": "quattordicesima"
+}

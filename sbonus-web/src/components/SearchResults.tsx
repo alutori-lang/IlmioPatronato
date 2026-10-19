@@ -95,7 +95,7 @@ export function SearchResults() {
                   <Link href={r.url} className="block rounded-2xl border border-line bg-surface p-4 transition hover:border-brand/40 hover:shadow-md">
                     <span className="text-xs font-semibold uppercase tracking-wide text-brand">{TIPO_LABEL[r.tipo]}</span>
                     <span className="mt-1 block font-semibold text-ink">{r.titolo}</span>
-                    <span className="mt-1 line-clamp-2 block text-sm text-ink-2">{r.sommario}</span>
+                    <span className="mt-1 line-clamp-2 text-sm text-ink-2">{r.sommario}</span>
                   </Link>
                 </li>
               ))}

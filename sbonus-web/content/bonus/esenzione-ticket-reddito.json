@@ -1,0 +1,89 @@
+{
+  "slug": "esenzione-ticket-reddito",
+  "titolo": "Esenzione dal ticket sanitario per reddito (codici E01-E04)",
+  "descrizione": "Niente ticket su visite ed esami specialistici per over 65 e under 6, disoccupati, titolari di assegno sociale o pensione minima con redditi bassi.",
+  "intro": "Chi rientra in alcune condizioni di età, lavoro o pensione e ha un reddito familiare basso non paga il ticket sulle prestazioni di specialistica ambulatoriale del Servizio sanitario. Le categorie nazionali sono identificate dai codici E01, E02, E03 ed E04. In molte Regioni il diritto viene riconosciuto in automatico sulla base dei dati fiscali, mentre per i disoccupati (E02) serve un'autocertificazione. Le procedure pratiche cambiano da Regione a Regione.",
+  "categoria": "salute",
+  "ente": "Servizio sanitario regionale (ASL / AUSL / ASST)",
+  "evidenza": {
+    "valore": "36.151,98 €",
+    "etichetta": "reddito familiare massimo per il codice E01"
+  },
+  "novita": {
+    "data": "2026-01-07",
+    "nota": "La Regione Toscana ha aggiornato le FAQ: confermate soglie e codici, certificati validi fino al 31 marzo e autocertificazione annuale per E02."
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "E01: bambini sotto i 6 anni e persone sopra i 65 anni con reddito familiare inferiore a 36.151,98 euro",
+    "E02: disoccupati (che hanno già lavorato in passato) e loro familiari a carico, con reddito familiare inferiore a 8.263,31 euro, elevato a 11.362,05 euro con coniuge a carico e di 516,46 euro per ogni figlio a carico",
+    "E03: titolari di assegno sociale (o della vecchia pensione sociale) e loro familiari a carico",
+    "E04: titolari di pensione al minimo con più di 60 anni e loro familiari a carico, con gli stessi limiti di reddito previsti per E02"
+  ],
+  "requisiti": [
+    "Appartenere a una delle quattro categorie (E01, E02, E03, E04)",
+    "Per E01, E02 ed E04: reddito complessivo del nucleo familiare fiscale dell'anno precedente sotto la soglia della categoria",
+    "Il nucleo fiscale comprende l'interessato, il coniuge non legalmente separato e i familiari fiscalmente a carico; la semplice convivenza non conta",
+    "Per E02: stato di disoccupazione, da autocertificare ogni anno"
+  ],
+  "importi": [
+    "Esenzione dalla quota di compartecipazione (ticket) per le prestazioni di specialistica ambulatoriale: visite specialistiche ed esami",
+    "Non è un contributo in denaro ma un risparmio sul ticket"
+  ],
+  "comeFare": [
+    "Controllare se l'esenzione risulta già attribuita: in molte Regioni (es. Emilia-Romagna, Toscana) i codici E01, E03 ed E04 sono assegnati d'ufficio dai dati fiscali e sono visibili nel Fascicolo sanitario elettronico",
+    "Se non risulta ma si ritiene di averne diritto, presentare un'autocertificazione: online sul portale sanitario regionale o sul Fascicolo sanitario elettronico con SPID/CIE, oppure agli sportelli dell'Azienda sanitaria",
+    "Per il codice E02 (disoccupati) l'autocertificazione va sempre presentata e rinnovata ogni anno",
+    "Al momento della prescrizione il medico riporta il codice di esenzione sulla ricetta"
+  ],
+  "documenti": [
+    "Tessera sanitaria e documento d'identità",
+    "Autocertificazione del diritto all'esenzione (modulo regionale), quando l'esenzione non è automatica o per E02",
+    "SPID o CIE per la procedura online"
+  ],
+  "scadenze": "I certificati di esenzione per reddito valgono dal 1° aprile al 31 marzo dell'anno successivo. Dove previsto, il rinnovo è automatico se i requisiti permangono; per E02 occorre una nuova autocertificazione ogni anno. Le regole di rinnovo dipendono dalla Regione.",
+  "faq": [
+    {
+      "q": "Devo presentare domanda ogni anno?",
+      "a": "Per E01, E03 ed E04 molte Regioni rinnovano l'esenzione d'ufficio dai dati fiscali; per E02 (disoccupati) serve invece un'autocertificazione annuale. Verificate le regole della vostra Regione."
+    },
+    {
+      "q": "Quale reddito si considera?",
+      "a": "Il reddito complessivo dell'anno precedente di tutto il nucleo familiare fiscale, cioè interessato, coniuge non separato e familiari a carico."
+    },
+    {
+      "q": "Cosa succede se mi esento senza averne diritto?",
+      "a": "L'autocertificazione è una dichiarazione sotto la propria responsabilità: se i requisiti non ci sono, l'Azienda sanitaria può chiedere il pagamento dei ticket dovuti. Se i requisiti vengono meno occorre chiedere la cancellazione dell'esenzione."
+    },
+    {
+      "q": "L'esenzione vale anche per i farmaci?",
+      "a": "Le pagine regionali consultate fanno riferimento alla specialistica ambulatoriale (visite ed esami). Le regole sul ticket dei farmaci sono stabilite da ciascuna Regione e vanno verificate localmente."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "Regione Emilia-Romagna - Esenzione ticket per reddito",
+      "url": "https://salute.regione.emilia-romagna.it/cure-primarie/ticket-esenzioni/esenzioni/esenzione-ticket-per-reddito"
+    },
+    {
+      "label": "Regione Toscana - FAQ esenzione dal ticket per reddito",
+      "url": "https://www.regione.toscana.it/-/domande-frequenti-sull-esenzione-dal-ticket-per-reddito"
+    }
+  ],
+  "tags": [
+    "ticket",
+    "esenzione",
+    "sanità",
+    "visite",
+    "esami",
+    "reddito",
+    "e01",
+    "e02"
+  ],
+  "noteRedazione": "Categorie e soglie verificate su due siti sanitari regionali ufficiali (Emilia-Romagna, aggiornato 15/9/2025; Toscana, aggiornato 7/1/2026). Corretto un errore della bozza: E01 riguarda under 6 e over 65 (soglia 36.151,98 euro), E04 i pensionati al minimo over 60 (bozza invertiva i codici). La pagina salute.gov.it della bozza non era consultabile (blocco anti-bot). Le procedure (automatismo, autocertificazione, canali online) variano per Regione: il testo dà gli esempi verificati e rimanda alla propria ASL. Esenzione sui farmaci non verificata.",
+  "origineApp": "esenzione_ticket"
+}

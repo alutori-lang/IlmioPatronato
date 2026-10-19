@@ -73,13 +73,15 @@ export default function Home() {
               >
                 <div className="flex flex-wrap items-center gap-2">
                   {isNuovo(ultimo.novita.data) && <NuovoBadge />}
-                  <span className="text-sm font-extrabold text-ink-3">Aggiornato a {formatNovita(ultimo.novita.data)}</span>
+                  <span className="text-sm font-extrabold text-ink-3">
+                    Aggiornato {ultimo.novita.data.length === 10 ? "il" : "a"} {formatNovita(ultimo.novita.data)}
+                  </span>
                 </div>
                 <div className="mt-5 flex items-start gap-4">
                   <Bolla categoria={ultimo.categoria} size="lg" />
                   <div className="min-w-0">
                     <h3 className="text-2xl font-black leading-tight text-ink sm:text-3xl">{titoloBreve(ultimo.titolo)}</h3>
-                    <p className="mt-2 text-lg font-bold text-ink-2">{ultimo.novita.nota}</p>
+                    <p className="mt-2 line-clamp-3 text-lg font-bold text-ink-2">{ultimo.novita.nota}</p>
                     <p className="mt-3 line-clamp-3 font-semibold leading-relaxed text-ink-3">{ultimo.descrizione}</p>
                   </div>
                 </div>
@@ -110,7 +112,7 @@ export default function Home() {
                           <span className="font-black text-ink">{titoloBreve(b.titolo)}</span>
                           {b.novita && isNuovo(b.novita.data) && <NuovoBadge />}
                         </span>
-                        <span className="mt-0.5 line-clamp-1 block text-sm font-semibold text-ink-3">{b.novita?.nota}</span>
+                        <span className="mt-0.5 line-clamp-2 text-sm font-semibold text-ink-3">{b.novita?.nota}</span>
                       </span>
                       <span className="hidden shrink-0 text-right text-xs font-extrabold text-ink-3 sm:block">{b.novita && formatNovita(b.novita.data)}</span>
                     </Link>
