@@ -5,6 +5,10 @@
   "intro": "La Carta Acquisti, nota anche come Social Card, è una carta elettronica su cui lo Stato accredita 80 euro ogni due mesi. Si usa per la spesa alimentare nei negozi convenzionati e per pagare le bollette di luce e gas in Posta. È riservata agli anziani dai 65 anni in su e ai bambini sotto i 3 anni in condizioni economiche molto difficili.",
   "categoria": "sostegno",
   "ente": "MEF / INPS / Poste Italiane",
+  "evidenza": {
+    "valore": "80 €",
+    "etichetta": "ogni due mesi"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

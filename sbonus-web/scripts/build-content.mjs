@@ -64,6 +64,8 @@ const bonus = readDir("bonus", ".json").map(({ file, raw }) => {
     intro: j.intro || "",
     categoria: j.categoria,
     ente: j.ente || "",
+    evidenza:
+      j.evidenza && j.evidenza.valore ? { valore: String(j.evidenza.valore), etichetta: String(j.evidenza.etichetta || "") } : null,
     stato: j.stato,
     pubblicato: j.pubblicato === true,
     verificato: j.verificato === true,

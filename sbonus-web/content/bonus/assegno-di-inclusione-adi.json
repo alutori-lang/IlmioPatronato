@@ -5,6 +5,10 @@
   "intro": "L'Assegno di Inclusione è la misura nazionale contro la povertà per le famiglie in cui vive almeno un minorenne, una persona con disabilità, un over 60 o una persona svantaggiata seguita dai servizi socio-sanitari. Integra il reddito familiare e può aggiungere un contributo per l'affitto, in cambio dell'adesione a un percorso di inclusione sociale o lavorativa. Dal 2026 il rinnovo non prevede più il mese di stop.",
   "categoria": "sostegno",
   "ente": "INPS / Ministero del Lavoro",
+  "evidenza": {
+    "valore": "10.140 €",
+    "etichetta": "soglia ISEE per accedere"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

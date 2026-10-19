@@ -5,6 +5,10 @@
   "intro": "La carta 'Dedicata a te' è una carta prepagata di Poste Italiane caricata con 500 euro per il 2026 e altri 500 per il 2027, da spendere solo in beni alimentari di prima necessità. Non serve fare domanda: l'INPS individua le famiglie dai dati ISEE e i Comuni comunicano chi ha diritto. Le carte si attivano dal 4 novembre 2026 e vanno usate per la prima volta entro il 16 dicembre 2026.",
   "categoria": "sostegno",
   "ente": "INPS / Comuni / Poste Italiane / MASAF",
+  "evidenza": {
+    "valore": "500 €",
+    "etichetta": "all'anno per la spesa"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

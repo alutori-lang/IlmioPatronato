@@ -5,6 +5,10 @@
   "intro": "Il congedo parentale permette ai genitori lavoratori dipendenti di assentarsi dal lavoro per accudire i figli. Dal 1° gennaio 2026 si può usare fino ai 14 anni del bambino (prima il limite era 12). Tre mesi per coppia possono essere pagati all'80% della retribuzione se usati entro i 6 anni del figlio; gli altri mesi indennizzati sono pagati al 30%.",
   "categoria": "lavoro",
   "ente": "INPS",
+  "evidenza": {
+    "valore": "80%",
+    "etichetta": "dello stipendio per 3 mesi"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

@@ -24,36 +24,52 @@ const FUNZIONI = [
 
 export default function AppPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 pt-6 sm:px-6">
-      <Breadcrumbs items={[{ label: "App", href: "/app" }]} />
-      <section className="mt-6 grid items-center gap-10 lg:grid-cols-[1.2fr_1fr]">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-wider text-accent">Gratis per Android e iPhone</p>
-          <h1 className="mt-2 font-display text-4xl font-extrabold leading-tight tracking-tight text-ink sm:text-5xl">{APP.name}</h1>
-          <p className="mt-4 text-lg leading-relaxed text-ink-2">
-            L&apos;app di SBonus per avere bonus, ISEE, NASpI e guide sempre a portata di mano. Senza registrazione obbligatoria,
-            con i documenti elaborati sul tuo telefono.
-          </p>
-          <StoreBadges className="mt-6" />
-          <p className="mt-4 text-sm text-ink-3">
-            Gratuita con pubblicità. Acquisto facoltativo «Premium PRO» per rimuovere gli annunci e usare l&apos;assistente senza
-            limiti.
-          </p>
-        </div>
-        <div className="mx-auto w-full max-w-xs">
-          <Image src="/img/smart-bonus-italia-icon.png" alt={`Icona dell'app ${APP.name}`} width={512} height={512} priority className="rounded-[2.5rem] shadow-2xl" />
+    <>
+      <section className="hero-bg relative overflow-hidden text-white">
+        <div aria-hidden="true" className="grid-pattern pointer-events-none absolute inset-0" />
+        <div className="relative mx-auto max-w-6xl px-4 pb-16 pt-6 sm:px-6">
+          <Breadcrumbs items={[{ label: "App", href: "/app" }]} chiaro />
+          <div className="mt-8 grid items-center gap-10 lg:grid-cols-[1.15fr_1fr]">
+            <div>
+              <div className="flex items-center gap-3">
+                <Image src="/img/smart-bonus-italia-icon.png" alt="" width={64} height={64} priority className="rounded-2xl shadow-lg ring-2 ring-white/30" />
+                <p className="text-sm font-bold uppercase tracking-[0.14em] text-[#7df3c4]">Gratis per Android e iPhone</p>
+              </div>
+              <h1 className="mt-5 font-display text-4xl font-extrabold leading-tight tracking-tight sm:text-6xl">{APP.name}</h1>
+              <p className="mt-4 max-w-xl text-lg leading-relaxed text-white/80">
+                L&apos;app di SBonus per avere bonus, ISEE, NASpI e guide sempre a portata di mano. Senza registrazione
+                obbligatoria, con i documenti elaborati sul tuo telefono.
+              </p>
+              <StoreBadges className="mt-7" />
+              <p className="mt-4 text-sm text-white/65">
+                Gratuita con pubblicità. Acquisto facoltativo «Premium PRO» per rimuovere gli annunci e usare l&apos;assistente
+                senza limiti.
+              </p>
+            </div>
+            <div aria-hidden="true" className="relative mx-auto h-[420px] w-full max-w-[420px] sm:h-[500px]">
+              <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#3ee0a1]/25 blur-3xl" />
+              <div className="absolute left-0 top-12 w-[48%] -rotate-6 rounded-[2.6rem] bg-[#0b1020] p-2.5 shadow-2xl ring-1 ring-white/15">
+                <Image src="/img/app/app-strumenti.png" alt="" width={660} height={1434} sizes="220px" priority className="rounded-[2.1rem]" />
+              </div>
+              <div className="absolute right-2 top-0 w-[52%] rotate-3 rounded-[2.6rem] bg-[#0b1020] p-2.5 shadow-2xl ring-1 ring-white/15">
+                <Image src="/img/app/app-assistente.png" alt="" width={660} height={1434} sizes="240px" priority className="rounded-[2.1rem]" />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
-
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
       <section aria-labelledby="funzioni" className="mt-16">
         <h2 id="funzioni" className="font-display text-2xl font-extrabold text-ink sm:text-3xl">
           Cosa trovi nell&apos;app
         </h2>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {FUNZIONI.map((f) => (
-            <div key={f.t} className="rounded-2xl border border-line bg-surface p-5">
-              <Icon name={f.i} className="h-6 w-6 text-brand" />
-              <h3 className="mt-3 font-semibold text-ink">{f.t}</h3>
+            <div key={f.t} className="rounded-3xl border border-line bg-surface p-5 transition hover:-translate-y-0.5 hover:shadow-lg">
+              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-brand text-brand-ink shadow-lg shadow-brand/25">
+                <Icon name={f.i} className="h-6 w-6" />
+              </span>
+              <h3 className="mt-4 font-display text-lg font-bold text-ink">{f.t}</h3>
               <p className="mt-1.5 text-sm leading-relaxed text-ink-2">{f.d}</p>
             </div>
           ))}
@@ -79,6 +95,7 @@ export default function AppPage() {
           offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
         }}
       />
-    </div>
+      </div>
+    </>
   );
 }

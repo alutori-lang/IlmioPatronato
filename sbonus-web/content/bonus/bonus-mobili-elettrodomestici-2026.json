@@ -5,6 +5,10 @@
   "intro": "Chi ristruttura casa può detrarre metà della spesa per arredarla con mobili nuovi e grandi elettrodomestici efficienti. Per gli acquisti fatti nel 2026 la detrazione è del 50% su un massimo di 5.000 euro per ogni immobile ristrutturato. Serve che i lavori siano iniziati dal 1° gennaio 2025 in poi e prima dell'acquisto. Il bonus si recupera nella dichiarazione dei redditi in dieci anni.",
   "categoria": "casa",
   "ente": "Agenzia delle Entrate",
+  "evidenza": {
+    "valore": "50%",
+    "etichetta": "su spese fino a 5.000 €"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

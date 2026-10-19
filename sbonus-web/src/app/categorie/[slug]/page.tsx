@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { PageHero } from "@/components/PageHero";
 import { BonusCard, CalcCard, GuideCard } from "@/components/Cards";
-import { Icon } from "@/components/Icon";
 import { CATEGORIE, getCategoria } from "@/lib/categories";
 import { CALCOLATORI } from "@/lib/calcolatori";
 import { bonusPerCategoria, guidePerCategoria, toLite } from "@/lib/content";
@@ -31,18 +30,16 @@ export default async function CategoriaPage({ params }: PageProps<"/categorie/[s
   if (bonus.length + guide.length === 0) notFound();
 
   return (
-    <div className="mx-auto max-w-6xl px-4 pt-6 sm:px-6">
-      <Breadcrumbs items={[{ label: "Categorie", href: "/categorie" }, { label: c.nome, href: `/categorie/${c.slug}` }]} />
-      <header className="mt-6 flex items-start gap-4">
-        <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-brand-soft text-brand">
-          <Icon name={c.icona} className="h-7 w-7" />
-        </span>
-        <div>
-          <h1 className="font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">{c.nome}</h1>
-          <p className="mt-2 max-w-2xl text-lg text-ink-2">{c.descrizione}</p>
-        </div>
-      </header>
-
+    <>
+      <PageHero
+        crumbs={[{ label: "Categorie", href: "/categorie" }, { label: c.nome, href: `/categorie/${c.slug}` }]}
+        occhiello="Categoria"
+        titolo={c.nome}
+        intro={c.descrizione}
+        categoria={c.slug}
+        icona={c.icona}
+      />
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
       {bonus.length > 0 && (
         <section aria-labelledby="cat-bonus" className="mt-10">
           <h2 id="cat-bonus" className="font-display text-2xl font-extrabold text-ink">
@@ -79,6 +76,7 @@ export default async function CategoriaPage({ params }: PageProps<"/categorie/[s
           </div>
         </section>
       )}
-    </div>
+      </div>
+    </>
   );
 }

@@ -5,6 +5,10 @@
   "intro": "La Legge di Bilancio 2026 ha portato il Bonus Mamme a 60 euro al mese, fino a 720 euro l'anno, per le lavoratrici dipendenti e autonome con almeno due figli e un reddito da lavoro non superiore a 40.000 euro. Il contributo è esentasse, non conta ai fini ISEE e viene pagato dall'INPS su domanda. Al momento della verifica non risulta però una procedura INPS aperta per la domanda 2026.",
   "categoria": "famiglia",
   "ente": "INPS",
+  "evidenza": {
+    "valore": "60 €",
+    "etichetta": "al mese, fino a 720 € l'anno"
+  },
   "stato": "in-attesa",
   "pubblicato": true,
   "verificato": true,

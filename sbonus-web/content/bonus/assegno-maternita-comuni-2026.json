@@ -5,6 +5,10 @@
   "intro": "L'assegno di maternità dei Comuni, detto anche assegno di maternità di base, aiuta le mamme che non hanno un'indennità di maternità o ne ricevono una bassa. Lo concede il Comune di residenza e lo paga l'INPS. Per le nascite, adozioni e affidamenti preadottivi del 2026 vale 413,10 euro al mese per cinque mesi, con ISEE fino a 20.668,26 euro.",
   "categoria": "famiglia",
   "ente": "Comune di residenza (pagamento INPS)",
+  "evidenza": {
+    "valore": "2.065,50 €",
+    "etichetta": "in totale, 413,10 € al mese"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

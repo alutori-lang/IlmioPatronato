@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { PageHero } from "@/components/PageHero";
 import { StatoBadge, BonusCard } from "@/components/Cards";
 import { JsonLd } from "@/components/JsonLd";
 import { Icon } from "@/components/Icon";
 import { AdSlot } from "@/components/AdSlot";
 import { AppPromo } from "@/components/AppPromo";
 import { Fonti, Faqs, AvvisoIndipendente } from "@/components/Editorial";
-import { bonusPubblicati, getBonus, bonusPerCategoria, formatData } from "@/lib/content";
-import { getCategoria } from "@/lib/categories";
+import { bonusPubblicati, getBonus, bonusPerCategoria, formatData, toLite } from "@/lib/content";
+import { getCategoria, stileTono } from "@/lib/categories";
 import { CALCOLATORI } from "@/lib/calcolatori";
 import { ADSENSE_SLOTS, absoluteUrl } from "@/lib/site";
 
@@ -41,9 +41,9 @@ const CALC_PER_BONUS: Record<string, string> = {
 
 function Blocco({ id, titolo, icona, children }: { id: string; titolo: string; icona: Parameters<typeof Icon>[0]["name"]; children: React.ReactNode }) {
   return (
-    <section id={id} aria-labelledby={`${id}-t`} className="scroll-mt-24 rounded-2xl border border-line bg-surface p-5 sm:p-6">
+    <section id={id} aria-labelledby={`${id}-t`} className="scroll-mt-24 rounded-3xl border border-line bg-surface p-5 shadow-[0_1px_3px_rgba(15,27,51,0.05)] sm:p-7">
       <h2 id={`${id}-t`} className="flex items-center gap-2.5 font-display text-xl font-bold text-ink">
-        <span className="grid h-9 w-9 place-items-center rounded-lg bg-brand-soft text-brand">
+        <span className="tone-icon grid h-10 w-10 place-items-center rounded-xl">
           <Icon name={icona} className="h-5 w-5" />
         </span>
         {titolo}
@@ -86,23 +86,39 @@ export default async function BonusPage({ params }: PageProps<"/bonus/[slug]">) 
   ].filter(Boolean) as { id: string; l: string }[];
 
   return (
-    <article className="mx-auto max-w-6xl px-4 pb-8 pt-6 sm:px-6">
-      <Breadcrumbs items={[{ label: "Bonus", href: "/bonus" }, ...(cat ? [{ label: cat.nome, href: `/categorie/${cat.slug}` }] : []), { label: b.titolo, href: `/bonus/${b.slug}` }]} />
-
-      <header className="mt-6 max-w-3xl">
+    <article className="pb-8">
+      <PageHero
+        crumbs={[{ label: "Bonus", href: "/bonus" }, ...(cat ? [{ label: cat.nome, href: `/categorie/${cat.slug}` }] : []), { label: b.titolo, href: `/bonus/${b.slug}` }]}
+        titolo={b.titolo}
+        intro={b.intro || b.descrizione}
+        categoria={b.categoria}
+        icona={cat?.icona}
+        occhiello={cat?.nome}
+      >
         <div className="flex flex-wrap items-center gap-2">
           <StatoBadge stato={b.stato} />
-          {b.ente && <span className="rounded-full bg-surface-2 px-2.5 py-1 text-xs font-semibold text-ink-2">{b.ente}</span>}
+          {b.ente && <span className="rounded-full bg-white/15 px-2.5 py-1 text-xs font-semibold text-white">{b.ente}</span>}
+          {b.ultimoControllo && (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1 text-xs text-white/85">
+              <Icon name="calendar" className="h-3.5 w-3.5" />
+              Controllato il <time dateTime={b.ultimoControllo}>{formatData(b.ultimoControllo)}</time>
+            </span>
+          )}
         </div>
-        <h1 className="mt-4 font-display text-3xl font-extrabold leading-tight tracking-tight text-ink sm:text-4xl">{b.titolo}</h1>
-        <p className="mt-4 text-lg leading-relaxed text-ink-2">{b.intro || b.descrizione}</p>
-        {b.ultimoControllo && (
-          <p className="mt-4 inline-flex items-center gap-2 text-sm text-ink-3">
-            <Icon name="calendar" className="h-4 w-4" />
-            Ultimo controllo sulle fonti ufficiali: <time dateTime={b.ultimoControllo}>{formatData(b.ultimoControllo)}</time>
-          </p>
-        )}
-      </header>
+      </PageHero>
+
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      {b.evidenza && (
+        <div style={stileTono(b.categoria)} className="relative z-10 -mt-8 flex max-w-xl items-center gap-4 rounded-3xl border border-line bg-surface p-5 shadow-[0_20px_50px_-20px_rgba(15,27,51,0.35)]">
+          <span className="tone-icon grid h-12 w-12 shrink-0 place-items-center rounded-2xl">
+            <Icon name="euro" className="h-6 w-6" />
+          </span>
+          <div>
+            <p className="font-display text-3xl font-extrabold leading-none tracking-tight text-ink">{b.evidenza.valore}</p>
+            <p className="mt-1 text-ink-2">{b.evidenza.etichetta}</p>
+          </div>
+        </div>
+      )}
 
       {b.stato === "scaduto" && (
         <div role="note" className="mt-6 flex max-w-3xl gap-3 rounded-2xl border border-danger/30 bg-danger-soft p-4 text-ink">
@@ -124,7 +140,7 @@ export default async function BonusPage({ params }: PageProps<"/bonus/[slug]">) 
       )}
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_280px]">
-        <div className="min-w-0 space-y-5">
+        <div className="min-w-0 space-y-5" style={stileTono(b.categoria)}>
           {b.aChiSpetta.length > 0 && (
             <Blocco id="a-chi-spetta" titolo="A chi spetta" icona="family">
               <Lista items={b.aChiSpetta} />
@@ -199,11 +215,13 @@ export default async function BonusPage({ params }: PageProps<"/bonus/[slug]">) 
           </h2>
           <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {correlati.map((x) => (
-              <BonusCard key={x.slug} b={x} />
+              <BonusCard key={x.slug} b={toLite(x)} />
             ))}
           </div>
         </section>
       )}
+
+      </div>
 
       <JsonLd
         data={{

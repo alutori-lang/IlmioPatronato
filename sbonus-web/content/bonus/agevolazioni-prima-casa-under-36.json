@@ -5,6 +5,10 @@
   "intro": "L'agevolazione fiscale per l'acquisto della prima casa da parte dei giovani under 36 con ISEE fino a 40.000 euro non è più disponibile. L'ultima proroga copriva solo i rogiti stipulati entro il 31 dicembre 2024, a condizione che il preliminare fosse stato firmato e registrato entro il 31 dicembre 2023. Per chi compra oggi restano le normali agevolazioni prima casa e, per il mutuo, la garanzia del Fondo Prima Casa gestito da Consap.",
   "categoria": "casa",
   "ente": "Agenzia delle Entrate",
+  "evidenza": {
+    "valore": "Scaduta",
+    "etichetta": "per gli atti dal 2025"
+  },
   "stato": "scaduto",
   "pubblicato": true,
   "verificato": true,

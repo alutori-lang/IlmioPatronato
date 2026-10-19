@@ -2,9 +2,9 @@
 
 import { apriPreferenze } from "./consent";
 
-export function CookiePrefsLink() {
+export function CookiePrefsLink({ className = "font-semibold text-brand underline underline-offset-2" }: { className?: string }) {
   return (
-    <button type="button" onClick={apriPreferenze} className="hover:text-brand">
+    <button type="button" onClick={apriPreferenze} className={className}>
       Preferenze cookie
     </button>
   );

@@ -5,6 +5,10 @@
   "intro": "Il Fondo di garanzia per la prima casa, gestito da Consap per conto del MEF, garantisce una parte del mutuo per l'acquisto dell'abitazione principale, rendendo più facile ottenerlo dalla banca. La garanzia ordinaria copre il 50% della quota capitale. Giovani under 36, giovani coppie, genitori soli con figli minori, inquilini di case popolari e famiglie numerose possono chiedere la garanzia elevata fino all'80% quando il mutuo supera l'80% del prezzo. Questa disciplina è prorogata fino al 31 dicembre 2027.",
   "categoria": "casa",
   "ente": "Consap / MEF",
+  "evidenza": {
+    "valore": "80%",
+    "etichetta": "di garanzia sul mutuo (massimo)"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

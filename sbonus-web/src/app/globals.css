@@ -182,3 +182,65 @@ body {
   background: var(--surface-2);
   color: var(--ink);
 }
+
+/* Tinte per categoria (impostate via --tone / --tone-soft) */
+.tone-icon {
+  background: linear-gradient(135deg, var(--tone), color-mix(in srgb, var(--tone) 55%, #ffffff));
+  color: #fff;
+  box-shadow: 0 8px 20px -8px color-mix(in srgb, var(--tone) 70%, transparent);
+}
+.tone-soft {
+  background: var(--tone-soft);
+}
+.tone-text {
+  color: var(--tone);
+}
+.tone-bar {
+  background: linear-gradient(90deg, var(--tone), color-mix(in srgb, var(--tone) 40%, #ffffff));
+}
+
+/* Hero e bande scure (identiche in chiaro e scuro) */
+.hero-bg {
+  background:
+    radial-gradient(50rem 30rem at 85% 10%, rgba(62, 224, 161, 0.18), transparent 60%),
+    radial-gradient(45rem 30rem at 10% 0%, rgba(120, 150, 255, 0.35), transparent 60%),
+    linear-gradient(160deg, #0b1d5c 0%, #1534a8 55%, #1d4fd8 100%);
+}
+.grid-pattern {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 75%);
+}
+.text-gradient {
+  background: linear-gradient(90deg, #7df3c4, #b9f6ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.band-dark {
+  background:
+    radial-gradient(40rem 20rem at 100% 0%, rgba(62, 224, 161, 0.14), transparent 60%),
+    linear-gradient(180deg, #0b1532, #0f1d45);
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--rot, 0deg));
+  }
+  50% {
+    transform: translateY(-8px) rotate(var(--rot, 0deg));
+  }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

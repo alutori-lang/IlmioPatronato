@@ -51,6 +51,13 @@ collections:
         display_fields: ["categorie.*.nome"]
         value_field: "categorie.*.slug"
       - { name: ente, label: "Ente (es. INPS)", widget: string, required: false }
+      - name: evidenza
+        label: "Cifra in evidenza sulle card"
+        widget: object
+        required: false
+        fields:
+          - { name: valore, label: "Valore (es. 203,80 €)", widget: string }
+          - { name: etichetta, label: "Etichetta (es. al mese per figlio)", widget: string }
       - name: stato
         label: Stato della misura
         widget: select

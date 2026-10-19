@@ -5,6 +5,10 @@
   "intro": "Chi esegue lavori di recupero edilizio su un immobile residenziale può recuperare parte della spesa con una detrazione IRPEF. Per le spese pagate nel 2026 la Legge di Bilancio 2026 ha confermato la percentuale più alta per la prima casa: 50% se l'immobile è abitazione principale del proprietario, 36% negli altri casi. Dal 2027 le percentuali scendono rispettivamente al 36% e al 30%. Lo sconto si recupera in dieci rate annuali nella dichiarazione dei redditi.",
   "categoria": "casa",
   "ente": "Agenzia delle Entrate",
+  "evidenza": {
+    "valore": "50%",
+    "etichetta": "detrazione sulla prima casa"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

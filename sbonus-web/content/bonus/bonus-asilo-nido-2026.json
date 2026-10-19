@@ -5,6 +5,10 @@
   "intro": "Il Bonus Asilo Nido rimborsa le rette di nidi pubblici e privati autorizzati per i bambini sotto i tre anni, oppure finanzia forme di assistenza a casa per i bambini con gravi patologie croniche. Dal 2026 la domanda resta valida fino ad agosto dell'anno in cui il bambino compie tre anni, quindi non va rifatta ogni anno. L'importo dipende dall'ISEE per prestazioni familiari (al netto dell'Assegno Unico) e dalla data di nascita del bambino.",
   "categoria": "famiglia",
   "ente": "INPS",
+  "evidenza": {
+    "valore": "3.600 €",
+    "etichetta": "all'anno (massimo)"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

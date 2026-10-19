@@ -5,6 +5,10 @@
   "intro": "L'Assegno Unico e Universale è il contributo mensile che l'INPS versa alle famiglie per ciascun figlio a carico, dal settimo mese di gravidanza fino ai 21 anni (senza limiti di età per i figli con disabilità). Per il 2026 importi e soglie ISEE sono stati aumentati dell'1,4% per adeguarli all'inflazione. Chi ha già una domanda accolta non deve ripresentarla: basta tenere aggiornato l'ISEE e comunicare eventuali cambiamenti.",
   "categoria": "famiglia",
   "ente": "INPS",
+  "evidenza": {
+    "valore": "203,80 €",
+    "etichetta": "al mese per figlio (massimo)"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

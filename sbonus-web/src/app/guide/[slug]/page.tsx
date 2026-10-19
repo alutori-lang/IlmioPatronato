@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { PageHero } from "@/components/PageHero";
 import { Faqs, Fonti, AvvisoIndipendente } from "@/components/Editorial";
 import { GuideCard } from "@/components/Cards";
 import { JsonLd } from "@/components/JsonLd";
@@ -49,25 +49,29 @@ export default async function GuidaPage({ params }: PageProps<"/guide/[slug]">) 
     .slice(0, 3);
 
   return (
-    <div className="mx-auto max-w-6xl px-4 pt-6 sm:px-6">
-      <Breadcrumbs items={[{ label: "Guide", href: "/guide" }, { label: g.titolo, href: `/guide/${g.slug}` }]} />
-      <div className="mt-6 grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px]">
-        <article className="min-w-0">
-          <header>
-            {cat && <p className="text-sm font-semibold uppercase tracking-wide text-brand">{cat.nome}</p>}
-            <h1 className="mt-2 font-display text-3xl font-extrabold leading-tight tracking-tight text-ink sm:text-4xl">{g.titolo}</h1>
-            <p className="mt-4 text-lg leading-relaxed text-ink-2">{g.descrizione}</p>
-            <p className="mt-4 text-sm text-ink-3">
-              {g.autore} · Pubblicata il <time dateTime={g.dataPubblicazione ?? undefined}>{formatData(g.dataPubblicazione)}</time>
-              {g.dataAggiornamento && g.dataAggiornamento !== g.dataPubblicazione && (
-                <>
-                  {" "}· Aggiornata il <time dateTime={g.dataAggiornamento}>{formatData(g.dataAggiornamento)}</time>
-                </>
-              )}
-            </p>
-          </header>
+    <>
+      <PageHero
+        crumbs={[{ label: "Guide", href: "/guide" }, { label: g.titolo, href: `/guide/${g.slug}` }]}
+        occhiello={cat?.nome ?? "Guida"}
+        titolo={g.titolo}
+        intro={g.descrizione}
+        categoria={g.categoria}
+        icona={cat?.icona ?? "book"}
+      >
+        <p className="text-sm text-white/75">
+          {g.autore} · Pubblicata il <time dateTime={g.dataPubblicazione ?? undefined}>{formatData(g.dataPubblicazione)}</time>
+          {g.dataAggiornamento && g.dataAggiornamento !== g.dataPubblicazione && (
+            <>
+              {" "}· Aggiornata il <time dateTime={g.dataAggiornamento}>{formatData(g.dataAggiornamento)}</time>
+            </>
+          )}
+        </p>
+      </PageHero>
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="relative z-10 -mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px]">
+        <article className="min-w-0 rounded-3xl border border-line bg-surface p-5 shadow-sm sm:p-8">
           {/* HTML generato a build time dal Markdown della redazione (contenuto attendibile del repository) */}
-          <div className="prose-sb mt-8" dangerouslySetInnerHTML={{ __html: g.html }} />
+          <div className="prose-sb" dangerouslySetInnerHTML={{ __html: g.html }} />
           <AdSlot slot={ADSENSE_SLOTS.contenuto} />
           <div className="mt-10 space-y-5">
             {g.faq.length > 0 && <Faqs faq={g.faq} />}
@@ -108,6 +112,7 @@ export default async function GuidaPage({ params }: PageProps<"/guide/[slug]">) 
           citation: g.fonti.map((f) => f.url),
         }}
       />
-    </div>
+      </div>
+    </>
   );
 }

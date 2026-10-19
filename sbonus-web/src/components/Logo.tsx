@@ -25,12 +25,12 @@ export function LogoMark({ className = "h-9 w-9" }: { className?: string }) {
   );
 }
 
-export function Logo({ className = "" }: { className?: string }) {
+export function Logo({ className = "", chiaro = false }: { className?: string; chiaro?: boolean }) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
       <LogoMark />
-      <span className="font-display text-[1.35rem] font-extrabold tracking-tight text-ink">
-        S<span className="text-brand">Bonus</span>
+      <span className={`font-display text-[1.35rem] font-extrabold tracking-tight ${chiaro ? "text-white" : "text-ink"}`}>
+        S<span className={chiaro ? "text-[#7df3c4]" : "text-brand"}>Bonus</span>
       </span>
     </span>
   );

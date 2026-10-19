@@ -5,6 +5,10 @@
   "intro": "L'assegno sociale è un aiuto economico dell'INPS per le persone di almeno 67 anni che hanno redditi molto bassi o nessun reddito, anche senza contributi versati. Nel 2026 vale fino a 546,24 euro al mese per tredici mensilità ed è esente da IRPEF. Spetta a italiani e stranieri con residenza effettiva e almeno dieci anni di soggiorno legale e continuativo in Italia.",
   "categoria": "pensioni",
   "ente": "INPS",
+  "evidenza": {
+    "valore": "546,24 €",
+    "etichetta": "al mese per 13 mensilità"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

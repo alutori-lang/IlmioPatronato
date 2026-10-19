@@ -5,6 +5,10 @@
   "intro": "Il Bonus Nuovi Nati è un contributo di 1.000 euro, pagato una sola volta, per ogni figlio nato, adottato o accolto in affidamento preadottivo nel 2026. Serve un ISEE per prestazioni familiari non superiore a 40.000 euro, calcolato senza l'Assegno Unico. La domanda va fatta all'INPS entro 120 giorni dall'evento, altrimenti si perde il diritto.",
   "categoria": "famiglia",
   "ente": "INPS",
+  "evidenza": {
+    "valore": "1.000 €",
+    "etichetta": "una tantum per figlio"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { PageHero } from "@/components/PageHero";
 import { CalcCard } from "@/components/Cards";
 import { CALCOLATORI } from "@/lib/calcolatori";
 import { PARAMS } from "@/lib/calc/params";
@@ -12,20 +12,21 @@ export const metadata: Metadata = {
 
 export default function CalcolatoriIndex() {
   return (
-    <div className="mx-auto max-w-6xl px-4 pt-6 sm:px-6">
-      <Breadcrumbs items={[{ label: "Calcolatori", href: "/calcolatori" }]} />
-      <header className="mt-6 max-w-3xl">
-        <h1 className="font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">Calcolatori gratuiti</h1>
-        <p className="mt-3 text-lg text-ink-2">
-          Strumenti per stimare importi e costi con i parametri {PARAMS.anno}. Ogni calcolatore spiega le formule, le ipotesi e
-          le fonti usate. I calcoli avvengono nel tuo browser: nessun dato viene inviato.
-        </p>
-      </header>
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <>
+      <PageHero
+        crumbs={[{ label: "Calcolatori", href: "/calcolatori" }]}
+        occhiello="Strumenti gratuiti"
+        titolo="Calcolatori gratuiti"
+        intro={`Stima importi e costi con i parametri ${PARAMS.anno}. Ogni calcolatore spiega formule, ipotesi e fonti. I calcoli avvengono nel tuo browser: nessun dato viene inviato.`}
+        icona="calc"
+      />
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {CALCOLATORI.map((c) => (
           <CalcCard key={c.slug} c={c} />
         ))}
       </div>
-    </div>
+      </div>
+    </>
   );
 }

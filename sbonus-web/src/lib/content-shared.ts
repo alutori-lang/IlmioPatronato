@@ -11,6 +11,8 @@ export type Bonus = {
   intro: string;
   categoria: string;
   ente: string;
+  /** Cifra chiave mostrata in grande sulle card (es. "203,80 €" + "al mese per figlio"). */
+  evidenza: { valore: string; etichetta: string } | null;
   stato: StatoBonus;
   pubblicato: boolean;
   verificato: boolean;
@@ -27,7 +29,7 @@ export type Bonus = {
   tags: string[];
 };
 
-export type BonusLite = Pick<Bonus, "slug" | "titolo" | "descrizione" | "categoria" | "stato" | "ente" | "tags">;
+export type BonusLite = Pick<Bonus, "slug" | "titolo" | "descrizione" | "categoria" | "stato" | "ente" | "tags" | "evidenza">;
 
 export const toLite = (b: Bonus): BonusLite => ({
   slug: b.slug,
@@ -37,6 +39,7 @@ export const toLite = (b: Bonus): BonusLite => ({
   stato: b.stato,
   ente: b.ente,
   tags: b.tags,
+  evidenza: b.evidenza,
 });
 
 export type Guida = {

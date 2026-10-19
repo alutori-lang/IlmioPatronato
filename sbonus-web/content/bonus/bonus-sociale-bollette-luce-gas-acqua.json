@@ -5,6 +5,10 @@
   "intro": "Il bonus sociale per disagio economico riduce le bollette di luce, gas e acqua delle famiglie con ISEE basso. Non serve fare domanda: basta presentare la DSU per l'ISEE e, se il valore è sotto soglia, lo sconto arriva in automatico. Dal 1° gennaio 2026 ARERA ha alzato la soglia ISEE a 9.796 euro, mentre per le famiglie con almeno quattro figli a carico resta a 20.000 euro.",
   "categoria": "sostegno",
   "ente": "ARERA / INPS",
+  "evidenza": {
+    "valore": "204,40 €",
+    "etichetta": "l'anno sulla luce (massimo)"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

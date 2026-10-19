@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { PageHero } from "@/components/PageHero";
 import { Faqs, Fonti, AvvisoIndipendente } from "@/components/Editorial";
 import { JsonLd } from "@/components/JsonLd";
 import { Icon } from "@/components/Icon";
@@ -54,18 +54,22 @@ export default async function CalcolatorePage({ params }: PageProps<"/calcolator
   const altri = CALCOLATORI.filter((x) => x.slug !== c.slug).slice(0, 3);
 
   return (
-    <div className="mx-auto max-w-6xl px-4 pt-6 sm:px-6">
-      <Breadcrumbs items={[{ label: "Calcolatori", href: "/calcolatori" }, { label: c.titoloBreve, href: `/calcolatori/${c.slug}` }]} />
-      <header className="mt-6 max-w-3xl">
-        <h1 className="font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">{c.titolo}</h1>
-        <p className="mt-3 text-lg leading-relaxed text-ink-2">{info.intro}</p>
-        <p className="mt-3 inline-flex flex-wrap items-center gap-2 text-sm text-ink-3">
+    <>
+      <PageHero
+        crumbs={[{ label: "Calcolatori", href: "/calcolatori" }, { label: c.titoloBreve, href: `/calcolatori/${c.slug}` }]}
+        occhiello="Calcolatore gratuito"
+        titolo={c.titolo}
+        intro={info.intro}
+        categoria={c.categoria}
+        icona={c.icona}
+      >
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-sm text-white/85">
           <Icon name="calendar" className="h-4 w-4" />
-          Parametri anno {PARAMS.anno} · ultimo controllo <time dateTime={PARAMS.ultimoControllo}>{formatData(PARAMS.ultimoControllo)}</time>
-        </p>
-      </header>
-
-      <div className="mt-8">
+          Parametri {PARAMS.anno} · controllati il <time dateTime={PARAMS.ultimoControllo}>{formatData(PARAMS.ultimoControllo)}</time>
+        </span>
+      </PageHero>
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="relative z-10 -mt-8">
         <Widget />
       </div>
 
@@ -171,6 +175,7 @@ export default async function CalcolatorePage({ params }: PageProps<"/calcolator
           offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
         }}
       />
-    </div>
+      </div>
+    </>
   );
 }

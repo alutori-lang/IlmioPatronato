@@ -5,6 +5,10 @@
   "intro": "I giovani tra i 20 e i 31 anni non compiuti che prendono in affitto una casa da usare come propria residenza possono ottenere una detrazione IRPEF per i primi quattro anni del contratto. Lo sconto è pari al 20% del canone, con un minimo di 991,60 euro e un massimo di 2.000 euro l'anno. Serve un reddito complessivo non superiore a 15.493,71 euro e l'alloggio non deve essere l'abitazione principale dei genitori.",
   "categoria": "casa",
   "ente": "Agenzia delle Entrate",
+  "evidenza": {
+    "valore": "2.000 €",
+    "etichetta": "di detrazione l'anno (massimo)"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

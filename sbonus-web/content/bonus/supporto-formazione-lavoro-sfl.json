@@ -5,6 +5,10 @@
   "intro": "Il Supporto per la Formazione e il Lavoro è un'indennità mensile pagata dall'INPS a chi, tra i 18 e i 59 anni, partecipa a corsi di formazione, progetti utili alla collettività, servizio civile o altre attività per trovare lavoro. Il pagamento spetta solo per i mesi di partecipazione effettiva. È pensato soprattutto per chi vive in famiglie con ISEE basso ma non rientra nell'Assegno di Inclusione.",
   "categoria": "lavoro",
   "ente": "INPS / Ministero del Lavoro",
+  "evidenza": {
+    "valore": "500 €",
+    "etichetta": "al mese durante i corsi"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

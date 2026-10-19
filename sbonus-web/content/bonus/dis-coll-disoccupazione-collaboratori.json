@@ -5,6 +5,10 @@
   "intro": "La DIS-COLL è l'equivalente della NASpI per chi lavora con contratti di collaborazione coordinata e continuativa, assegni di ricerca o dottorati con borsa ed è iscritto solo alla Gestione Separata INPS. Basta un mese di contributi e la domanda va fatta entro 68 giorni dalla fine del rapporto. La durata dipende dai mesi coperti da contributi, fino a un massimo di un anno.",
   "categoria": "lavoro",
   "ente": "INPS",
+  "evidenza": {
+    "valore": "1.584,70 €",
+    "etichetta": "al mese (massimo)"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,

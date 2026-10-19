@@ -5,6 +5,10 @@
   "intro": "La NASpI è il sussidio mensile che l'INPS paga a chi ha perso il lavoro dipendente senza averlo scelto. Si calcola sulle retribuzioni degli ultimi quattro anni e dura la metà delle settimane con contributi in quel periodo. Va chiesta online entro 68 giorni dalla fine del rapporto, da soli o con l'aiuto di un patronato.",
   "categoria": "lavoro",
   "ente": "INPS",
+  "evidenza": {
+    "valore": "1.584,70 €",
+    "etichetta": "al mese (massimo)"
+  },
   "stato": "attivo",
   "pubblicato": true,
   "verificato": true,
