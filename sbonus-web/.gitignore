@@ -43,3 +43,6 @@ next-env.d.ts
 
 # contenuti generati da scripts/build-content.mjs
 /src/generated/
+
+.vercel
+.env*

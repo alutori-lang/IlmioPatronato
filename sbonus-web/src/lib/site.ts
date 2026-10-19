@@ -17,6 +17,13 @@ export const SITE = {
   },
 } as const;
 
+/**
+ * Indicizzazione: spenta finché non si imposta SBONUS_INDEXABLE=1 (solo sul
+ * dominio definitivo sbonus.it). Così anteprime e indirizzi *.vercel.app
+ * non finiscono su Google come duplicati.
+ */
+export const INDEXABLE = process.env.SBONUS_INDEXABLE === "1";
+
 export const APP = {
   name: "Smart Bonus Italia",
   android: "https://play.google.com/store/apps/details?id=com.docflow.docflow_immigrati",

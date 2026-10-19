@@ -86,7 +86,8 @@ Configurazione (una volta):
 4. Nota: il piano gratuito Hobby di Vercel è riservato a uso non commerciale. Con la pubblicità AdSense serve il piano
    **Pro** oppure un altro hosting Node.js.
 
-Le anteprime (preview) di Vercel sono escluse dall'indicizzazione tramite `robots.txt`.
+**Indicizzazione:** è spenta di default (`robots.txt` blocca tutto e ogni pagina ha `noindex`). Imposta
+`SBONUS_INDEXABLE=1` nelle variabili di **Production** solo quando `sbonus.it` è collegato e pronto.
 
 ## Google AdSense
 

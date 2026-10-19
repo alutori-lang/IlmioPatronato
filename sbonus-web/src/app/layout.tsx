@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import { SITE, APP, absoluteUrl } from "@/lib/site";
+import { SITE, APP, INDEXABLE, absoluteUrl } from "@/lib/site";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CookieBanner } from "@/components/CookieBanner";
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     url: "/",
   },
   twitter: { card: "summary_large_image" },
-  robots: { index: true, follow: true },
+  robots: INDEXABLE ? { index: true, follow: true } : { index: false, follow: false },
   itunes: { appId: APP.iosId },
   formatDetection: { telephone: false },
 };
