@@ -1,0 +1,71 @@
+{
+  "slug": "agevolazioni-prima-casa-under-36",
+  "titolo": "Agevolazioni Prima Casa Under 36 (scadute)",
+  "descrizione": "Le esenzioni su imposte di registro, ipotecaria e catastale per under 36 sono scadute: valevano per rogiti entro il 31/12/2024. Resta il Fondo Consap.",
+  "intro": "L'agevolazione fiscale per l'acquisto della prima casa da parte dei giovani under 36 con ISEE fino a 40.000 euro non è più disponibile. L'ultima proroga copriva solo i rogiti stipulati entro il 31 dicembre 2024, a condizione che il preliminare fosse stato firmato e registrato entro il 31 dicembre 2023. Per chi compra oggi restano le normali agevolazioni prima casa e, per il mutuo, la garanzia del Fondo Prima Casa gestito da Consap.",
+  "categoria": "casa",
+  "ente": "Agenzia delle Entrate",
+  "evidenza": {
+    "valore": "Scaduta",
+    "etichetta": "per gli atti dal 2025"
+  },
+  "stato": "scaduto",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Non più richiedibile per nuovi acquisti: valeva per giovani che non avevano compiuto 36 anni nell'anno del rogito, con ISEE non superiore a 40.000 euro"
+  ],
+  "requisiti": [
+    "Misura chiusa: rogito stipulato entro il 31 dicembre 2024",
+    "Proroga 2024 applicabile solo se il contratto preliminare era stato sottoscritto e registrato entro il 31 dicembre 2023"
+  ],
+  "importi": [
+    "Quando era in vigore: esenzione da imposta di registro, ipotecaria e catastale e, per acquisti soggetti a IVA, credito d'imposta pari all'IVA pagata",
+    "Nessun importo disponibile per acquisti 2025-2026"
+  ],
+  "comeFare": [
+    "Per i nuovi acquisti non è possibile richiederla",
+    "Chi compra la prima casa nel 2026 può valutare con il notaio le agevolazioni prima casa ordinarie",
+    "Per il mutuo verificare l'accesso al Fondo di garanzia Prima Casa Consap tramite la propria banca"
+  ],
+  "documenti": [
+    "Nessuno: misura non più attiva"
+  ],
+  "scadenze": "Scaduta: valeva per i rogiti entro il 31 dicembre 2024 (con preliminare registrato entro il 31 dicembre 2023).",
+  "faq": [
+    {
+      "q": "Se rogito nel 2026 posso avere l'esenzione under 36?",
+      "a": "No. La proroga riguardava solo i rogiti entro il 31 dicembre 2024 e preliminari registrati entro il 2023. Per il 2025 e il 2026 non risulta una nuova proroga."
+    },
+    {
+      "q": "Esiste ancora qualcosa per i giovani che comprano casa?",
+      "a": "Sì: il Fondo di garanzia Prima Casa Consap, che per gli under 36 e le altre categorie prioritarie può garantire fino all'80% del mutuo, con regole prorogate al 31 dicembre 2027."
+    },
+    {
+      "q": "Restano le agevolazioni prima casa normali?",
+      "a": "Le agevolazioni prima casa ordinarie non sono legate all'età. Le condizioni e le aliquote vanno verificate con il notaio o sulla guida dell'Agenzia delle Entrate sull'acquisto della casa."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "Agenzia delle Entrate - Circolare 14/2024 su proroga agevolazioni under 36 (Milleproroghe)",
+      "url": "https://www.agenziaentrate.gov.it/portale/documents/20143/6193294/circolare+n+14_2024+under36_milleproroghe.pdf/f56160f7-050c-8208-2041-e836277179c4"
+    },
+    {
+      "label": "Consap - Fondo di garanzia per la prima casa",
+      "url": "https://www.consap.it/fondo-prima-casa/"
+    }
+  ],
+  "tags": [
+    "prima casa",
+    "under 36",
+    "giovani",
+    "imposta di registro",
+    "scaduto",
+    "notaio"
+  ],
+  "noteRedazione": "Scadenza confermata da documentazione Agenzia Entrate (circolare 14/2024 e guida acquisto casa). Le aliquote delle agevolazioni prima casa ordinarie non sono state riverificate e sono quindi omesse. Rispetto alla bozza: la bozza la indicava attiva fino al 31/12/2026; in realtà è scaduta. La garanzia Consap è trattata nella scheda separata bonus_mutuo_under36.",
+  "origineApp": "bonus_prima_casa"
+}

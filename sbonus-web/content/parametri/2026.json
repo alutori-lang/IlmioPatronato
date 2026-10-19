@@ -1,0 +1,129 @@
+{
+  "anno": 2026,
+  "ultimoControllo": "2026-10-19",
+  "irpef": {
+    "scaglioni": [
+      {
+        "fino": 28000,
+        "aliquota": 0.23
+      },
+      {
+        "fino": 50000,
+        "aliquota": 0.33
+      },
+      {
+        "fino": null,
+        "aliquota": 0.43
+      }
+    ],
+    "fonte": {
+      "label": "Agenzia delle Entrate – Aliquote e calcolo dell'IRPEF",
+      "url": "https://www.agenziaentrate.gov.it/portale/imposta-sul-reddito-delle-persone-fisiche-irpef-/aliquote-e-calcolo-dell-irpef"
+    },
+    "verificato": true,
+    "nota": "Legge 30 dicembre 2025, n. 199 (Legge di Bilancio 2026): seconda aliquota ridotta dal 35% al 33%."
+  },
+  "cuneoFiscale": {
+    "sommaEsente": [
+      {
+        "fino": 8500,
+        "percentuale": 0.071
+      },
+      {
+        "fino": 15000,
+        "percentuale": 0.053
+      },
+      {
+        "fino": 20000,
+        "percentuale": 0.048
+      }
+    ],
+    "ulterioreDetrazione": {
+      "pieno": 1000,
+      "da": 20000,
+      "pienoFino": 32000,
+      "azzeraA": 40000
+    },
+    "fonte": {
+      "label": "Agenzia delle Entrate – Circolare n. 4/E del 16 maggio 2025",
+      "url": "https://www.agenziaentrate.gov.it/portale/documents/20143/8410823/Circolare+lavoro+dipendente+LB2025+DD+IRPEF+n.+4+del+16+maggio+2025.pdf"
+    },
+    "verificato": true,
+    "nota": "Misure strutturali introdotte dalla L. 207/2024, applicate in base al reddito complessivo."
+  },
+  "inpsDipendente": {
+    "aliquota": 0.0919,
+    "aliquotaAggiuntiva": 0.01,
+    "sogliaAggiuntivaAnnua": 56224,
+    "fonte": {
+      "label": "INPS – Circolare n. 6 del 30 gennaio 2026",
+      "url": "https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2026.01.circolare-numero-6-del-30-01-2026_15151.html"
+    },
+    "verificato": false,
+    "nota": "Aliquota standard FPLD per la generalità dei lavoratori dipendenti del settore privato; alcuni settori hanno aliquote diverse. Soglia aggiuntiva 2026 riscontrata su più fonti concordanti: da ricontrollare sul testo della circolare."
+  },
+  "naspi": {
+    "soglia": 1456.72,
+    "massimale": 1584.7,
+    "percentualeSotto": 0.75,
+    "percentualeSopra": 0.25,
+    "riduzioneMensile": 0.03,
+    "meseInizioRiduzione": 6,
+    "meseInizioRiduzioneOver55": 8,
+    "durataMassimaMesi": 24,
+    "settimaneMinime": 13,
+    "fonte": {
+      "label": "INPS – Circolare n. 4 del 28 gennaio 2026",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/01/Circolare_15147/Allegati/16539_Circolare-numero-4-del-28-01-2026.pdf"
+    },
+    "verificato": true,
+    "nota": "Soglia e massimale 2026 riscontrati sulla scheda NASpI di inps.it (Circolare INPS n. 4/2026). Regole di calcolo: D.Lgs. 22/2015, art. 4. La riduzione del 3% è applicata in modo progressivo sull'importo del mese precedente.",
+    "fonteScheda": {
+      "label": "INPS – Scheda NASpI",
+      "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50593.naspi-indennit-mensile-di-disoccupazione.html"
+    }
+  },
+  "assegnoUnico": {
+    "iseeMin": 17468.51,
+    "iseeMax": 46582.71,
+    "figlioMinore": {
+      "max": 203.8,
+      "min": 58.3
+    },
+    "figlio18_21": {
+      "max": 99.1,
+      "min": 29.1
+    },
+    "maggiorazioneTerzoFiglio": {
+      "max": 99.1,
+      "min": 17.49
+    },
+    "maggiorazioneUnderUnoPercent": 0.5,
+    "maggiorazioneMadreUnder21": 23.3,
+    "forfettariaQuattroFigli": 150,
+    "disabilitaMinore": {
+      "media": 99.1,
+      "grave": 110.6,
+      "nonAutosufficienza": 122.3
+    },
+    "fonte": {
+      "label": "INPS – Circolare n. 7 del 30 gennaio 2026",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/01/Circolare_15152/Allegati/16548_Circolare-numero-7-del-30-01-2026.pdf"
+    },
+    "verificato": false,
+    "nota": "Confermati sul testo della Circolare INPS n. 7/2026 e su inps.it: importo base per figlio minorenne (58,30–203,80 €), soglie ISEE 2026, +50% sotto 1 anno, +50% tra 1 e 3 anni con almeno 3 figli e ISEE fino a 46.582,71 €, forfettaria di 150 € con 4 o più figli. Gli importi di maggiorazione dal terzo figlio, disabilità, madre under 21 e figli 18–21 sono nell'Allegato 1 della circolare, non consultato: valori da fonti secondarie concordanti, da ricontrollare. La riduzione tra le soglie ISEE è approssimata in modo lineare; la maggiorazione per genitori entrambi lavoratori non è inclusa."
+  },
+  "tfr": {
+    "divisore": 13.5,
+    "contributoAggiuntivo": 0.005,
+    "rivalutazioneFissa": 0.015,
+    "quotaInflazione": 0.75,
+    "impostaSostitutivaRivalutazione": 0.17,
+    "fonte": {
+      "label": "Codice civile, art. 2120",
+      "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:regio.decreto:1942-03-16;262~art2120"
+    },
+    "verificato": true,
+    "nota": "Il contributo dello 0,50% (L. 297/1982) viene detratto dalla quota annua. La tassazione separata è stimata con l'aliquota media IRPEF sul reddito di riferimento."
+  }
+}

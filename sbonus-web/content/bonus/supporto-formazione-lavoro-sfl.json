@@ -1,0 +1,83 @@
+{
+  "slug": "supporto-formazione-lavoro-sfl",
+  "titolo": "Supporto per la Formazione e il Lavoro (SFL) 2026: 500 euro al mese",
+  "descrizione": "SFL 2026: indennità di 500 euro al mese per chi ha 18-59 anni, ISEE fino a 10.140 euro e partecipa a corsi o politiche attive del lavoro.",
+  "intro": "Il Supporto per la Formazione e il Lavoro è un'indennità mensile pagata dall'INPS a chi, tra i 18 e i 59 anni, partecipa a corsi di formazione, progetti utili alla collettività, servizio civile o altre attività per trovare lavoro. Il pagamento spetta solo per i mesi di partecipazione effettiva. È pensato soprattutto per chi vive in famiglie con ISEE basso ma non rientra nell'Assegno di Inclusione.",
+  "categoria": "lavoro",
+  "ente": "INPS / Ministero del Lavoro",
+  "evidenza": {
+    "valore": "500 €",
+    "etichetta": "al mese durante i corsi"
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Singoli componenti di nuclei familiari, di età tra 18 e 59 anni, con i requisiti economici e di residenza",
+    "Componenti di nuclei ADI non inclusi nella scala di equivalenza ADI, che aderiscono volontariamente ai percorsi di avviamento al lavoro"
+  ],
+  "requisiti": [
+    "Età tra 18 e 59 anni",
+    "Cittadinanza italiana o UE (o familiare con diritto di soggiorno), permesso UE per soggiornanti di lungo periodo, protezione internazionale o apolide",
+    "Residenza in Italia da almeno 5 anni, gli ultimi 2 continuativi",
+    "ISEE in corso di validità non superiore a 10.140 euro",
+    "Reddito familiare inferiore a 10.140 euro annui moltiplicati per la scala di equivalenza ISEE",
+    "Patrimonio immobiliare (esclusa la casa di abitazione fino a 150.000 euro IMU) non oltre 30.000 euro; patrimonio mobiliare sotto 6.000/8.000/10.000 euro in base ai componenti, con le maggiorazioni previste",
+    "Nessuna auto oltre 1.600 cc o moto oltre 250 cc immatricolata negli ultimi 36 mesi, nessuna barca o aereo",
+    "Nessuna condanna definitiva nei 10 anni precedenti e nessuna disoccupazione da dimissioni volontarie nei 12 mesi precedenti (salvo giusta causa)",
+    "Incompatibile con altri strumenti pubblici di sostegno al reddito per la disoccupazione (es. NASpI)"
+  ],
+  "importi": [
+    "500 euro al mese, pagati con bonifico mensile dell'INPS",
+    "Spetta solo in caso di effettiva partecipazione alle attività",
+    "Massimo 12 mesi, prorogabili di altri 12 se alla scadenza è in corso un percorso formativo"
+  ],
+  "comeFare": [
+    "Avere un ISEE valido",
+    "Presentare la domanda online sul sito INPS (oppure tramite patronato o Contact center 803 164 / 06 164 164), rilasciando la DID",
+    "Registrarsi su SIISL e firmare il Patto di Attivazione Digitale, indicando almeno tre agenzie per il lavoro",
+    "Firmare il Patto di servizio personalizzato quando si viene convocati dal servizio per il lavoro",
+    "Iscriversi e partecipare a un corso o altra attività: l'indennità viene pagata solo per la partecipazione effettiva"
+  ],
+  "documenti": [
+    "ISEE in corso di validità",
+    "Documento d'identità e codice fiscale",
+    "Permesso di soggiorno UE per soggiornanti di lungo periodo o titolo di protezione (per cittadini extra UE)",
+    "Per chi ha 18-29 anni senza obbligo scolastico assolto: iscrizione a un percorso di istruzione per adulti",
+    "Credenziali SPID/CIE per domanda e SIISL"
+  ],
+  "scadenze": "Domanda presentabile tutto l'anno, senza una scadenza fissa.",
+  "faq": [
+    {
+      "q": "Posso prendere l'SFL insieme alla NASpI?",
+      "a": "No, l'SFL è incompatibile con gli altri strumenti pubblici di sostegno al reddito per la disoccupazione."
+    },
+    {
+      "q": "L'indennità arriva anche se non frequento il corso?",
+      "a": "No, i 500 euro spettano solo se si partecipa davvero alle attività; altrimenti si decade."
+    },
+    {
+      "q": "Chi è in una famiglia che prende l'ADI può chiedere l'SFL?",
+      "a": "Sì, se non è conteggiato nella scala di equivalenza ADI e aderisce volontariamente ai percorsi di lavoro."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS – Scheda Supporto per la Formazione e il Lavoro (SFL)",
+      "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.supporto-per-la-formazione-e-il-lavoro-sfl-.html"
+    }
+  ],
+  "tags": [
+    "sfl",
+    "supporto formazione lavoro",
+    "formazione",
+    "siisl",
+    "corsi",
+    "isee",
+    "500 euro"
+  ],
+  "noteRedazione": "Rispetto alla bozza: importo aggiornato da 350 a 500 euro al mese e ISEE da 6.000 a 10.140 euro; aggiunta la proroga di 12 mesi; il requisito 'non beneficiario di ADI' è stato precisato (possibile per chi non è nella scala di equivalenza ADI); tolto il programma GOL come requisito, non presente nella scheda INPS.",
+  "origineApp": "sfl"
+}

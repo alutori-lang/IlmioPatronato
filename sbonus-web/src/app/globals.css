@@ -1,0 +1,207 @@
+@import "tailwindcss";
+
+/* Stile "Sole" con i blu dell'app Smart Bonus Italia: testata a gradiente blu,
+   azzurro chiaro per le evidenziazioni, corallo per le azioni.
+   Look deliberatamente chiaro e allegro: un solo tema, colori sempre espliciti. */
+:root {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f4f2fb;
+  --ink: #1d1b2f;
+  --ink-2: #48465c;
+  --ink-3: #6b6980;
+  --line: #e9e6f3;
+  --sun: #bbdefb;
+  --sun-2: #e3f2fd;
+  --sun-ink: #bbdefb;
+  --blu-1: #0d47a1;
+  --blu-2: #1565c0;
+  --blu-3: #1976d2;
+  --coral: #e8472b;
+  --coral-2: #cf3a20;
+  --brand: #3b5bdb;
+  --brand-ink: #ffffff;
+  --brand-2: #2f4ac0;
+  --brand-soft: #e8edff;
+  --accent: #1f8a5b;
+  --accent-soft: #e2f5ec;
+  --warn: #a35a00;
+  --warn-soft: #fff1d6;
+  --danger: #c8321b;
+  --danger-soft: #ffe8e3;
+  --ring: #3b5bdb66;
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-2: var(--brand-2);
+  --color-brand-soft: var(--brand-soft);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-sun: var(--sun);
+  --color-sun-2: var(--sun-2);
+  --color-sun-ink: var(--sun-ink);
+  --color-coral: var(--coral);
+  --color-coral-2: var(--coral-2);
+  --color-blu-1: var(--blu-1);
+  --color-blu-2: var(--blu-2);
+  --color-blu-3: var(--blu-3);
+  --font-sans: var(--font-nunito), ui-rounded, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+
+:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-rise {
+  animation: rise 0.35s ease-out both;
+}
+
+/* Testo editoriale generato da Markdown (guide) */
+.prose-sb {
+  color: var(--ink-2);
+  line-height: 1.75;
+  font-size: 1.0625rem;
+}
+.prose-sb > * + * {
+  margin-top: 1.1em;
+}
+.prose-sb h2 {
+  color: var(--ink);
+  font-size: 1.55rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  margin-top: 2em;
+  scroll-margin-top: 6rem;
+}
+.prose-sb h3 {
+  color: var(--ink);
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin-top: 1.6em;
+}
+.prose-sb a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose-sb strong {
+  color: var(--ink);
+}
+.prose-sb ul,
+.prose-sb ol {
+  padding-left: 1.4em;
+}
+.prose-sb ul {
+  list-style: disc;
+}
+.prose-sb ol {
+  list-style: decimal;
+}
+.prose-sb li + li {
+  margin-top: 0.4em;
+}
+.prose-sb blockquote {
+  background: var(--sun-2);
+  border-radius: 18px;
+  padding: 0.9em 1.1em;
+  color: var(--ink);
+}
+.prose-sb table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  display: block;
+  overflow-x: auto;
+}
+.prose-sb th,
+.prose-sb td {
+  border: 1px solid var(--line);
+  padding: 0.55em 0.75em;
+  text-align: left;
+}
+.prose-sb th {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Evidenziatore giallo per le parole chiave dei titoli */
+.hl {
+  background: var(--sun);
+  padding: 0 0.22em;
+  border-radius: 0.3em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.hl-dark {
+  background: var(--sun);
+  color: var(--ink);
+  padding: 0 0.22em;
+  border-radius: 0.3em;
+}
+
+/* Ombra "a gradino" tipica dello stile Sole */
+.shadow-step {
+  box-shadow: 0 10px 0 -4px rgba(29, 27, 47, 0.16);
+}
+
+/* Testata blu come nell'app: gradiente da sinistra a destra */
+.bg-blu {
+  background: linear-gradient(90deg, var(--blu-1), var(--blu-2) 55%, var(--blu-3));
+}

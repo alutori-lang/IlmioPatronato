@@ -1,0 +1,92 @@
+{
+  "slug": "decontribuzione-sud",
+  "titolo": "Decontribuzione Sud PMI 2025-2029",
+  "descrizione": "Le micro, piccole e medie imprese con dipendenti stabili nelle 8 regioni del Sud pagano meno contributi: nel 2026 sconto del 20%, max 125 € al mese.",
+  "intro": "La legge di Bilancio 2025 (L. 207/2024, commi 406 e seguenti) ha introdotto un esonero contributivo parziale e decrescente, dal 2025 al 2029, per le micro, piccole e medie imprese con lavoratori a tempo indeterminato occupati in Abruzzo, Molise, Campania, Basilicata, Sicilia, Puglia, Calabria e Sardegna. Per il 2026 lo sconto è del 20% dei contributi previdenziali, con un tetto di 125 € al mese per lavoratore. Sostituisce la vecchia Decontribuzione Sud al 30%, che ha coperto i periodi fino al 31 dicembre 2024.",
+  "categoria": "lavoro",
+  "ente": "INPS",
+  "evidenza": {
+    "valore": "20%",
+    "etichetta": "dei contributi nel 2026 (max 125 € al mese)"
+  },
+  "novita": {
+    "data": "2026-07-27",
+    "nota": "INPS (circolare n. 80/2026) ha esteso la vecchia Decontribuzione Sud 2022-2024 agli intermediari assicurativi che ne erano esclusi, con crediti utilizzabili entro il 31 dicembre 2026."
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Datori di lavoro privati che sono micro, piccole o medie imprese secondo la definizione UE (meno di 250 dipendenti e rispetto delle soglie di fatturato o bilancio)",
+    "Per rapporti di lavoro a tempo indeterminato con sede di lavoro in Abruzzo, Molise, Campania, Basilicata, Sicilia, Puglia, Calabria o Sardegna",
+    "Anche imprese con sede legale fuori da queste regioni, per i lavoratori impiegati nelle sedi del Sud"
+  ],
+  "requisiti": [
+    "Impresa di dimensione micro, piccola o media",
+    "Rapporto di lavoro a tempo indeterminato già in essere al 31 dicembre dell'anno precedente (per il 2026: assunto entro il 31 dicembre 2025)",
+    "Sede di lavoro collocata in una delle otto regioni ammesse",
+    "Esclusi il settore agricolo, il lavoro domestico e l'apprendistato",
+    "Rispetto dei limiti 'de minimis': esclusi i datori che hanno ricevuto aiuti de minimis per oltre 300.000 € nell'arco di tre anni",
+    "Regolarità contributiva e rispetto delle condizioni generali per gli incentivi"
+  ],
+  "importi": [
+    "2025: 25% dei contributi previdenziali, massimo 145 € al mese per 12 mensilità",
+    "2026: 20%, massimo 125 € al mese per 12 mensilità",
+    "2027: 20%, massimo 125 € al mese",
+    "2028: 20%, massimo 100 € al mese",
+    "2029: 15%, massimo 75 € al mese"
+  ],
+  "comeFare": [
+    "1. Non serve una domanda: l'INPS gestisce l'agevolazione tramite il codice di autorizzazione '0L' attribuito alle posizioni aziendali interessate (prorogato fino al 31 dicembre 2029)",
+    "2. Le aziende con sede legale fuori dalle regioni ammesse ma lavoratori nelle sedi del Sud seguono le indicazioni della circolare INPS 32/2025 per l'attribuzione del codice",
+    "3. Il datore di lavoro (o il consulente del lavoro) indica l'esonero nella denuncia mensile UniEmens per ciascun lavoratore avente diritto",
+    "4. Verificare il rispetto del massimale de minimis prima di applicare lo sgravio"
+  ],
+  "documenti": [
+    "Denunce contributive UniEmens",
+    "Documentazione sulla dimensione d'impresa (dipendenti e fatturato/bilancio)",
+    "Registrazione degli aiuti de minimis ricevuti nel triennio"
+  ],
+  "scadenze": "Misura in vigore dal 2025 al 2029, con percentuali decrescenti. Per la vecchia Decontribuzione Sud 2022-2024 estesa agli intermediari assicurativi, i crediti vanno fatti valere entro il 31 dicembre 2026.",
+  "faq": [
+    {
+      "q": "Lo sconto è ancora del 30%?",
+      "a": "No. Il 30% valeva fino al 31 dicembre 2024. Dal 2025 c'è la Decontribuzione Sud PMI: 25% nel 2025, 20% nel 2026 e nel 2027, poi 20% con tetto più basso nel 2028 e 15% nel 2029."
+    },
+    {
+      "q": "Vale per i lavoratori assunti nel 2026?",
+      "a": "Per l'anno 2026 lo sconto riguarda i lavoratori a tempo indeterminato già assunti al 31 dicembre 2025. Chi viene assunto nel 2026 potrà rientrare nello sconto del 2027, se restano i requisiti."
+    },
+    {
+      "q": "Le grandi imprese possono usarla?",
+      "a": "La misura descritta è riservata a micro, piccole e medie imprese. Per le imprese più grandi la legge prevedeva una disciplina separata, subordinata all'autorizzazione della Commissione europea: verificate con INPS lo stato attuale."
+    },
+    {
+      "q": "Si cumula con il Bonus Giovani o il Bonus Donne 2026?",
+      "a": "No, per lo stesso lavoratore non si possono cumulare: INPS lo precisa espressamente per gli esoneri del decreto Lavoro 2026."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS - Circolare n. 32 del 30 gennaio 2025 (Decontribuzione Sud PMI)",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2025/01/Circolare_14812/Allegati/15880_Circolare-numero-32-del-30-01-2025.pdf"
+    },
+    {
+      "label": "INPS - Comunicato stampa 27 luglio 2026 (circolare n. 80/2026)",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/comunicati-stampa/2026/07/Allegati/4153_CS_Esonero_giovani_under_36_e_Decontribuzione_sud.pdf"
+    }
+  ],
+  "tags": [
+    "decontribuzione sud",
+    "mezzogiorno",
+    "PMI",
+    "sgravio contributivo",
+    "de minimis",
+    "aziende",
+    "2026"
+  ],
+  "noteRedazione": "Bozza corretta: il 30% indicato era la vecchia Decontribuzione Sud (fino al 31/12/2024). Ora la misura è la 'Decontribuzione Sud PMI' (L. 207/2024, commi 406 e ss.), con percentuali e tetti per anno verificati sulla circolare INPS 32/2025; limitata a micro/PMI, aiuto de minimis, esclusi agricoltura, domestico e apprendistato. Non verificato: lo stato attuale della misura per le imprese con più di 250 dipendenti (la circolare 32/2025 la dava subordinata all'autorizzazione UE) e l'esistenza di circolari INPS specifiche per il 2026. Non confusa con il 'Bonus ZES' 2026 (circ. INPS 56/2026, per datori fino a 10 dipendenti che assumono over 35 disoccupati da 24 mesi), che non è trattato in questa scheda. Le regioni sono le 8 storiche: Marche e Umbria rientrano nella ZES unica ma non in questa decontribuzione secondo la circolare 32/2025.",
+  "origineApp": "decontribuzione_sud"
+}

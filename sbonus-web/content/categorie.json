@@ -1,0 +1,70 @@
+{
+  "categorie": [
+    {
+      "slug": "famiglia",
+      "nome": "Famiglia",
+      "descrizione": "Assegno unico, nuovi nati, asilo nido, maternità e congedi.",
+      "icona": "family"
+    },
+    {
+      "slug": "lavoro",
+      "nome": "Lavoro e disoccupazione",
+      "descrizione": "NASpI, DIS-COLL, formazione e misure per chi cerca lavoro.",
+      "icona": "work"
+    },
+    {
+      "slug": "casa",
+      "nome": "Casa",
+      "descrizione": "Detrazioni per lavori, mobili, affitto e garanzia mutuo prima casa.",
+      "icona": "home"
+    },
+    {
+      "slug": "sostegno",
+      "nome": "Sostegno al reddito",
+      "descrizione": "ADI, carte acquisti, bonus bollette e aiuti per i nuclei in difficoltà.",
+      "icona": "support"
+    },
+    {
+      "slug": "pensioni",
+      "nome": "Pensioni",
+      "descrizione": "Assegno sociale, integrazioni e prestazioni per gli anziani.",
+      "icona": "elderly"
+    },
+    {
+      "slug": "isee",
+      "nome": "ISEE",
+      "descrizione": "Come si ottiene l'ISEE e a quali agevolazioni dà accesso.",
+      "icona": "isee"
+    },
+    {
+      "slug": "fisco",
+      "nome": "Fisco",
+      "descrizione": "IRPEF, detrazioni, 730 e cuneo fiscale.",
+      "icona": "tax"
+    },
+    {
+      "slug": "inps",
+      "nome": "Guide INPS",
+      "descrizione": "Come usare i servizi online INPS e presentare le domande.",
+      "icona": "inps"
+    },
+    {
+      "slug": "salute",
+      "nome": "Salute",
+      "descrizione": "Esenzioni, bonus psicologo e prestazioni sanitarie.",
+      "icona": "health"
+    },
+    {
+      "slug": "studenti",
+      "nome": "Studenti",
+      "descrizione": "Borse di studio, carte per i giovani e diritto allo studio.",
+      "icona": "school"
+    },
+    {
+      "slug": "regionali",
+      "nome": "Agevolazioni regionali",
+      "descrizione": "Misure di Regioni e Comuni.",
+      "icona": "map"
+    }
+  ]
+}

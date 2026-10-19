@@ -1,0 +1,80 @@
+{
+  "slug": "maxi-deduzione-nuove-assunzioni",
+  "titolo": "Maxi-deduzione per nuove assunzioni (fino al 130% del costo)",
+  "descrizione": "Imprese e professionisti che aumentano i dipendenti a tempo indeterminato deducono il costo dei neoassunti maggiorato del 20% o 30%, fino al 2027.",
+  "intro": "Chi produce reddito d'impresa o di lavoro autonomo e aumenta il numero di dipendenti stabili può dedurre il costo dei nuovi assunti a tempo indeterminato maggiorato del 20%; la maggiorazione sale al 30% per alcune categorie di lavoratori più tutelati. L'agevolazione, nata con il D.Lgs. 216/2023, è stata prorogata dalla legge di Bilancio 2025 fino al periodo d'imposta 2027. Si applica direttamente in dichiarazione dei redditi, senza domanda.",
+  "categoria": "fisco",
+  "ente": "Agenzia delle Entrate",
+  "evidenza": {
+    "valore": "fino al 130%",
+    "etichetta": "del costo dei nuovi assunti, deducibile"
+  },
+  "novita": {
+    "data": "2025-01-20",
+    "nota": "Con la circolare n. 1/E l'Agenzia delle Entrate ha spiegato le regole della maggiorazione, prorogata fino al 2027 dalla legge di Bilancio 2025."
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Titolari di reddito d'impresa",
+    "Esercenti arti e professioni, anche in forma associata",
+    "Non spetta a chi è nel regime forfetario o comunque non determina il reddito in modo analitico"
+  ],
+  "requisiti": [
+    "Attività avviata da almeno un anno prima del periodo d'imposta agevolato",
+    "Reddito determinato in modo analitico (escluso il forfetario)",
+    "Aumento del numero di dipendenti a tempo indeterminato a fine periodo rispetto al periodo precedente",
+    "L'aumento dei dipendenti stabili deve essere accompagnato da un aumento del totale dei dipendenti, compresi quelli a termine"
+  ],
+  "importi": [
+    "Maggiorazione del 20% del costo del personale neoassunto a tempo indeterminato (deduzione pari al 120%)",
+    "Ulteriore 10% (deduzione pari al 130%) per assunzioni di lavoratori meritevoli di maggior tutela, tra cui persone con disabilità, donne con almeno due figli minori, donne vittime di violenza inserite in percorsi di protezione e giovani ammessi agli incentivi all'occupazione giovanile",
+    "Il beneficio è una minore tassazione in dichiarazione, non un contributo in denaro"
+  ],
+  "comeFare": [
+    "1. Verificare con il proprio consulente che l'incremento dei dipendenti a tempo indeterminato e di quelli totali sia rispettato a fine anno",
+    "2. Calcolare la maggiorazione secondo le regole della circolare 1/E/2025 dell'Agenzia delle Entrate",
+    "3. Indicare la deduzione maggiorata nella dichiarazione dei redditi relativa al periodo d'imposta (2025, 2026 o 2027)"
+  ],
+  "documenti": [
+    "Libro unico del lavoro e comunicazioni di assunzione (UniLav)",
+    "Prospetto del numero di dipendenti a inizio e fine periodo",
+    "Documentazione del costo del personale neoassunto",
+    "Eventuale documentazione dell'appartenenza del lavoratore alle categorie con maggiorazione al 30%"
+  ],
+  "scadenze": "Vale per i periodi d'imposta 2025, 2026 e 2027 (per chi ha l'anno solare); si applica in sede di dichiarazione dei redditi.",
+  "faq": [
+    {
+      "q": "Serve fare una domanda?",
+      "a": "No. La maggiorazione si applica direttamente nella dichiarazione dei redditi, rispettando i requisiti di incremento occupazionale."
+    },
+    {
+      "q": "Ne possono beneficiare i forfettari?",
+      "a": "No. L'agevolazione richiede che il reddito sia determinato in modo analitico, quindi il regime forfetario è escluso."
+    },
+    {
+      "q": "Esiste un bonus da 3.000 € per chi si trasferisce oltre 100 km?",
+      "a": "Non nei termini indicati da alcune fonti. La legge di Bilancio 2025 aveva previsto un'esenzione fiscale (non un bonus) su somme pagate dal datore per affitto e manutenzione della casa ai neoassunti del 2025 trasferiti oltre 100 km: verificate la situazione specifica con un professionista o con l'Agenzia delle Entrate."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "Agenzia delle Entrate - Comunicato stampa del 20 gennaio 2025 (nuove assunzioni)",
+      "url": "https://www.agenziaentrate.gov.it/portale/-/comunicato-stampa-del-20-gennaio-2025-nuove-assunzioni"
+    }
+  ],
+  "tags": [
+    "maxi deduzione",
+    "nuove assunzioni",
+    "120%",
+    "130%",
+    "imprese",
+    "professionisti",
+    "legge di bilancio 2025"
+  ],
+  "noteRedazione": "Bozza rinominata e riscritta: 'Bonus Lavoro 2025 - Nuovo Decreto' non è il nome di una misura ufficiale. Mantenuta e verificata (comunicato AdE 20/01/2025) la maxi-deduzione 120-130%, prorogata al 2027 dalla L. 207/2024 (commi 399-400). Categoria cambiata in 'fisco'. Rimosso il 'bonus fino a 3.000 € per chi trasferisce la residenza oltre 100 km': secondo fonti (istruzioni 730/2026 AdE viste solo in anteprima di ricerca, e stampa di settore) si trattava di un'esenzione fino a 5.000 €/anno per due anni su somme per affitto/manutenzione, per neoassunti a tempo indeterminato nel 2025 con reddito da lavoro dipendente 2024 non superiore a 35.000 €, non prorogata per le assunzioni 2026: non verificato direttamente su una pagina ufficiale aperta, quindi non riportato nei requisiti. Rimossa anche la 'conferma della decontribuzione per giovani e donne', trattata nelle schede bonus-assunzione-giovani e bonus-donne. La circolare 1/E/2025 non è stata letta direttamente: i dati vengono dal comunicato AdE che la riassume. Non verificato se la legge di Bilancio 2026 abbia modificato la misura.",
+  "origineApp": "bonus_lavoro_2025"
+}

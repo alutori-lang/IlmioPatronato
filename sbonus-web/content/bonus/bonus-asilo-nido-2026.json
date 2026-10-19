@@ -1,0 +1,93 @@
+{
+  "slug": "bonus-asilo-nido-2026",
+  "titolo": "Bonus Asilo Nido 2026",
+  "descrizione": "Contributo INPS fino a 3.600 euro l'anno per la retta del nido o per l'assistenza a casa dei bambini sotto i 3 anni con gravi patologie croniche.",
+  "intro": "Il Bonus Asilo Nido rimborsa le rette di nidi pubblici e privati autorizzati per i bambini sotto i tre anni, oppure finanzia forme di assistenza a casa per i bambini con gravi patologie croniche. Dal 2026 la domanda resta valida fino ad agosto dell'anno in cui il bambino compie tre anni, quindi non va rifatta ogni anno. L'importo dipende dall'ISEE per prestazioni familiari (al netto dell'Assegno Unico) e dalla data di nascita del bambino.",
+  "categoria": "famiglia",
+  "ente": "INPS",
+  "evidenza": {
+    "valore": "3.600 €",
+    "etichetta": "all'anno (massimo)"
+  },
+  "novita": {
+    "data": "2026-03-27",
+    "nota": "Fino a 3.600 € l'anno per i bambini nati dal 2024"
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Il genitore che paga la retta di un nido pubblico o privato autorizzato per un figlio con meno di tre anni",
+    "Il genitore che convive con un figlio sotto i tre anni con gravi patologie croniche che non può frequentare il nido (contributo per supporto a casa)"
+  ],
+  "requisiti": [
+    "Cittadinanza italiana o UE; per i cittadini extra UE, permesso UE per soggiornanti di lungo periodo o uno degli altri permessi indicati dall'INPS (ad esempio lavoro, motivi familiari, protezione speciale)",
+    "Residenza in Italia",
+    "Il servizio deve essere un nido, micronido, sezione primavera, spazio gioco o servizio educativo domiciliare con regolare autorizzazione regionale",
+    "Per il supporto a casa: attestazione del pediatra di libera scelta sulla grave patologia cronica",
+    "Chi ottiene il contributo nido anche per un solo mese non può chiedere nello stesso anno quello per il supporto a casa"
+  ],
+  "importi": [
+    "Bambini nati dal 1° gennaio 2024: 3.600 euro l'anno con ISEE fino a 40.000 euro; 1.500 euro con ISEE oltre 40.000 euro o senza ISEE",
+    "Bambini nati prima del 1° gennaio 2024: 3.000 euro con ISEE fino a 25.000,99 euro; 2.500 euro con ISEE da 25.001 a 40.000 euro; 1.500 euro oltre 40.000 euro o senza ISEE",
+    "Il contributo nido è pagato in 11 rate mensili e non può superare la spesa effettivamente sostenuta",
+    "Il contributo per il supporto a casa è pagato in un'unica soluzione"
+  ],
+  "comeFare": [
+    "Richiedi l'ISEE per prestazioni familiari del minore",
+    "Fatti dare dal nido gli estremi dell'autorizzazione della struttura",
+    "Presenta la domanda sul sito INPS (servizio Bonus nido) con SPID, CIE o CNS, oppure tramite patronato",
+    "Scegli i mesi per cui chiedi il contributo",
+    "Carica ogni mese la fattura o ricevuta e la prova del pagamento tracciabile",
+    "Negli anni successivi accedi alla stessa domanda e seleziona i nuovi mesi, senza fare una nuova istanza"
+  ],
+  "documenti": [
+    "ISEE per prestazioni familiari in corso di validità",
+    "Fattura (o ricevuta, o avviso di pagamento per i nidi comunali) intestata al genitore o al bambino, con mese di riferimento",
+    "Prova del pagamento tracciabile: bonifico, carta o POS, PagoPA, bollettino postale, assegno non trasferibile",
+    "Estremi dell'autorizzazione della struttura",
+    "Per il supporto a casa: attestazione del pediatra di libera scelta",
+    "Per i cittadini extra UE: estremi del permesso di soggiorno"
+  ],
+  "scadenze": "La domanda resta valida fino ad agosto dell'anno in cui il bambino compie tre anni. Le ricevute di pagamento dei mesi del 2026 vanno caricate entro il 30 aprile 2027, a pena di decadenza.",
+  "faq": [
+    {
+      "q": "Devo rifare la domanda ogni anno?",
+      "a": "No, dal 2026 la domanda vale fino ad agosto dell'anno in cui il bambino compie tre anni. Ogni anno basta selezionare i nuovi mesi e caricare le ricevute."
+    },
+    {
+      "q": "Quali spese vengono rimborsate?",
+      "a": "La retta mensile, l'eventuale quota per i pasti, l'imposta di bollo e l'IVA agevolata. Non sono rimborsati iscrizione, pre-scuola, post-scuola e IVA ordinaria."
+    },
+    {
+      "q": "Posso pagare il nido in contanti?",
+      "a": "No, il rimborso spetta solo per pagamenti tracciabili, come bonifico, carta, PagoPA, bollettino postale o assegno non trasferibile."
+    },
+    {
+      "q": "Vale anche per i centri gioco con il genitore presente?",
+      "a": "No, sono esclusi i centri per bambini e famiglie in cui il bambino è accompagnato da un adulto, oltre ai servizi ricreativi."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS - Circolare n. 29 del 27 marzo 2026 (Bonus nido)",
+      "url": "https://servizi2.inps.it/Servizi/CircMessStd/maestro.ashx?idAllegato=16651&flagOriginale=1"
+    },
+    {
+      "label": "INPS - Bonus asilo nido 2026: attivo il servizio per la domanda",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.03.bonus-asilo-nido-2026-attivo-il-servizio-per-la-domanda.html"
+    }
+  ],
+  "tags": [
+    "bonus nido",
+    "asilo nido",
+    "bambini 0-3 anni",
+    "ISEE",
+    "INPS",
+    "2026"
+  ],
+  "noteRedazione": "La bozza riportava soglie 2025 (25.000/40.000 euro) per tutti e la scadenza 31 dicembre 2026: per i nati dal 2024 la soglia è unica a 40.000 euro e il termine reale è quello per caricare le ricevute (30 aprile dell'anno dopo). A luglio 2026 l'INPS ha annunciato ulteriori semplificazioni con il Decreto lavoro, che non sono state verificate nel dettaglio.",
+  "origineApp": "bonus_nido"
+}

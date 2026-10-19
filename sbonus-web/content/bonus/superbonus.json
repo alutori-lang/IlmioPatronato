@@ -1,0 +1,95 @@
+{
+  "slug": "superbonus",
+  "titolo": "Superbonus: chiuso nel 2026, resta solo nelle zone del sisma",
+  "descrizione": "Il Superbonus ordinario (70% nel 2024, 65% nel 2025) non è stato prorogato per il 2026. Il 110% resta solo per alcuni lavori nelle aree terremotate.",
+  "intro": "Il Superbonus dell'art. 119 del DL 34/2020 è sceso al 70% per le spese 2024 e al 65% per quelle 2025, in quest'ultimo caso solo per i lavori già avviati entro il 15 ottobre 2024. La Legge di Bilancio 2026 (L. 199/2025) non lo ha rinnovato: per le spese sostenute nel 2026 la versione ordinaria non è più disponibile. Una deroga resta per i comuni di Abruzzo, Lazio, Marche e Umbria colpiti dai sismi del 2009 e dal 2016, dove per le spese 2026 vale ancora il 110%, ma solo in casi specifici e con sconto in fattura o cessione del credito. Per gli altri lavori del 2026 restano i bonus ordinari, ad esempio la ristrutturazione al 50% sull'abitazione principale e al 36% negli altri casi.",
+  "categoria": "casa",
+  "ente": "Agenzia delle Entrate",
+  "evidenza": {
+    "valore": "Scaduto",
+    "etichetta": "Superbonus ordinario dal 2026"
+  },
+  "novita": {
+    "data": "2026-02-06",
+    "nota": "Il dossier della Camera sulla Legge di Bilancio 2026 conferma che per le spese 2026 il 110% resta solo nei comuni colpiti dai sismi del Centro Italia, nei casi previsti e con opzione per sconto o cessione."
+  },
+  "stato": "scaduto",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Superbonus ordinario: nessun nuovo beneficiario per le spese sostenute dal 1° gennaio 2026",
+    "Chi ha sostenuto spese nel 2024 (70%) o nel 2025 (65%) rispettando le condizioni continua a recuperare le quote annuali già maturate",
+    "Spese 2026 al 110%: solo interventi nei comuni di Abruzzo, Lazio, Marche e Umbria colpiti dai sismi del 6 aprile 2009 e dal 24 agosto 2016 con stato di emergenza dichiarato, nei casi previsti dalla legge"
+  ],
+  "requisiti": [
+    "Per le spese 2025 (65%): lavori già avviati entro il 15 ottobre 2024, ad esempio con CILAS presentata o, nei condomini, delibera assembleare approvata entro tale data",
+    "Per il 110% nel 2026 nelle aree del sisma: immobili danneggiati dagli eventi sismici indicati, nei casi disciplinati dall'art. 2, comma 3-ter.1, del DL 11/2023",
+    "Per il 110% nel 2026: esercizio obbligatorio dell'opzione per lo sconto in fattura o la cessione del credito",
+    "Nelle aree del sisma il 110% spetta solo sulla parte di spesa che supera il contributo pubblico per la ricostruzione"
+  ],
+  "importi": [
+    "Spese 2023: 110% (in alcuni casi 90%); spese 2024: 70%; spese 2025: 65% solo alle condizioni indicate",
+    "Spese 2026: nessuna detrazione Superbonus ordinaria",
+    "Spese 2026 nelle aree del sisma 2009/2016: 110% solo nei casi previsti",
+    "In alternativa, per le spese 2026: detrazione ristrutturazione al 50% sull'abitazione principale (proprietari o titolari di diritto reale) e al 36% negli altri casi, fino a 96.000 euro per unità immobiliare"
+  ],
+  "comeFare": [
+    "Se hai lavori del 2024 o 2025 già agevolati, continua a indicare le quote residue nella dichiarazione dei redditi",
+    "Per nuovi lavori nel 2026 valuta con un tecnico i bonus ordinari (ristrutturazione, ecobonus, sismabonus)",
+    "Se l'immobile è in un comune del cratere sismico 2009 o 2016, verifica con il tecnico e con l'Ufficio speciale per la ricostruzione se l'intervento rientra nei casi ammessi al 110%"
+  ],
+  "documenti": [
+    "Per le quote residue: documentazione dei lavori già agevolati (fatture, bonifici, asseverazioni, CILAS)",
+    "Per le aree del sisma: pratica di ricostruzione e documentazione del contributo pubblico ricevuto"
+  ],
+  "scadenze": "Superbonus ordinario terminato con le spese sostenute entro il 31 dicembre 2025. Nelle aree del sisma 2009/2016 il 110% vale per le spese sostenute nel 2026, solo nei casi previsti.",
+  "faq": [
+    {
+      "q": "Nel 2026 posso ancora avere il Superbonus al 70% o al 65%?",
+      "a": "No. Il 70% riguardava le spese 2024 e il 65% quelle 2025. La Legge di Bilancio 2026 non ha previsto proroghe per le spese del 2026."
+    },
+    {
+      "q": "Ho fatto lavori nel 2025 al 65%: perdo la detrazione?",
+      "a": "No. Se hai rispettato le condizioni, continui a recuperare le quote annuali già maturate nelle dichiarazioni dei prossimi anni."
+    },
+    {
+      "q": "Esiste ancora il 110%?",
+      "a": "Solo per le spese 2026 su interventi nei comuni di Abruzzo, Lazio, Marche e Umbria colpiti dai terremoti del 2009 e dal 2016, nei casi previsti dalla legge e con sconto in fattura o cessione del credito."
+    },
+    {
+      "q": "Cosa posso usare per i lavori di casa nel 2026?",
+      "a": "I bonus ordinari. Per la ristrutturazione: 50% sull'abitazione principale per proprietari o titolari di diritto reale, 36% negli altri casi, con tetto di 96.000 euro per unità immobiliare."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "Agenzia delle Entrate - Superbonus",
+      "url": "https://www.agenziaentrate.gov.it/portale/superbonus-110-"
+    },
+    {
+      "label": "Camera dei deputati - Dossier Legge di Bilancio 2026 (L. 199/2025)",
+      "url": "https://documenti.camera.it/leg19/dossier/pdf/ID0014evol3.pdf"
+    },
+    {
+      "label": "Camera dei deputati - Bonus edilizi e tassazione immobiliare",
+      "url": "https://temi.camera.it/leg19/temi/19_tl18_tassazione_immobili.html"
+    },
+    {
+      "label": "Gazzetta Ufficiale - comma 8-ter.1 art. 119 DL 34/2020 (110% aree sisma per le spese 2026)",
+      "url": "https://www.gazzettaufficiale.it/atto/serie_generale/caricaArticolo?art.versione=1&art.idGruppo=1&art.flagTipoArticolo=0&art.codiceRedazionale=25A04549&art.idArticolo=4&art.idSottoArticolo=1&art.idSottoArticolo1=10&art.dataPubblicazioneGazzetta=2025-08-09&art.progressivo=0"
+    }
+  ],
+  "tags": [
+    "superbonus",
+    "superbonus 2026",
+    "sisma",
+    "110",
+    "condominio",
+    "bonus casa",
+    "legge di bilancio 2026"
+  ],
+  "noteRedazione": "Bozza riscritta. Il titolo '70% (2025)' era sbagliato: il 70% riguarda le spese 2024, il 65% le spese 2025 con lavori avviati entro il 15/10/2024. Stato 'scaduto' perché la L. 199/2025 non proroga il Superbonus ordinario per il 2026; la scadenza '31 dicembre 2026' della bozza era errata, come anche la 'detrazione in 4 quote' presentata come regola generale. La pagina Superbonus dell'Agenzia non ha una data di aggiornamento visibile e non parla del 2026. Il 110% 2026 per le aree del sisma è confermato dal dossier della Camera e dal testo pubblicato in Gazzetta Ufficiale il 9/8/2025; non ho identificato con certezza numero e titolo di quell'atto, quindi non li indico. Lo slug resta 'superbonus-70' anche se il contenuto descrive lo stato attuale del Superbonus.",
+  "origineApp": "superbonus_70"
+}

@@ -1,0 +1,83 @@
+{
+  "slug": "bonus-mobili-elettrodomestici-2026",
+  "titolo": "Bonus Mobili ed Elettrodomestici 2026",
+  "descrizione": "Detrazione IRPEF del 50% su mobili e grandi elettrodomestici per casa ristrutturata: tetto 5.000 euro nel 2026, recupero in 10 anni.",
+  "intro": "Chi ristruttura casa può detrarre metà della spesa per arredarla con mobili nuovi e grandi elettrodomestici efficienti. Per gli acquisti fatti nel 2026 la detrazione è del 50% su un massimo di 5.000 euro per ogni immobile ristrutturato. Serve che i lavori siano iniziati dal 1° gennaio 2025 in poi e prima dell'acquisto. Il bonus si recupera nella dichiarazione dei redditi in dieci anni.",
+  "categoria": "casa",
+  "ente": "Agenzia delle Entrate",
+  "evidenza": {
+    "valore": "50%",
+    "etichetta": "su spese fino a 5.000 €"
+  },
+  "novita": {
+    "data": "2025-12-30",
+    "nota": "Confermato per gli acquisti del 2026, fino a 5.000 €"
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Contribuenti che beneficiano della detrazione per un intervento di recupero edilizio sull'immobile da arredare"
+  ],
+  "requisiti": [
+    "Intervento di recupero edilizio agevolato iniziato a partire dal 1° gennaio dell'anno precedente all'acquisto (per acquisti 2026: lavori iniziati dal 1° gennaio 2025)",
+    "Data di inizio lavori anteriore alla data di acquisto dei beni",
+    "Mobili nuovi (es. letti, armadi, cassettiere, librerie, scrivanie, tavoli, sedie, divani, materassi, apparecchi di illuminazione)",
+    "Grandi elettrodomestici nuovi con classe minima: forni classe A, lavatrici/lavasciugatrici/lavastoviglie classe E, frigoriferi e congelatori classe F",
+    "Pagamento con bonifico, carta di debito o carta di credito (esclusi contanti e assegni)"
+  ],
+  "importi": [
+    "Detrazione del 50% della spesa",
+    "Spesa massima di 5.000 euro per gli acquisti del 2026, per ciascuna unità abitativa ristrutturata",
+    "Detrazione ripartita in 10 quote annuali di pari importo"
+  ],
+  "comeFare": [
+    "Verificare che l'intervento edilizio sia iniziato prima dell'acquisto e dal 1° gennaio 2025 in poi",
+    "Acquistare i beni entro il 31 dicembre 2026 pagando con bonifico o carta",
+    "Farsi rilasciare fattura con natura, qualità e quantità dei beni",
+    "Conservare ricevute di pagamento e prova della data di inizio lavori",
+    "Indicare la spesa nel 730 o modello Redditi dell'anno successivo"
+  ],
+  "documenti": [
+    "Fatture d'acquisto con descrizione dei beni",
+    "Ricevuta del bonifico o dell'operazione con carta (ed estratto conto)",
+    "Titolo edilizio o comunicazione che attesti la data di inizio lavori, oppure autocertificazione se non è richiesto alcun titolo"
+  ],
+  "scadenze": "Acquisti effettuati entro il 31 dicembre 2026.",
+  "faq": [
+    {
+      "q": "Posso usare il bonus mobili senza ristrutturare?",
+      "a": "No. Il bonus è collegato a un intervento di recupero edilizio agevolato sullo stesso immobile, iniziato prima dell'acquisto dei beni."
+    },
+    {
+      "q": "Il limite di 5.000 euro vale per persona o per casa?",
+      "a": "Per ciascuna unità abitativa ristrutturata. Chi ristruttura due immobili può avere il tetto per ciascuno."
+    },
+    {
+      "q": "Posso pagare a rate o con finanziamento?",
+      "a": "Il pagamento deve essere tracciabile (bonifico o carta). Contanti e assegni non sono ammessi. Per i finanziamenti conviene verificare le istruzioni della guida AE."
+    },
+    {
+      "q": "Quali elettrodomestici sono ammessi?",
+      "a": "Grandi elettrodomestici nuovi con classe energetica minima: A per i forni, E per lavatrici, lavasciugatrici e lavastoviglie, F per frigoriferi e congelatori."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "Agenzia delle Entrate - Bonus mobili: che cos'è",
+      "url": "https://www.agenziaentrate.gov.it/portale/bonus-mobili/infogen-bonus-mobili-cittadini"
+    }
+  ],
+  "tags": [
+    "bonus mobili",
+    "elettrodomestici",
+    "arredamento",
+    "detrazione 50%",
+    "ristrutturazione",
+    "2026"
+  ],
+  "noteRedazione": "Percentuale 50%, tetto 5.000 euro per il 2026, classi energetiche e modalità di pagamento confermate su Agenzia Entrate. Non verificato l'obbligo di comunicazione ENEA per gli elettrodomestici né le regole sui pagamenti tramite finanziamento: omessi. Rispetto alla bozza: aggiunto il requisito dei lavori iniziati dal 1° gennaio 2025 e corrette le classi energetiche (non 'A+').",
+  "origineApp": "bonus_mobili"
+}

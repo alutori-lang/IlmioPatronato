@@ -1,0 +1,261 @@
+# Configurazione del pannello redazione SBonus (Decap CMS).
+# Documentazione: https://decapcms.org/docs/configuration-options/
+backend:
+  name: github
+  repo: alutori-lang/IlmioPatronato
+  branch: main
+  # Endpoint OAuth implementato nel sito (src/app/api/decap/*)
+  base_url: https://sbonus.it
+  auth_endpoint: api/decap/auth
+  commit_messages:
+    create: "sbonus(contenuti): crea {{collection}} «{{slug}}»"
+    update: "sbonus(contenuti): aggiorna {{collection}} «{{slug}}»"
+    delete: "sbonus(contenuti): elimina {{collection}} «{{slug}}»"
+    uploadMedia: "sbonus(media): carica {{path}}"
+    deleteMedia: "sbonus(media): elimina {{path}}"
+
+# Bozze → In revisione → Pronte: ogni modifica passa da una pull request
+publish_mode: editorial_workflow
+locale: it
+
+media_folder: sbonus-web/public/img/uploads
+public_folder: /img/uploads
+
+collections:
+  - name: bonus
+    label: Bonus
+    label_singular: Bonus
+    folder: sbonus-web/content/bonus
+    extension: json
+    format: json
+    create: true
+    slug: "{{fields.slug}}"
+    identifier_field: titolo
+    summary: "{{titolo}} — {{stato}} — pubblicato: {{pubblicato}}"
+    sortable_fields: [titolo, ultimoControllo, aggiornatoIl]
+    view_filters:
+      - { label: Pubblicati, field: pubblicato, pattern: true }
+      - { label: Bozze, field: pubblicato, pattern: false }
+      - { label: Da verificare, field: stato, pattern: da-verificare }
+    fields:
+      - { name: titolo, label: Titolo, widget: string }
+      - { name: slug, label: "Indirizzo (slug)", widget: string, pattern: ["^[a-z0-9]+(-[a-z0-9]+)*$", "Solo minuscole, numeri e trattini"] }
+      - { name: descrizione, label: "Descrizione breve (max 160 caratteri, usata da Google)", widget: text }
+      - { name: intro, label: Introduzione, widget: text, required: false }
+      - name: categoria
+        label: Categoria
+        widget: relation
+        collection: impostazioni
+        file: categorie
+        search_fields: ["categorie.*.nome"]
+        display_fields: ["categorie.*.nome"]
+        value_field: "categorie.*.slug"
+      - { name: ente, label: "Ente (es. INPS)", widget: string, required: false }
+      - name: evidenza
+        label: "Cifra in evidenza sulle card"
+        widget: object
+        required: false
+        fields:
+          - { name: valore, label: "Valore (es. 203,80 €)", widget: string }
+          - { name: etichetta, label: "Etichetta (es. al mese per figlio)", widget: string }
+      - name: novita
+        label: "Novità (compare in cima alla homepage)"
+        widget: object
+        required: false
+        fields:
+          - { name: data, label: "Data della novità ufficiale (AAAA-MM o AAAA-MM-GG)", widget: string, pattern: ['^\d{4}-\d{2}(-\d{2})?$', 'Formato AAAA-MM o AAAA-MM-GG'] }
+          - { name: nota, label: "Cosa è cambiato (una frase)", widget: string }
+      - name: stato
+        label: Stato della misura
+        widget: select
+        options:
+          - { label: Attivo, value: attivo }
+          - { label: In attesa di attuazione, value: in-attesa }
+          - { label: Scaduto, value: scaduto }
+          - { label: Da verificare, value: da-verificare }
+      - { name: verificato, label: "Verificato su fonti ufficiali", widget: boolean, default: false, hint: "Obbligatorio per pubblicare" }
+      - { name: pubblicato, label: "Pubblicato sul sito", widget: boolean, default: false, hint: "Il sito rifiuta la pubblicazione se la scheda non è verificata e non ha fonti e data di controllo" }
+      - { name: ultimoControllo, label: "Data ultimo controllo", widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false, required: false }
+      - { name: aggiornatoIl, label: "Data aggiornamento", widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false, required: false }
+      - { name: aChiSpetta, label: A chi spetta, widget: list, field: { name: voce, label: Voce, widget: string }, required: false }
+      - { name: requisiti, label: Requisiti, widget: list, field: { name: voce, label: Voce, widget: string }, required: false }
+      - { name: importi, label: Importi, widget: list, field: { name: voce, label: Voce, widget: string }, required: false }
+      - { name: comeFare, label: "Come fare domanda (passaggi)", widget: list, field: { name: passo, label: Passo, widget: string }, required: false }
+      - { name: documenti, label: Documenti necessari, widget: list, field: { name: voce, label: Voce, widget: string }, required: false }
+      - { name: scadenze, label: Scadenze, widget: text, required: false }
+      - name: faq
+        label: Domande frequenti
+        widget: list
+        required: false
+        fields:
+          - { name: q, label: Domanda, widget: string }
+          - { name: a, label: Risposta, widget: text }
+      - name: fonti
+        label: Fonti ufficiali
+        widget: list
+        fields:
+          - { name: label, label: Nome della fonte, widget: string }
+          - { name: url, label: "Indirizzo (https://...)", widget: string, pattern: ["^https://", "Deve iniziare con https://"] }
+      - { name: tags, label: Parole chiave, widget: list, required: false }
+      - { name: noteRedazione, label: "Note interne (non pubblicate)", widget: text, required: false }
+      - { name: origineApp, label: "ID nell'app (non modificare)", widget: hidden, required: false }
+
+  - name: guide
+    label: Guide e articoli
+    label_singular: Guida
+    folder: sbonus-web/content/guide
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{slug}}"
+    identifier_field: titolo
+    summary: "{{titolo}} — pubblicata: {{pubblicato}}"
+    fields:
+      - { name: titolo, label: Titolo, widget: string }
+      - { name: titoloSeo, label: "Titolo per Google (facoltativo)", widget: string, required: false }
+      - { name: descrizione, label: "Descrizione (max 160 caratteri)", widget: text }
+      - name: categoria
+        label: Categoria
+        widget: relation
+        collection: impostazioni
+        file: categorie
+        search_fields: ["categorie.*.nome"]
+        display_fields: ["categorie.*.nome"]
+        value_field: "categorie.*.slug"
+      - { name: pubblicato, label: Pubblicata, widget: boolean, default: false }
+      - { name: dataPubblicazione, label: Data di pubblicazione, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
+      - { name: dataAggiornamento, label: Data di aggiornamento, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false, required: false }
+      - { name: autore, label: Autore, widget: string, default: "Redazione SBonus", required: false }
+      - { name: tags, label: Parole chiave, widget: list, required: false }
+      - { name: correlati, label: "Guide correlate (slug)", widget: list, required: false }
+      - name: fonti
+        label: Fonti
+        widget: list
+        fields:
+          - { name: label, label: Nome della fonte, widget: string }
+          - { name: url, label: "Indirizzo (https://...)", widget: string, pattern: ["^https://", "Deve iniziare con https://"] }
+      - name: faq
+        label: Domande frequenti
+        widget: list
+        required: false
+        fields:
+          - { name: q, label: Domanda, widget: string }
+          - { name: a, label: Risposta, widget: text }
+      - { name: body, label: Testo, widget: markdown }
+
+  - name: impostazioni
+    label: Impostazioni
+    editor: { preview: false }
+    files:
+      - name: categorie
+        label: Categorie
+        file: sbonus-web/content/categorie.json
+        fields:
+          - name: categorie
+            label: Categorie
+            widget: list
+            summary: "{{fields.nome}}"
+            fields:
+              - { name: slug, label: "Slug", widget: string, pattern: ["^[a-z0-9]+(-[a-z0-9]+)*$", "Solo minuscole, numeri e trattini"] }
+              - { name: nome, label: Nome, widget: string }
+              - { name: descrizione, label: Descrizione, widget: text }
+              - name: icona
+                label: Icona
+                widget: select
+                options: [family, work, home, elderly, inps, tax, isee, school, health, support, map, calc, search, book, phone, euro]
+
+      - name: parametri
+        label: "Parametri calcolatori 2026"
+        file: sbonus-web/content/parametri/2026.json
+        fields:
+          - { name: anno, label: Anno, widget: number, value_type: int }
+          - { name: ultimoControllo, label: Data ultimo controllo, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
+          - name: irpef
+            label: IRPEF
+            widget: object
+            fields:
+              - name: scaglioni
+                label: Scaglioni
+                widget: list
+                fields:
+                  - { name: fino, label: "Fino a (€) — vuoto per l'ultimo", widget: number, value_type: float, required: false }
+                  - { name: aliquota, label: "Aliquota (es. 0.23)", widget: number, value_type: float }
+              - &fonte { name: fonte, label: Fonte, widget: object, fields: [{ name: label, label: Nome, widget: string }, { name: url, label: URL, widget: string }] }
+              - &verificato { name: verificato, label: Verificato, widget: boolean }
+              - &nota { name: nota, label: Nota, widget: text, required: false }
+          - name: cuneoFiscale
+            label: Cuneo fiscale
+            widget: object
+            fields:
+              - name: sommaEsente
+                label: Somma esente (fasce)
+                widget: list
+                fields:
+                  - { name: fino, label: "Fino a (€)", widget: number, value_type: float }
+                  - { name: percentuale, label: "Percentuale (es. 0.071)", widget: number, value_type: float }
+              - name: ulterioreDetrazione
+                label: Ulteriore detrazione
+                widget: object
+                fields:
+                  - { name: pieno, label: "Importo pieno (€)", widget: number, value_type: float }
+                  - { name: da, label: "Da reddito (€)", widget: number, value_type: float }
+                  - { name: pienoFino, label: "Pieno fino a (€)", widget: number, value_type: float }
+                  - { name: azzeraA, label: "Si azzera a (€)", widget: number, value_type: float }
+              - *fonte
+              - *verificato
+              - *nota
+          - name: inpsDipendente
+            label: Contributi INPS dipendente
+            widget: object
+            fields:
+              - { name: aliquota, label: "Aliquota (es. 0.0919)", widget: number, value_type: float }
+              - { name: aliquotaAggiuntiva, label: "Aliquota aggiuntiva (es. 0.01)", widget: number, value_type: float }
+              - { name: sogliaAggiuntivaAnnua, label: "Soglia aggiuntiva annua (€)", widget: number, value_type: float }
+              - *fonte
+              - *verificato
+              - *nota
+          - name: naspi
+            label: NASpI
+            widget: object
+            fields:
+              - { name: soglia, label: "Retribuzione di riferimento (€)", widget: number, value_type: float }
+              - { name: massimale, label: "Massimale mensile (€)", widget: number, value_type: float }
+              - { name: percentualeSotto, label: "Percentuale sotto soglia", widget: number, value_type: float }
+              - { name: percentualeSopra, label: "Percentuale sopra soglia", widget: number, value_type: float }
+              - { name: riduzioneMensile, label: "Riduzione mensile", widget: number, value_type: float }
+              - { name: meseInizioRiduzione, label: "Mese inizio riduzione", widget: number, value_type: int }
+              - { name: meseInizioRiduzioneOver55, label: "Mese inizio riduzione over 55", widget: number, value_type: int }
+              - { name: durataMassimaMesi, label: "Durata massima (mesi)", widget: number, value_type: int }
+              - { name: settimaneMinime, label: "Settimane minime", widget: number, value_type: int }
+              - *fonte
+              - { name: fonteScheda, label: Scheda INPS, widget: object, fields: [{ name: label, label: Nome, widget: string }, { name: url, label: URL, widget: string }] }
+              - *verificato
+              - *nota
+          - name: assegnoUnico
+            label: Assegno Unico
+            widget: object
+            fields:
+              - { name: iseeMin, label: "Soglia ISEE minima (€)", widget: number, value_type: float }
+              - { name: iseeMax, label: "Soglia ISEE massima (€)", widget: number, value_type: float }
+              - &range1 { name: figlioMinore, label: Figlio minorenne, widget: object, fields: [{ name: max, label: "Massimo (€)", widget: number, value_type: float }, { name: min, label: "Minimo (€)", widget: number, value_type: float }] }
+              - { name: figlio18_21, label: Figlio 18-21, widget: object, fields: [{ name: max, label: "Massimo (€)", widget: number, value_type: float }, { name: min, label: "Minimo (€)", widget: number, value_type: float }] }
+              - { name: maggiorazioneTerzoFiglio, label: Maggiorazione dal 3° figlio, widget: object, fields: [{ name: max, label: "Massimo (€)", widget: number, value_type: float }, { name: min, label: "Minimo (€)", widget: number, value_type: float }] }
+              - { name: maggiorazioneUnderUnoPercent, label: "Maggiorazione under 1 / 1-3 anni (es. 0.5)", widget: number, value_type: float }
+              - { name: maggiorazioneMadreUnder21, label: "Madre under 21 (€)", widget: number, value_type: float }
+              - { name: forfettariaQuattroFigli, label: "Forfettaria 4+ figli (€)", widget: number, value_type: float }
+              - { name: disabilitaMinore, label: Disabilità minori, widget: object, fields: [{ name: media, label: "Media (€)", widget: number, value_type: float }, { name: grave, label: "Grave (€)", widget: number, value_type: float }, { name: nonAutosufficienza, label: "Non autosufficienza (€)", widget: number, value_type: float }] }
+              - *fonte
+              - *verificato
+              - *nota
+          - name: tfr
+            label: TFR
+            widget: object
+            fields:
+              - { name: divisore, label: Divisore, widget: number, value_type: float }
+              - { name: contributoAggiuntivo, label: "Contributo aggiuntivo (es. 0.005)", widget: number, value_type: float }
+              - { name: rivalutazioneFissa, label: "Rivalutazione fissa (es. 0.015)", widget: number, value_type: float }
+              - { name: quotaInflazione, label: "Quota inflazione (es. 0.75)", widget: number, value_type: float }
+              - { name: impostaSostitutivaRivalutazione, label: "Imposta sostitutiva (es. 0.17)", widget: number, value_type: float }
+              - *fonte
+              - *verificato
+              - *nota

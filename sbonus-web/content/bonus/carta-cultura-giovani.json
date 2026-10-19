@@ -1,0 +1,93 @@
+{
+  "slug": "carta-cultura-giovani",
+  "titolo": "Carta della Cultura Giovani",
+  "descrizione": "Contributo digitale di 500 € per acquisti culturali, riservato ai giovani di nuclei con ISEE fino a 35.000 €. Iscrizioni 2026 chiuse il 30 giugno.",
+  "intro": "La Carta della Cultura Giovani è il contributo del Ministero della Cultura che ha preso il posto di 18app: vale 500 € e si spende in libri, cinema, teatro, concerti, musei e corsi. Spetta a chi ha compiuto 18 anni nell'anno precedente e vive in un nucleo con ISEE non oltre 35.000 €. Per l'edizione 2026 (nati nel 2007) le iscrizioni si sono chiuse il 30 giugno 2026; chi si è registrato può usare i buoni fino al 31 dicembre 2026.",
+  "categoria": "studenti",
+  "ente": "Ministero della Cultura",
+  "evidenza": {
+    "valore": "500 €",
+    "etichetta": "una tantum"
+  },
+  "novita": {
+    "data": "2026-05-04",
+    "nota": "Il MiC ha ricordato che le iscrizioni all'edizione 2026 si chiudevano il 30 giugno 2026 e che i buoni sono spendibili fino al 31 dicembre 2026."
+  },
+  "stato": "scaduto",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Giovani che hanno compiuto 18 anni nell'anno precedente a quello dell'iniziativa (per l'edizione 2026: nati nel 2007)",
+    "Residenti in Italia o titolari di permesso di soggiorno valido",
+    "Appartenenti a un nucleo familiare con ISEE non superiore a 35.000 €"
+  ],
+  "requisiti": [
+    "Aver compiuto 18 anni nell'anno precedente all'edizione",
+    "Residenza in Italia o permesso di soggiorno in corso di validità",
+    "ISEE del nucleo familiare fino a 35.000 €",
+    "Registrazione sul portale cartegiovani.cultura.gov.it entro la finestra prevista (per il 2026: 31 gennaio – 30 giugno)"
+  ],
+  "importi": [
+    "500 € in buoni elettronici",
+    "Cumulabile con la Carta del Merito (fino a 1.000 € complessivi per chi ha entrambi i requisiti)",
+    "Nessun tetto per singolo acquisto, ma non si possono comprare più unità dello stesso bene"
+  ],
+  "comeFare": [
+    "Accedere a cartegiovani.cultura.gov.it con SPID o CIE durante il periodo di iscrizione",
+    "Indicare un indirizzo e-mail e accettare le condizioni d'uso; conservare la mail di conferma",
+    "Avere già una DSU/ISEE valida: il portale verifica l'ISEE tramite INPS",
+    "Generare un buono scegliendo l'ambito e il tipo di bene e indicando l'importo",
+    "Presentare il buono a un esercente registrato (negozio fisico o online) entro il 31 dicembre"
+  ],
+  "documenti": [
+    "Credenziali SPID o CIE",
+    "ISEE in corso di validità (verificato in automatico)",
+    "Permesso di soggiorno valido, se cittadino extra UE"
+  ],
+  "scadenze": "Edizione 2026: iscrizioni dal 31 gennaio al 30 giugno 2026 (chiuse); buoni spendibili fino al 31 dicembre 2026. La sola titolarità di SPID/CIE non vale come iscrizione.",
+  "faq": [
+    {
+      "q": "Cosa posso comprare con la carta?",
+      "a": "Biglietti per cinema, teatro, danza, concerti ed eventi culturali, libri, musica registrata, prodotti audiovisivi, ingressi a musei, monumenti e parchi archeologici, abbonamenti a quotidiani anche digitali e corsi di musica, teatro e lingua straniera. Sono esclusi videogiochi e abbonamenti a piattaforme di contenuti audiovisivi."
+    },
+    {
+      "q": "Posso ancora iscrivermi nel 2026?",
+      "a": "No. La finestra di registrazione dell'edizione 2026 si è chiusa il 30 giugno 2026. Chi si è iscritto in tempo può spendere i buoni fino al 31 dicembre 2026."
+    },
+    {
+      "q": "Posso cederla o convertirla in denaro?",
+      "a": "No, il contributo è personale. Venderlo o cederlo è un illecito: il Ministero invita a segnalare eventuali offerte a numeroverde@cultura.gov.it."
+    },
+    {
+      "q": "Esiste anche un'app?",
+      "a": "No, la carta si gestisce solo dal sito ufficiale cartegiovani.cultura.gov.it."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "Portale ufficiale Carta della Cultura e del Merito (MiC)",
+      "url": "https://cartegiovani.cultura.gov.it/"
+    },
+    {
+      "label": "FAQ beneficiari Carta Cultura Giovani (MiC)",
+      "url": "https://cartegiovani.cultura.gov.it/giovanimeritoBeneficiario/assets/docs/FAQ_BENEFICIARI_CULTURA.pdf"
+    },
+    {
+      "label": "MiC – Carte giovani al COMICON 2026 (4 maggio 2026)",
+      "url": "https://diac.cultura.gov.it/mic-comicon-napoli-carta-cultura-giovani-merito/"
+    }
+  ],
+  "tags": [
+    "cultura",
+    "18 anni",
+    "giovani",
+    "libri",
+    "cinema",
+    "ISEE",
+    "ex 18app"
+  ],
+  "noteRedazione": "Verificati su fonti MiC: importo 500 €, ISEE ≤ 35.000 €, residenza/permesso, finestra 31/1–30/6/2026, utilizzo entro 31/12/2026, ambiti di spesa. Correzioni rispetto alla bozza: ente è il Ministero della Cultura su cartegiovani.cultura.gov.it (non cartadellacultura.istruzione.it); la carta spetta nell'anno successivo al compimento dei 18 anni, non nell'anno stesso; scadenza reale = 30 giugno per iscriversi e 31 dicembre per spendere. Stato 'scaduto' perché le iscrizioni 2026 sono chiuse. NON verificato su fonte ufficiale aperta: dettagli della 'Carta Valore' (L. 30 dicembre 2025 n. 199, art. 1 commi 538-549, 'Bonus valore cultura'), che secondo fonti di stampa sostituirebbe dal 2027 Carta Cultura e Carta del Merito con accesso legato al diploma entro i 19 anni; ho visto solo il titolo nel dossier della Camera. Da aggiornare quando il MiC pubblicherà le regole 2027. Il riferimento all'anno di nascita 2007 è dedotto dalla regola ufficiale (18 anni nell'anno precedente).",
+  "origineApp": "bonus_cultura"
+}

@@ -1,0 +1,90 @@
+{
+  "slug": "pensione-inabilita-civile",
+  "titolo": "Pensione di inabilità civile (invalidità al 100%)",
+  "descrizione": "Per invalidi civili totali tra 18 e 67 anni con reddito personale fino a 20.029,55 euro: 340,71 euro al mese per 13 mensilità nel 2026.",
+  "intro": "La pensione di inabilità civile è la prestazione assistenziale INPS per chi ha un'inabilità lavorativa totale e permanente (100%) riconosciuta dalla commissione medico-legale. Spetta tra i 18 e i 67 anni a chi ha un reddito personale entro il limite annuo stabilito per legge. Nel 2026 vale 340,71 euro al mese per 13 mensilità; a 67 anni si trasforma in assegno sociale sostitutivo. Chi ha un'invalidità tra il 74% e il 99% può invece accedere all'assegno mensile di assistenza.",
+  "categoria": "sostegno",
+  "ente": "INPS",
+  "evidenza": {
+    "valore": "340,71 €",
+    "etichetta": "al mese per 13 mensilità (2026)"
+  },
+  "novita": {
+    "data": "2026-07-20",
+    "nota": "INPS ha aggiornato la scheda con importo e limite di reddito 2026 e con la nuova procedura senza domanda amministrativa nelle province della sperimentazione."
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Persone tra 18 e 67 anni con inabilità lavorativa totale e permanente (100%) riconosciuta come invalidi civili",
+    "Con reddito personale annuo inferiore a 20.029,55 euro (limite 2026)",
+    "Cittadini italiani, cittadini UE iscritti all'anagrafe, cittadini extra UE con permesso di soggiorno di almeno un anno, con residenza stabile in Italia"
+  ],
+  "requisiti": [
+    "Verbale della commissione con riconoscimento dell'inabilità totale e permanente (100%)",
+    "Età tra 18 e 67 anni",
+    "Reddito personale annuo sotto 20.029,55 euro nel 2026",
+    "Cittadinanza italiana, iscrizione anagrafica per i cittadini UE oppure permesso di soggiorno di almeno un anno per i cittadini extra UE",
+    "Residenza stabile e abituale in Italia"
+  ],
+  "importi": [
+    "340,71 euro al mese per 13 mensilità (2026)",
+    "Decorre dal primo giorno del mese successivo alla domanda o dalla data fissata dalla commissione",
+    "In presenza di particolari condizioni di reddito l'importo può essere aumentato con la maggiorazione prevista dall'art. 70 della legge 388/2000 (importo non indicato nella scheda INPS)",
+    "Con il riconoscimento dell'accompagnamento si aggiunge l'indennità di accompagnamento, indipendente dal reddito (552,57 euro al mese nel 2026)"
+  ],
+  "comeFare": [
+    "Far inviare dal medico certificatore il certificato medico introduttivo online all'INPS",
+    "Nelle province della sperimentazione non serve domanda amministrativa; nelle altre presentarla online (SPID, CIE o CNS) entro il 31 dicembre 2026, oppure tramite patronato o associazioni di categoria (ANMIC, ENS, UIC, ANFFAS)",
+    "Sostenere la visita presso la commissione medico-legale; il verbale arriva per raccomandata o PEC ed è consultabile nella Cassetta postale online INPS",
+    "Completare i dati socio-economici e di pagamento richiesti dall'INPS"
+  ],
+  "documenti": [
+    "Certificato medico introduttivo telematico",
+    "Documentazione sanitaria",
+    "Documento d'identità, codice fiscale, eventuale permesso di soggiorno",
+    "Dati sui redditi personali e IBAN"
+  ],
+  "scadenze": "Sempre richiedibile. Finché l'iter per la stessa prestazione è in corso non si può presentare una nuova domanda. Nelle province fuori dalla sperimentazione la domanda amministrativa resta obbligatoria fino al 31 dicembre 2026.",
+  "faq": [
+    {
+      "q": "Posso lavorare e ricevere la pensione di inabilità?",
+      "a": "Secondo la scheda INPS la pensione di inabilità civile è compatibile con l'attività lavorativa, fermo restando il rispetto del limite di reddito personale."
+    },
+    {
+      "q": "È la stessa cosa della pensione di inabilità contributiva?",
+      "a": "No. Quella descritta qui è una prestazione assistenziale per invalidi civili, legata al reddito. Esiste anche una pensione di inabilità previdenziale per chi ha versato contributi, con regole diverse."
+    },
+    {
+      "q": "Spetta anche se sono ricoverato?",
+      "a": "Sì, la scheda INPS precisa che spetta anche in caso di ricovero in istituto pubblico che provvede al sostentamento."
+    },
+    {
+      "q": "Cosa succede a 67 anni?",
+      "a": "La pensione si trasforma in assegno sociale sostitutivo."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS - Pensione di inabilità agli invalidi civili",
+      "url": "https://www.inps.it/it/it/dettaglio-approfondimento.schede-informative.pensione-di-inabilit-agli-invalidi-civili.html"
+    },
+    {
+      "label": "INPS - Circolare 153/2025, Allegato 2 (importi e limiti 2026)",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2025/12/Circolare_15109/Allegati/16486_Circolare-numero-153-del-19-12-2025_Allegato-n-2.pdf"
+    }
+  ],
+  "tags": [
+    "invalidità",
+    "inabilità",
+    "100%",
+    "pensione",
+    "invalidi civili",
+    "inps"
+  ],
+  "noteRedazione": "Requisiti, importo 340,71 euro e limite 20.029,55 euro verificati sulla scheda INPS (aggiornata 20/7/2026) e sulla tabella dell'Allegato 2 alla circolare INPS 153/2025. Correzioni rispetto alla bozza: importo e limite aggiornati dal 2025 (333,33/17.920 euro, valori errati o superati: nel 2025 erano 336,00/19.772,50 euro) al 2026; il nome ufficiale è 'pensione di inabilità'; rimossa dalla bozza la parte sull'assegno 74-99%, trattata nella scheda 'invalidita-civile'. Importo della maggiorazione art. 70 L. 388/2000 non verificato e quindi omesso; elenco province della sperimentazione non riportato.",
+  "origineApp": "pensione_invalidita"
+}

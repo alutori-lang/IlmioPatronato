@@ -1,0 +1,94 @@
+{
+  "slug": "bonus-decoder-2026",
+  "titolo": "Bonus Decoder 2026",
+  "descrizione": "Voucher MIMIT fino a 30 € (decoder terrestre DVB-T2) o 70 € (satellitare), uno per famiglia in regola col canone Rai. Domande non ancora aperte.",
+  "intro": "Il Ministero delle Imprese e del Made in Italy ha previsto con il decreto del 19 maggio 2026 un nuovo contributo per acquistare decoder di nuova generazione, terrestri DVB-T2 o satellitari DVB-S2 con codifica HEVC Main 10. Il voucher copre fino al 70% del prezzo, con un massimo di 30 € o 70 €, ed è riservato a un maggiorenne per famiglia anagrafica in regola con il canone Rai. Le domande non sono ancora aperte: date e piattaforma saranno fissate da un successivo decreto direttoriale.",
+  "categoria": "fisco",
+  "ente": "Ministero delle Imprese e del Made in Italy (MIMIT)",
+  "evidenza": {
+    "valore": "fino a 70 €",
+    "etichetta": "sconto in fattura"
+  },
+  "novita": {
+    "data": "2026-05-28",
+    "nota": "Pubblicato il DM 19 maggio 2026 sul nuovo voucher decoder da 30 milioni di euro; i bonus TV precedenti (2022 e 2024) sono chiusi."
+  },
+  "stato": "in-attesa",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Consumatori maggiorenni (persone fisiche che non agiscono per attività professionale)",
+    "Un solo decoder per famiglia anagrafica",
+    "Famiglia in regola con il pagamento del canone Rai",
+    "Nessun componente della famiglia deve aver già usato precedenti contributi per decoder"
+  ],
+  "requisiti": [
+    "Maggiore età del richiedente",
+    "Famiglia anagrafica in regola con il canone Rai (verifica automatica con l'Agenzia delle Entrate)",
+    "Nessun precedente contributo decoder fruito da componenti della famiglia",
+    "Acquisto di un decoder incluso nell'elenco ufficiale (DVB-T2 HEVC Main 10 o satellitare DVB-S2 HEVC 10 bit) presso un venditore aderente",
+    "Nel decreto non è previsto un limite ISEE"
+  ],
+  "importi": [
+    "Fino al 70% del prezzo del decoder",
+    "Massimo 30 € per decoder terrestre standard",
+    "Massimo 70 € per decoder satellitare",
+    "Contributi concessi in ordine cronologico fino a esaurimento dei 30 milioni di euro"
+  ],
+  "comeFare": [
+    "Attendere il decreto direttoriale MIMIT che aprirà la misura",
+    "Richiedere il voucher sulla piattaforma informatica gestita da PagoPA, che verifica famiglia anagrafica e canone Rai",
+    "Usare il codice voucher entro la validità indicata presso un venditore aderente, fisico o online",
+    "Lo sconto viene applicato direttamente in fattura"
+  ],
+  "documenti": [
+    "Codice fiscale e identità digitale per la piattaforma (modalità di accesso da confermare con il decreto direttoriale)",
+    "Voucher generato dalla piattaforma"
+  ],
+  "scadenze": "Misura non ancora attiva: tempi di apertura e durata saranno stabiliti da decreti direttoriali MIMIT. Fino a esaurimento fondi.",
+  "faq": [
+    {
+      "q": "Serve l'ISEE?",
+      "a": "No: il decreto del 19 maggio 2026 richiede la maggiore età e che la famiglia sia in regola con il canone Rai, senza soglie ISEE."
+    },
+    {
+      "q": "Posso comprare una TV nuova con il bonus?",
+      "a": "No, il nuovo contributo riguarda solo i decoder. Il bonus TV con rottamazione è chiuso dal 2022."
+    },
+    {
+      "q": "Quando si potrà chiedere?",
+      "a": "Non c'è ancora una data: il MIMIT la fisserà con un decreto direttoriale. Conviene seguire la pagina ufficiale Bonus Decoder."
+    },
+    {
+      "q": "Ho già avuto il bonus decoder in passato: posso richiederlo?",
+      "a": "No, il decreto lo esclude se un componente della famiglia ha già usufruito di contributi per l'acquisto di decoder previsti dalle misure precedenti."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "MIMIT – Bonus Decoder",
+      "url": "https://www.mimit.gov.it/it/incentivi/bonus-decoder"
+    },
+    {
+      "label": "MIMIT – Decreto ministeriale 19 maggio 2026",
+      "url": "https://www.mimit.gov.it/it/normativa/decreti-ministeriali/decreto-ministeriale-19-maggio-2026-definizione-dei-criteri-e-delle-modalita-per-la-concessione-del-contributo-economico-per-lacquisto-di-decoder-digitali-televisivi-terrestri-e-satellitari"
+    },
+    {
+      "label": "MIMIT – Testo del DM (PDF)",
+      "url": "https://www.mimit.gov.it/images/stories/normativa/incentivi/4.1_DM_Voucher_decoder_DVB-T2_def_signed-nf.pdf"
+    }
+  ],
+  "tags": [
+    "decoder",
+    "tv",
+    "DVB-T2",
+    "satellitare",
+    "canone Rai",
+    "voucher",
+    "MIMIT"
+  ],
+  "noteRedazione": "La bozza descriveva i vecchi Bonus TV/Rottamazione (chiusi nel 2022) e Bonus Decoder a casa over 70 (chiuso nel 2024). Riscritta sul nuovo DM 19/5/2026, letto nel testo integrale: 70% del prezzo, max 30/70 €, maggiorenne, una per famiglia anagrafica, canone Rai in regola, esclusione per chi ha già avuto contributi decoder, piattaforma PagoPA, rimborso ai venditori via Invitalia, 30 mln €. Stato 'in-attesa': la pagina MIMIT dice che il bonus non è ancora fruibile e non ho trovato il decreto direttoriale di avvio (verifica al 19/10/2026). Non verificati: accesso tramite app IO (riportato solo dalla stampa), durata di validità del voucher, data di apertura. Categoria lasciata 'fisco' come in bozza; valutare 'sostegno'.",
+  "origineApp": "bonus_tv"
+}

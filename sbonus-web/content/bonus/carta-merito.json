@@ -1,0 +1,91 @@
+{
+  "slug": "carta-merito",
+  "titolo": "Carta del Merito",
+  "descrizione": "500 € per consumi culturali ai diplomati con almeno 100/100 entro i 19 anni, senza limiti ISEE. Iscrizioni 2026 chiuse il 30 giugno.",
+  "intro": "La Carta del Merito è il contributo di 500 € del Ministero della Cultura per chi ha ottenuto il diploma di scuola superiore con almeno 100 centesimi entro i 19 anni. Non richiede ISEE e si somma alla Carta della Cultura Giovani, fino a 1.000 € complessivi. Per l'edizione 2026 (diplomati 2025) le iscrizioni si sono chiuse il 30 giugno 2026 e i buoni si spendono entro il 31 dicembre 2026.",
+  "categoria": "studenti",
+  "ente": "Ministero della Cultura",
+  "evidenza": {
+    "valore": "500 €",
+    "etichetta": "una tantum"
+  },
+  "novita": {
+    "data": "2026-05-04",
+    "nota": "Il MiC ha confermato iscrizioni 2026 fino al 30 giugno e utilizzo dei buoni fino al 31 dicembre 2026."
+  },
+  "stato": "scaduto",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Diplomati presso scuole secondarie di II grado del sistema nazionale di istruzione con voto di almeno 100/100",
+    "Che hanno conseguito il diploma entro i 19 anni di età",
+    "Residenti in Italia o titolari di permesso di soggiorno valido",
+    "La carta si usa nell'anno successivo al diploma (edizione 2026: diplomati nel 2025)"
+  ],
+  "requisiti": [
+    "Diploma finale di scuola secondaria di II grado con votazione di almeno 100 centesimi (anche con lode)",
+    "Diploma conseguito entro i 19 anni",
+    "Residenza in Italia o permesso di soggiorno valido",
+    "Nessun requisito ISEE",
+    "Iscrizione sul portale cartegiovani.cultura.gov.it nella finestra prevista"
+  ],
+  "importi": [
+    "500 € in buoni elettronici",
+    "Cumulabile con la Carta della Cultura Giovani (fino a 1.000 €)"
+  ],
+  "comeFare": [
+    "Accedere a cartegiovani.cultura.gov.it con SPID o CIE nel periodo di iscrizione (per il 2026: 31 gennaio – 30 giugno)",
+    "Inserire un indirizzo e-mail, accettare le condizioni d'uso e conservare la conferma",
+    "Generare buoni per ambito e tipo di bene",
+    "Spenderli presso esercenti registrati entro il 31 dicembre"
+  ],
+  "documenti": [
+    "Credenziali SPID o CIE",
+    "Permesso di soggiorno valido, se cittadino extra UE"
+  ],
+  "scadenze": "Edizione 2026: iscrizioni dal 31 gennaio al 30 giugno 2026 (chiuse); buoni spendibili fino al 31 dicembre 2026.",
+  "faq": [
+    {
+      "q": "Serve l'ISEE?",
+      "a": "No, la Carta del Merito dipende solo dal voto di diploma (almeno 100/100) ottenuto entro i 19 anni."
+    },
+    {
+      "q": "Posso avere anche la Carta della Cultura Giovani?",
+      "a": "Sì, se hai anche i requisiti di quella carta (tra cui ISEE fino a 35.000 €): le due carte sono cumulabili."
+    },
+    {
+      "q": "Cosa posso acquistare?",
+      "a": "Gli stessi beni culturali della Carta Cultura: libri, cinema, teatro, concerti, musei, musica, audiovisivi, corsi di musica, teatro e lingue, abbonamenti a quotidiani. Esclusi videogiochi e abbonamenti a piattaforme video."
+    },
+    {
+      "q": "Mi sono diplomato nel 2026 con 100: quando potrò usarla?",
+      "a": "La carta spetta nell'anno successivo al diploma. Per il 2027 la legge di bilancio 2026 ha previsto una nuova 'Carta Valore': le regole vanno verificate quando il Ministero le pubblicherà."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "Portale ufficiale Carta della Cultura e del Merito (MiC)",
+      "url": "https://cartegiovani.cultura.gov.it/"
+    },
+    {
+      "label": "FAQ beneficiari Carta del Merito (MiC)",
+      "url": "https://cartegiovani.cultura.gov.it/giovanimeritoBeneficiario/assets/docs/FAQ_BENEFICIARI_MERITO.pdf"
+    },
+    {
+      "label": "MiC – Carte giovani al COMICON 2026",
+      "url": "https://diac.cultura.gov.it/mic-comicon-napoli-carta-cultura-giovani-merito/"
+    }
+  ],
+  "tags": [
+    "merito",
+    "diploma",
+    "maturità",
+    "100/100",
+    "cultura",
+    "studenti"
+  ],
+  "noteRedazione": "Verificati su fonti MiC: 500 €, voto ≥ 100 entro i 19 anni, residenza/permesso, cumulabilità, finestra 2026 e utilizzo entro 31/12/2026. Correzioni rispetto alla bozza: ente è il Ministero della Cultura (non dell'Istruzione), portale cartegiovani.cultura.gov.it; non esiste verifica 'dal MIUR' come documento da presentare. Stato 'scaduto' perché le iscrizioni 2026 sono chiuse. Non verificata su fonte ufficiale aperta la disciplina della 'Carta Valore' dal 2027 (L. 199/2025, art. 1 commi 538-549): citata solo come previsione da confermare.",
+  "origineApp": "carta_merito"
+}

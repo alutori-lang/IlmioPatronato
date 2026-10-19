@@ -1,0 +1,99 @@
+{
+  "slug": "morosita-incolpevole",
+  "titolo": "Fondo inquilini morosi incolpevoli",
+  "descrizione": "Contributo fino a 12.000 € per inquilini sotto sfratto che non pagano l'affitto per perdita di reddito. Fondo rifinanziato per 2025 e 2026, bandi dei Comuni.",
+  "intro": "Il Fondo per gli inquilini morosi incolpevoli aiuta chi ha ricevuto un'intimazione di sfratto perché non riesce più a pagare l'affitto a causa di una perdita o forte riduzione del reddito familiare, ad esempio licenziamento, cassa integrazione o malattia grave. Le risorse statali vengono ripartite alle Regioni e da queste ai Comuni, che pubblicano gli avvisi. La legge di bilancio 2025 ha rifinanziato il Fondo con 10 milioni di euro per il 2025 e 20 milioni per il 2026.",
+  "categoria": "casa",
+  "ente": "Comune di residenza (risorse statali ripartite da MIT e Regioni)",
+  "evidenza": {
+    "valore": "fino a 12.000 €",
+    "etichetta": "contributo massimo per nucleo"
+  },
+  "novita": {
+    "data": "2025-12-30",
+    "nota": "La legge di bilancio 2026 ha istituito, dal 2027, un nuovo Fondo rotativo da 5 milioni annui gestito da CONSAP per coprire morosità incolpevole e deposito cauzionale."
+  },
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Inquilini di alloggi sul libero mercato, destinatari di un'intimazione di sfratto per morosità, che non riescono a pagare il canone per una perdita o consistente riduzione del reddito del nucleo familiare."
+  ],
+  "requisiti": [
+    "Morosità dovuta a cause come: licenziamento, riduzione dell'orario di lavoro, cassa integrazione, mancato rinnovo di contratti a termine o atipici, cessazione di attività autonoma per forza maggiore, malattia grave, infortunio o decesso di un componente del nucleo",
+    "Reddito ISE non superiore a 35.000 € oppure ISEE non superiore a 26.000 €",
+    "Atto di intimazione di sfratto per morosità con citazione per la convalida",
+    "Contratto di locazione registrato per alloggio non di lusso (escluse categorie A/1, A/8, A/9) e residenza nell'alloggio da almeno un anno",
+    "Nessun componente del nucleo titolare di un altro alloggio adeguato",
+    "Altri requisiti (cittadinanza o permesso di soggiorno, residenza) previsti dai bandi comunali"
+  ],
+  "importi": [
+    "Contributo massimo complessivo di 12.000 € per nucleo (art. 4 del DM 30 marzo 2016)",
+    "Il contributo può servire a sanare il debito, a compensare il proprietario che accetta di rinviare lo sfratto, a versare il deposito cauzionale o alcune mensilità di un nuovo contratto a canone concordato; i tetti per ciascuna finalità sono fissati da Regioni e Comuni",
+    "Di solito il contributo è pagato direttamente al proprietario su delega dell'inquilino"
+  ],
+  "comeFare": [
+    "Rivolgersi ai servizi sociali o all'ufficio casa del Comune di residenza e verificare se è aperto un avviso",
+    "Compilare il modulo comunale con le dichiarazioni sui requisiti",
+    "Allegare la documentazione sulla causa della perdita di reddito e l'atto di sfratto",
+    "Presentare la domanda nei termini e con le modalità indicate (protocollo, PEC, portale)",
+    "Concordare con il proprietario la soluzione (sanatoria, rinvio dello sfratto, nuovo contratto)"
+  ],
+  "documenti": [
+    "ISEE o attestazione ISE in corso di validità",
+    "Contratto di locazione registrato",
+    "Atto di intimazione di sfratto per morosità con citazione per la convalida",
+    "Documentazione della causa della morosità (lettera di licenziamento, cassa integrazione, certificati medici, ecc.)",
+    "Documento d'identità e, per i cittadini extra UE, titolo di soggiorno"
+  ],
+  "scadenze": "Dipendono dagli avvisi comunali e regionali. Alcuni Comuni tengono l'avviso aperto tutto l'anno fino a esaurimento dei fondi. La legge di bilancio 2025 prevede che le risorse siano erogate entro il 31 luglio di ciascuna annualità, pena il definanziamento.",
+  "faq": [
+    {
+      "q": "Il Fondo è ancora finanziato?",
+      "a": "Sì: la legge 207/2024 lo ha rifinanziato con 10 milioni di euro per il 2025 e 20 milioni per il 2026. Dal 2027 la legge di bilancio 2026 ha previsto anche un nuovo Fondo rotativo da 5 milioni l'anno."
+    },
+    {
+      "q": "Posso fare domanda direttamente al Ministero?",
+      "a": "No. Il Ministero ripartisce le risorse alle Regioni, che le assegnano ai Comuni: la domanda si presenta al proprio Comune."
+    },
+    {
+      "q": "Serve per forza uno sfratto in corso?",
+      "a": "Secondo i criteri del DM 2016 ripresi dagli avvisi comunali, serve un'intimazione di sfratto per morosità con citazione per la convalida. Verifica comunque il bando del tuo Comune."
+    },
+    {
+      "q": "Chi è considerato moroso incolpevole?",
+      "a": "Chi non riesce a pagare l'affitto perché il reddito familiare è crollato per cause non dipendenti dalla sua volontà, come perdita del lavoro, cassa integrazione o malattia grave."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "Gazzetta Ufficiale – Legge 30 dicembre 2024, n. 207 (art. 1, commi 117-119)",
+      "url": "https://www.gazzettaufficiale.it/eli/id/2024/12/31/24G00229/sg"
+    },
+    {
+      "label": "Gazzetta Ufficiale – Legge 30 dicembre 2025, n. 199 (art. 1, commi 759-760)",
+      "url": "https://www.gazzettaufficiale.it/eli/id/2025/12/30/25G00212/sg"
+    },
+    {
+      "label": "MIT – Fondo per la morosità incolpevole",
+      "url": "https://www.mit.gov.it/documentazione/fondo-per-la-morosita-incolpevole"
+    },
+    {
+      "label": "Comune di Chiaravalle – Avviso morosi incolpevoli anno 2026 (esempio)",
+      "url": "https://chiaravalle-api.municipiumapp.it/s3/2044/allegati/avviso-pubblico-2026-chiaravalle.pdf"
+    }
+  ],
+  "tags": [
+    "morosità incolpevole",
+    "sfratto",
+    "affitto",
+    "casa",
+    "comune",
+    "contributo",
+    "emergenza abitativa"
+  ],
+  "noteRedazione": "Rifinanziamento verificato sul testo della L. 207/2024 (c. 117: 10 mln 2025, 20 mln 2026) e nuovo Fondo rotativo CONSAP dal 2027 sulla L. 199/2025 (c. 759-760). Requisiti e tetto di 12.000 € verificati su un avviso comunale 2026 (Chiaravalle, Marche) che richiama il DM 30/3/2016, non sul testo del DM. Corretto il draft: il limite di 35.000 € è riferito all'ISE (alternativo all'ISEE di 26.000 €), non al reddito lordo. Non verificati: adozione del decreto MIT-MEF previsto dal c. 118 della L. 207/2024 (aggiornamento criteri, numero massimo di annualità) e riparto 2026 tra le Regioni; i criteri potrebbero essere cambiati. La pagina MIT citata è ferma al 2017. Verificato=false finché il decreto attuativo non è confermato.",
+  "origineApp": "morosita_incolpevole"
+}

@@ -1,0 +1,99 @@
+{
+  "slug": "servizio-civile",
+  "titolo": "Servizio Civile Universale",
+  "descrizione": "Da 8 a 12 mesi in progetti di enti pubblici e non profit per giovani 18-28 anni, con assegno di 519,47 € al mese. Bandi tematici aperti fino al 6/11/2026.",
+  "intro": "Il Servizio Civile Universale permette ai giovani tra 18 e 28 anni di impegnarsi per 8-12 mesi in progetti di assistenza, cultura, ambiente, educazione, protezione civile e altri settori, in Italia o all'estero, con 25 ore settimanali. Spetta un assegno mensile di 519,47 €, aggiornabile in base all'inflazione ISTAT. Possono partecipare anche i cittadini UE e i cittadini extra UE regolarmente soggiornanti in Italia. Il bando ordinario 2026 è chiuso, ma fino al 6 novembre 2026 sono aperti i bandi tematici (agricolo, ambientale, digitale).",
+  "categoria": "lavoro",
+  "ente": "Dipartimento per le Politiche giovanili e il Servizio civile universale",
+  "evidenza": {
+    "valore": "519,47 €",
+    "etichetta": "al mese"
+  },
+  "novita": {
+    "data": "2026-09",
+    "nota": "Pubblicati i bandi tematici 2026 per 3.767 volontari nei programmi agricolo, ambientale, digitale e autofinanziati, con domande fino alle 14 del 6 novembre 2026."
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Giovani che hanno compiuto 18 anni e non hanno superato i 28 anni (fino a 28 anni e 364 giorni) alla data della domanda",
+    "Cittadini italiani, di altri Paesi UE o di Paesi extra UE regolarmente soggiornanti in Italia",
+    "Alcuni progetti riservano posti a giovani con minori opportunità (ad esempio disabilità, bassa scolarizzazione, difficoltà economiche)"
+  ],
+  "requisiti": [
+    "Età tra 18 e 28 anni compiuti (28 anni e 364 giorni) al momento della domanda",
+    "Cittadinanza italiana o UE, oppure regolare soggiorno in Italia per i cittadini extra UE",
+    "Nessuna condanna, anche non definitiva, a reclusione superiore a un anno per delitto non colposo, né condanne per i reati più gravi indicati nel bando (contro la persona, armi, terrorismo, criminalità organizzata)",
+    "Non aver già svolto il Servizio civile nazionale o universale (salvo casi specifici previsti dal bando)",
+    "Non appartenere a corpi militari o forze di polizia",
+    "Non avere, o non aver avuto per più di tre mesi nell'ultimo anno, rapporti di lavoro, collaborazione o stage retribuiti con l'ente del progetto",
+    "Si può presentare una sola domanda, per un solo progetto e una sola sede"
+  ],
+  "importi": [
+    "Assegno mensile di 519,47 €, che può essere aumentato in base alla variazione ISTAT",
+    "Per i progetti all'estero o con periodo nell'UE è prevista anche un'indennità giornaliera aggiuntiva, variabile in base al Paese",
+    "Riserva del 15% dei posti nei concorsi pubblici per personale non dirigenziale a favore di chi ha concluso il servizio senza demerito"
+  ],
+  "comeFare": [
+    "1. Cercare il progetto sul sito scelgoilserviziocivile.gov.it (sezione 'Scegli il tuo progetto') e leggere la scheda dell'ente",
+    "2. Presentare la domanda solo online sulla piattaforma DOL (domandaonline.serviziocivile.it) con SPID o CIE; i cittadini UE ed extra UE senza SPID possono chiedere credenziali al Dipartimento",
+    "3. Controllare sul sito dell'ente il calendario dei colloqui di selezione, pubblicato almeno 10 giorni prima",
+    "4. Se selezionati, firmare il contratto scaricabile dal sito del Dipartimento e iniziare il servizio alla data indicata"
+  ],
+  "documenti": [
+    "SPID o CIE (o credenziali rilasciate dal Dipartimento per chi non può ottenere lo SPID)",
+    "Permesso di soggiorno per i cittadini extra UE",
+    "Curriculum ed eventuali titoli, se richiesti nella domanda o per i posti riservati"
+  ],
+  "scadenze": "Bandi tematici 2026: domande entro le ore 14:00 del 6 novembre 2026. Il bando ordinario 2026 (65.964 posti) si è chiuso ad aprile 2026; i nuovi bandi sono pubblicati sul sito del Dipartimento.",
+  "faq": [
+    {
+      "q": "Possono partecipare gli stranieri?",
+      "a": "Sì. Oltre ai cittadini italiani e UE possono partecipare i cittadini extra UE regolarmente soggiornanti in Italia, con gli altri requisiti del bando."
+    },
+    {
+      "q": "Posso candidarmi a più progetti?",
+      "a": "No. Si può presentare una sola domanda per un unico progetto e un'unica sede; più domande comportano l'esclusione."
+    },
+    {
+      "q": "Quante ore si lavora e per quanto tempo?",
+      "a": "I progetti durano da 8 a 12 mesi, con 25 ore settimanali o un monte ore annuo proporzionato (1.145 ore per 12 mesi), su cinque o sei giorni a settimana."
+    },
+    {
+      "q": "Se ho già fatto il servizio civile posso rifarlo?",
+      "a": "In generale no: il bando esclude chi ha già svolto il Servizio civile nazionale o universale, salvo alcune eccezioni (ad esempio interruzioni dovute al COVID-19 o a cause previste dal bando)."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "Dipartimento Politiche giovanili - Bando ordinario 2026",
+      "url": "https://www.politichegiovanili.gov.it/comunicazione/avvisi-e-bandi/servizio-civile/bandi-di-selezione-volontari/bando_ordinario_2026/"
+    },
+    {
+      "label": "Dipartimento Politiche giovanili - Testo del bando SCU 2026",
+      "url": "https://www.politichegiovanili.gov.it/media/2yglygy5/bando-scu-2026-signed.pdf"
+    },
+    {
+      "label": "Dipartimento Politiche giovanili - Bandi tematici 2026",
+      "url": "https://www.politichegiovanili.gov.it/comunicazione/news/2026/9/bandi-tematici-2026/"
+    },
+    {
+      "label": "Scelgo il Servizio Civile - Il bando in breve",
+      "url": "https://scelgoilserviziocivile.gov.it/leggi-il-bando/in-breve/"
+    }
+  ],
+  "tags": [
+    "servizio civile",
+    "giovani",
+    "volontariato",
+    "18-28 anni",
+    "assegno mensile",
+    "bando 2026",
+    "stranieri"
+  ],
+  "noteRedazione": "Assegno aggiornato da 507,30 € (bozza) a 519,47 €, come da bando ordinario 2026. Durata corretta: 8-12 mesi (non solo 12). Requisiti ed esclusioni verificati sul testo del bando ordinario 2026; per i bandi tematici in scadenza il 6/11/2026 sono stati verificati numero di posti, programmi, età, durata e modalità di domanda, mentre l'importo dell'assegno e i requisiti di dettaglio non sono riportati nelle pagine consultate e si presumono uguali al bando ordinario (da verificare sul testo del bando tematico). Rimosso il periodo 'dicembre-febbraio' per il bando annuale: nel 2026 il bando ordinario è scaduto ad aprile (proroga al 16 aprile 2026). Il bando per l'assistenza a ciechi e grandi invalidi 2026 (scaduto ad agosto) non è trattato.",
+  "origineApp": "servizio_civile"
+}

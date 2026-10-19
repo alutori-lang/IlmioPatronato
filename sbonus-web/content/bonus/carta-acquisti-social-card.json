@@ -1,0 +1,89 @@
+{
+  "slug": "carta-acquisti-social-card",
+  "titolo": "Carta Acquisti 2026 (Social Card): 80 euro ogni due mesi",
+  "descrizione": "Carta Acquisti 2026: 80 euro ogni due mesi per over 65 e bambini sotto i 3 anni con ISEE sotto 8.230,81 euro. Requisiti e domanda in Posta.",
+  "intro": "La Carta Acquisti, nota anche come Social Card, è una carta elettronica su cui lo Stato accredita 80 euro ogni due mesi. Si usa per la spesa alimentare nei negozi convenzionati e per pagare le bollette di luce e gas in Posta. È riservata agli anziani dai 65 anni in su e ai bambini sotto i 3 anni in condizioni economiche molto difficili.",
+  "categoria": "sostegno",
+  "ente": "MEF / INPS / Poste Italiane",
+  "evidenza": {
+    "valore": "80 €",
+    "etichetta": "ogni due mesi"
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Persone dai 65 anni in su con ISEE e redditi sotto le soglie 2026",
+    "Bambini sotto i 3 anni (la carta è intestata al genitore o a chi esercita la responsabilità genitoriale)",
+    "Cittadini italiani, UE, loro familiari con diritto di soggiorno, stranieri con permesso UE per soggiornanti di lungo periodo, rifugiati o titolari di protezione sussidiaria, iscritti all'anagrafe"
+  ],
+  "requisiti": [
+    "ISEE in corso di validità inferiore a 8.230,81 euro (2026)",
+    "Per chi ha 65-69 anni: redditi e trattamenti complessivi inferiori a 8.230,81 euro; dai 70 anni: inferiori a 10.974,42 euro",
+    "Patrimonio mobiliare non superiore a 15.000 euro (da soli o con il coniuge / con chi esercita la responsabilità genitoriale)",
+    "Non più di un'utenza elettrica domestica, una non domestica e due del gas",
+    "Non più di due auto; non più di un immobile abitativo con quota pari o superiore al 25%; nessun immobile non abitativo o C7 con quota pari o superiore al 10%",
+    "Per gli over 65: non essere ricoverati in istituti di lunga degenza o detenuti con vitto a carico dello Stato"
+  ],
+  "importi": [
+    "80 euro accreditati ogni due mesi (480 euro l'anno)",
+    "Sconto del 5% nei negozi e nelle farmacie aderenti (escluse specialità medicinali e ticket)",
+    "Non è possibile prelevare contanti"
+  ],
+  "comeFare": [
+    "Presentare la DSU e ottenere l'ISEE",
+    "Compilare il modulo 2026 (per over 65 o per minori di 3 anni), disponibile in Posta e sui siti di INPS, Poste, MEF e Ministero del Lavoro",
+    "Consegnarlo a un ufficio postale: la domanda viene trasmessa all'INPS per le verifiche",
+    "Se l'esito è positivo, ritirare la carta in Posta con il primo accredito già caricato",
+    "Rinnovare l'ISEE ogni gennaio per evitare la sospensione degli accrediti"
+  ],
+  "documenti": [
+    "Modulo di domanda Carta Acquisti 2026",
+    "Documento d'identità e codice fiscale",
+    "ISEE in corso di validità",
+    "Per stranieri extra UE: permesso UE per soggiornanti di lungo periodo o titolo di protezione",
+    "Per i bambini: dati del minore e del genitore richiedente"
+  ],
+  "scadenze": "Domanda presentabile tutto l'anno. L'ISEE vale fino al 31 dicembre: chi ha già la carta deve presentare la nuova DSU a gennaio, altrimenti gli accrediti vengono sospesi.",
+  "faq": [
+    {
+      "q": "Dove si chiede la Carta Acquisti?",
+      "a": "Presso un ufficio postale, con il modulo apposito; non si fa online sul sito INPS."
+    },
+    {
+      "q": "Cosa posso pagare con la carta?",
+      "a": "La spesa alimentare nei negozi convenzionati e le bollette di luce e gas negli uffici postali."
+    },
+    {
+      "q": "Uno straniero può averla?",
+      "a": "Sì, se ha il permesso UE per soggiornanti di lungo periodo o è rifugiato o titolare di protezione sussidiaria, oltre agli altri requisiti."
+    },
+    {
+      "q": "Chi ha la Carta Acquisti può avere anche la carta Dedicata a te?",
+      "a": "No, i nuclei che percepiscono la Carta Acquisti sono esclusi dalla carta Dedicata a te."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS – La Carta acquisti",
+      "url": "https://www.inps.it/it/it/dettaglio-approfondimento.schede-informative.la-carta-acquisti.html"
+    },
+    {
+      "label": "MEF – Carta Acquisti: aggiornamenti ISTAT 2026",
+      "url": "https://www.mef.gov.it/focus/carta_acquisti/eventi/2026/Dal-1-gennaio-2026-in-vigore-gli-aggiornamenti-ISTAT-per-gli-importi-di-reddito-e-lindicatore-ISEE/"
+    }
+  ],
+  "tags": [
+    "carta acquisti",
+    "social card",
+    "over 65",
+    "bambini",
+    "bollette",
+    "spesa",
+    "80 euro"
+  ],
+  "noteRedazione": "Rispetto alla bozza: soglia ISEE aggiornata da 8.052,75 a 8.230,81 euro (2026); aggiunti i limiti di reddito per età (8.230,81 / 10.974,42 euro) e quelli patrimoniali; la cittadinanza non è limitata a italiani/UE ma include lungo soggiornanti e rifugiati. Categoria cambiata da fisco a sostegno.",
+  "origineApp": "social_card"
+}

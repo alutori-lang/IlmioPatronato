@@ -1,0 +1,85 @@
+{
+  "slug": "rimpatrio-volontario-assistito",
+  "titolo": "Rimpatrio Volontario Assistito e Reintegrazione (RVA&R)",
+  "descrizione": "Programma del Ministero dell'Interno (FAMI) per tornare nel Paese d'origine: viaggio pagato, contributo di prima sistemazione e piano di reintegrazione.",
+  "intro": "Il Rimpatrio Volontario Assistito e Reintegrazione (RVA&R) è promosso dal Dipartimento per le libertà civili e l'immigrazione del Ministero dell'Interno e oggi è finanziato dal Fondo Asilo Migrazione e Integrazione 2021-2027. Aiuta i cittadini di Paesi terzi che scelgono di tornare nel proprio Paese con orientamento, documenti di viaggio, biglietto fino a destinazione e un piano individuale di reintegrazione. Prevede anche un contributo in denaro per la prima sistemazione e un sostegno in beni e servizi nel Paese d'origine. La domanda si presenta agli enti attuatori, attualmente l'Organizzazione Internazionale per le Migrazioni (OIM).",
+  "categoria": "sostegno",
+  "ente": "Ministero dell'Interno (DLCI) / OIM",
+  "evidenza": {
+    "valore": "Viaggio pagato",
+    "etichetta": "più piano di reintegrazione"
+  },
+  "novita": {
+    "data": "2024-12-11",
+    "nota": "La Prefettura di Catania ha aggiornato la scheda sul programma, finanziato dal FAMI 2021-2027 e attuato dall'OIM."
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Cittadini di Paesi terzi presenti in Italia che non hanno ricevuto un diniego definitivo sulla domanda di permesso di soggiorno o di protezione internazionale",
+    "Cittadini di Paesi terzi in posizione regolare o irregolare, compresi quelli con allontanamento rinviato",
+    "Esclusi: cittadini UE, cittadini di Paesi esenti dal visto d'ingresso, chi ha già usufruito di un rimpatrio volontario assistito, chi è espulso come sanzione penale o è soggetto a estradizione o a mandato d'arresto europeo o internazionale, chi è espulso solo per non aver rispettato un ordine di lasciare il Paese"
+  ],
+  "requisiti": [
+    "Scelta volontaria di tornare nel Paese d'origine, formalizzata con la firma della dichiarazione di RVA presso l'ente attuatore",
+    "Non rientrare nelle categorie escluse",
+    "Definizione con l'ente attuatore di un piano individuale di reintegrazione (PIR)"
+  ],
+  "importi": [
+    "Viaggio pagato fino alla destinazione finale e aiuto per ottenere il documento di viaggio dal consolato, con costi coperti",
+    "Eventuale accompagnamento sanitario, dopo valutazione medica",
+    "Contributo in denaro per la prima sistemazione, prima della partenza o subito dopo l'arrivo (importo non indicato dalla fonte ufficiale)",
+    "Sostegno alla reintegrazione in beni e servizi nel Paese d'origine (importo non indicato dalla fonte ufficiale)"
+  ],
+  "comeFare": [
+    "Contatta l'ente attuatore (oggi l'OIM) o l'ufficio immigrazione della Prefettura per informazioni",
+    "Partecipa al colloquio di orientamento",
+    "Firma la dichiarazione di rimpatrio volontario assistito",
+    "Definisci con l'operatore il piano individuale di reintegrazione",
+    "L'ente organizza documenti e viaggio; il sostegno prosegue nel Paese d'origine"
+  ],
+  "documenti": [
+    "Passaporto o altro documento d'identità, se disponibile (altrimenti l'ente aiuta a ottenere il documento di viaggio)",
+    "Permesso di soggiorno o documentazione della propria posizione, se presente",
+    "Dichiarazione di volontà di rimpatrio, firmata presso l'ente attuatore"
+  ],
+  "scadenze": "Nessuna scadenza per il singolo richiedente: l'accesso dipende dai progetti finanziati in corso e dalle risorse disponibili.",
+  "faq": [
+    {
+      "q": "Quanto si riceve in denaro?",
+      "a": "La fonte ufficiale consultata prevede un contributo di prima sistemazione e un sostegno in beni e servizi, ma non ne indica l'importo. Va chiesto all'ente attuatore."
+    },
+    {
+      "q": "Possono partecipare anche gli irregolari?",
+      "a": "Sì, il programma è aperto sia a chi è in posizione regolare sia a chi è irregolare, salvo le categorie escluse."
+    },
+    {
+      "q": "Chi non può partecipare?",
+      "a": "Tra gli altri: cittadini UE, cittadini di Paesi esenti da visto, chi ha già usufruito del programma, chi è espulso come sanzione penale o è soggetto a estradizione o mandato d'arresto."
+    },
+    {
+      "q": "A chi mi rivolgo?",
+      "a": "All'ente attuatore, oggi l'Organizzazione Internazionale per le Migrazioni (OIM), oppure all'ufficio immigrazione della Prefettura per un primo orientamento."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "Prefettura di Catania (Ministero dell'Interno) - Rimpatrio Volontario Assistito",
+      "url": "https://prefettura.interno.gov.it/it/prefetture/catania/rimpatrio-volontario-assistito-rva"
+    }
+  ],
+  "tags": [
+    "rimpatrio volontario",
+    "rva",
+    "reintegrazione",
+    "oim",
+    "fami",
+    "ritorno",
+    "paese d'origine"
+  ],
+  "noteRedazione": "Tolta la cifra 'fino a 2.500 €' della bozza: nessuna fonte ufficiale consultata indica importi. Il link OIM della bozza (italy.iom.int/it/rimpatrio-volontario-assistito) dà errore 404. Aggiunte le esclusioni indicate dalla Prefettura (pagina aggiornata l'11/12/2024). Da verificare: il progetto OIM in corso (da risultati di ricerca risulta 'RI.VOL.A.RE in RE.TE', 2/1/2024-1/1/2027, ma il manuale OIM non si è aperto), recapiti o numero verde OIM aggiornati ed effetti su un eventuale divieto di reingresso, che la fonte non tratta. verificato=true per requisiti e tipo di aiuti, senza importi in euro.",
+  "origineApp": "rimpatrio_volontario"
+}

@@ -1,0 +1,91 @@
+{
+  "slug": "regime-forfetario",
+  "titolo": "Regime forfetario: imposta al 5% per le nuove attività",
+  "descrizione": "Partita IVA nel regime forfetario con imposta sostitutiva del 15%, ridotta al 5% per i primi 5 anni di una nuova attività. Non c'è un limite di età.",
+  "intro": "Il regime forfetario è il regime naturale per le persone fisiche con partita IVA che nell'anno precedente non hanno superato 85.000 € di ricavi o compensi. Al posto di IRPEF e addizionali si paga un'imposta sostitutiva del 15% sul reddito calcolato con un coefficiente di redditività, che scende al 5% per i primi cinque anni se si avvia un'attività davvero nuova. Non è una misura riservata ai giovani: vale a qualsiasi età, purché si rispettino i requisiti.",
+  "categoria": "fisco",
+  "ente": "Agenzia delle Entrate",
+  "evidenza": {
+    "valore": "5%",
+    "etichetta": "di imposta per i primi 5 anni (poi 15%)"
+  },
+  "novita": {
+    "data": "2026-07-21",
+    "nota": "La scheda dell'Agenzia delle Entrate conferma per il 2025 e il 2026 la soglia di 35.000 € di reddito da lavoro dipendente o pensione nell'anno precedente (ordinariamente 30.000 €)."
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Persone fisiche che esercitano attività d'impresa, arte o professione in forma individuale",
+    "Chi apre una nuova partita IVA e dichiara di prevedere il rispetto dei requisiti",
+    "Aliquota al 5% solo per chi avvia un'attività nuova, senza età minima o massima"
+  ],
+  "requisiti": [
+    "Ricavi o compensi dell'anno precedente non superiori a 85.000 € (sommando le diverse attività)",
+    "Spese per lavoro accessorio, dipendenti e collaboratori non superiori a 20.000 € lordi",
+    "Reddito da lavoro dipendente o pensione dell'anno precedente non superiore a 35.000 € per il 2025 e il 2026 (30.000 € ordinariamente), salvo che il rapporto di lavoro sia cessato",
+    "Non lavorare prevalentemente per il datore di lavoro attuale o per quelli dei due anni precedenti (o soggetti a loro riconducibili)",
+    "Esclusi, tra gli altri, chi usa regimi IVA speciali, i non residenti (salvo eccezioni UE/SEE), chi partecipa a società collegate all'attività",
+    "Per il 5%: nessuna attività d'impresa, artistica o professionale nei tre anni precedenti e attività non mera prosecuzione di un lavoro precedente (salvo pratica professionale obbligatoria)"
+  ],
+  "importi": [
+    "Imposta sostitutiva del 15% sul reddito imponibile (ricavi per coefficiente di redditività, meno contributi previdenziali obbligatori)",
+    "Imposta ridotta al 5% per i primi cinque anni di una nuova attività con i requisiti",
+    "Se i ricavi superano 85.000 € si esce dal regime dall'anno successivo; oltre 100.000 € si esce subito",
+    "Artigiani e commercianti forfettari possono chiedere all'INPS la riduzione del 35% dei contributi"
+  ],
+  "comeFare": [
+    "1. Aprire la partita IVA presentando la dichiarazione di inizio attività all'Agenzia delle Entrate (direttamente o tramite un intermediario) e indicare l'adesione al regime forfetario",
+    "2. Verificare con un professionista di avere i requisiti per l'aliquota al 5%",
+    "3. Se ci si iscrive alla gestione INPS artigiani o commercianti, chiedere la riduzione contributiva del 35% con la massima tempestività dopo l'iscrizione (per attività iniziate l'anno prima, entro il 28 febbraio)",
+    "4. Calcolare e versare l'imposta sostitutiva con la dichiarazione dei redditi"
+  ],
+  "documenti": [
+    "Documento d'identità e codice fiscale",
+    "Dichiarazione di inizio attività con codice ATECO",
+    "Dati sui redditi da lavoro dipendente o pensione dell'anno precedente"
+  ],
+  "scadenze": "Regime sempre accessibile all'apertura della partita IVA o dall'inizio di ogni anno, se si hanno i requisiti. La soglia di 35.000 € per i redditi da lavoro dipendente vale per il 2025 e il 2026.",
+  "faq": [
+    {
+      "q": "Bisogna essere giovani per avere il 5%?",
+      "a": "No. L'aliquota al 5% dipende dal fatto che l'attività sia nuova (nessuna attività autonoma nei tre anni precedenti e non semplice prosecuzione di un lavoro precedente), non dall'età."
+    },
+    {
+      "q": "Posso essere dipendente e forfettario insieme?",
+      "a": "Sì, se nell'anno precedente il reddito da lavoro dipendente o pensione non ha superato 35.000 € (soglia valida per il 2025 e il 2026) e se non lavori prevalentemente per il tuo datore di lavoro attuale o dei due anni precedenti."
+    },
+    {
+      "q": "Cosa succede se supero 85.000 €?",
+      "a": "Resti nel regime per l'anno in corso ed esci da quello successivo. Se superi 100.000 €, esci subito e applichi l'IVA dall'operazione che fa superare la soglia."
+    },
+    {
+      "q": "Ci sono sconti sui contributi INPS?",
+      "a": "Artigiani e commercianti forfettari possono chiedere la riduzione del 35% dei contributi. Per chi si è iscritto per la prima volta a queste gestioni nel 2025 la legge di Bilancio 2025 ha previsto una riduzione del 50%, con domanda dedicata."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "Agenzia delle Entrate - Regime forfetario: che cos'è",
+      "url": "https://www.agenziaentrate.gov.it/portale/regime-forfetario-le-regole-2020-/infogen-regime-forfetario-le-regole-2020-"
+    },
+    {
+      "label": "INPS - Circolare n. 14 del 9 febbraio 2026 (contributi artigiani e commercianti)",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/02/Circolare_15162/Allegati/16561_Circolare-numero-14-del-09-02-2026.pdf"
+    }
+  ],
+  "tags": [
+    "regime forfetario",
+    "flat tax",
+    "partita iva",
+    "5%",
+    "nuove attività",
+    "autonomi",
+    "contributi INPS"
+  ],
+  "noteRedazione": "Bozza rinominata: 'flat tax giovani' è fuorviante, il regime non ha requisiti di età. Categoria cambiata in 'fisco'. Corretta la soglia del reddito da lavoro dipendente: 35.000 € per 2025 e 2026 (non 30.000 €), verificata sulla scheda AdE aggiornata al 21/07/2026. Requisiti, aliquote e soglie di uscita verificati su AdE; riduzione INPS 35% e termine del 28 febbraio verificati sulla circolare INPS 14/2026. Rimossi: 'contributi ridotti per 5 anni' e i riferimenti a 'niente IVA, IRAP, studi di settore' e al 'modello AA9/12', non verificati sulle pagine ufficiali consultate (la pagina AdE letta non tratta IVA/IRAP in dettaglio). Non verificato se la soglia di 35.000 € venga prorogata al 2027.",
+  "origineApp": "flat_tax_giovani"
+}

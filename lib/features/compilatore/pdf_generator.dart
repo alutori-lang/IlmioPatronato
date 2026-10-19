@@ -5,6 +5,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
 import 'moduli_data.dart';
+import '../../core/services/ad_service.dart';
 
 // ---------------------------------------------------------------------------
 // Generatore PDF per i moduli compilati
@@ -41,10 +42,12 @@ class PdfGenerator {
 
     if (!context.mounted) return;
 
-    await Printing.sharePdf(
-      bytes: bytes,
-      filename: '${modulo.id}_${DateFormat('yyyyMMdd').format(DateTime.now())}.pdf',
-    );
+    // Share sheet opens only after the rewarded video was dismissed (see
+    // AdService.showRewardedThen); no interstitial may appear on top of it.
+    await AdService().withShareSheet(() => Printing.sharePdf(
+          bytes: bytes,
+          filename: '${modulo.id}_${DateFormat('yyyyMMdd').format(DateTime.now())}.pdf',
+        ));
   }
 
   // -------------------------------------------------------------------------

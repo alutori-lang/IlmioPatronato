@@ -1,0 +1,86 @@
+{
+  "slug": "prestazione-universale-anziani",
+  "titolo": "Prestazione Universale per anziani non autosufficienti (Decreto Anziani)",
+  "descrizione": "Sostegno INPS sperimentale per over 80 non autosufficienti con ISEE socio-sanitario fino a 6.000 €: accompagnamento più assegno di assistenza di 850 €.",
+  "intro": "La Prestazione Universale è una misura sperimentale prevista dal cosiddetto Decreto Anziani, in vigore dal 1° gennaio 2025 al 31 dicembre 2026. È rivolta alle persone di almeno 80 anni con un bisogno assistenziale gravissimo, già titolari dell'indennità di accompagnamento e con ISEE socio-sanitario non oltre 6.000 euro. All'importo dell'accompagnamento si aggiunge un assegno di assistenza di circa 850 euro al mese, da spendere per una badante regolarmente assunta o per servizi di cura forniti da soggetti qualificati.",
+  "categoria": "pensioni",
+  "ente": "INPS",
+  "evidenza": {
+    "valore": "850 €/mese",
+    "etichetta": "assegno di assistenza in aggiunta all'accompagnamento"
+  },
+  "novita": {
+    "data": "2026-06-08",
+    "nota": "La scheda INPS, aggiornata a giugno 2026, conferma la sperimentazione fino al 31 dicembre 2026; non risulta ancora una proroga ufficiale per il 2027."
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Persone con almeno 80 anni in condizione di non autosufficienza con bisogno assistenziale gravissimo, già beneficiarie dell'indennità di accompagnamento, che vivono al proprio domicilio."
+  ],
+  "requisiti": [
+    "Età di almeno 80 anni",
+    "Bisogno assistenziale gravissimo riconosciuto dall'INPS",
+    "ISEE socio-sanitario non superiore a 6.000 euro",
+    "Titolarità dell'indennità di accompagnamento",
+    "Non essere ricoverati in RSA o strutture analoghe"
+  ],
+  "importi": [
+    "Quota fissa pari all'importo dell'indennità di accompagnamento (pagata con le stesse modalità dell'accompagnamento)",
+    "Quota integrativa (assegno di assistenza) di circa 850 euro al mese, nei limiti delle risorse disponibili",
+    "L'assegno di assistenza va utilizzato per pagare un lavoratore domestico regolarmente assunto o per acquistare servizi di cura da soggetti qualificati"
+  ],
+  "comeFare": [
+    "Ottenere un ISEE socio-sanitario valido presentando la DSU",
+    "Presentare domanda online sul sito INPS, servizio 'Decreto Anziani – Prestazione Universale', accedendo con SPID, CIE o CNS",
+    "In alternativa rivolgersi a un patronato",
+    "Se la domanda viene accolta, la prestazione decorre dal mese di presentazione",
+    "Conservare e trasmettere quando richiesto la documentazione di spesa (es. buste paga della badante o fatture dei servizi)"
+  ],
+  "documenti": [
+    "DSU/ISEE socio-sanitario",
+    "Dati del verbale che riconosce l'indennità di accompagnamento",
+    "Contratto di lavoro domestico e buste paga, oppure fatture dei servizi di cura acquistati",
+    "Documento d'identità e codice fiscale"
+  ],
+  "scadenze": "Misura sperimentale dal 1° gennaio 2025 al 31 dicembre 2026: le domande possono essere presentate fino al 31 dicembre 2026. Una proroga oltre tale data non risulta, al momento, da fonti ufficiali.",
+  "faq": [
+    {
+      "q": "La Prestazione Universale sostituisce l'accompagnamento?",
+      "a": "No. Per la durata della prestazione la quota fissa corrisponde all'indennità di accompagnamento, a cui si aggiunge l'assegno di assistenza. Se cessa l'accompagnamento, decade anche la Prestazione Universale."
+    },
+    {
+      "q": "Posso usare gli 850 euro liberamente?",
+      "a": "No. L'assegno di assistenza è vincolato al pagamento di un lavoratore domestico con contratto regolare o all'acquisto di servizi di cura da soggetti qualificati. Se non viene usato in questo modo la prestazione può decadere."
+    },
+    {
+      "q": "Cosa succede se vengo ricoverato in RSA?",
+      "a": "Il ricovero in RSA o in strutture simili è causa di decadenza secondo quanto indicato dall'INPS."
+    },
+    {
+      "q": "Si può rinunciare dopo l'accoglimento?",
+      "a": "Sì, l'INPS prevede la possibilità di rinuncia dopo l'accoglimento della domanda."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS – Decreto Anziani: Prestazione Universale (scheda)",
+      "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.decreto-anziani-prestazione-universale.html"
+    }
+  ],
+  "tags": [
+    "anziani",
+    "over 80",
+    "non autosufficienza",
+    "prestazione universale",
+    "decreto anziani",
+    "badante",
+    "accompagnamento",
+    "INPS"
+  ],
+  "noteRedazione": "Rinominata da 'Bonus Anziani Non Autosufficienti 2025' al nome ufficiale 'Prestazione Universale'. Verificati sulla scheda INPS (agg. 08/06/2026): requisiti, durata sperimentale fino al 31/12/2026, assegno di assistenza circa 850 €/mese. Rimosso l'importo dell'accompagnamento (531,76 € era un valore superato) e il totale 'circa 1.381 €': l'importo 2026 dell'accompagnamento non è stato verificato su fonte ufficiale. Proposte di innalzare la soglia ISEE a 12.000 € o di prorogare la misura al 2027 non risultano approvate: da ricontrollare dopo la legge di bilancio 2027.",
+  "origineApp": "bonus_anziani_2025"
+}

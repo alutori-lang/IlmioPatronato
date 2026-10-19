@@ -1,0 +1,91 @@
+{
+  "slug": "carta-dedicata-a-te",
+  "titolo": "Carta Dedicata a te 2026-2027: 500 euro all'anno per la spesa alimentare",
+  "descrizione": "Carta Dedicata a te 2026-2027: 500 euro l'anno per alimenti di prima necessità a nuclei con ISEE fino a 15.000 euro. Nessuna domanda.",
+  "intro": "La carta 'Dedicata a te' è una carta prepagata di Poste Italiane caricata con 500 euro per il 2026 e altri 500 per il 2027, da spendere solo in beni alimentari di prima necessità. Non serve fare domanda: l'INPS individua le famiglie dai dati ISEE e i Comuni comunicano chi ha diritto. Le carte si attivano dal 4 novembre 2026 e vanno usate per la prima volta entro il 16 dicembre 2026.",
+  "categoria": "sostegno",
+  "ente": "INPS / Comuni / Poste Italiane / MASAF",
+  "evidenza": {
+    "valore": "500 €",
+    "etichetta": "all'anno per la spesa"
+  },
+  "novita": {
+    "data": "2026-09",
+    "nota": "Nuova edizione: 500 € accreditati dal 4 novembre 2026, senza domanda"
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Nuclei familiari residenti in Italia con ISEE ordinario non superiore a 15.000 euro e tutti i componenti iscritti all'anagrafe",
+    "Nei limiti delle carte disponibili, con priorità: prima i nuclei di almeno 3 persone con un componente nato entro il 31 dicembre 2012, poi quelli di almeno 3 persone con un nato entro il 31 dicembre 2008, poi gli altri nuclei di almeno 3 persone; dentro ogni fascia conta l'ISEE più basso"
+  ],
+  "requisiti": [
+    "Residenza in Italia e iscrizione all'anagrafe di tutti i componenti",
+    "ISEE ordinario valido non superiore a 15.000 euro",
+    "Esclusi i nuclei che ricevono Assegno di Inclusione, Carta acquisti o altre misure di sostegno contro la povertà",
+    "Esclusi i nuclei con almeno un componente che percepisce NASpI, DIS-COLL, cassa integrazione o strumenti simili di sostegno al reddito"
+  ],
+  "importi": [
+    "500 euro per il 2026, accreditati dal 4 novembre 2026",
+    "500 euro per il 2027, accreditati a partire da aprile 2027",
+    "Spendibili solo per beni alimentari di prima necessità (carburante e trasporti non sono previsti)"
+  ],
+  "comeFare": [
+    "Avere un ISEE ordinario valido: non c'è nessuna domanda da presentare né all'INPS né al Comune",
+    "L'INPS forma gli elenchi dei potenziali beneficiari e i Comuni li verificano e li pubblicano",
+    "Il Comune avvisa i nuovi beneficiari, che ritirano la carta all'ufficio postale abilitato",
+    "Chi ha già la carta degli anni precedenti ed è confermato riceve la ricarica sulla stessa carta",
+    "Fare il primo acquisto entro il 16 dicembre 2026, altrimenti si perde il contributo"
+  ],
+  "documenti": [
+    "Nessun documento da presentare per la domanda (assegnazione d'ufficio)",
+    "Documento d'identità e codice fiscale per il ritiro della carta in Posta",
+    "Eventuale comunicazione ricevuta dal Comune"
+  ],
+  "scadenze": "Primo utilizzo obbligatorio entro il 16 dicembre 2026 per non perdere il contributo 2026. Gli elenchi comunali dovevano essere consolidati entro il 13 ottobre 2026. Seconda ricarica da aprile 2027.",
+  "faq": [
+    {
+      "q": "Devo fare domanda per la carta Dedicata a te?",
+      "a": "No. I beneficiari vengono individuati in automatico dall'INPS sulla base dell'ISEE e confermati dal Comune, che avvisa gli interessati."
+    },
+    {
+      "q": "Posso usarla per benzina o abbonamenti ai mezzi pubblici?",
+      "a": "Per l'edizione 2026-2027 è prevista solo per beni alimentari di prima necessità."
+    },
+    {
+      "q": "Ho già la carta dello scorso anno: me ne danno una nuova?",
+      "a": "No, se sei confermato nelle nuove liste la ricarica arriva sulla carta che hai già."
+    },
+    {
+      "q": "Prendo l'Assegno di Inclusione: posso averla?",
+      "a": "No, i nuclei che ricevono l'ADI, la Carta acquisti o altri sostegni contro la povertà sono esclusi."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS – Carta 'Dedicata a te': modalità operative per il 2026-2027",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.09.carta-dedicata-a-te-modalit-operative-per-il-2026-2027.html"
+    },
+    {
+      "label": "INPS – Carta 'Dedicata a te': beneficiari individuati senza domanda",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.09.carta-dedicata-a-te-beneficiari-individuati-senza-domanda.html"
+    },
+    {
+      "label": "MASAF – Nuova edizione della Carta Dedicata a Te",
+      "url": "https://www.masaf.gov.it/nuova-edizione-carta-dedicata-a-te"
+    }
+  ],
+  "tags": [
+    "carta dedicata a te",
+    "spesa",
+    "alimentari",
+    "poste italiane",
+    "isee 15000",
+    "famiglie"
+  ],
+  "noteRedazione": "Rispetto alla bozza: l'edizione 2026-2027 vale 500 euro per ciascun anno (1.000 euro in due anni); non copre più carburante e trasporti; aggiunte le priorità per età dei figli, le date (4 novembre 2026, 16 dicembre 2026, aprile 2027) e il riferimento al decreto interministeriale del 24 giugno 2026. Il requisito dei 3 componenti risulta dalle fasce di priorità INPS e dal comunicato MASAF. Lo sconto del 15% presso alcune catene, citato dal MASAF, non è stato inserito perché non dettagliato nelle pagine INPS. Il link MEF della bozza è stato sostituito con fonti INPS/MASAF.",
+  "origineApp": "carta_dedicata"
+}

@@ -1,0 +1,98 @@
+{
+  "slug": "assegno-unico-universale-2026",
+  "titolo": "Assegno Unico e Universale per i figli a carico 2026",
+  "descrizione": "Assegno mensile INPS per ogni figlio a carico: nel 2026 da 58,3 a 203,8 euro a figlio minorenne in base all'ISEE, più eventuali maggiorazioni.",
+  "intro": "L'Assegno Unico e Universale è il contributo mensile che l'INPS versa alle famiglie per ciascun figlio a carico, dal settimo mese di gravidanza fino ai 21 anni (senza limiti di età per i figli con disabilità). Per il 2026 importi e soglie ISEE sono stati aumentati dell'1,4% per adeguarli all'inflazione. Chi ha già una domanda accolta non deve ripresentarla: basta tenere aggiornato l'ISEE e comunicare eventuali cambiamenti.",
+  "categoria": "famiglia",
+  "ente": "INPS",
+  "evidenza": {
+    "valore": "203,80 €",
+    "etichetta": "al mese per figlio (massimo)"
+  },
+  "novita": {
+    "data": "2026-02",
+    "nota": "Importi 2026 aumentati dell'1,4%: fino a 203,80 € a figlio"
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Famiglie con figli minorenni a carico, a partire dal settimo mese di gravidanza",
+    "Famiglie con figli maggiorenni fino a 21 anni che studiano (scuola o università), fanno tirocinio o lavorano con reddito complessivo sotto 8.000 euro l'anno, sono iscritti come disoccupati ai servizi per l'impiego o svolgono il servizio civile",
+    "Famiglie con figli con disabilità, senza limiti di età"
+  ],
+  "requisiti": [
+    "Cittadinanza italiana o UE, oppure titolo di soggiorno valido",
+    "Essere soggetti al pagamento dell'imposta sul reddito in Italia",
+    "Residenza in Italia, oppure lavoro in Italia con iscrizione a un regime previdenziale obbligatorio e contribuzione regolare (per i lavoratori non residenti l'assegno è proporzionato al periodo di lavoro in Italia)",
+    "ISEE non obbligatorio: senza ISEE si riceve l'importo minimo"
+  ],
+  "importi": [
+    "Fino a 203,8 euro al mese per ogni figlio minorenne con ISEE fino a 17.468,51 euro",
+    "Importo minimo di 58,3 euro al mese per ogni figlio minorenne senza ISEE o con ISEE pari o superiore a 46.582,71 euro",
+    "Tra le due soglie l'importo diminuisce gradualmente al crescere dell'ISEE",
+    "Aumento del 50% per ogni figlio con meno di un anno",
+    "Aumento del 50% per ogni figlio tra 1 e 3 anni nei nuclei con almeno tre figli e ISEE fino a 46.582,71 euro",
+    "Maggiorazione forfettaria di 150 euro al mese per i nuclei con almeno quattro figli a carico",
+    "Altre maggiorazioni per figli con disabilità, madri con meno di 21 anni, entrambi i genitori con reddito da lavoro e figli successivi al secondo"
+  ],
+  "comeFare": [
+    "Richiedi l'ISEE per prestazioni familiari tramite il Portale unico ISEE dell'INPS (anche in versione precompilata) o rivolgendoti a un CAF",
+    "Se non hai mai presentato domanda, accedi al servizio Assegno unico sul sito INPS con SPID, CIE o CNS, oppure usa l'app INPS Mobile",
+    "In alternativa chiama il Contact Center (803 164 da rete fissa, 06 164 164 da cellulare) o rivolgiti a un patronato",
+    "Indica i figli, le eventuali condizioni che danno diritto a maggiorazioni e l'IBAN per l'accredito",
+    "Se la domanda è già stata accolta negli anni precedenti, non serve ripresentarla: rinnova solo l'ISEE ogni anno e comunica le variazioni del nucleo"
+  ],
+  "documenti": [
+    "ISEE in corso di validità (facoltativo, ma necessario per ricevere più del minimo)",
+    "Codici fiscali del richiedente e dei figli",
+    "IBAN intestato o cointestato al richiedente",
+    "Per i figli 18-21 anni: informazioni sulla condizione (studio, lavoro, disoccupazione, servizio civile)",
+    "Per i cittadini extra UE: estremi del titolo di soggiorno"
+  ],
+  "scadenze": "La domanda si può presentare in qualunque momento dell'anno. Le domande presentate tra il 1° marzo e il 30 giugno danno diritto agli arretrati da marzo; dopo il 30 giugno l'assegno decorre dal mese successivo alla domanda. Da marzo 2026, senza un ISEE valido si riceve il minimo: presentando la DSU entro il 30 giugno 2026 si recuperano le differenze da marzo.",
+  "faq": [
+    {
+      "q": "Devo rifare la domanda di Assegno Unico nel 2026?",
+      "a": "No, se la domanda è già stata accolta resta valida. Bisogna però rinnovare l'ISEE, altrimenti da marzo l'importo scende al minimo."
+    },
+    {
+      "q": "Cosa succede se non presento l'ISEE?",
+      "a": "L'assegno viene pagato lo stesso, ma nell'importo minimo di 58,3 euro al mese per ogni figlio minorenne."
+    },
+    {
+      "q": "Fino a che età si riceve l'Assegno Unico?",
+      "a": "Fino a 21 anni, ma dai 18 anni solo se il figlio studia, fa tirocinio o lavora con reddito sotto 8.000 euro, è disoccupato iscritto ai centri per l'impiego o fa il servizio civile. Per i figli con disabilità non c'è limite di età."
+    },
+    {
+      "q": "Quale ISEE si usa nel 2026?",
+      "a": "Dal 2026 si usa il nuovo ISEE per prestazioni familiari e per l'inclusione, calcolato senza considerare l'Assegno Unico ricevuto. Per gennaio e febbraio 2026 vale ancora l'ISEE valido al 31 dicembre 2025."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS - Scheda Assegno unico e universale per i figli a carico",
+      "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.assegno-unico-e-universale-per-i-figli-a-carico-55984.assegno-unico-e-universale-per-i-figli-a-carico.html"
+    },
+    {
+      "label": "INPS - Circolare n. 7 del 30 gennaio 2026",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/01/Circolare_15152/Allegati/16548_Circolare-numero-7-del-30-01-2026.pdf"
+    },
+    {
+      "label": "INPS - Assegno unico 2026: presentazione domanda e aggiornamento importi",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.02.assegno-unico-2026-presentazione-domanda-e-aggiornamento-importi.html"
+    }
+  ],
+  "tags": [
+    "assegno unico",
+    "figli",
+    "famiglia",
+    "ISEE",
+    "INPS",
+    "2026"
+  ],
+  "noteRedazione": "Gli importi in euro delle maggiorazioni per figli con disabilità, madri under 21, secondo percettore di reddito e figli oltre il secondo sono nell'Allegato 1 della circolare INPS n. 7/2026, che non è stato possibile leggere: per questo sono indicati senza cifre.",
+  "origineApp": "assegno_unico"
+}

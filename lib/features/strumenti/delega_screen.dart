@@ -511,10 +511,13 @@ class _DelegaScreenState extends State<DelegaScreen>
       ),
     );
 
-    await Printing.sharePdf(
-      bytes: await pdf.save(),
-      filename: 'delega_${DateFormat('yyyyMMdd_HHmmss').format(DateTime.now())}.pdf',
-    );
+    // Share sheet opens only after the rewarded video was dismissed (see
+    // AdService.showRewardedThen); no interstitial may appear on top of it.
+    final bytes = await pdf.save();
+    await AdService().withShareSheet(() => Printing.sharePdf(
+          bytes: bytes,
+          filename: 'delega_${DateFormat('yyyyMMdd_HHmmss').format(DateTime.now())}.pdf',
+        ));
   }
 
   @override

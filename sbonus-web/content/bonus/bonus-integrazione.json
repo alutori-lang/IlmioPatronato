@@ -1,0 +1,81 @@
+{
+  "slug": "bonus-integrazione",
+  "titolo": "SAI - Sistema di Accoglienza e Integrazione",
+  "descrizione": "Accoglienza e percorsi di integrazione gratuiti (alloggio, italiano, lavoro, aiuto legale) per titolari di protezione e minori soli. Non è un bonus in denaro.",
+  "intro": "Non esiste una misura nazionale chiamata 'Bonus Integrazione Rifugiati'. Esiste il SAI, la rete pubblica di accoglienza di secondo livello: i progetti sono gestiti dagli enti locali, coordinati dal Servizio Centrale e finanziati dal Ministero dell'Interno con il Fondo nazionale per le politiche e i servizi dell'asilo. I progetti offrono vitto e alloggio e accompagnano le persone verso l'autonomia con corsi di italiano, orientamento ai servizi, formazione e inserimento lavorativo. Non si chiede come un bonus: l'inserimento parte da una segnalazione e l'ammissione la decide il Servizio Centrale, in base ai posti disponibili.",
+  "categoria": "sostegno",
+  "ente": "Ministero dell'Interno / Servizio Centrale SAI / enti locali",
+  "evidenza": null,
+  "novita": null,
+  "stato": "da-verificare",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Titolari di protezione internazionale (status di rifugiato o protezione sussidiaria) e di altre forme di protezione previste dalla legge",
+    "Minori stranieri non accompagnati, anche se non hanno chiesto asilo",
+    "Richiedenti asilo solo in alcuni casi (ad esempio persone vulnerabili): va verificato caso per caso"
+  ],
+  "requisiti": [
+    "Appartenere a una delle categorie ammesse dalla normativa vigente",
+    "Segnalazione da parte di un progetto territoriale o di soggetti terzi come Prefetture, Questure o associazioni",
+    "Posti disponibili: l'ammissione è decisa dal Servizio Centrale"
+  ],
+  "importi": [
+    "Servizi gratuiti: vitto e alloggio, accompagnamento sociale e ai servizi del territorio (anche sanitari), corsi di italiano, iscrizione a scuola dei minori, informazione legale, formazione, orientamento al lavoro e alla ricerca di casa",
+    "Progetti specializzati per persone vulnerabili (disabilità, minori soli, vittime di tortura, nuclei monoparentali, donne sole in gravidanza)",
+    "Eventuali somme in denaro (pocket money) non sono indicate nelle fonti ufficiali consultate"
+  ],
+  "comeFare": [
+    "Rivolgersi alla Prefettura, alla Questura, ai servizi sociali del Comune o a un'associazione che segue la persona",
+    "Il soggetto che segnala invia la richiesta di inserimento al Servizio Centrale del SAI",
+    "Il Servizio Centrale valuta la richiesta e, se ci sono posti, indica il progetto di destinazione",
+    "Nel progetto si concorda un percorso individuale verso l'autonomia"
+  ],
+  "documenti": [
+    "Permesso di soggiorno per protezione o documentazione della procedura in corso",
+    "Documento d'identità, se disponibile",
+    "Eventuale documentazione sanitaria o sociale utile per i progetti specializzati"
+  ],
+  "scadenze": "Nessuna scadenza: l'accesso dipende dai requisiti e dai posti disponibili. La durata della permanenza per gli adulti non è indicata nelle fonti consultate; per i minori stranieri non accompagnati è fino alla maggiore età più sei mesi, con possibili proroghe.",
+  "faq": [
+    {
+      "q": "Esiste un 'bonus integrazione' in denaro per i rifugiati?",
+      "a": "Non risulta una misura nazionale con questo nome. Esiste il SAI, che offre servizi di accoglienza e integrazione, non un contributo da chiedere con una domanda."
+    },
+    {
+      "q": "Posso fare domanda da solo?",
+      "a": "No. L'inserimento avviene su segnalazione di un progetto territoriale, della Prefettura, della Questura o di associazioni, e l'ammissione la decide il Servizio Centrale."
+    },
+    {
+      "q": "I richiedenti asilo possono entrare nel SAI?",
+      "a": "In generale il SAI è riservato ai titolari di protezione e ai minori soli, con eccezioni per alcune categorie di richiedenti, come le persone vulnerabili. Conviene verificare la propria situazione con la Prefettura o con un operatore legale."
+    },
+    {
+      "q": "Cosa offre in concreto?",
+      "a": "Vitto e alloggio, corsi di italiano, aiuto a usare i servizi del territorio, informazione legale, formazione e orientamento al lavoro e alla ricerca di casa."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "Rete SAI (Servizio Centrale) - Accoglienza integrata",
+      "url": "https://www.retesai.it/attivita-e-servizi/accoglienza-integrata/"
+    },
+    {
+      "label": "Ministero dell'Interno - DLCI - Il sistema di accoglienza",
+      "url": "https://libertaciviliimmigrazione.dlci.interno.gov.it/il-sistema-di-accoglienza"
+    }
+  ],
+  "tags": [
+    "sai",
+    "accoglienza",
+    "rifugiati",
+    "protezione internazionale",
+    "integrazione",
+    "asilo",
+    "minori stranieri non accompagnati"
+  ],
+  "noteRedazione": "Il 'Bonus Integrazione Rifugiati' non esiste con questo nome: pagina rifatta sul SAI. Rimossi perché non confermati su fonti ufficiali il 'pocket money 75-150 euro/mese' e la 'durata 6-12 mesi' della bozza. La pagina DLCI consultata riguarda soprattutto i minori stranieri non accompagnati; servizi e modalità di ingresso vengono da retesai.it (sito del Servizio Centrale, non in elenco .gov.it). Le categorie ammesse dopo il DL 20/2023 sono scritte in modo prudente perché non ho letto il testo aggiornato del D.Lgs. 142/2015. verificato=false: non ci sono importi verificabili e le categorie ammesse vanno controllate sul testo di legge.",
+  "origineApp": "bonus_integrazione"
+}

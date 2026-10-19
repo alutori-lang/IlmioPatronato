@@ -1,0 +1,106 @@
+{
+  "slug": "bonus-giovani-2026",
+  "titolo": "Bonus Giovani 2026: esonero contributivo per chi assume under 35",
+  "descrizione": "Contributi azzerati fino a 500 € al mese (650 € nella ZES) per le assunzioni stabili nel 2026 di giovani under 35 svantaggiati.",
+  "intro": "Il decreto Lavoro 2026 (D.L. 62/2026, art. 2) azzera i contributi previdenziali a carico del datore di lavoro privato che, nel corso del 2026, assume a tempo indeterminato un giovane sotto i 35 anni senza un lavoro regolarmente retribuito da tempo o in condizione di svantaggio. Il tetto è di 500 € al mese per lavoratore e sale a 650 € se la sede di lavoro si trova nella ZES unica. A parte è previsto un incentivo dedicato alla trasformazione a tempo indeterminato dei contratti a termine di giovani under 35, per le trasformazioni fatte da agosto a dicembre 2026.",
+  "categoria": "lavoro",
+  "ente": "INPS",
+  "evidenza": {
+    "valore": "500 €",
+    "etichetta": "al mese per lavoratore (650 € nella ZES)"
+  },
+  "novita": {
+    "data": "2026-07-30",
+    "nota": "INPS ha attivato la domanda per l'incentivo di stabilizzazione degli under 35 (art. 4 del decreto Lavoro, messaggio n. 2518 del 29 luglio 2026)."
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Datori di lavoro privati, anche non imprenditori e anche del settore agricolo, che assumono a tempo indeterminato tra il 1° gennaio e il 31 dicembre 2026",
+    "Il beneficio va al datore di lavoro, non al lavoratore: il giovane assunto non riceve somme dirette",
+    "Escluse le pubbliche amministrazioni"
+  ],
+  "requisiti": [
+    "Lavoratore che alla data dell'assunzione non ha ancora compiuto 35 anni",
+    "In alternativa: privo di impiego regolarmente retribuito da almeno 24 mesi; oppure privo di impiego da almeno 12 mesi e appartenente a una categoria di svantaggio prevista dal regolamento UE 651/2014 (ad esempio senza diploma di scuola superiore, adulto che vive solo con persone a carico, lavoratore del genere sottorappresentato in settori con forte disparità uomo-donna); oppure lavoratore 'svantaggiato' (ad esempio privo di impiego da almeno 6 mesi o di età tra 15 e 24 anni)",
+    "Contratto di lavoro subordinato a tempo indeterminato, a tempo pieno o parziale, anche in somministrazione",
+    "Esclusi lavoro domestico, apprendistato, lavoro intermittente, contratti a termine e trasformazioni di contratti a termine (queste ultime hanno un incentivo separato)",
+    "Incremento occupazionale netto rispetto alla media dei dipendenti dei 12 mesi precedenti",
+    "Regolarità contributiva (DURC), rispetto dei contratti collettivi e delle norme sulla sicurezza sul lavoro"
+  ],
+  "importi": [
+    "Esonero del 100% dei contributi previdenziali a carico del datore (esclusi premi e contributi INAIL)",
+    "Tetto di 500 € al mese per lavoratore, elevato a 650 € al mese per assunzioni in sedi nelle regioni della ZES unica (Abruzzo, Molise, Campania, Basilicata, Sicilia, Puglia, Calabria, Sardegna, Marche, Umbria)",
+    "Durata massima 24 mesi per i lavoratori 'molto svantaggiati' (senza impiego da 24 mesi, o da 12 mesi con un ulteriore fattore di svantaggio); 12 mesi per gli altri lavoratori svantaggiati",
+    "Incentivo stabilizzazione (art. 4): esonero del 100% fino a 500 € al mese per massimo 24 mesi, per le trasformazioni a tempo indeterminato effettuate dal 1° agosto al 31 dicembre 2026",
+    "Risorse limitate: INPS accoglie le domande solo se c'è copertura finanziaria"
+  ],
+  "comeFare": [
+    "1. Il datore di lavoro verifica età e condizione di svantaggio del candidato e il requisito dell'incremento occupazionale netto",
+    "2. Presenta la domanda online all'INPS sul Portale delle Agevolazioni (ex DiResCo), modulo 'Bonus giovani 2026'; per le trasformazioni di contratti a termine si usa il modulo dedicato all'incentivo di stabilizzazione (art. 4)",
+    "3. La domanda si può inviare anche prima dell'assunzione: in questo caso INPS accantona le risorse e il datore deve effettuare l'assunzione e inviare la comunicazione obbligatoria (UniLav/UniSomm) entro 10 giorni",
+    "4. Ottenuto l'accoglimento, l'esonero si recupera nelle denunce contributive mensili (UniEmens) entro l'importo riconosciuto"
+  ],
+  "documenti": [
+    "Dati identificativi dell'azienda e del lavoratore",
+    "Indicazione della classe di svantaggio del lavoratore",
+    "Tipologia di contratto (tempo pieno o parziale) e retribuzione media mensile prevista",
+    "Comunicazione obbligatoria di assunzione (UniLav/UniSomm), che deve coincidere con i dati della domanda",
+    "Dichiarazioni sostitutive su non cumulo con altri esoneri e sul trattamento economico applicato"
+  ],
+  "scadenze": "Assunzioni a tempo indeterminato effettuate dal 1° gennaio al 31 dicembre 2026; trasformazioni di contratti a termine (incentivo stabilizzazione) dal 1° agosto al 31 dicembre 2026. In entrambi i casi fino a esaurimento delle risorse.",
+  "faq": [
+    {
+      "q": "Il bonus spetta per qualsiasi giovane under 35 assunto?",
+      "a": "No. Nel 2026 l'esonero per le nuove assunzioni è riservato ai giovani under 35 'svantaggiati' o 'molto svantaggiati' secondo le regole UE, ad esempio chi non ha un lavoro regolarmente retribuito da almeno 6, 12 o 24 mesi a seconda dei casi."
+    },
+    {
+      "q": "Si può cumulare con la Decontribuzione Sud?",
+      "a": "No. INPS precisa che l'esonero non è cumulabile con altri esoneri o riduzioni contributive previsti dalla normativa, inclusa la Decontribuzione Sud PMI, per lo stesso lavoratore."
+    },
+    {
+      "q": "E se trasformo a tempo indeterminato un contratto a termine?",
+      "a": "C'è un incentivo apposito: vale per giovani under 35 mai assunti prima a tempo indeterminato, con contratto a termine attivato entro il 30 aprile 2026 e di durata non superiore a 12 mesi, trasformato senza interruzioni tra il 1° agosto e il 31 dicembre 2026."
+    },
+    {
+      "q": "Esiste ancora l'esonero 'under 36' da 6.000-8.000 € l'anno?",
+      "a": "No per le nuove assunzioni: riguardava assunzioni e trasformazioni effettuate tra luglio 2022 e dicembre 2023. Nel 2026 INPS lo ha esteso, per quel periodo, agli intermediari assicurativi che ne erano esclusi, con crediti utilizzabili entro il 31 dicembre 2026."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS - Bonus Giovani 2026 (notizia)",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.05.bonus-giovani-2026.html"
+    },
+    {
+      "label": "INPS - Circolare n. 55 del 14 maggio 2026",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/05/Circolare_15258/Allegati/16770_Circolare-numero-55-del-14-05-2026.pdf"
+    },
+    {
+      "label": "INPS - Stabilizzazione giovani: guida alla circolare n. 72/2026",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.07.stabilizzazione-giovani-guida-alla-circolare-inps-n-72-del-2026.html"
+    },
+    {
+      "label": "INPS - Decontribuzione under 35 e madri con almeno tre figli: novità",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.07.decontribuzione-under-35-e-madri-con-almeno-tre-figli-novit.html"
+    },
+    {
+      "label": "INPS - Comunicato stampa 27 luglio 2026 (esonero under 36 e Decontribuzione Sud)",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/comunicati-stampa/2026/07/Allegati/4153_CS_Esonero_giovani_under_36_e_Decontribuzione_sud.pdf"
+    }
+  ],
+  "tags": [
+    "bonus giovani 2026",
+    "under 35",
+    "assunzione",
+    "esonero contributivo",
+    "decreto lavoro",
+    "stabilizzazione",
+    "ZES"
+  ],
+  "noteRedazione": "Bozza riscritta integralmente. La bozza descriveva il vecchio esonero 'under 36' (6.000 €/anno per 36-48 mesi), valido solo per assunzioni/trasformazioni da luglio 2022 a dicembre 2023: oggi non applicabile alle nuove assunzioni (solo estensione 2026 agli intermediari assicurativi, circ. INPS 80/2026). La misura vigente è il Bonus Giovani 2026 del D.L. 62/2026 (convertito dalla L. 112/2026), circ. INPS 55/2026, che ha sostituito la proroga gennaio-aprile 2026 del bonus giovani del D.L. 60/2024 (abrogata). Requisiti, importi e procedura verificati sulla circolare 55 e sulle notizie INPS. Non verificati: numero del messaggio INPS che ha reso disponibile il modulo 'Bonus giovani 2026' (fonti di settore citano il n. 1966/2026) e il dettaglio del tetto della stabilizzazione (una fonte non ufficiale cita 8.000 €/anno, le pagine INPS consultate indicano 500 €/mese). Rimossa la richiesta 'mai assunto a tempo indeterminato' per le nuove assunzioni 2026 (vale solo per l'incentivo di stabilizzazione).",
+  "origineApp": "bonus_assunzione_giovani"
+}

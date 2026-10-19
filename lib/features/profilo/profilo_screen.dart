@@ -18,6 +18,7 @@ import 'notifiche_screen.dart';
 import 'scanner_doc_screen.dart';
 import 'tracker_pratica_screen.dart';
 import 'translator_screen.dart';
+import '../../core/services/ads_consent.dart';
 
 // iOS App Store numeric ID assigned by Apple once the first version is approved.
 // While empty, the rate/share buttons fall back to an App Store search by name.
@@ -391,6 +392,16 @@ class ProfiloScreen extends StatelessWidget {
   }
 
   Widget _buildSettings(BuildContext context, AppStrings s) {
+    // GDPR: the "Privacy settings" entry (Google UMP privacy options form)
+    // is shown only when the consent SDK says it is required.
+    return ValueListenableBuilder<bool>(
+      valueListenable: AdsConsent.privacyOptionsRequired,
+      builder: (context, privacyRequired, _) =>
+          _buildSettingsList(context, s, privacyRequired),
+    );
+  }
+
+  Widget _buildSettingsList(BuildContext context, AppStrings s, bool privacyRequired) {
     final langService = context.watch<LanguageService>();
     final themeService = context.watch<ThemeService>();
     final items = [
@@ -400,6 +411,8 @@ class ProfiloScreen extends StatelessWidget {
       _SettData(Icons.info, s.settingsAbout, 'v1.0.11', AppColors.iconGreen),
       _SettData(Icons.star, s.settingsRate, '', const Color(0xFFFFC107)),
       _SettData(Icons.share, s.settingsShare, '', AppColors.iconPurple),
+      if (privacyRequired)
+        _SettData(Icons.privacy_tip, s.settingsPrivacyAds, '', AppColors.iconBlue),
     ];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -423,6 +436,9 @@ class ProfiloScreen extends StatelessWidget {
                 break;
               case 5:
                 _shareApp(context);
+                break;
+              case 6:
+                AdsConsent.showPrivacyOptionsForm();
                 break;
             }
           },

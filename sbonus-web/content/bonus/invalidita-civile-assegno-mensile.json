@@ -1,0 +1,94 @@
+{
+  "slug": "invalidita-civile-assegno-mensile",
+  "titolo": "Invalidità civile: riconoscimento e assegno mensile di assistenza",
+  "descrizione": "Con invalidità civile dal 74% al 99% e reddito personale fino a 5.852,21 euro l'INPS paga l'assegno mensile di 340,71 euro per 13 mensilità (2026).",
+  "intro": "L'invalidità civile viene riconosciuta da una commissione medico-legale dopo l'invio del certificato medico introduttivo da parte del medico. Chi ha tra 18 e 67 anni, un'invalidità tra il 74% e il 99% e un reddito personale molto basso può ricevere dall'INPS l'assegno mensile di assistenza. Per il 2026 l'importo è di 340,71 euro al mese per 13 mensilità; al compimento dei 67 anni l'assegno diventa assegno sociale sostitutivo. Chi ha un'invalidità del 100% accede invece alla pensione di inabilità civile.",
+  "categoria": "sostegno",
+  "ente": "INPS",
+  "evidenza": {
+    "valore": "340,71 €",
+    "etichetta": "al mese per 13 mensilità (2026)"
+  },
+  "novita": {
+    "data": "2026-07-20",
+    "nota": "INPS ha aggiornato la scheda: importo e limite di reddito 2026 e nuova procedura senza domanda amministrativa nelle province della sperimentazione; altrove la domanda resta obbligatoria fino al 31 dicembre 2026."
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Persone tra 18 e 67 anni con invalidità civile riconosciuta tra il 74% e il 99%",
+    "Con reddito personale annuo non superiore a 5.852,21 euro (soglia 2026)",
+    "Cittadini italiani, cittadini UE iscritti all'anagrafe e cittadini extra UE con permesso di soggiorno nei casi previsti, con residenza stabile in Italia"
+  ],
+  "requisiti": [
+    "Riconoscimento di una riduzione della capacità lavorativa dal 74% al 99% nel verbale della commissione",
+    "Età compresa tra 18 e 67 anni",
+    "Reddito personale annuo entro 5.852,21 euro per il 2026",
+    "Condizione di inattività lavorativa, come ridefinita dall'art. 12-ter del decreto-legge 146/2021",
+    "Residenza stabile in Italia e requisiti di cittadinanza o soggiorno",
+    "Non è cumulabile con pensioni dirette di invalidità o con prestazioni per invalidità di guerra, lavoro o servizio: si può scegliere la più favorevole"
+  ],
+  "importi": [
+    "Assegno mensile di assistenza 2026: 340,71 euro al mese per 13 mensilità (la scheda INPS lo arrotonda a 340 euro)",
+    "Decorre dal primo giorno del mese successivo alla domanda o dalla data indicata dalla commissione",
+    "Se la commissione riconosce l'impossibilità di camminare o di compiere gli atti quotidiani senza aiuto, spetta anche l'indennità di accompagnamento, indipendente dal reddito (552,57 euro al mese nel 2026, da circolare INPS 153/2025)"
+  ],
+  "comeFare": [
+    "Chiedere al medico certificatore di inviare online all'INPS il certificato medico introduttivo",
+    "Nelle province della sperimentazione della riforma della disabilità non serve una domanda separata; nelle altre presentare la domanda online all'INPS (SPID, CIE o CNS) entro i termini, oppure tramite patronato o associazione di categoria",
+    "Sottoporsi alla visita presso la commissione medico-legale",
+    "Ricevuto il verbale, completare i dati per il pagamento (reddito, situazione lavorativa, IBAN); INPS indica circa 45 giorni per la liquidazione una volta forniti tutti i dati"
+  ],
+  "documenti": [
+    "Certificato medico introduttivo inviato online dal medico",
+    "Documentazione sanitaria da portare alla visita",
+    "Documento d'identità, codice fiscale e, per i cittadini extra UE, permesso di soggiorno",
+    "Dati su redditi personali e situazione lavorativa, IBAN per l'accredito"
+  ],
+  "scadenze": "Prestazione sempre richiedibile. Nelle province non ancora interessate dalla sperimentazione la domanda amministrativa resta necessaria fino al 31 dicembre 2026. Eventuali incompatibilità sopravvenute vanno comunicate all'INPS entro 30 giorni.",
+  "faq": [
+    {
+      "q": "Qual è la differenza con l'assegno ordinario di invalidità?",
+      "a": "L'assegno ordinario di invalidità è una prestazione previdenziale per chi ha versato contributi (almeno 5 anni, di cui 3 nell'ultimo quinquennio). L'assegno mensile di assistenza descritto qui è invece una prestazione assistenziale per invalidi civili, legata al reddito e non ai contributi."
+    },
+    {
+      "q": "Cosa succede a 67 anni?",
+      "a": "L'assegno mensile si trasforma in assegno sociale sostitutivo."
+    },
+    {
+      "q": "Con il 100% di invalidità cosa spetta?",
+      "a": "La pensione di inabilità civile, con lo stesso importo mensile ma un limite di reddito molto più alto (20.029,55 euro nel 2026). Vedi la scheda dedicata."
+    },
+    {
+      "q": "Posso lavorare?",
+      "a": "Tra i requisiti INPS indica l'inattività lavorativa come ridefinita dall'art. 12-ter del DL 146/2021. Prima di accettare un lavoro conviene verificare con il patronato o con l'INPS gli effetti sull'assegno."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS - Assegno mensile di assistenza",
+      "url": "https://www.inps.it/it/it/dettaglio-approfondimento.schede-informative.assegno-mensile-di-assistenza.html"
+    },
+    {
+      "label": "INPS - Circolare n. 153 del 19/12/2025 (rinnovo prestazioni 2026)",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2025/12/Circolare_15109/Allegati/16484_Circolare-numero-153-del-19-12-2025.pdf"
+    },
+    {
+      "label": "INPS - Circolare 153/2025, Allegato 2 (tabelle importi e limiti 2026)",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2025/12/Circolare_15109/Allegati/16486_Circolare-numero-153-del-19-12-2025_Allegato-n-2.pdf"
+    }
+  ],
+  "tags": [
+    "invalidità civile",
+    "assegno mensile",
+    "74%",
+    "disabilità",
+    "inps",
+    "accompagnamento"
+  ],
+  "noteRedazione": "CORRETTO L'OGGETTO: la bozza descriveva l'Assegno Ordinario di Invalidità (prestazione contributiva INPS), che non corrisponde allo slug 'invalidita-civile'. La scheda ora tratta il riconoscimento dell'invalidità civile e l'assegno mensile di assistenza (74-99%). Importo 340,71 euro e limite 5.852,21 euro verificati nella tabella dell'Allegato 2 alla circolare INPS 153/2025 (valori 2026 calcolati con perequazione previsionale); la scheda INPS (aggiornata 20/7/2026) indica '340 euro'. Indennità di accompagnamento 552,57 euro dalla stessa tabella. Compatibilità con lavoro sotto soglia non esplicitata dalla fonte: indicato solo il rinvio normativo. Elenco province della sperimentazione non riportato. Se si vuole una scheda sull'Assegno ordinario di invalidità, va creata con altro slug e verificata a parte.",
+  "origineApp": "invalidita_civile"
+}

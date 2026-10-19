@@ -1,0 +1,100 @@
+{
+  "slug": "naspi-indennita-disoccupazione",
+  "titolo": "NASpI 2026: l'indennità di disoccupazione per i lavoratori dipendenti",
+  "descrizione": "NASpI 2026: chi ne ha diritto, requisito delle 13 settimane, importo massimo di 1.584,70 euro, durata e domanda entro 68 giorni.",
+  "intro": "La NASpI è il sussidio mensile che l'INPS paga a chi ha perso il lavoro dipendente senza averlo scelto. Si calcola sulle retribuzioni degli ultimi quattro anni e dura la metà delle settimane con contributi in quel periodo. Va chiesta online entro 68 giorni dalla fine del rapporto, da soli o con l'aiuto di un patronato.",
+  "categoria": "lavoro",
+  "ente": "INPS",
+  "evidenza": {
+    "valore": "1.584,70 €",
+    "etichetta": "al mese (massimo)"
+  },
+  "novita": {
+    "data": "2026-01-28",
+    "nota": "Massimale 2026: 1.584,70 € al mese"
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Lavoratori con contratto di lavoro subordinato che hanno perso il lavoro in modo involontario",
+    "Apprendisti, soci lavoratori di cooperative con rapporto subordinato, personale artistico subordinato",
+    "Dipendenti a tempo determinato della pubblica amministrazione",
+    "Dal 2022 anche operai agricoli a tempo indeterminato di cooperative che trasformano prodotti agricoli propri o dei soci",
+    "Non spetta: dipendenti pubblici a tempo indeterminato, operai agricoli a tempo determinato, stranieri con permesso per lavoro stagionale, chi ha già i requisiti per la pensione di vecchiaia o anticipata"
+  ],
+  "requisiti": [
+    "Stato di disoccupazione involontaria (licenziamento, scadenza del contratto a termine, ecc.)",
+    "Almeno 13 settimane di contributi contro la disoccupazione nei 4 anni precedenti",
+    "Dimissioni volontarie e risoluzione consensuale escludono il diritto, salvo eccezioni: dimissioni per giusta causa, dimissioni nel periodo tutelato di maternità/paternità, risoluzione consensuale nella procedura di conciliazione o per rifiuto di un trasferimento oltre 50 km",
+    "Dal 2025: se nei 12 mesi precedenti si è lasciato volontariamente un lavoro a tempo indeterminato, servono almeno 13 settimane di contributi tra quelle dimissioni e la nuova perdita involontaria del lavoro",
+    "Disponibilità immediata al lavoro (la domanda NASpI vale già come DID) e patto di servizio con il Centro per l'impiego"
+  ],
+  "importi": [
+    "75% della retribuzione media mensile degli ultimi 4 anni, se non supera 1.456,72 euro (valore 2026)",
+    "Oltre 1.456,72 euro si aggiunge il 25% della parte eccedente",
+    "Importo massimo mensile 2026: 1.584,70 euro",
+    "Riduzione del 3% al mese dal primo giorno del sesto mese di fruizione (dall'ottavo mese per chi ha compiuto 55 anni alla domanda)",
+    "Durata: metà delle settimane di contribuzione degli ultimi 4 anni (senza contare quelle già usate per altre indennità di disoccupazione)",
+    "Possibile anticipo in un'unica soluzione per avviare un'attività autonoma o entrare come socio in una cooperativa di lavoro"
+  ],
+  "comeFare": [
+    "Raccogliere i dati della cessazione del rapporto (data e motivo) e l'IBAN",
+    "Presentare la domanda online sul sito INPS con SPID, CIE o CNS, servizio 'NASpI – invio domanda, comunicazioni e consultazione'",
+    "In alternativa rivolgersi a un patronato o chiamare il Contact center 803 164 (da fisso) / 06 164 164 (da cellulare)",
+    "Entro 15 giorni dalla domanda contattare il Centro per l'impiego per firmare il patto di servizio personalizzato",
+    "Se si svolge o si avvia un'altra attività, comunicare all'INPS il reddito presunto (in domanda o con il modello NASpI-COM entro un mese)"
+  ],
+  "documenti": [
+    "Documento d'identità e codice fiscale",
+    "Credenziali SPID, CIE o CNS (oppure delega al patronato)",
+    "Dati del rapporto di lavoro cessato (lettera di licenziamento o comunicazione di fine contratto)",
+    "IBAN di conto corrente o libretto postale intestato al richiedente",
+    "Eventuale reddito presunto di altre attività in corso"
+  ],
+  "scadenze": "La domanda va inviata, a pena di decadenza, entro 68 giorni dalla cessazione del rapporto (il termine si sospende in caso di maternità, malattia o infortunio indennizzabili insorti nei termini previsti). Se inviata entro l'ottavo giorno, la prestazione decorre dall'ottavo giorno dopo la cessazione; altrimenti dal giorno successivo alla domanda.",
+  "faq": [
+    {
+      "q": "Se mi dimetto ho diritto alla NASpI?",
+      "a": "In genere no. Fanno eccezione le dimissioni per giusta causa e quelle presentate nel periodo tutelato di maternità o paternità."
+    },
+    {
+      "q": "Quanto dura la NASpI?",
+      "a": "Per un numero di settimane pari alla metà di quelle con contributi negli ultimi quattro anni, senza contare i periodi già usati per un'indennità precedente."
+    },
+    {
+      "q": "Posso lavorare mentre prendo la NASpI?",
+      "a": "Sì, entro certi limiti di reddito e comunicando all'INPS il reddito presunto, altrimenti si decade. Un contratto subordinato fino a sei mesi sospende la prestazione."
+    },
+    {
+      "q": "Quando l'importo inizia a ridursi?",
+      "a": "Dal sesto mese cala del 3% ogni mese; per chi ha almeno 55 anni alla domanda la riduzione parte dall'ottavo mese."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS – Scheda NASpI: indennità mensile di disoccupazione",
+      "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50593.naspi-indennit-mensile-di-disoccupazione.html"
+    },
+    {
+      "label": "INPS – Circolare n. 4 del 28 gennaio 2026 (importi 2026)",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/01/Circolare_15147/Allegati/16539_Circolare-numero-4-del-28-01-2026.pdf"
+    },
+    {
+      "label": "INPS – NASpI: nuovo requisito contributivo (circolare 98/2025)",
+      "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.06.naspi-nuovo-requisito-contributivo.html"
+    }
+  ],
+  "tags": [
+    "naspi",
+    "disoccupazione",
+    "licenziamento",
+    "inps",
+    "lavoro dipendente",
+    "sussidio"
+  ],
+  "noteRedazione": "Rispetto alla bozza: tolto il requisito delle 30 giornate negli ultimi 12 mesi (non più presente nella scheda INPS); importo massimo aggiornato a 1.584,70 euro e soglia a 1.456,72 euro (2026); aggiunto il requisito 2025 delle 13 settimane dopo dimissioni volontarie; la domanda vale già come DID, non serve passare prima dal CpI. Non sono indicati tempi di esito perché la scheda rinvia a un regolamento con termini variabili.",
+  "origineApp": "naspi"
+}

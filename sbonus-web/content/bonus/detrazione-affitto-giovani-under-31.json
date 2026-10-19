@@ -1,0 +1,78 @@
+{
+  "slug": "detrazione-affitto-giovani-under-31",
+  "titolo": "Detrazione Affitto Giovani Under 31",
+  "descrizione": "Detrazione IRPEF per inquilini tra 20 e 31 anni non compiuti con reddito fino a 15.493,71 euro: 20% del canone, minimo 991,60 e massimo 2.000 euro.",
+  "intro": "I giovani tra i 20 e i 31 anni non compiuti che prendono in affitto una casa da usare come propria residenza possono ottenere una detrazione IRPEF per i primi quattro anni del contratto. Lo sconto è pari al 20% del canone, con un minimo di 991,60 euro e un massimo di 2.000 euro l'anno. Serve un reddito complessivo non superiore a 15.493,71 euro e l'alloggio non deve essere l'abitazione principale dei genitori.",
+  "categoria": "casa",
+  "ente": "Agenzia delle Entrate",
+  "evidenza": {
+    "valore": "2.000 €",
+    "etichetta": "di detrazione l'anno (massimo)"
+  },
+  "stato": "attivo",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Giovani di età compresa tra 20 e 31 anni non compiuti che hanno stipulato un contratto di locazione per un'abitazione (o una porzione) da destinare a propria residenza"
+  ],
+  "requisiti": [
+    "Età tra 20 e 31 anni non compiuti (il requisito vale anche se ricorre solo per parte dell'anno)",
+    "Reddito complessivo non superiore a 15.493,71 euro",
+    "Contratto di locazione stipulato ai sensi della legge 431/1998 e registrato",
+    "Immobile (o porzione) adibito a propria residenza e diverso dall'abitazione principale dei genitori"
+  ],
+  "importi": [
+    "20% del canone annuo pagato",
+    "Minimo 991,60 euro, massimo 2.000 euro all'anno",
+    "Importi rapportati ai giorni in cui l'immobile è stato residenza dell'inquilino",
+    "Spetta per i primi 4 anni dalla stipula del contratto"
+  ],
+  "comeFare": [
+    "Stipulare e registrare il contratto di locazione",
+    "Trasferire la residenza nell'immobile in affitto",
+    "Indicare la detrazione nel 730 (rigo E71, codice 4) o nel modello Redditi",
+    "Ripetere la richiesta ogni anno, fino a quattro anni, se restano i requisiti di età e reddito"
+  ],
+  "documenti": [
+    "Contratto di locazione registrato",
+    "Ricevute o prove di pagamento del canone",
+    "Autocertificazione che l'immobile è la propria residenza (abitazione principale)"
+  ],
+  "scadenze": "Si richiede con la dichiarazione dei redditi (730 o modello Redditi) relativa all'anno in cui si è pagato l'affitto.",
+  "faq": [
+    {
+      "q": "Se compio 31 anni durante l'anno perdo la detrazione?",
+      "a": "No, il requisito di età è soddisfatto anche se ricorre solo per una parte dell'anno; conta però che il contratto sia stato stipulato prima di compiere 31 anni."
+    },
+    {
+      "q": "Se ho poche tasse da pagare perdo lo sconto?",
+      "a": "No: se la detrazione supera l'imposta dovuta, la parte non utilizzata viene riconosciuta come credito."
+    },
+    {
+      "q": "Posso cumularla con il contributo del fondo affitti?",
+      "a": "No, la detrazione è incompatibile con il contributo fondo affitti e con altri contributi che coprono il canone."
+    },
+    {
+      "q": "Vale anche se affitto solo una stanza?",
+      "a": "Sì, la norma comprende anche la locazione di una porzione di unità immobiliare destinata a propria residenza."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "Agenzia delle Entrate - Tutte le agevolazioni della dichiarazione 2026: altre detrazioni e deduzioni (PDF)",
+      "url": "https://www.agenziaentrate.gov.it/portale/documents/20143/10186910/Altre_detrazioni_e_deduzioni.pdf/3044e7d4-4fc6-e2c7-37b3-343f7f239ea7"
+    }
+  ],
+  "tags": [
+    "affitto",
+    "giovani",
+    "under 31",
+    "detrazione",
+    "locazione",
+    "730"
+  ],
+  "noteRedazione": "Età, reddito, percentuale, minimo/massimo, durata 4 anni e rigo E71 cod. 4 confermati nella guida AE 'Tutte le agevolazioni della dichiarazione 2026'. Il link della bozza (agenziaentrate.gov.it/portale/bonus-affitto-giovani) restituisce 404 ed è stato sostituito. Una fonte secondaria citava un tetto di 2.100 euro non riscontrato nel documento AE: mantenuto 2.000 euro. Rispetto alla bozza: aggiunta incompatibilità con il fondo affitti e possibilità di affittare una porzione.",
+  "origineApp": "bonus_affitto_giovani"
+}

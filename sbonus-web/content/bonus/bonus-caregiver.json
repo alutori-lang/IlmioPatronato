@@ -1,0 +1,81 @@
+{
+  "slug": "bonus-caregiver",
+  "titolo": "Contributo per caregiver familiari",
+  "descrizione": "Oggi gli aiuti ai caregiver sono regionali e comunali. Il contributo INPS fino a 400 €/mese è in un disegno di legge non ancora approvato in via definitiva.",
+  "intro": "Il caregiver familiare è chi assiste gratuitamente in casa un familiare con disabilità o non autosufficiente. Al momento non esiste un bonus nazionale in vigore: i contributi economici sono decisi da Regioni e Comuni, con bandi, requisiti e importi propri. Il Governo ha approvato a gennaio 2026 un disegno di legge che prevede un contributo INPS fino a 400 euro al mese, prioritariamente per chi assiste persone con disabilità gravissima; il testo è stato approvato dalla Camera ma l'iter parlamentare non è concluso.",
+  "categoria": "sostegno",
+  "ente": "Regioni e Comuni (misure attuali); INPS (contributo nazionale proposto)",
+  "evidenza": {
+    "valore": "fino a 400 €/mese",
+    "etichetta": "contributo nazionale proposto, non ancora in vigore"
+  },
+  "novita": {
+    "data": "2026-10-14",
+    "nota": "Il disegno di legge sul riconoscimento dei caregiver familiari è stato approvato dall'Aula della Camera; l'iter parlamentare prosegue."
+  },
+  "stato": "in-attesa",
+  "pubblicato": false,
+  "verificato": false,
+  "ultimoControllo": null,
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Oggi: caregiver residenti in Regioni o Comuni che pubblicano bandi specifici, secondo le regole locali.",
+    "Secondo il disegno di legge (non ancora in vigore): coniuge, parte dell'unione civile, convivente di fatto o parente entro il secondo grado (affini entro il terzo in casi specifici) che assiste un familiare con disabilità o non autosufficiente, con priorità per chi assiste persone con disabilità gravissima."
+  ],
+  "requisiti": [
+    "Misure regionali/comunali: requisiti fissati dal singolo bando (residenza, condizione della persona assistita, eventuale ISEE)",
+    "Contributo nazionale previsto dal DDL: priorità a caregiver con reddito inferiore a 3.000 euro annui che assistono una persona con disabilità gravissima (requisiti definitivi da confermare con la legge approvata)"
+  ],
+  "importi": [
+    "Misure regionali/comunali: importi variabili, stabiliti dai singoli bandi",
+    "Contributo nazionale previsto dal DDL: fino a 400 euro al mese, erogato dall'INPS, nei limiti delle risorse"
+  ],
+  "comeFare": [
+    "Verificare sul sito della propria Regione, del Comune o dell'Ambito territoriale sociale se è aperto un bando per caregiver familiari",
+    "Presentare domanda secondo le modalità indicate nel bando",
+    "Per il contributo nazionale occorre attendere l'approvazione definitiva della legge e le istruzioni INPS"
+  ],
+  "documenti": [
+    "Quelli richiesti dal bando locale (di solito: documento d'identità, certificazione della disabilità o non autosufficienza dell'assistito, eventuale ISEE)"
+  ],
+  "scadenze": "Misure regionali e comunali: secondo i singoli bandi. Contributo nazionale: non ancora attivo; la legge di bilancio 2026 ha istituito un Fondo per il caregiver familiare con 1,15 milioni di euro per il 2026 e 207 milioni di euro annui dal 2027.",
+  "faq": [
+    {
+      "q": "Il bonus caregiver da 400 euro si può già chiedere?",
+      "a": "No. È previsto da un disegno di legge approvato dal Consiglio dei Ministri e poi dalla Camera, ma non ancora diventato legge. Non ci sono domande aperte all'INPS."
+    },
+    {
+      "q": "Chi eroga oggi i contributi per i caregiver?",
+      "a": "Regioni, Comuni e Ambiti territoriali, con bandi propri. Importi e requisiti cambiano da territorio a territorio."
+    },
+    {
+      "q": "La legge di bilancio 2026 ha stanziato fondi?",
+      "a": "Sì: ha istituito un Fondo per sostenere gli interventi legislativi sul caregiver familiare, con 1,15 milioni di euro per il 2026 e 207 milioni annui a partire dal 2027."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "Governo – Comunicato del Consiglio dei Ministri n. 155 (12/01/2026)",
+      "url": "https://www.governo.it/it/articolo/comunicato-stampa-del-consiglio-dei-ministri-n-155/30739"
+    },
+    {
+      "label": "Ministro per le disabilità – Locatelli, con legge su caregiver diamo segnale forte e concreto (14/10/2026)",
+      "url": "https://disabilita.governo.it/it/notizie/locatelli-con-legge-su-caregiver-diamo-segnale-forte-e-concreto"
+    },
+    {
+      "label": "Gazzetta Ufficiale – Legge 30 dicembre 2025, n. 199 (art. 1, comma 227)",
+      "url": "https://www.gazzettaufficiale.it/eli/id/2025/12/30/25G00212/sg"
+    }
+  ],
+  "tags": [
+    "caregiver",
+    "assistenza",
+    "familiare",
+    "disabilità",
+    "non autosufficienza",
+    "contributo",
+    "DDL caregiver"
+  ],
+  "noteRedazione": "Il draft indicava importi regionali di 400–800 €/mese: non verificabili come dato generale, rimossi. Nessun bonus nazionale è in vigore a ottobre 2026: il contributo INPS fino a 400 €/mese è contenuto nel DDL approvato dal CdM il 12/01/2026 e dall'Aula della Camera (notizia del 14/10/2026); manca il passaggio al Senato. Requisiti di dettaglio riportati da fonti giornalistiche (91 ore settimanali, ISEE 15.000 €) NON confermati su fonte ufficiale e quindi omessi. Fondo L. 199/2025 c. 227 verificato sul testo in Gazzetta. Ripubblicare quando la legge sarà definitiva.",
+  "origineApp": "bonus_caregiver"
+}

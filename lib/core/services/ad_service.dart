@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'ad_retry.dart';
+import 'ads_consent.dart';
 import 'premium_service.dart';
 
 class AdService {
@@ -49,6 +52,19 @@ class AdService {
       Platform.isAndroid ? _androidAppOpenId : _iosAppOpenId;
 
   InterstitialAd? _interstitialAd;
+  bool _interstitialLoading = false;
+  final AdRetryBackoff _interstitialRetry = AdRetryBackoff();
+  final AdRetryBackoff _rewardedRetry = AdRetryBackoff();
+
+  /// Minimum time between two interstitials: the app has many
+  /// tap-to-interstitial triggers, this keeps them from stacking up.
+  static const Duration minInterstitialGap = Duration(seconds: 60);
+  DateTime? _lastInterstitialAt;
+
+  /// > 0 while a share sheet (PDF) is open: no interstitial on top of it.
+  int _shareSheetsOpen = 0;
+  DateTime? _shareSheetClosedAt;
+
   int _navigationCount = 0;
   static const int _interstitialInterval = 3;
   // Per-route counters: tap n°1 niente ad, tap n°2 ad, n°3 niente, n°4 ad...
@@ -59,17 +75,23 @@ class AdService {
   // (and so closing an interstitial doesn't re-trigger app-open on resume).
   bool _isShowingFullScreenAd = false;
 
-  Future<void> initialize() async {
+  /// Starts the Google UMP consent flow (GDPR) in the background; the Mobile
+  /// Ads SDK is initialised only after it, and only when consent allows ads
+  /// ([AdsConsent.whenReady]). Never awaited by the UI. Call after runApp.
+  void start() {
     // No App Tracking Transparency: the app declares "no tracking" in the
     // App Privacy section on App Store Connect, so the ATT prompt is not
     // required and was removed entirely (Apple flagged a previous build
     // for declaring tracking + missing the prompt — guideline 2.1).
     // AdMob on iOS 14.5+ automatically falls back to non-personalized
     // ads when ATT has not been granted, which matches the privacy
-    // declaration.
-    await MobileAds.instance.initialize();
-    _loadInterstitialAd();
-    _loadRewardedAd();
+    // declaration. So: consent -> MobileAds.initialize -> first loads.
+    AdsConsent.start(
+      afterInit: () async {
+        _loadInterstitialAd();
+        _loadRewardedAd();
+      },
+    );
     // App-open intentionally DORMANT for this app (utility app with a
     // sensitive audience — an ad on every return hurts retention/ratings).
     // To re-enable: uncomment below AND restore the lifecycle hook in
@@ -86,7 +108,9 @@ class AdService {
   Future<BannerAd?> createAdaptiveBannerAd({
     required int widthDp,
     VoidCallback? onLoaded,
+    VoidCallback? onFailed,
   }) async {
+    if (!AdsConsent.isReady) return null; // never before consent + init
     if (PremiumService().isPremium) return null; // premium = no banner
     final AdSize? size =
         await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(widthDp);
@@ -99,13 +123,16 @@ class AdService {
         onAdLoaded: (ad) => onLoaded?.call(),
         onAdFailedToLoad: (ad, error) {
           ad.dispose();
+          onFailed?.call();
         },
       ),
     );
   }
 
-  // Kept for any caller still on the fixed-size banner.
-  BannerAd createBannerAd({VoidCallback? onLoaded}) {
+  // Kept for any caller still on the fixed-size banner. Returns null until
+  // the consent gate is ready.
+  BannerAd? createBannerAd({VoidCallback? onLoaded}) {
+    if (!AdsConsent.isReady) return null;
     return BannerAd(
       adUnitId: bannerAdUnitId,
       size: AdSize.banner,
@@ -121,11 +148,16 @@ class AdService {
 
   // ── Interstitial (smart: ogni 3 navigazioni) ──
   void _loadInterstitialAd() {
+    if (!AdsConsent.isReady) return; // loaded by the gate's afterInit
+    if (_interstitialAd != null || _interstitialLoading) return;
+    _interstitialLoading = true;
     InterstitialAd.load(
       adUnitId: interstitialAdUnitId,
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
+          _interstitialLoading = false;
+          _interstitialRetry.reset();
           _interstitialAd = ad;
           ad.fullScreenContentCallback = FullScreenContentCallback(
             onAdDismissedFullScreenContent: (ad) {
@@ -141,7 +173,10 @@ class AdService {
           );
         },
         onAdFailedToLoad: (error) {
+          _interstitialLoading = false;
           _interstitialAd = null;
+          // 30 s, 60 s, 2 min, then every 4 min.
+          _interstitialRetry.schedule(_loadInterstitialAd);
         },
       ),
     );
@@ -158,8 +193,46 @@ class AdService {
     }
   }
 
+  /// False while a share sheet is open (or just closed) and during the
+  /// [minInterstitialGap] after the previous interstitial.
+  bool get canShowInterstitialNow => _interstitialAllowedAt(DateTime.now());
+
+  bool _interstitialAllowedAt(DateTime now) {
+    if (_shareSheetsOpen > 0) return false;
+    final closed = _shareSheetClosedAt;
+    if (closed != null && now.difference(closed) < const Duration(seconds: 3)) {
+      return false;
+    }
+    final last = _lastInterstitialAt;
+    return last == null || now.difference(last) >= minInterstitialGap;
+  }
+
+  @visibleForTesting
+  bool debugInterstitialAllowedAt(DateTime now) => _interstitialAllowedAt(now);
+
+  @visibleForTesting
+  void debugSetLastInterstitialAt(DateTime? at) => _lastInterstitialAt = at;
+
+  @visibleForTesting
+  bool get debugShareSheetOpen => _shareSheetsOpen > 0;
+
+  /// Runs [openSheet] (e.g. Printing.sharePdf) with interstitials blocked
+  /// while it is open, so an ad never appears at the same moment as the
+  /// share sheet.
+  Future<T> withShareSheet<T>(Future<T> Function() openSheet) async {
+    _shareSheetsOpen++;
+    try {
+      return await openSheet();
+    } finally {
+      _shareSheetsOpen--;
+      _shareSheetClosedAt = DateTime.now();
+    }
+  }
+
   void showInterstitial() {
+    if (!canShowInterstitialNow) return;
     if (_interstitialAd != null) {
+      _lastInterstitialAt = DateTime.now();
       _isShowingFullScreenAd = true;
       _interstitialAd!.show();
       _interstitialAd = null;
@@ -195,6 +268,11 @@ class AdService {
       navigate();
       return;
     }
+    if (!canShowInterstitialNow) {
+      // < 60 s from the previous interstitial (or a share sheet is open).
+      navigate();
+      return;
+    }
     final ad = _interstitialAd;
     if (ad == null) {
       // Ad non pronto: navighi subito e provo a precaricarlo per la prossima volta.
@@ -203,6 +281,7 @@ class AdService {
       return;
     }
     _interstitialAd = null;
+    _lastInterstitialAt = DateTime.now();
     ad.fullScreenContentCallback = FullScreenContentCallback(
       onAdDismissedFullScreenContent: (a) {
         _isShowingFullScreenAd = false;
@@ -232,6 +311,7 @@ class AdService {
   bool _rewardedLoading = false;
 
   void _loadRewardedAd() {
+    if (!AdsConsent.isReady) return; // loaded by the gate's afterInit
     if (_rewardedAd != null || _rewardedLoading) return;
     _rewardedLoading = true;
     RewardedAd.load(
@@ -241,10 +321,12 @@ class AdService {
         onAdLoaded: (ad) {
           _rewardedAd = ad;
           _rewardedLoading = false;
+          _rewardedRetry.reset();
         },
         onAdFailedToLoad: (error) {
           _rewardedAd = null;
           _rewardedLoading = false;
+          _rewardedRetry.schedule(_loadRewardedAd);
         },
       ),
     );
@@ -349,6 +431,7 @@ class AdService {
 
   void _loadAppOpenAd() {
     if (appOpenAdUnitId.isEmpty) return; // app-open ads disabled
+    if (!AdsConsent.isReady) return; // never before consent + init
     if (_appOpenAd != null || _appOpenLoading) return;
     _appOpenLoading = true;
     AppOpenAd.load(

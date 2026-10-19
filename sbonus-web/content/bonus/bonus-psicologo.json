@@ -1,0 +1,88 @@
+{
+  "slug": "bonus-psicologo",
+  "titolo": "Bonus psicologo: contributo INPS per la psicoterapia",
+  "descrizione": "Fino a 1.500 euro (max 50 euro a seduta) per la psicoterapia con ISEE fino a 50.000 euro. Finestra 2026 non ancora aperta da INPS.",
+  "intro": "Il bonus psicologo è un contributo, gestito dall'INPS, che copre una parte del costo delle sedute di psicoterapia presso professionisti privati aderenti all'iniziativa. La somma non viene accreditata al cittadino ma pagata direttamente al terapeuta, fino a 50 euro per seduta, con un tetto che dipende dall'ISEE. L'ultima finestra per le domande è stata quella dal 15 settembre al 14 novembre 2025; al 19 ottobre 2026 sui canali ufficiali non risulta ancora pubblicata la finestra 2026.",
+  "categoria": "salute",
+  "ente": "INPS / Ministero della Salute",
+  "evidenza": {
+    "valore": "1.500 €",
+    "etichetta": "massimo con ISEE sotto 15.000 €"
+  },
+  "novita": {
+    "data": "2025-12-05",
+    "nota": "INPS ha pubblicato le graduatorie definitive 2025, con fondi 2024 e 2025 unificati (21,5 milioni di euro); nessun avviso ufficiale sulla finestra 2026 trovato al 19 ottobre 2026."
+  },
+  "stato": "in-attesa",
+  "pubblicato": true,
+  "verificato": true,
+  "ultimoControllo": "2026-10-19",
+  "aggiornatoIl": "2026-10-19",
+  "aChiSpetta": [
+    "Persone residenti in Italia che vogliono iniziare un percorso di psicoterapia (ad esempio per ansia, stress, depressione o fragilità psicologica)",
+    "Con ISEE in corso di validità non superiore a 50.000 euro"
+  ],
+  "requisiti": [
+    "Residenza in Italia",
+    "ISEE ordinario o corrente valido, con valore non superiore a 50.000 euro (un ISEE con omissioni o difformità non sanate rende la domanda improcedibile)",
+    "Domanda presentata online entro la finestra stabilita da INPS",
+    "Il contributo si ottiene una sola volta per ciascun richiedente in ogni annualità"
+  ],
+  "importi": [
+    "Fino a 50 euro per ciascuna seduta, versati direttamente allo psicoterapeuta",
+    "ISEE inferiore a 15.000 euro: tetto di 1.500 euro",
+    "ISEE da 15.000 a 30.000 euro: tetto di 1.000 euro",
+    "ISEE oltre 30.000 e fino a 50.000 euro: tetto di 500 euro",
+    "Importi riferiti all'edizione 2025: per il 2026 vanno confermati dal nuovo avviso INPS"
+  ],
+  "comeFare": [
+    "Procurarsi per tempo un ISEE valido e senza difformità",
+    "All'apertura della finestra, accedere al servizio INPS dedicato al bonus psicologo con SPID (almeno livello 2), CIE o CNS; in alternativa usare il Contact Center (803 164 da fisso, 06 164 164 da cellulare)",
+    "Attendere le graduatorie, stilate per Regione in ordine di ISEE crescente (a parità vale l'ordine di invio)",
+    "Se ammessi, consultare nell'area personale l'esito e il codice univoco e comunicarlo a uno psicoterapeuta aderente",
+    "Fare almeno una seduta entro 60 giorni dalla pubblicazione della graduatoria e usare il codice entro 270 giorni, altrimenti il beneficio decade"
+  ],
+  "documenti": [
+    "ISEE in corso di validità",
+    "SPID, CIE o CNS per accedere al servizio INPS"
+  ],
+  "scadenze": "Edizione 2025: domande dal 15 settembre al 14 novembre 2025, graduatorie definitive del 5 dicembre 2025, codici validi 270 giorni da quella data. Per il 2026 le date non risultano ancora comunicate da INPS al 19 ottobre 2026.",
+  "faq": [
+    {
+      "q": "Posso fare domanda adesso?",
+      "a": "No. Si può presentare domanda solo quando INPS apre la finestra annuale con un avviso ufficiale; al 19 ottobre 2026 la finestra 2026 non risulta ancora annunciata."
+    },
+    {
+      "q": "Ricevo i soldi sul mio conto?",
+      "a": "No. INPS paga direttamente il professionista, fino a 50 euro per seduta, nei limiti del tetto assegnato in base all'ISEE."
+    },
+    {
+      "q": "Serve una prescrizione medica?",
+      "a": "Le pagine INPS consultate indicano come requisiti solo la residenza in Italia e l'ISEE entro 50.000 euro; non citano una prescrizione del medico."
+    },
+    {
+      "q": "Cosa succede se non uso il codice in tempo?",
+      "a": "Se non si fa almeno una seduta entro 60 giorni si perde il diritto e la graduatoria scorre; in ogni caso il codice viene annullato dopo 270 giorni."
+    }
+  ],
+  "fonti": [
+    {
+      "label": "INPS - Bonus psicologo (scheda servizio)",
+      "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.contributo-per-sostenere-le-spese-relative-a-sessioni-di-psicoterapia-bonus-psicologo.html"
+    },
+    {
+      "label": "INPS - Comunicato stampa graduatorie definitive 2025 (5/12/2025)",
+      "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/comunicati-stampa/2025/12/Allegati/3951_CS_bonuspsicologo_512.pdf"
+    }
+  ],
+  "tags": [
+    "psicologo",
+    "psicoterapia",
+    "salute mentale",
+    "isee",
+    "inps",
+    "bonus"
+  ],
+  "noteRedazione": "Requisiti, importi e regole 60/270 giorni verificati sulla scheda INPS (ultimo aggiornamento 3/12/2025) e sul comunicato INPS del 5/12/2025: si riferiscono all'edizione 2025. Al 19/10/2026 non trovato alcun messaggio INPS o decreto ministeriale che apra la finestra 2026; salute.gov.it non era consultabile (blocco anti-bot). Siti non ufficiali parlano di 8,5 milioni di euro per il 2026 dalla legge di bilancio 2026: dato NON verificato su fonte ufficiale e quindi omesso. Da ricontrollare appena INPS pubblica il nuovo avviso.",
+  "origineApp": "bonus_psicologo"
+}
