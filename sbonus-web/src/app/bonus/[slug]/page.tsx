@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/PageHero";
-import { StatoBadge, BonusCard } from "@/components/Cards";
+import { StatoBadge, BonusList } from "@/components/Rows";
 import { JsonLd } from "@/components/JsonLd";
 import { Icon } from "@/components/Icon";
 import { AdSlot } from "@/components/AdSlot";
 import { AppPromo } from "@/components/AppPromo";
 import { Fonti, Faqs, AvvisoIndipendente } from "@/components/Editorial";
 import { bonusPubblicati, getBonus, bonusPerCategoria, formatData, toLite } from "@/lib/content";
-import { getCategoria, stileTono } from "@/lib/categories";
+import { getCategoria } from "@/lib/categories";
 import { CALCOLATORI } from "@/lib/calcolatori";
 import { ADSENSE_SLOTS, absoluteUrl } from "@/lib/site";
 
@@ -39,13 +39,10 @@ const CALC_PER_BONUS: Record<string, string> = {
   "fondo-garanzia-prima-casa-consap": "rata-mutuo",
 };
 
-function Blocco({ id, titolo, icona, children }: { id: string; titolo: string; icona: Parameters<typeof Icon>[0]["name"]; children: React.ReactNode }) {
+function Blocco({ id, titolo, children }: { id: string; titolo: string; icona?: string; children: React.ReactNode }) {
   return (
-    <section id={id} aria-labelledby={`${id}-t`} className="scroll-mt-24 rounded-3xl border border-line bg-surface p-5 shadow-[0_1px_3px_rgba(15,27,51,0.05)] sm:p-7">
-      <h2 id={`${id}-t`} className="flex items-center gap-2.5 font-display text-xl font-bold text-ink">
-        <span className="tone-icon grid h-10 w-10 place-items-center rounded-xl">
-          <Icon name={icona} className="h-5 w-5" />
-        </span>
+    <section id={id} aria-labelledby={`${id}-t`} className="scroll-mt-24 border-t border-line pt-8">
+      <h2 id={`${id}-t`} className="text-xl font-semibold tracking-tight text-ink">
         {titolo}
       </h2>
       <div className="mt-4 text-ink-2">{children}</div>
@@ -57,8 +54,8 @@ function Lista({ items }: { items: string[] }) {
   return (
     <ul className="space-y-2.5">
       {items.map((x) => (
-        <li key={x} className="flex gap-2.5 leading-relaxed">
-          <Icon name="check" className="mt-1 h-4 w-4 shrink-0 text-accent" />
+        <li key={x} className="flex gap-3 leading-relaxed">
+          <span className="mt-[0.6rem] h-1.5 w-1.5 shrink-0 rounded-full bg-brand" aria-hidden="true" />
           <span>{x}</span>
         </li>
       ))}
@@ -95,11 +92,11 @@ export default async function BonusPage({ params }: PageProps<"/bonus/[slug]">) 
         icona={cat?.icona}
         occhiello={cat?.nome}
       >
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
           <StatoBadge stato={b.stato} />
-          {b.ente && <span className="rounded-full bg-white/15 px-2.5 py-1 text-xs font-semibold text-white">{b.ente}</span>}
+          {b.ente && <span className="text-sm text-ink-3">{b.ente}</span>}
           {b.ultimoControllo && (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1 text-xs text-white/85">
+            <span className="inline-flex items-center gap-1.5 text-sm text-ink-3">
               <Icon name="calendar" className="h-3.5 w-3.5" />
               Controllato il <time dateTime={b.ultimoControllo}>{formatData(b.ultimoControllo)}</time>
             </span>
@@ -109,15 +106,19 @@ export default async function BonusPage({ params }: PageProps<"/bonus/[slug]">) 
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
       {b.evidenza && (
-        <div style={stileTono(b.categoria)} className="relative z-10 -mt-8 flex max-w-xl items-center gap-4 rounded-3xl border border-line bg-surface p-5 shadow-[0_20px_50px_-20px_rgba(15,27,51,0.35)]">
-          <span className="tone-icon grid h-12 w-12 shrink-0 place-items-center rounded-2xl">
-            <Icon name="euro" className="h-6 w-6" />
-          </span>
+        <dl className="mt-8 flex flex-wrap gap-x-12 gap-y-4">
           <div>
-            <p className="font-display text-3xl font-extrabold leading-none tracking-tight text-ink">{b.evidenza.valore}</p>
-            <p className="mt-1 text-ink-2">{b.evidenza.etichetta}</p>
+            <dt className="text-sm text-ink-3">Importo</dt>
+            <dd className="mt-1 text-3xl font-semibold tracking-tight text-ink">{b.evidenza.valore}</dd>
+            <dd className="text-sm text-ink-2">{b.evidenza.etichetta}</dd>
           </div>
-        </div>
+          {b.scadenze && (
+            <div className="max-w-md">
+              <dt className="text-sm text-ink-3">Scadenza</dt>
+              <dd className="mt-1 line-clamp-3 text-ink-2">{b.scadenze}</dd>
+            </div>
+          )}
+        </dl>
       )}
 
       {b.stato === "scaduto" && (
@@ -139,8 +140,8 @@ export default async function BonusPage({ params }: PageProps<"/bonus/[slug]">) 
         </div>
       )}
 
-      <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_280px]">
-        <div className="min-w-0 space-y-5" style={stileTono(b.categoria)}>
+      <div className="mt-10 grid gap-12 lg:grid-cols-[1fr_260px]">
+        <div className="min-w-0 space-y-10">
           {b.aChiSpetta.length > 0 && (
             <Blocco id="a-chi-spetta" titolo="A chi spetta" icona="family">
               <Lista items={b.aChiSpetta} />
@@ -155,7 +156,7 @@ export default async function BonusPage({ params }: PageProps<"/bonus/[slug]">) 
             <Blocco id="importi" titolo="Importi" icona="euro">
               <Lista items={b.importi} />
               {calc && (
-                <Link href={`/calcolatori/${calc.slug}`} className="mt-5 inline-flex items-center gap-2 rounded-xl bg-accent-soft px-4 py-2.5 font-semibold text-accent hover:underline">
+                <Link href={`/calcolatori/${calc.slug}`} className="mt-5 inline-flex items-center gap-2 font-medium text-brand hover:underline">
                   <Icon name="calc" className="h-5 w-5" /> Stima il tuo importo: {calc.titolo}
                 </Link>
               )}
@@ -169,7 +170,7 @@ export default async function BonusPage({ params }: PageProps<"/bonus/[slug]">) 
               <ol className="space-y-3">
                 {b.comeFare.map((s, i) => (
                   <li key={s} className="flex gap-3 leading-relaxed">
-                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand text-sm font-bold text-brand-ink">{i + 1}</span>
+                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-line text-sm font-medium tabular-nums text-ink">{i + 1}</span>
                     <span className="pt-0.5">{s}</span>
                   </li>
                 ))}
@@ -192,8 +193,8 @@ export default async function BonusPage({ params }: PageProps<"/bonus/[slug]">) 
         </div>
 
         <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
-          <nav aria-label="Indice della scheda" className="hidden rounded-2xl border border-line bg-surface p-5 lg:block">
-            <p className="text-sm font-bold uppercase tracking-wide text-ink">In questa scheda</p>
+          <nav aria-label="Indice della scheda" className="hidden lg:block">
+            <p className="text-sm font-semibold text-ink">In questa scheda</p>
             <ul className="mt-3 space-y-2 text-[0.95rem]">
               {indice.map((x) => (
                 <li key={x.id}>
@@ -204,19 +205,17 @@ export default async function BonusPage({ params }: PageProps<"/bonus/[slug]">) 
               ))}
             </ul>
           </nav>
-          <AppPromo compatto />
+          <AppPromo />
         </aside>
       </div>
 
       {correlati.length > 0 && (
         <section aria-labelledby="correlati" className="mt-14">
-          <h2 id="correlati" className="font-display text-2xl font-extrabold text-ink">
+          <h2 id="correlati" className="text-xl font-semibold tracking-tight text-ink">
             Altri bonus in {cat?.nome ?? "questa categoria"}
           </h2>
-          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {correlati.map((x) => (
-              <BonusCard key={x.slug} b={toLite(x)} />
-            ))}
+          <div className="mt-5">
+            <BonusList bonus={correlati.map(toLite)} />
           </div>
         </section>
       )}

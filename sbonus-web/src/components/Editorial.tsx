@@ -5,8 +5,8 @@ import { Icon } from "./Icon";
 
 export function Faqs({ faq }: { faq: Faq[] }) {
   return (
-    <section id="faq" aria-labelledby="faq-t" className="scroll-mt-24 rounded-2xl border border-line bg-surface p-5 sm:p-6">
-      <h2 id="faq-t" className="font-display text-xl font-bold text-ink">
+    <section id="faq" aria-labelledby="faq-t" className="scroll-mt-24 border-t border-line pt-8">
+      <h2 id="faq-t" className="text-xl font-semibold tracking-tight text-ink">
         Domande frequenti
       </h2>
       <div className="mt-4 divide-y divide-line">
@@ -35,8 +35,8 @@ export function Faqs({ faq }: { faq: Faq[] }) {
 
 export function Fonti({ fonti, ultimoControllo }: { fonti: Fonte[]; ultimoControllo?: string | null }) {
   return (
-    <section id="fonti" aria-labelledby="fonti-t" className="scroll-mt-24 rounded-2xl border border-line bg-surface-2 p-5 sm:p-6">
-      <h2 id="fonti-t" className="font-display text-xl font-bold text-ink">
+    <section id="fonti" aria-labelledby="fonti-t" className="scroll-mt-24 border-t border-line pt-8">
+      <h2 id="fonti-t" className="text-xl font-semibold tracking-tight text-ink">
         Fonti ufficiali
       </h2>
       <ul className="mt-3 space-y-2">
@@ -61,7 +61,7 @@ export function Fonti({ fonti, ultimoControllo }: { fonti: Fonte[]; ultimoContro
 
 export function AvvisoIndipendente() {
   return (
-    <p className="flex gap-2.5 rounded-2xl border border-line p-4 text-sm leading-relaxed text-ink-3">
+    <p className="flex gap-2.5 border-t border-line pt-6 text-sm leading-relaxed text-ink-3">
       <Icon name="info" className="mt-0.5 h-4 w-4 shrink-0" />
       <span>
         SBonus è un portale informativo indipendente, non affiliato a INPS, Agenzia delle Entrate o altri enti pubblici. Le

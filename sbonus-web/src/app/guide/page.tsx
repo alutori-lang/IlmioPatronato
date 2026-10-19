@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
-import { GuideCard } from "@/components/Cards";
+import { GuideList } from "@/components/Rows";
 import { guidePubblicate } from "@/lib/content";
 import { CATEGORIE } from "@/lib/categories";
 
@@ -23,17 +23,15 @@ export default function GuideIndex() {
         icona="book"
       />
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-      <nav aria-label="Categorie delle guide" className="mt-6 flex flex-wrap gap-2">
+      <nav aria-label="Categorie delle guide" className="mt-10 flex flex-wrap gap-2">
         {categorie.map((c) => (
-          <Link key={c.slug} href={`/categorie/${c.slug}`} className="rounded-full border border-line bg-surface px-3.5 py-2 text-sm font-medium text-ink-2 hover:border-brand/40 hover:text-brand">
+          <Link key={c.slug} href={`/categorie/${c.slug}`} className="rounded-full border border-line px-3.5 py-1.5 text-sm text-ink-2 transition-colors hover:border-ink-3 hover:text-ink">
             {c.nome}
           </Link>
         ))}
       </nav>
-      <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {guidePubblicate.map((g) => (
-          <GuideCard key={g.slug} g={g} />
-        ))}
+      <div className="mt-8">
+        <GuideList guide={guidePubblicate} />
       </div>
       </div>
     </>

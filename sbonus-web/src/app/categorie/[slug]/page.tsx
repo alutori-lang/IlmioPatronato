@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/PageHero";
-import { BonusCard, CalcCard, GuideCard } from "@/components/Cards";
+import { BonusList, CalcList, GuideList } from "@/components/Rows";
 import { CATEGORIE, getCategoria } from "@/lib/categories";
 import { CALCOLATORI } from "@/lib/calcolatori";
 import { bonusPerCategoria, guidePerCategoria, toLite } from "@/lib/content";
@@ -41,38 +41,32 @@ export default async function CategoriaPage({ params }: PageProps<"/categorie/[s
       />
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
       {bonus.length > 0 && (
-        <section aria-labelledby="cat-bonus" className="mt-10">
-          <h2 id="cat-bonus" className="font-display text-2xl font-extrabold text-ink">
+        <section aria-labelledby="cat-bonus" className="mt-12">
+          <h2 id="cat-bonus" className="text-xl font-semibold tracking-tight text-ink">
             Bonus e prestazioni
           </h2>
-          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {bonus.map((b) => (
-              <BonusCard key={b.slug} b={toLite(b)} />
-            ))}
+          <div className="mt-5">
+            <BonusList bonus={bonus.map(toLite)} />
           </div>
         </section>
       )}
       {guide.length > 0 && (
-        <section aria-labelledby="cat-guide" className="mt-12">
-          <h2 id="cat-guide" className="font-display text-2xl font-extrabold text-ink">
+        <section aria-labelledby="cat-guide" className="mt-14">
+          <h2 id="cat-guide" className="text-xl font-semibold tracking-tight text-ink">
             Guide
           </h2>
-          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {guide.map((g) => (
-              <GuideCard key={g.slug} g={g} />
-            ))}
+          <div className="mt-5">
+            <GuideList guide={guide} />
           </div>
         </section>
       )}
       {calc.length > 0 && (
         <section aria-labelledby="cat-calc" className="mt-12">
-          <h2 id="cat-calc" className="font-display text-2xl font-extrabold text-ink">
+          <h2 id="cat-calc" className="text-xl font-semibold tracking-tight text-ink">
             Calcolatori
           </h2>
-          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {calc.map((x) => (
-              <CalcCard key={x.slug} c={x} />
-            ))}
+          <div className="mt-5">
+            <CalcList calcolatori={calc} />
           </div>
         </section>
       )}

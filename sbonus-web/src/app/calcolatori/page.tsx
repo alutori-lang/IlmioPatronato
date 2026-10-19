@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
-import { CalcCard } from "@/components/Cards";
+import { CalcList } from "@/components/Rows";
 import { CALCOLATORI } from "@/lib/calcolatori";
 import { PARAMS } from "@/lib/calc/params";
 
@@ -21,10 +21,8 @@ export default function CalcolatoriIndex() {
         icona="calc"
       />
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {CALCOLATORI.map((c) => (
-          <CalcCard key={c.slug} c={c} />
-        ))}
+      <div className="mt-10">
+        <CalcList calcolatori={CALCOLATORI} />
       </div>
       </div>
     </>

@@ -5,7 +5,7 @@ import { PageHero } from "@/components/PageHero";
 import { Faqs, Fonti, AvvisoIndipendente } from "@/components/Editorial";
 import { JsonLd } from "@/components/JsonLd";
 import { Icon } from "@/components/Icon";
-import { CalcCard } from "@/components/Cards";
+import { CalcList } from "@/components/Rows";
 import { AdSlot } from "@/components/AdSlot";
 import { NaspiCalc } from "@/components/calc/NaspiCalc";
 import { AssegnoUnicoCalc } from "@/components/calc/AssegnoUnicoCalc";
@@ -63,18 +63,18 @@ export default async function CalcolatorePage({ params }: PageProps<"/calcolator
         categoria={c.categoria}
         icona={c.icona}
       >
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-sm text-white/85">
+        <span className="inline-flex items-center gap-1.5 text-sm text-ink-3">
           <Icon name="calendar" className="h-4 w-4" />
           Parametri {PARAMS.anno} · controllati il <time dateTime={PARAMS.ultimoControllo}>{formatData(PARAMS.ultimoControllo)}</time>
         </span>
       </PageHero>
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-      <div className="relative z-10 -mt-8">
+      <div className="mt-10">
         <Widget />
       </div>
 
-      <p className="mt-4 flex gap-2 rounded-2xl bg-warn-soft p-4 text-sm leading-relaxed text-ink">
-        <Icon name="info" className="mt-0.5 h-4 w-4 shrink-0 text-warn" />
+      <p className="mt-6 flex gap-2.5 rounded-xl border border-line bg-surface-2 p-4 text-sm leading-relaxed text-ink-2">
+        <Icon name="info" className="mt-0.5 h-4 w-4 shrink-0 text-ink-3" />
         <span>
           <strong>È una stima, non un importo ufficiale.</strong> Il risultato ha valore orientativo: l&apos;importo effettivo lo
           stabilisce l&apos;ente competente sulla base della tua situazione completa. I dati che inserisci restano nel tuo browser e
@@ -85,23 +85,23 @@ export default async function CalcolatorePage({ params }: PageProps<"/calcolator
       <AdSlot slot={ADSENSE_SLOTS.contenuto} />
 
       <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_320px]">
-        <div className="min-w-0 space-y-5">
-          <section aria-labelledby="come" className="rounded-2xl border border-line bg-surface p-5 sm:p-6">
-            <h2 id="come" className="font-display text-xl font-bold text-ink">
+        <div className="min-w-0 space-y-10">
+          <section aria-labelledby="come" className="border-t border-line pt-8">
+            <h2 id="come" className="text-xl font-semibold tracking-tight text-ink">
               Come funziona il calcolo
             </h2>
             <ol className="mt-4 space-y-3 text-ink-2">
               {info.come.map((s, i) => (
                 <li key={s} className="flex gap-3 leading-relaxed">
-                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-soft text-sm font-bold text-brand">{i + 1}</span>
+                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-line text-sm font-medium tabular-nums text-ink">{i + 1}</span>
                   <span className="pt-0.5">{s}</span>
                 </li>
               ))}
             </ol>
           </section>
 
-          <section aria-labelledby="ipotesi" className="rounded-2xl border border-line bg-surface p-5 sm:p-6">
-            <h2 id="ipotesi" className="font-display text-xl font-bold text-ink">
+          <section aria-labelledby="ipotesi" className="border-t border-line pt-8">
+            <h2 id="ipotesi" className="text-xl font-semibold tracking-tight text-ink">
               Ipotesi e limiti
             </h2>
             <ul className="mt-4 space-y-2.5 text-ink-2">
@@ -120,8 +120,8 @@ export default async function CalcolatorePage({ params }: PageProps<"/calcolator
         </div>
 
         <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
-          <section aria-labelledby="parametri" className="rounded-2xl border border-line bg-surface p-5">
-            <h2 id="parametri" className="font-bold text-ink">
+          <section aria-labelledby="parametri" className="rounded-2xl border border-line p-5">
+            <h2 id="parametri" className="font-semibold text-ink">
               Parametri {PARAMS.anno}
             </h2>
             <dl className="mt-3 space-y-3 text-sm">
@@ -139,9 +139,9 @@ export default async function CalcolatorePage({ params }: PageProps<"/calcolator
             </p>
           </section>
           {bonus && (
-            <Link href={`/bonus/${bonus.slug}`} className="flex items-center justify-between gap-3 rounded-2xl border border-line bg-surface p-5 font-semibold text-ink hover:border-brand/40">
+            <Link href={`/bonus/${bonus.slug}`} className="flex items-center justify-between gap-3 rounded-2xl border border-line p-5 font-medium text-ink hover:border-brand/50">
               <span>
-                <span className="block text-xs font-semibold uppercase tracking-wide text-brand">Scheda completa</span>
+                <span className="block text-sm text-ink-3">Scheda completa</span>
                 {bonus.titolo}
               </span>
               <Icon name="arrow" className="h-5 w-5 text-brand" />
@@ -151,13 +151,11 @@ export default async function CalcolatorePage({ params }: PageProps<"/calcolator
       </div>
 
       <section aria-labelledby="altri" className="mt-14">
-        <h2 id="altri" className="font-display text-2xl font-extrabold text-ink">
+        <h2 id="altri" className="text-xl font-semibold tracking-tight text-ink">
           Altri calcolatori
         </h2>
-        <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {altri.map((x) => (
-            <CalcCard key={x.slug} c={x} />
-          ))}
+        <div className="mt-5">
+          <CalcList calcolatori={altri} />
         </div>
       </section>
 

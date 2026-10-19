@@ -34,7 +34,7 @@ export function Header() {
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line/70 bg-surface/85 shadow-[0_1px_12px_rgba(15,27,51,0.05)] backdrop-blur-md supports-[backdrop-filter]:bg-surface/70">
+    <header className="sticky top-0 z-40 border-b border-line bg-surface/90 backdrop-blur supports-[backdrop-filter]:bg-surface/80">
       <a href="#contenuto" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:rounded-lg focus:bg-brand focus:px-4 focus:py-2 focus:text-brand-ink">
         Vai al contenuto
       </a>
@@ -62,13 +62,6 @@ export function Header() {
         </nav>
 
         <div className="ml-auto flex items-center gap-1">
-          <Link
-            href="/app"
-            className="mr-1 hidden items-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-brand-ink shadow-md shadow-brand/25 transition hover:bg-brand-2 lg:inline-flex"
-          >
-            <Icon name="phone" className="h-4 w-4" />
-            Scarica l&apos;app
-          </Link>
           <button
             type="button"
             onClick={() => {

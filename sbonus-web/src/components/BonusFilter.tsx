@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import type { BonusLite, StatoBonus } from "@/lib/content-shared";
 import { STATO_LABEL } from "@/lib/content-shared";
 import { normalizza } from "@/lib/search";
-import { BonusCard } from "./Cards";
+import { BonusList } from "./Rows";
 
 type Props = { bonus: BonusLite[]; categorie: { slug: string; nome: string }[] };
 
@@ -25,11 +25,11 @@ export function BonusFilter({ bonus, categorie }: Props) {
   }, [bonus, cat, stato, testo]);
 
   const chip = (on: boolean) =>
-    `rounded-full border px-3.5 py-2 text-sm font-medium transition ${on ? "border-brand bg-brand text-brand-ink" : "border-line bg-surface text-ink-2 hover:border-brand/40 hover:text-brand"}`;
+    `rounded-full border px-3.5 py-1.5 text-sm transition-colors ${on ? "border-ink bg-ink text-bg" : "border-line text-ink-2 hover:border-ink-3 hover:text-ink"}`;
 
   return (
-    <div className="mt-8">
-      <div className="space-y-4 rounded-2xl border border-line bg-surface p-4 sm:p-5">
+    <div className="mt-10">
+      <div className="space-y-5">
         <div>
           <label htmlFor="filtro-testo" className="text-sm font-semibold text-ink">
             Filtra per parola
@@ -78,10 +78,8 @@ export function BonusFilter({ bonus, categorie }: Props) {
         {filtrati.length} {filtrati.length === 1 ? "bonus trovato" : "bonus trovati"}
       </p>
       {filtrati.length > 0 ? (
-        <div className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filtrati.map((b) => (
-            <BonusCard key={b.slug} b={b} />
-          ))}
+        <div className="mt-3">
+          <BonusList bonus={filtrati} />
         </div>
       ) : (
         <div className="mt-3 rounded-2xl border border-dashed border-line p-10 text-center text-ink-2">

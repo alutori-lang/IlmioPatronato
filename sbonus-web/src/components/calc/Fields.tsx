@@ -128,7 +128,7 @@ export function CalcForm({ onSubmit, onReset, children, submitLabel = "Calcola" 
         e.preventDefault();
         onSubmit();
       }}
-      className="space-y-5 rounded-2xl border border-line bg-surface p-5 sm:p-6"
+      className="space-y-5 rounded-2xl border border-line p-5 sm:p-6"
     >
       {children}
       <div className="flex flex-col gap-2 pt-1 sm:flex-row">
@@ -145,9 +145,9 @@ export function CalcForm({ onSubmit, onReset, children, submitLabel = "Calcola" 
 
 export function ResultPanel({ titolo, valore, nota, children }: { titolo: string; valore: string; nota?: string; children?: React.ReactNode }) {
   return (
-    <section aria-live="polite" aria-label="Risultato" className="animate-rise rounded-2xl border border-accent/30 bg-surface p-5 shadow-sm sm:p-6">
-      <p className="text-sm font-semibold uppercase tracking-wide text-accent">{titolo}</p>
-      <p className="mt-1 font-display text-4xl font-extrabold tracking-tight text-ink">{valore}</p>
+    <section aria-live="polite" aria-label="Risultato" className="animate-rise rounded-2xl border border-line p-5 sm:p-6">
+      <p className="text-sm text-ink-3">{titolo}</p>
+      <p className="mt-1 text-4xl font-semibold tracking-tight tabular-nums text-ink">{valore}</p>
       {nota && <p className="mt-1 text-sm text-ink-3">{nota}</p>}
       {children && <div className="mt-5">{children}</div>}
     </section>

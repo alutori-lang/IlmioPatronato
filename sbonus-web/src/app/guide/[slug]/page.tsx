@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/PageHero";
 import { Faqs, Fonti, AvvisoIndipendente } from "@/components/Editorial";
-import { GuideCard } from "@/components/Cards";
+import { GuideList } from "@/components/Rows";
 import { JsonLd } from "@/components/JsonLd";
 import { AdSlot } from "@/components/AdSlot";
 import { AppPromo } from "@/components/AppPromo";
@@ -58,7 +58,7 @@ export default async function GuidaPage({ params }: PageProps<"/guide/[slug]">) 
         categoria={g.categoria}
         icona={cat?.icona ?? "book"}
       >
-        <p className="text-sm text-white/75">
+        <p className="text-sm text-ink-3">
           {g.autore} · Pubblicata il <time dateTime={g.dataPubblicazione ?? undefined}>{formatData(g.dataPubblicazione)}</time>
           {g.dataAggiornamento && g.dataAggiornamento !== g.dataPubblicazione && (
             <>
@@ -68,8 +68,8 @@ export default async function GuidaPage({ params }: PageProps<"/guide/[slug]">) 
         </p>
       </PageHero>
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-      <div className="relative z-10 -mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px]">
-        <article className="min-w-0 rounded-3xl border border-line bg-surface p-5 shadow-sm sm:p-8">
+      <div className="mt-10 grid gap-12 lg:grid-cols-[minmax(0,1fr)_260px]">
+        <article className="min-w-0 max-w-3xl">
           {/* HTML generato a build time dal Markdown della redazione (contenuto attendibile del repository) */}
           <div className="prose-sb" dangerouslySetInnerHTML={{ __html: g.html }} />
           <AdSlot slot={ADSENSE_SLOTS.contenuto} />
@@ -80,19 +80,17 @@ export default async function GuidaPage({ params }: PageProps<"/guide/[slug]">) 
           </div>
         </article>
         <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
-          <AppPromo compatto />
+          <AppPromo />
         </aside>
       </div>
 
       {correlate.length > 0 && (
         <section aria-labelledby="correlate" className="mt-14">
-          <h2 id="correlate" className="font-display text-2xl font-extrabold text-ink">
+          <h2 id="correlate" className="text-xl font-semibold tracking-tight text-ink">
             Leggi anche
           </h2>
-          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {correlate.map((x) => (
-              <GuideCard key={x.slug} g={x} />
-            ))}
+          <div className="mt-5">
+            <GuideList guide={correlate} />
           </div>
         </section>
       )}

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { SITE, APP, INDEXABLE, absoluteUrl } from "@/lib/site";
 import { Header } from "@/components/Header";
@@ -8,7 +8,6 @@ import { CookieBanner } from "@/components/CookieBanner";
 import { JsonLd } from "@/components/JsonLd";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
-const jakarta = Plus_Jakarta_Sans({ variable: "--font-jakarta", subsets: ["latin"], weight: ["600", "700", "800"], display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -41,7 +40,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="it" className={`${inter.variable} ${jakarta.variable} h-full antialiased`}>
+    <html lang="it" className={`${inter.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <JsonLd
           data={[

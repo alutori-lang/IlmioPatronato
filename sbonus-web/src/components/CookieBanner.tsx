@@ -35,7 +35,7 @@ export function CookieBanner() {
   return (
     <div role="dialog" aria-modal="false" aria-labelledby="cookie-title" className="fixed inset-x-0 bottom-0 z-50 p-3 sm:p-4">
       <div className="animate-rise mx-auto max-w-3xl rounded-2xl border border-line bg-surface p-5 shadow-2xl">
-        <h2 id="cookie-title" className="font-display text-lg font-bold text-ink">
+        <h2 id="cookie-title" className="text-lg font-bold text-ink">
           La tua privacy
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-ink-2">
