@@ -25,10 +25,10 @@ export default function Home() {
 
   return (
     <>
-      {/* ───── Testata gialla ───── */}
-      <section className="bg-sun">
+      {/* ───── Testata blu ───── */}
+      <section className="bg-blu">
         <div className="mx-auto max-w-6xl px-4 pb-14 pt-8 text-center sm:px-6 sm:pb-20 sm:pt-12">
-          <h1 className="mx-auto max-w-[15ch] text-[2.6rem] font-black leading-[1.02] tracking-tight text-ink text-balance sm:text-6xl lg:text-7xl">
+          <h1 className="mx-auto max-w-[15ch] text-[2.6rem] font-black leading-[1.02] tracking-tight text-white text-balance sm:text-6xl lg:text-7xl">
             Scopri tutti i bonus che ti spettano!
           </h1>
           <p className="mx-auto mt-5 max-w-[42ch] text-lg font-bold text-sun-ink sm:text-xl">
@@ -39,7 +39,7 @@ export default function Home() {
           </div>
           <nav aria-label="Ricerche frequenti" className="mt-5 flex flex-wrap justify-center gap-2">
             {RICERCHE_RAPIDE.map((r) => (
-              <Link key={r.href} href={r.href} className="rounded-full bg-white/60 px-4 py-1.5 text-sm font-extrabold text-ink transition hover:bg-white">
+              <Link key={r.href} href={r.href} className="rounded-full bg-white/15 px-4 py-1.5 text-sm font-extrabold text-white transition hover:bg-white hover:text-blu-1">
                 {r.label}
               </Link>
             ))}

@@ -25,13 +25,13 @@ const FUNZIONI = [
 export default function AppPage() {
   return (
     <>
-      <section className="bg-sun">
+      <section className="bg-blu">
         <div className="mx-auto max-w-6xl px-4 pb-16 pt-8 sm:px-6">
           <Breadcrumbs items={[{ label: "App", href: "/app" }]} />
           <div className="mt-10 grid items-center gap-12 lg:grid-cols-[1.2fr_1fr]">
             <div>
               <Image src="/img/smart-bonus-italia-icon.png" alt="" width={72} height={72} priority className="rounded-2xl" />
-              <h1 className="mt-6 text-4xl font-black tracking-tight text-ink sm:text-6xl">{APP.name}</h1>
+              <h1 className="mt-6 text-4xl font-black tracking-tight text-white sm:text-6xl">{APP.name}</h1>
               <p className="mt-4 max-w-xl text-lg font-bold leading-relaxed text-sun-ink">
                 L&apos;app di SBonus per avere bonus, ISEE, NASpI e guide sempre a portata di mano. Gratuita per Android e iPhone,
                 senza registrazione obbligatoria.

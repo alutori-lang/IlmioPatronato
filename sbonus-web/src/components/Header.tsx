@@ -34,13 +34,13 @@ export function Header() {
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
-    <header className="sticky top-0 z-40 bg-sun">
-      <a href="#contenuto" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sun">
+    <header className="bg-blu sticky top-0 z-40">
+      <a href="#contenuto" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-blu-1">
         Vai al contenuto
       </a>
       <div className="mx-auto flex h-[72px] max-w-6xl items-center gap-4 px-4 sm:px-6">
         <Link href="/" aria-label="SBonus, vai alla home" className="shrink-0">
-          <Logo />
+          <Logo chiaro />
         </Link>
 
         <nav aria-label="Principale" className="ml-auto hidden md:block">
@@ -51,7 +51,7 @@ export function Header() {
                   href={n.href}
                   aria-current={isActive(n.href) ? "page" : undefined}
                   className={`rounded-full px-4 py-2 text-[0.95rem] font-extrabold transition ${
-                    isActive(n.href) ? "bg-ink text-sun" : "bg-white/55 text-ink hover:bg-white"
+                    isActive(n.href) ? "bg-white text-blu-1" : "bg-white/15 text-white hover:bg-white/25"
                   }`}
                 >
                   {n.label}
@@ -69,7 +69,7 @@ export function Header() {
             }}
             aria-expanded={search}
             aria-controls="header-search"
-            className="grid h-11 w-11 place-items-center rounded-full bg-white/55 text-ink transition hover:bg-white"
+            className="grid h-11 w-11 place-items-center rounded-full bg-white/15 text-white transition hover:bg-white/25"
           >
             <Icon name={search ? "close" : "search"} />
             <span className="sr-only">{search ? "Chiudi ricerca" : "Apri ricerca"}</span>
@@ -81,7 +81,7 @@ export function Header() {
             }}
             aria-expanded={menu}
             aria-controls="mobile-menu"
-            className="grid h-11 w-11 place-items-center rounded-full bg-white/55 text-ink transition hover:bg-white md:hidden"
+            className="grid h-11 w-11 place-items-center rounded-full bg-white/15 text-white transition hover:bg-white/25 md:hidden"
           >
             <Icon name={menu ? "close" : "menu"} />
             <span className="sr-only">{menu ? "Chiudi menu" : "Apri menu"}</span>
@@ -90,7 +90,7 @@ export function Header() {
       </div>
 
       {search && (
-        <div id="header-search" className="animate-rise bg-sun px-4 pb-4 sm:px-6">
+        <div id="header-search" className="animate-rise px-4 pb-4 sm:px-6">
           <div className="mx-auto max-w-3xl">
             <SearchBox autoFocus onNavigate={() => setSearch(false)} />
           </div>
@@ -98,7 +98,7 @@ export function Header() {
       )}
 
       {menu && (
-        <nav id="mobile-menu" aria-label="Menu mobile" className="animate-rise bg-sun px-4 pb-4 md:hidden">
+        <nav id="mobile-menu" aria-label="Menu mobile" className="animate-rise px-4 pb-4 md:hidden">
           <ul className="flex flex-col gap-2 py-2">
             {NAV.map((n) => (
               <li key={n.href}>
@@ -106,7 +106,7 @@ export function Header() {
                   href={n.href}
                   aria-current={isActive(n.href) ? "page" : undefined}
                   className={`flex items-center justify-between rounded-2xl px-4 py-3.5 text-base font-extrabold ${
-                    isActive(n.href) ? "bg-ink text-sun" : "bg-white/55 text-ink"
+                    isActive(n.href) ? "bg-white text-blu-1" : "bg-white/15 text-white"
                   }`}
                 >
                   {n.label}

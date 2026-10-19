@@ -95,7 +95,7 @@ export default async function BonusPage({ params }: PageProps<"/bonus/[slug]">) 
         <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
           <StatoBadge stato={b.stato} />
           {b.novita && isNuovo(b.novita.data) && <NuovoBadge />}
-          {b.ente && <span className="rounded-full bg-white/60 px-3 py-0.5 text-sm font-extrabold text-ink">{b.ente}</span>}
+          {b.ente && <span className="rounded-full bg-white/15 px-3 py-0.5 text-sm font-extrabold text-white">{b.ente}</span>}
           {b.ultimoControllo && (
             <span className="inline-flex items-center gap-1.5 text-sm font-bold text-sun-ink">
               <Icon name="calendar" className="h-3.5 w-3.5" />

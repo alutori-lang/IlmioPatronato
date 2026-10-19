@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
-/* Stile "Sole": giallo solare, corallo per le azioni, blu notte per il testo.
+/* Stile "Sole" con i blu dell'app Smart Bonus Italia: testata a gradiente blu,
+   azzurro chiaro per le evidenziazioni, corallo per le azioni.
    Look deliberatamente chiaro e allegro: un solo tema, colori sempre espliciti. */
 :root {
   --bg: #ffffff;
@@ -10,9 +11,12 @@
   --ink-2: #48465c;
   --ink-3: #6b6980;
   --line: #e9e6f3;
-  --sun: #ffd43b;
-  --sun-2: #ffe680;
-  --sun-ink: #4a3d0a;
+  --sun: #bbdefb;
+  --sun-2: #e3f2fd;
+  --sun-ink: #bbdefb;
+  --blu-1: #0d47a1;
+  --blu-2: #1565c0;
+  --blu-3: #1976d2;
   --coral: #e8472b;
   --coral-2: #cf3a20;
   --brand: #3b5bdb;
@@ -52,6 +56,9 @@
   --color-sun-ink: var(--sun-ink);
   --color-coral: var(--coral);
   --color-coral-2: var(--coral-2);
+  --color-blu-1: var(--blu-1);
+  --color-blu-2: var(--blu-2);
+  --color-blu-3: var(--blu-3);
   --font-sans: var(--font-nunito), ui-rounded, system-ui, sans-serif;
 }
 
@@ -192,4 +199,9 @@ body {
 /* Ombra "a gradino" tipica dello stile Sole */
 .shadow-step {
   box-shadow: 0 10px 0 -4px rgba(29, 27, 47, 0.16);
+}
+
+/* Testata blu come nell'app: gradiente da sinistra a destra */
+.bg-blu {
+  background: linear-gradient(90deg, var(--blu-1), var(--blu-2) 55%, var(--blu-3));
 }

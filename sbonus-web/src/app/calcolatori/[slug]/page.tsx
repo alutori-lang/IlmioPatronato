@@ -63,7 +63,7 @@ export default async function CalcolatorePage({ params }: PageProps<"/calcolator
         categoria={c.categoria}
         icona={c.icona}
       >
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-white/60 px-3 py-1 text-sm font-bold text-ink">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-sm font-bold text-white">
           <Icon name="calendar" className="h-4 w-4" />
           Parametri {PARAMS.anno} · controllati il <time dateTime={PARAMS.ultimoControllo}>{formatData(PARAMS.ultimoControllo)}</time>
         </span>

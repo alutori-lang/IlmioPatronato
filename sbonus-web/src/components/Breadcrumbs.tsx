@@ -14,11 +14,11 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
             <li key={c.href} className="flex items-center gap-1.5">
               {i > 0 && <span aria-hidden="true">›</span>}
               {i === all.length - 1 ? (
-                <span aria-current="page" className="line-clamp-1 text-ink">
+                <span aria-current="page" className="line-clamp-1 text-white">
                   {c.label}
                 </span>
               ) : (
-                <Link href={c.href} className="hover:text-ink hover:underline">
+                <Link href={c.href} className="hover:text-white hover:underline">
                   {c.label}
                 </Link>
               )}
